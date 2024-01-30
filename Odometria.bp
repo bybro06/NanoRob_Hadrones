@@ -3,10 +3,8 @@ xtime = 0
 ytime = 0
 thetatime = 0
 
-'Motor.Move("C",20,180,"True")
-'Program.End()
 Thread.Run = Odometry
-ToXY(40,-100,300,90)
+ToXY_Basic(40,-100,300,90)
 Program.Delay(30000)
 
 Sub Odometry
@@ -63,7 +61,7 @@ Sub Odometry
   EndWhile
 EndSub
 
-Function ToXY (in number Velocidad, in number x, in number y, in number theta)
+Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   
   I = "B"
   D = "C"
@@ -154,4 +152,7 @@ Function GUnivEncMG(in number V1, in number V2, in number Angle)
   
   Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
   
+EndFunction
+
+Function ToXY_Giro(in number Velocidad, in number x, in number y, in theta)
 EndFunction
