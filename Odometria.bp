@@ -6,7 +6,7 @@ thetatime = 0
 'Motor.Move("C",20,180,"True")
 'Program.End()
 Thread.Run = Odometry
-ToXY(70,-100,800,33)
+ToXY(40,-100,300,90)
 Program.Delay(30000)
 
 Sub Odometry
