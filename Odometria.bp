@@ -1,0 +1,141 @@
+centro = 0
+xtime = 0
+ytime = 0
+thetatime = 0
+
+'Motor.Move("C",20,180,"True")
+'Program.End()
+Thread.Run = Odometry
+ToXY(30,100,200,90)
+Program.Delay(30000)
+
+Sub Odometry
+  
+  alpha_L[0] = 0
+  alpha_R[0] = 0
+  
+  oldB = 0
+  oldC = 0
+
+  xt[0] = 0
+  yt[0] = 0
+  thetat[0] = 0
+
+  i = 0
+  While "True"
+    
+    Dw = 84.5
+
+    Diameter = 56
+
+    alpha_L[i] = Math.GetRadians(MotorB.GetTacho())
+    alpha_R[i] = Math.GetRadians(MotorC.GetTacho())
+    
+    
+    d_L = (alpha_L[i]-alpha_L[i-1]) * Diameter/2
+    d_R = (alpha_R[i]-alpha_R[i-1]) * Diameter/2
+
+    d = (d_L + d_R) / 2
+
+    delta_theta = (d_R - d_L) / (2 * Dw)
+    
+    xt[i+1] = d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i]
+    
+    yt[i+1] = d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i]
+    
+    thetat[i+1] = thetat[i] + delta_theta
+    
+    xtime = xt[i]
+    ytime = yt[i]
+    thetatime = thetat[i]
+    
+    i++
+    
+    LCD.StopUpdate()
+    LCD.Clear()
+    LCD.Write(5,5,"xt: "+xt[i])
+    LCD.Write(5,15,"yt: "+yt[i])
+    LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
+    LCD.Write(5,35,"centro: "+centro)
+    LCD.Update()
+    Program.Delay(10)
+    
+  EndWhile
+EndSub
+
+Function ToXY (in number Velocidad, in number x, in number y, in number theta)
+  
+  I = "B"
+  D = "C"
+  
+  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
+  G1 = 110/36
+  
+  Signo = -1
+  
+  diff_x = x - @xtime
+  diff_y = y - @ytime
+  
+  angulo_giro_inicial = Math.getDegrees(Math.ArcTan((y-@ytime)/(x-@xtime)))
+  
+  If angulo_giro_inicial > 0 Then
+    V1 = Velocidad
+    V2 = Velocidad * -1
+  Else
+    V1 = Velocidad * -1
+    V2 = Velocidad
+  EndIf
+  
+  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
+  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
+  
+  @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
+  Encodr = angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  
+  Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
+  
+  distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
+
+  Enc = distancia*360 / Math.Pi / @Diameter
+
+  Motor.Move("BC",-Velocidad,Enc,"True")
+  
+  angulo_giro_final = theta - Math.GetDegrees(@thetatime)
+  
+  If angulo_giro_final > 0 Then
+    V1 = Velocidad
+    V2 = Velocidad * -1
+  Else
+    V1 = Velocidad * -1
+    V2 = Velocidad
+  EndIf
+  
+  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
+  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
+  
+  @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
+  Encodr = angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  
+  Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
+  
+EndFunction
+
+Function GUnivEncMG(in number V1, in number V2, in number Angle)
+  I = "B"
+  D = "C"
+  
+  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
+  G1 = 110/36
+  
+  Signo = (V1 / V2) / Math.Abs(V1 / V2)
+  
+  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
+  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
+  
+  
+  @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
+  Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  
+  Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
+  
+EndFunction
