@@ -6,7 +6,7 @@ thetatime = 0
 'Motor.Move("C",20,180,"True")
 'Program.End()
 Thread.Run = Odometry
-ToXY(30,100,200,90)
+ToXY(70,-100,800,33)
 Program.Delay(30000)
 
 Sub Odometry
@@ -39,9 +39,9 @@ Sub Odometry
 
     delta_theta = (d_R - d_L) / (2 * Dw)
     
-    xt[i+1] = d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i]
+    xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])*-1
     
-    yt[i+1] = d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i]
+    yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
     
     thetat[i+1] = thetat[i] + delta_theta
     
@@ -76,7 +76,7 @@ Function ToXY (in number Velocidad, in number x, in number y, in number theta)
   diff_x = x - @xtime
   diff_y = y - @ytime
   
-  angulo_giro_inicial = Math.getDegrees(Math.ArcTan((y-@ytime)/(x-@xtime)))
+  angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
   
   If angulo_giro_inicial > 0 Then
     V1 = Velocidad
@@ -92,13 +92,31 @@ Function ToXY (in number Velocidad, in number x, in number y, in number theta)
   @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
   Encodr = angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
-  Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
+  Motor.MoveSync(I + D, -V1/3, -V2/3, Encodr, "True")
   
   distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
 
   Enc = distancia*360 / Math.Pi / @Diameter
 
-  Motor.Move("BC",-Velocidad,Enc,"True")
+  'Motor.Move("BC",-Velocidad,Enc,"True")
+  
+  encoder_B_inicial = Motor.GetCount ("B")
+  encoder_C_inicial = Motor.GetCount ("C")
+
+  While Math.abs(Motor.GetCount ("C") - encoder_C_inicial) < Enc
+    
+    encoder_B = Motor.GetCount ("B") - encoder_B_inicial
+    encoder_C = Motor.GetCount ("C") - encoder_C_inicial
+    
+    error = encoder_B - encoder_C
+
+    proporcional = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcional), -(Velocidad+proporcional))
+
+  EndWhile
+
+  Motor.Stop("BC", "True")
   
   angulo_giro_final = theta - Math.GetDegrees(@thetatime)
   
@@ -116,7 +134,7 @@ Function ToXY (in number Velocidad, in number x, in number y, in number theta)
   @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
   Encodr = angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
-  Motor.MoveSync(I + D, -V1, -V2, Encodr, "True")
+  Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
   
 EndFunction
 
