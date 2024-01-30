@@ -97,8 +97,6 @@ Function ToXY (in number Velocidad, in number x, in number y, in number theta)
   distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
 
   Enc = distancia*360 / Math.Pi / @Diameter
-
-  'Motor.Move("BC",-Velocidad,Enc,"True")
   
   encoder_B_inicial = Motor.GetCount ("B")
   encoder_C_inicial = Motor.GetCount ("C")
