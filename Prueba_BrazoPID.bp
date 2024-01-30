@@ -1,0 +1,366 @@
+#A positivo para bajar, negativo para subir
+#D positivo para cerrar, negativo para abrir
+
+#180º A para bajar completo
+#110º D para cerrar completo
+
+
+'While "True"
+  'PIDControl_AD()
+'EndWhile
+
+
+Thread.Run = PIDControl_AD
+Main()
+
+Sub Main
+  StartArm()
+  
+  EncoderRectoMG(40,7)
+  BMoveAD(150,100,170,-170)
+  BMoveD0(50)
+  BMoveA(150,100)
+  EncoderRectoMG(20,6)
+  BMoveA(100, 110)
+  BMoveD(100, -180)
+  Program.Delay(500)
+  
+  EncoderRectoMG(-40,14)
+    
+  Program.Delay(500)
+  
+  
+  EncoderRectoMG(40,7)
+  BMoveAD(150,100,148,-170)
+  BMoveD0(50)
+  BMoveA(150,70)
+  EncoderRectoMG(20,4)
+  BMoveA(70, 92)
+  BMoveD(50, -180)
+  Program.Delay(500)
+  
+  EncoderRectoMG(-40,11)
+  
+  BMoveAD0(100,100)
+  
+  Program.Delay(500)
+
+EndSub
+
+Sub Main2
+  BMoveAD(150,150,180,-30)
+  BMoveD(50,150)
+  Program.Delay(1000)
+  BMoveA(40,135)
+  Program.Delay(2500)
+  BMoveAD(150,100,162,20)
+  BMoveD0(100)
+  BMoveA(150,150)
+  BMoveA(150,170)
+  BMoveA0(150)
+  Program.Delay(2000)
+EndSub
+
+Sub MainControl
+  angle_A = 0
+  angle_D = 0  
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      angle_A -= 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "D" Then
+      angle_A += 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "L" Then
+      angle_D -= 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "R" Then
+      angle_D += 1
+      Program.Delay(1)
+    EndIf
+  EndWhile
+EndSub
+
+Sub StartArm
+  BMoveAD(200,200,-200,200)
+  Program.Delay(1000)
+
+  Motor.ResetCount("A")
+  Motor.ResetCount("D")
+  angle_A = 0
+  angle_D = 0
+EndSub
+
+Sub PIDControl_AD
+  
+  kp_A = 0.5
+  ki_A = 0.0001
+  kd_A = 0.1
+  
+  kp_D = 0.8
+  ki_D = 0.0001
+  kd_D = 0.1
+  
+  error_A = 0
+  error_D = 0
+  
+  errsum_A = 0
+  errsum_D = 0
+  
+  oldError_A = 0
+  oldError_D = 0
+  
+  u_A = 0
+  u_D = 0
+  
+  angle_A = 0
+  angle_D = 0
+  
+  While "True"
+    
+    error_A = angle_A - MotorA.GetTacho()
+    errsum_A += error_A
+    u_A = (error_A * kp_A) + (errsum_A * ki_A/1) + ((error_A - oldError_A) * kd_A)
+    
+    MotorA.StartSpeed(u_A)
+    
+    error_D = angle_D - MotorD.GetTacho()
+    errsum_D += error_D
+    u_D = (error_D * kp_D) + (errsum_D * ki_D/1) + ((error_D - oldError_D) * kd_D)
+    
+    MotorD.StartSpeed(u_D)
+    
+    LCD.StopUpdate()
+    LCD.Clear()
+    LCD.Write(5,5,"Angulo de A:  "+MotorA.GetTacho())
+    LCD.Write(5,25,"Obj de A:  "+angle_A)
+    LCD.Write(5,45,"Angulo de D:  "+MotorD.GetTacho())
+    LCD.Write(5,65,"Obj de D:  "+angle_D)
+    LCD.Update()
+  EndWhile
+
+EndSub
+
+Function BMoveA(in number degrees_per_second, in number degrees)
+  
+  #Para usar con control PID en paralelo
+  
+  rotation = degrees - @angle_A
+  sign = Math.Abs(rotation)/rotation
+  progress = 0
+  
+  degrees_per_interval = degrees_per_second * sign / 50
+  
+  While Math.Abs(rotation - progress) > 5
+    
+    @angle_A += degrees_per_interval
+    progress += degrees_per_interval
+
+    Program.Delay(1)
+    
+  EndWhile
+  @angle_A = degrees
+EndFunction
+
+Function BMoveAPesado(in number degrees_per_second, in number degrees)
+  
+  #Para usar con control PID en paralelo
+  
+  old_kp_A = @kp_A
+  old_ki_A = @ki_A
+  old_kd_A = @kd_A
+  
+  @kp_A *= 15
+  @ki_A *= 15
+  @kd_A *= 15
+  
+  rotation = degrees - @angle_A
+  sign = Math.Abs(rotation)/rotation
+  progress = 0
+  
+  degrees_per_interval = degrees_per_second * sign / 50
+  
+  While Math.Abs(rotation - progress) > 5
+    
+    @angle_A += degrees_per_interval
+    progress += degrees_per_interval
+
+    Program.Delay(1)
+    
+  EndWhile
+  @angle_A = degrees
+  
+  @kp_A = old_kp_A
+  @ki_A = old_ki_A
+  @kd_A = old_kd_A
+EndFunction
+
+Function BMoveD(in number degrees_per_second, in number degrees)
+  
+  #Para usar con control PID en paralelo
+  
+  rotation = degrees - @angle_D
+  sign = Math.Abs(rotation)/rotation
+  progress = 0
+  
+  degrees_per_interval = degrees_per_second * sign / 50
+  
+  While Math.Abs(rotation - progress) > 5
+    
+    @angle_D += degrees_per_interval
+    progress += degrees_per_interval
+    
+    Program.Delay(1)
+    
+  EndWhile
+  @angle_D = degrees
+EndFunction
+
+Function BMoveAD(in number degrees_per_second_A, in number degrees_per_second_D, in number degrees_A, in number degrees_D)
+  
+  #Para usar con control PID en paralelo
+  
+  While @angle_A <> degrees_A Or @angle_D <> degrees_D
+    
+    If Math.Round(@angle_A) < degrees_A - 5 and Math.Round(@angle_A) < degrees_A Then
+      @angle_A += Math.Min(degrees_per_second_A, degrees_per_second_A/2 + (degrees_A - @angle_A) / 10)/50
+    ElseIf Math.Round(@angle_A) > degrees_A + 5 and Math.Round(@angle_A) > degrees_A Then
+      @angle_A -= Math.Max(degrees_per_second_A, degrees_per_second_A/2 + (degrees_A - @angle_A) / 10)/50
+    Else
+      @angle_A = degrees_A
+    EndIf
+    
+    If Math.Round(@angle_D) < degrees_D Then
+      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+    ElseIf Math.Round(@angle_D) > degrees_D Then
+      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+    Else
+      @angle_D = degrees_D
+    EndIf
+    
+    Program.Delay(1)
+  EndWhile
+  @angle_A = degrees_A  
+  @angle_D = degrees_D
+  
+EndFunction
+
+Function BMoveA0(in number degrees_per_second)
+  
+  #Para usar con control PID en paralelo
+  
+  degrees = 0
+  rotation = degrees - @angle_A
+  sign = Math.Abs(rotation)/rotation
+  progress = 0
+  
+  degrees_per_interval = degrees_per_second * sign / 50
+  
+  While Math.Abs(rotation - progress) > 5
+    
+    @angle_A += degrees_per_interval
+    progress += degrees_per_interval
+
+    Program.Delay(1)
+    
+  EndWhile
+  @angle_A = degrees
+EndFunction
+
+Function BMoveD0(in number degrees_per_second)
+  
+  #Para usar con control PID en paralelo
+  
+  degrees = 0
+  rotation = degrees - @angle_D
+  sign = Math.Abs(rotation)/rotation
+  progress = 0
+  
+  degrees_per_interval = degrees_per_second * sign / 50
+  
+  While Math.Abs(rotation - progress) > 5
+    
+    @angle_D += degrees_per_interval
+    progress += degrees_per_interval
+    
+    Program.Delay(1)
+    
+  EndWhile
+  @angle_D = degrees
+EndFunction
+
+Function BMoveAD0(in number degrees_per_second_A, in number degrees_per_second_D)
+  
+  #Para usar con control PID en paralelo
+  
+  degrees_A = 0
+  degrees_D = 0
+  
+  While @angle_A <> degrees_A Or @angle_D <> degrees_D
+    
+    If Math.Round(@angle_A) < degrees_A Then
+      @angle_A += Math.Min(degrees_per_second_A, degrees_per_second_A/2 + (degrees_A - @angle_A) / 10)/50
+    ElseIf Math.Round(@angle_A) > degrees_A Then
+      @angle_A -= Math.Max(degrees_per_second_A, degrees_per_second_A/2 + (degrees_A - @angle_A) / 10)/50
+    Else
+      @angle_A = degrees_A
+    EndIf
+    
+    If Math.Round(@angle_D) < degrees_D Then
+      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+    ElseIf Math.Round(@angle_D) > degrees_D Then
+      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+    Else
+      @angle_D = degrees_D
+    EndIf
+    
+    Program.Delay(1)
+  EndWhile
+  @angle_A = degrees_A  
+  @angle_D = degrees_D
+  
+EndFunction
+
+Function EncoderRectoMG(in number Velocidad, in number Distancia)
+
+  diametro = 5.6
+  
+  proporcial = 0 
+  Enc = Distancia*360 / Math.Pi / diametro
+  
+  Motor.ResetCount ("B") 
+  Motor.ResetCount ("C")
+
+  While Math.abs(Motor.GetCount ("C")) < Enc
+
+    error = Motor.GetCount ("C") - Motor.GetCount ("B")
+
+    proporcial = error*0.5
+
+    Motor.StartSync("BC", -(Velocidad-proporcial), -(Velocidad+proporcial))
+
+  EndWhile
+
+  Motor.Stop("BC", "True")
+
+EndFunction
+
+Sub notas
+    Speaker.Note(100,"C5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"D5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"E5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"F5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"G5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"A5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"B5",300)
+  Speaker.Wait()
+  Speaker.Note(100,"C6",300)
+  Speaker.Wait()
+EndSub
