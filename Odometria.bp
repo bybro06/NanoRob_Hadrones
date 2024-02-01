@@ -134,8 +134,8 @@ EndSub
 Sub Display
     LCD.StopUpdate()
     LCD.Clear()
-    LCD.Write(5,5,"xt: "+xt[i])
-    LCD.Write(5,15,"yt: "+yt[i])
+    LCD.Write(5,5,"xt: "+Math.Round(xt[i]*100)/100)
+    LCD.Write(5,15,"yt: "+Math.Round(yt[i]*100)/100)
     LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
     LCD.Write(5,35,"centro: "+centro)
     LCD.Write(5,65,"Angulo de A:  "+MotorA.GetTacho())
