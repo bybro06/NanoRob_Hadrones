@@ -2,6 +2,9 @@ centro = 0
 xtime = 0
 ytime = 0
 thetatime = 0
+xtcorrect = 0
+ytcorrect = 0
+thetatcorrect = 0
 Sentido_D = 1
 
 StartArm()
@@ -69,16 +72,31 @@ Sub Odometry
     d = (d_L + d_R) / 2
 
     delta_theta = (d_R - d_L) / (2 * Dw)
+
+    If xtcorrect <> 0 Then
+      xt[i+1] = xtcorrect
+      xtcorrect = 0
+    Else
+      xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])*-1
+    EndIf
     
-    xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])*-1
+    If ytcorrect <> 0 Then
+      yt[i+1] = ytcorrect
+      ytcorrect = 0
+    Else
+      yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
+    EndIf
     
-    yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
+    If thetatcorrect <> 0 Then
+      thetat[i+1] = thetatcorrect
+      thetatcorrect = 0
+    Else
+      thetat[i+1] = thetat[i] + delta_theta
+    EndIf
     
-    thetat[i+1] = thetat[i] + delta_theta
-    
-    xtime = xt[i]
-    ytime = yt[i]
-    thetatime = thetat[i]
+    xtime = xt[i+1]
+    ytime = yt[i+1]
+    thetatime = thetat[i+1]
     
     i++
     
@@ -132,6 +150,7 @@ Sub PIDControl_AD
 EndSub
 
 Sub Display
+  While "True"
     LCD.StopUpdate()
     LCD.Clear()
     LCD.Write(5,5,"xt: "+Math.Round(xt[i]*100)/100)
@@ -143,6 +162,8 @@ Sub Display
     LCD.Write(5,85,"Angulo de D:  "+MotorD.GetTacho())
     LCD.Write(5,95,"Obj de D:  "+angle_D)
     LCD.Update()
+    Program.Delay(50)
+  EndWhile
 EndSub
 
 'Subs a ejecutar
@@ -150,10 +171,8 @@ EndSub
 Sub Main
   
   
-  BMoveD(180,160)
-  BMoveA(360,180)
-  Program.Delay(3000)
-  BMoveA0(180)
+  ToXY_Basic(30,-300,500,-90)
+  ToXY_Basic(30,0,0,0)
 
 EndSub
 
@@ -222,7 +241,7 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
   Encodr = angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
-  Motor.MoveSync(I + D, -V1/3, -V2/3, Encodr, "True")
+  Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
   
   distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
 
@@ -263,6 +282,9 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   Encodr = angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
   Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
+  @xtcorrect = x
+  @ytcorrect = y
+  @thetatcorrect = math.getradians(theta)
   
 EndFunction
 
@@ -471,26 +493,3 @@ Function BMoveAD0(in number degrees_per_second_A, in number degrees_per_second_D
   
 EndFunction
 
-Function EncoderRectoMG(in number Velocidad, in number Distancia)
-
-  diametro = 5.6
-  
-  proporcial = 0 
-  Enc = Distancia*360 / Math.Pi / diametro
-  
-  Motor.ResetCount ("B") 
-  Motor.ResetCount ("C")
-
-  While Math.abs(Motor.GetCount ("C")) < Enc
-
-    error = Motor.GetCount ("C") - Motor.GetCount ("B")
-
-    proporcial = error*0.5
-
-    Motor.StartSync("BC", -(Velocidad-proporcial), -(Velocidad+proporcial))
-
-  EndWhile
-
-  Motor.Stop("BC", "True")
-
-EndFunction

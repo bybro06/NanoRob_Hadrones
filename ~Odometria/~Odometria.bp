@@ -3,6 +3,10 @@ lv_degrees_per_second_d_7 = 0
 lv_degrees_a_7 = 0
 lv_degrees_d_7 = 0
 lv_degrees_per_second_9 = 0
+lv_velocidad_1 = 0
+lv_x_1 = 0
+lv_y_1 = 0
+lv_theta_1 = 0
 lv_degrees_per_second_6 = 0
 lv_degrees_6 = 0
 lv_degrees_per_second_4 = 0
@@ -12,6 +16,9 @@ gv_centro = 0
 gv_xtime = 0
 gv_ytime = 0
 gv_thetatime = 0
+gv_xtcorrect = 0
+gv_ytcorrect = 0
+gv_thetatcorrect = 0
 gv_sentido_d = 0
 gv_angle_a = 0
 gv_angle_d = 0
@@ -19,6 +26,9 @@ gv_centro = 0
 gv_xtime = 0
 gv_ytime = 0
 gv_thetatime = 0
+gv_xtcorrect = 0
+gv_ytcorrect = 0
+gv_thetatcorrect = 0
 gv_sentido_d = 1
 f_startarm_0 ()
 Thread.Run = f_pidcontrol_ad_0
@@ -71,12 +81,27 @@ gv_d_l = ( gv_alpha_l [ gv_i ] - gv_alpha_l [ gv_i - 1 ] ) * gv_diameter / 2
 gv_d_r = ( gv_alpha_r [ gv_i ] - gv_alpha_r [ gv_i - 1 ] ) * gv_diameter / 2
 gv_d = ( gv_d_l + gv_d_r ) / 2
 gv_delta_theta = ( gv_d_r - gv_d_l ) / ( 2 * gv_dw )
+If gv_xtcorrect <> 0 Then
+gv_xt [ gv_i + 1 ] = gv_xtcorrect
+gv_xtcorrect = 0
+Else
 gv_xt [ gv_i + 1 ] = ( gv_d * Math.Sin ( gv_thetat [ gv_i ] + gv_delta_theta / 2 ) + gv_xt [ gv_i ] ) * - 1
+EndIf
+If gv_ytcorrect <> 0 Then
+gv_yt [ gv_i + 1 ] = gv_ytcorrect
+gv_ytcorrect = 0
+Else
 gv_yt [ gv_i + 1 ] = ( gv_d * Math.Cos ( gv_thetat [ gv_i ] + gv_delta_theta / 2 ) + gv_yt [ gv_i ] ) * - 1
+EndIf
+If gv_thetatcorrect <> 0 Then
+gv_thetat [ gv_i + 1 ] = gv_thetatcorrect
+gv_thetatcorrect = 0
+Else
 gv_thetat [ gv_i + 1 ] = gv_thetat [ gv_i ] + gv_delta_theta
-gv_xtime = gv_xt [ gv_i ]
-gv_ytime = gv_yt [ gv_i ]
-gv_thetatime = gv_thetat [ gv_i ]
+EndIf
+gv_xtime = gv_xt [ gv_i + 1 ]
+gv_ytime = gv_yt [ gv_i + 1 ]
+gv_thetatime = gv_thetat [ gv_i + 1 ]
 gv_i = gv_i + 1
 Program.Delay ( 10 )
 EndWhile
@@ -110,10 +135,11 @@ MotorD.StartSpeed ( gv_u_d )
 EndWhile
 EndSub
 Sub f_display_0
+While "True"
 LCD.StopUpdate ()
 LCD.Clear ()
-LCD.Write ( 5 , 5 , "xt: " + gv_xt [ gv_i ] )
-LCD.Write ( 5 , 15 , "yt: " + gv_yt [ gv_i ] )
+LCD.Write ( 5 , 5 , "xt: " + Math.Round ( gv_xt [ gv_i ] * 100 ) / 100 )
+LCD.Write ( 5 , 15 , "yt: " + Math.Round ( gv_yt [ gv_i ] * 100 ) / 100 )
 LCD.Write ( 5 , 25 , "thetat: " + math.getdegrees ( gv_thetat [ gv_i ] ) )
 LCD.Write ( 5 , 35 , "centro: " + gv_centro )
 LCD.Write ( 5 , 65 , "Angulo de A:  " + MotorA.GetTacho () )
@@ -121,17 +147,69 @@ LCD.Write ( 5 , 75 , "Obj de A:  " + gv_angle_a )
 LCD.Write ( 5 , 85 , "Angulo de D:  " + MotorD.GetTacho () )
 LCD.Write ( 5 , 95 , "Obj de D:  " + gv_angle_d )
 LCD.Update ()
+Program.Delay ( 50 )
+EndWhile
 EndSub
 Sub f_main_0
-lv_degrees_per_second_6 = 180
-lv_degrees_6 = 160
-f_bmoved_2 ()
-lv_degrees_per_second_4 = 360
-lv_degrees_4 = 180
-f_bmovea_2 ()
-Program.Delay ( 3000 )
-lv_degrees_per_second_8 = 180
-f_bmovea0_1 ()
+lv_velocidad_1 = 30
+lv_x_1 = - 300
+lv_y_1 = 500
+lv_theta_1 = - 90
+f_toxy_basic_4 ()
+lv_velocidad_1 = 30
+lv_x_1 = 0
+lv_y_1 = 0
+lv_theta_1 = 0
+f_toxy_basic_4 ()
+EndSub
+Sub f_toxy_basic_4
+lv_i_1 = "B"
+lv_d_1 = "C"
+lv_g1_1 = 110 / 36
+lv_signo_1 = - 1
+lv_diff_x_1 = lv_x_1 - gv_xtime
+lv_diff_y_1 = lv_y_1 - gv_ytime
+lv_angulo_giro_inicial_1 = Math.getDegrees ( Math.ArcTan ( ( lv_x_1 - gv_xtime ) / ( lv_y_1 - gv_ytime ) ) )
+If lv_angulo_giro_inicial_1 > 0 Then
+lv_v1_1 = lv_velocidad_1
+lv_v2_1 = lv_velocidad_1 * - 1
+Else
+lv_v1_1 = lv_velocidad_1 * - 1
+lv_v2_1 = lv_velocidad_1
+EndIf
+lv_vmin_1 = Math.Min ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
+lv_vmax_1 = Math.Max ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
+gv_centro = ( - 8.5 * ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 8.5 ) / ( ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 1 )
+lv_encodr_1 = lv_angulo_giro_inicial_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) )
+Motor.MoveSync ( lv_i_1 + lv_d_1 , - lv_v1_1 / 2 , - lv_v2_1 / 2 , lv_encodr_1 , "True" )
+lv_distancia_1 = Math.SquareRoot ( lv_diff_x_1 * lv_diff_x_1 + lv_diff_y_1 * lv_diff_y_1 )
+lv_enc_1 = lv_distancia_1 * 360 / Math.Pi / gv_diameter
+lv_encoder_b_inicial_1 = Motor.GetCount ( "B" )
+lv_encoder_c_inicial_1 = Motor.GetCount ( "C" )
+While Math.abs ( Motor.GetCount ( "C" ) - lv_encoder_c_inicial_1 ) < lv_enc_1
+lv_encoder_b_1 = Motor.GetCount ( "B" ) - lv_encoder_b_inicial_1
+lv_encoder_c_1 = Motor.GetCount ( "C" ) - lv_encoder_c_inicial_1
+lv_error_1 = lv_encoder_b_1 - lv_encoder_c_1
+lv_proporcional_1 = lv_error_1 * 2
+Motor.StartSync ( "BC" , ( lv_velocidad_1 - lv_proporcional_1 ) , - ( lv_velocidad_1 + lv_proporcional_1 ) )
+EndWhile
+Motor.Stop ( "BC" , "True" )
+lv_angulo_giro_final_1 = lv_theta_1 - Math.GetDegrees ( gv_thetatime )
+If lv_angulo_giro_final_1 > 0 Then
+lv_v1_1 = lv_velocidad_1
+lv_v2_1 = lv_velocidad_1 * - 1
+Else
+lv_v1_1 = lv_velocidad_1 * - 1
+lv_v2_1 = lv_velocidad_1
+EndIf
+lv_vmin_1 = Math.Min ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
+lv_vmax_1 = Math.Max ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
+gv_centro = ( - 8.5 * ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 8.5 ) / ( ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 1 )
+lv_encodr_1 = lv_angulo_giro_final_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) )
+Motor.MoveSync ( lv_i_1 + lv_d_1 , - lv_v1_1 / 2 , - lv_v2_1 / 2 , lv_encodr_1 , "True" )
+gv_xtcorrect = lv_x_1
+gv_ytcorrect = lv_y_1
+gv_thetatcorrect = math.getradians ( lv_theta_1 )
 EndSub
 Sub f_bmovea_2
 lv_rotation_4 = lv_degrees_4 - gv_angle_a
