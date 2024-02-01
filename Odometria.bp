@@ -227,6 +227,15 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   
   angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
   
+	If diff_y < 0 Then
+    If diff_x < 0 Then
+			angulo_giro_inicial -= 90
+		ElseIf diff_x > 0 Then
+			angulo_giro_inicial += 90
+		Else
+			angulo_giro_inicial = 180
+  EndIf
+
   If angulo_giro_inicial > 0 Then
     V1 = Velocidad
     V2 = Velocidad * -1
@@ -259,7 +268,7 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
 
     proporcional = error*2
 
-    Motor.StartSync("BC", (Velocidad-proporcional), -(Velocidad+proporcional))
+    Motor.StartSync("BC", (Velocidad-proporcional)/2, -(Velocidad+proporcional)/2)
 
   EndWhile
 
