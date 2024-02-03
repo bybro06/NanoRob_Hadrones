@@ -35,7 +35,7 @@ Thread.Run = f_pidcontrol_ad_0
 Thread.Run = f_odometry_0
 Thread.Run = f_display_0
 f_main_0 ()
-Program.Delay ( 10000 )
+Program.Delay ( 20000 )
 Sub f_startarm_0
 lv_degrees_per_second_a_7 = 200
 lv_degrees_per_second_d_7 = 200
@@ -147,7 +147,7 @@ LCD.Write ( 5 , 75 , "Obj de A:  " + gv_angle_a )
 LCD.Write ( 5 , 85 , "Angulo de D:  " + MotorD.GetTacho () )
 LCD.Write ( 5 , 95 , "Obj de D:  " + gv_angle_d )
 LCD.Update ()
-Program.Delay ( 50 )
+Program.Delay ( 100 )
 EndWhile
 EndSub
 Sub f_main_0
@@ -169,7 +169,16 @@ lv_g1_1 = 110 / 36
 lv_signo_1 = - 1
 lv_diff_x_1 = lv_x_1 - gv_xtime
 lv_diff_y_1 = lv_y_1 - gv_ytime
+lv_diff_theta_1 = lv_theta_1 - gv_thetatime
 lv_angulo_giro_inicial_1 = Math.getDegrees ( Math.ArcTan ( ( lv_x_1 - gv_xtime ) / ( lv_y_1 - gv_ytime ) ) )
+If lv_diff_y_1 < 0 Then
+If lv_diff_x_1 < 0 Then
+lv_angulo_giro_inicial_1 = lv_angulo_giro_inicial_1 - 180 - gv_thetatime
+ElseIf lv_diff_x_1 > 0 Then
+lv_angulo_giro_inicial_1 = 180 - gv_thetatime - lv_angulo_giro_inicial_1
+Else
+EndIf
+EndIf
 If lv_angulo_giro_inicial_1 > 0 Then
 lv_v1_1 = lv_velocidad_1
 lv_v2_1 = lv_velocidad_1 * - 1
@@ -180,8 +189,9 @@ EndIf
 lv_vmin_1 = Math.Min ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
 lv_vmax_1 = Math.Max ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
 gv_centro = ( - 8.5 * ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 8.5 ) / ( ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 1 )
-lv_encodr_1 = lv_angulo_giro_inicial_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) )
+lv_encodr_1 = Math.Abs ( lv_angulo_giro_inicial_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) ) )
 Motor.MoveSync ( lv_i_1 + lv_d_1 , - lv_v1_1 / 2 , - lv_v2_1 / 2 , lv_encodr_1 , "True" )
+Program.Delay ( 100 )
 lv_distancia_1 = Math.SquareRoot ( lv_diff_x_1 * lv_diff_x_1 + lv_diff_y_1 * lv_diff_y_1 )
 lv_enc_1 = lv_distancia_1 * 360 / Math.Pi / gv_diameter
 lv_encoder_b_inicial_1 = Motor.GetCount ( "B" )
@@ -191,9 +201,10 @@ lv_encoder_b_1 = Motor.GetCount ( "B" ) - lv_encoder_b_inicial_1
 lv_encoder_c_1 = Motor.GetCount ( "C" ) - lv_encoder_c_inicial_1
 lv_error_1 = lv_encoder_b_1 - lv_encoder_c_1
 lv_proporcional_1 = lv_error_1 * 2
-Motor.StartSync ( "BC" , ( lv_velocidad_1 - lv_proporcional_1 ) , - ( lv_velocidad_1 + lv_proporcional_1 ) )
+Motor.StartSync ( "BC" , ( lv_velocidad_1 - lv_proporcional_1 ) / 2 , - ( lv_velocidad_1 + lv_proporcional_1 ) / 2 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
+Program.Delay ( 100 )
 lv_angulo_giro_final_1 = lv_theta_1 - Math.GetDegrees ( gv_thetatime )
 If lv_angulo_giro_final_1 > 0 Then
 lv_v1_1 = lv_velocidad_1
@@ -205,11 +216,12 @@ EndIf
 lv_vmin_1 = Math.Min ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
 lv_vmax_1 = Math.Max ( Math.Abs ( lv_v1_1 ) , Math.Abs ( lv_v2_1 ) )
 gv_centro = ( - 8.5 * ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 8.5 ) / ( ( lv_vmin_1 / lv_vmax_1 ) * lv_signo_1 - 1 )
-lv_encodr_1 = lv_angulo_giro_final_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) )
+lv_encodr_1 = Math.Abs ( lv_angulo_giro_final_1 * lv_g1_1 * ( - 2 / ( lv_signo_1 * lv_vmin_1 / lv_vmax_1 - 1 ) ) )
 Motor.MoveSync ( lv_i_1 + lv_d_1 , - lv_v1_1 / 2 , - lv_v2_1 / 2 , lv_encodr_1 , "True" )
 gv_xtcorrect = lv_x_1
 gv_ytcorrect = lv_y_1
 gv_thetatcorrect = math.getradians ( lv_theta_1 )
+Program.Delay ( 100 )
 EndSub
 Sub f_bmovea_2
 lv_rotation_4 = lv_degrees_4 - gv_angle_a

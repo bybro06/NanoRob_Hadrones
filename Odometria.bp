@@ -13,7 +13,7 @@ Thread.Run = PIDControl_AD
 Thread.Run = Odometry
 Thread.Run = Display
 Main()
-Program.Delay(10000)
+Program.Delay(20000)
 
 Sub StartArm
   BMoveAD(200,200,-200,200)
@@ -86,13 +86,14 @@ Sub Odometry
     Else
       yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
     EndIf
-    
+
     If thetatcorrect <> 0 Then
       thetat[i+1] = thetatcorrect
       thetatcorrect = 0
     Else
       thetat[i+1] = thetat[i] + delta_theta
     EndIf
+
     
     xtime = xt[i+1]
     ytime = yt[i+1]
@@ -162,7 +163,7 @@ Sub Display
     LCD.Write(5,85,"Angulo de D:  "+MotorD.GetTacho())
     LCD.Write(5,95,"Obj de D:  "+angle_D)
     LCD.Update()
-    Program.Delay(50)
+    Program.Delay(100)
   EndWhile
 EndSub
 
@@ -224,18 +225,19 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   
   diff_x = x - @xtime
   diff_y = y - @ytime
+  diff_theta = theta - @thetatime
   
   angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
   
-	If diff_y < 0 Then
+  If diff_y < 0 Then
     If diff_x < 0 Then
-			angulo_giro_inicial -= 90
+			angulo_giro_inicial = angulo_giro_inicial - 180 - @thetatime
 		ElseIf diff_x > 0 Then
-			angulo_giro_inicial += 90
+			angulo_giro_inicial = 180 - @thetatime - angulo_giro_inicial
 		Else
-			angulo_giro_inicial = 180
+    EndIf
   EndIf
-
+  
   If angulo_giro_inicial > 0 Then
     V1 = Velocidad
     V2 = Velocidad * -1
@@ -248,9 +250,11 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
   
   @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
-  Encodr = angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  Encodr = Math.Abs(angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1)))
   
   Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
+  
+  Program.Delay(100)
   
   distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
 
@@ -274,6 +278,8 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
 
   Motor.Stop("BC", "True")
   
+  Program.Delay(100)
+  
   angulo_giro_final = theta - Math.GetDegrees(@thetatime)
   
   If angulo_giro_final > 0 Then
@@ -288,12 +294,16 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
   
   @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
-  Encodr = angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  Encodr = Math.Abs(angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1)))
+  
   
   Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
+  
   @xtcorrect = x
   @ytcorrect = y
   @thetatcorrect = math.getradians(theta)
+  
+  Program.Delay(100)
   
 EndFunction
 
