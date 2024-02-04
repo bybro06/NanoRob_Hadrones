@@ -8,8 +8,6 @@ thetatcorrect = 0
 Sentido_D = 1
 angulo = 0
 
-StartArm()
-
 Thread.Run = PIDControl_AD
 Thread.Run = Odometry
 Thread.Run = Display
@@ -17,13 +15,13 @@ Main()
 Program.Delay(20000)
 
 Sub StartArm
-  BMoveAD(200,200,-200,200)
-  Program.Delay(1000)
 
   Motor.ResetCount("A")
   Motor.ResetCount("D")
   angle_A = 0
   angle_D = 0
+  
+  BMoveA(200,-180)
   
   Time.Reset1()
   While Time.Get1() <500
@@ -31,12 +29,12 @@ Sub StartArm
     Program.Delay(5)
   EndWhile
   
-  If Math.Abs(Motor.GetCount("D")) < 60 Then
-    BMoveD0(90)
-    Sentido_D = 1
-  Else
-    BMoveD0(90)
+  If Math.Abs(Motor.GetCount("D")) < 30 Then
     Sentido_D = -1
+    BMoveD0(90)
+  Else
+    Sentido_D = 1
+    BMoveD0(90)
   EndIf
   
   Program.Delay(100)
@@ -110,7 +108,7 @@ EndSub
 
 Sub PIDControl_AD
   
-  kp_A = 0.5
+  kp_A = 1.5
   ki_A = 0.0001
   kd_A = 0.1
   
@@ -165,6 +163,7 @@ Sub Display
     LCD.Write(5,75,"Obj de A:  "+angle_A)
     LCD.Write(5,85,"Angulo de D:  "+MotorD.GetTacho())
     LCD.Write(5,95,"Obj de D:  "+angle_D)
+    LCD.Write(5,105,"Sentido D: "+Sentido_D)
     LCD.Update()
     Program.Delay(100)
   EndWhile
@@ -174,12 +173,24 @@ EndSub
 
 Sub Main
   
+  StartArm()
   
-  ToXY_Basic(50,-300,500,90)
-  'Program.Delay(10000)
-  ToXY_Basic(50,0,0,0)
-  ToXY_Basic(30,0,0,0)
-
+  BMoveD(100,150)
+  Program.Delay(1000)
+  BMoveA0(60)
+  Motor.Move("BC",-30,130,"True")
+  BMoveD0(100)
+  Program.Delay(2000)
+  GUnivEncMG(-30,30,22)
+  BMoveA(100,180)
+  Program.Delay(2000)
+  Motor.Move("BC",10,10,"True")
+  BMoveA(150,180)
+  GUnivEncMG(10,-10,5)
+  BMoveAD(15,40,55,150)
+  Program.Delay(2000)
+  Motor.Move("BC",30,150,"True")
+  BMoveAD0(100,100)
 EndSub
 
 Sub Main2
@@ -339,6 +350,7 @@ Function BMoveA(in number degrees_per_second, in number degrees)
     Program.Delay(1)
     
   EndWhile
+ 
   @angle_A = degrees
 EndFunction
 
@@ -379,11 +391,12 @@ Function BMoveD(in number degrees_per_second, in number degrees)
   
   #Para usar con control PID en paralelo
   
+  degrees *= @Sentido_D
   rotation = degrees - @angle_D
   sign = Math.Abs(rotation)/rotation
   progress = 0
   
-  degrees_per_interval = degrees_per_second * sign / 50
+  degrees_per_interval = degrees_per_second * sign / 50 
   
   While Math.Abs(rotation - progress) > 5
     
@@ -400,6 +413,7 @@ Function BMoveAD(in number degrees_per_second_A, in number degrees_per_second_D,
   
   #Para usar con control PID en paralelo
   
+  degrees_D *= @Sentido_D
   While @angle_A <> degrees_A Or @angle_D <> degrees_D
     
     If Math.Round(@angle_A) < degrees_A - 5 and Math.Round(@angle_A) < degrees_A Then
@@ -411,9 +425,9 @@ Function BMoveAD(in number degrees_per_second_A, in number degrees_per_second_D,
     EndIf
     
     If Math.Round(@angle_D) < degrees_D Then
-      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50'* @Sentido_D
     ElseIf Math.Round(@angle_D) > degrees_D Then
-      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50'* @Sentido_D
     Else
       @angle_D = degrees_D
     EndIf
@@ -487,9 +501,9 @@ Function BMoveAD0(in number degrees_per_second_A, in number degrees_per_second_D
     EndIf
     
     If Math.Round(@angle_D) < degrees_D Then
-      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+      @angle_D += Math.Min(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50'* @Sentido_D
     ElseIf Math.Round(@angle_D) > degrees_D Then
-      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50
+      @angle_D -= Math.Max(degrees_per_second_D, degrees_per_second_D/2 + (degrees_D - @angle_D) / 10)/50'* @Sentido_D
     Else
       @angle_D = degrees_D
     EndIf
