@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reemplazar en Archivo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #000000, #A0C0FF);
+            color: #fff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label, input, button {
+            display: block;
+            margin: 10px auto;
+        }
+
+        input[type="file"], input[type="text"], input[type="checkbox"], button {
+            background-color: #007BA7;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 16px;
+        }
+
+        input[type="file"]:hover,
+        input[type="text"]:hover,
+        button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #FF3333;
+            border: none;
+            border-radius: 2px;
+            transform: scale(1.5);
+            margin-top: 10px;
+            position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+        }
+
+        input[type="checkbox"]::before {
+            content: "✔";
+            display: inline-block;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input[type="checkbox"]:not(:checked)::before {
+            content: "✖";
+        }
+
+        #ejecutar-reemplazo {
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        #ejecutar-reemplazo::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background-color: transparent;
+            border-radius: 50%;
+            opacity: 0;
+            transition: width 0.7s ease-out, height 0.7s ease-out, opacity 0.7s ease-out, background-color 0.7s ease-out;
+        }
+
+        #ejecutar-reemplazo.clicked::before {
+            width: 800px;
+            height: 800px;
+            opacity: 1;
+            background-color: #33CCCC;
+            transform: translate(-50%, -50%) scale(2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reemplazar en Archivo</h1>
+
+        <label for="archivo">Archivo:</label>
+        <input type="file" id="archivo" accept=".txt"><br>
+
+        <label for="palabra-buscar">Palabra a buscar:</label>
+        <input type="text" id="palabra-buscar" placeholder="Texto a buscar"><br>
+
+        <label for="palabra-reemplazar">Palabra a reemplazar:</label>
+        <input type="text" id="palabra-reemplazar" placeholder="Texto de reemplazo"><br>
+
+        <div class="checkbox-container">
+            <label for="reemplazar-todas">Reemplazar todas las coincidencias</label>
+            <input type="checkbox" id="reemplazar-todas">
+        </div>
+
+        <button id="ejecutar-reemplazo" onclick="animateButton();">Ejecutar Reemplazo</button>
+        
+        <!-- Elemento para mostrar el número de coincidencias -->
+        <div id="coincidencias"></div>
+    </div>
+
+    <script>
+        function animateButton() {
+            var button = document.getElementById("ejecutar-reemplazo");
+            button.classList.add("clicked");
+
+            setTimeout(function() {
+                button.classList.remove("clicked");
+
+                const archivoInput = document.getElementById('archivo');
+                const palabraBuscarInput = document.getElementById('palabra-buscar');
+                const palabraReemplazarInput = document.getElementById('palabra-reemplazar');
+                const reemplazarTodasCheckbox = document.getElementById('reemplazar-todas');
+                const coincidenciasDiv = document.getElementById('coincidencias');
+
+                // Obtener los valores de los campos de entrada
+                const archivoSeleccionado = archivoInput.files[0];
+                const palabraBuscar = palabraBuscarInput.value;
+                const palabraReemplazar = palabraReemplazarInput.value;
+                const reemplazarTodas = reemplazarTodasCheckbox.checked;
+
+                if (!archivoSeleccionado) {
+                    alert('Por favor, seleccione un archivo.');
+                    return;
+                }
+
+                if (!palabraBuscar) {
+                    alert('Por favor, ingrese una palabra a buscar.');
+                    return;
+                }
+
+                // Lógica para contar las coincidencias con la palabra a buscar
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const contenidoArchivo = event.target.result;
+                    let numCoincidencias = 0;
+
+                    if (reemplazarTodas) {
+                        // Utilizar una expresión regular para contar todas las coincidencias
+                        const regex = new RegExp(palabraBuscar, 'g');
+                        numCoincidencias = (contenidoArchivo.match(regex) || []).length;
+                    } else {
+                        // Contar solo la primera coincidencia
+                        numCoincidencias = (contenidoArchivo.includes(palabraBuscar)) ? 1 : 0;
+                    }
+
+                    // Mostrar el número de coincidencias
+                    coincidenciasDiv.textContent = `Número de coincidencias: ${numCoincidencias}`;
+
+                    // Realizar el reemplazo si hay al menos una coincidencia
+                    if (numCoincidencias > 0) {
+                        // Lógica para realizar el reemplazo en el archivo seleccionado
+                        let nuevoContenido = contenidoArchivo;
+
+                        if (reemplazarTodas) {
+                            // Reemplazar todas las ocurrencias de la palabra
+                            nuevoContenido = contenidoArchivo.replace(new RegExp(palabraBuscar, 'g'), palabraReemplazar);
+                        } else {
+                            // Reemplazar solo la primera ocurrencia de la palabra
+                            nuevoContenido = contenidoArchivo.replace(palabraBuscar, palabraReemplazar);
+                        }
+
+                        // Descargar el archivo con el nuevo contenido
+                        const blob = new Blob([nuevoContenido], { type: 'text/plain' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = archivoSeleccionado.name;
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    }
+                };
+
+                reader.readAsText(archivoSeleccionado);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
