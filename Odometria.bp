@@ -7,7 +7,8 @@ ytcorrect = 0
 thetatcorrect = 0
 Sentido_D = 1
 
-StartArm()
+include "includes\Aceleracion_MotGran"
+include "includes\Movimiento_Recto_MotGran"
 
 Thread.Run = PIDControl_AD
 Thread.Run = Odometry
@@ -16,27 +17,25 @@ Main()
 Program.Delay(10000)
 
 Sub StartArm
-  BMoveAD(200,200,-200,200)
-  Program.Delay(1000)
 
-  Motor.ResetCount("A")
-  Motor.ResetCount("D")
   angle_A = 0
   angle_D = 0
   
   Time.Reset1()
   While Time.Get1() <500
     angle_D ++
-    Program.Delay(5)
+    Program.Delay(3)
   EndWhile
-  
+  Program.Delay(500)
   If Math.Abs(Motor.GetCount("D")) < 60 Then
     BMoveD0(90)
-    Sentido_D = 1
+    Sentido_D = -1
   Else
     BMoveD0(90)
-    Sentido_D = -1
+    Sentido_D = 1
   EndIf
+  
+  BMoveA0(90)
   
   Program.Delay(100)
 EndSub
@@ -157,10 +156,13 @@ Sub Display
     LCD.Write(5,15,"yt: "+Math.Round(yt[i]*100)/100)
     LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
     LCD.Write(5,35,"centro: "+centro)
-    LCD.Write(5,65,"Angulo de A:  "+MotorA.GetTacho())
-    LCD.Write(5,75,"Obj de A:  "+angle_A)
-    LCD.Write(5,85,"Angulo de D:  "+MotorD.GetTacho())
-    LCD.Write(5,95,"Obj de D:  "+angle_D)
+    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
+    LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
+    LCD.Write(5,85,"Obj de A:  "+angle_A)
+    LCD.Write(5,95,"Angulo de D:  "+MotorD.GetTacho())
+    LCD.Write(5,105,"Obj de D:  "+angle_D)
+    LCD.Write(5,115,"Sentido0 de D:  "+Sentido_D)
     LCD.Update()
     Program.Delay(50)
   EndWhile
@@ -169,11 +171,21 @@ EndSub
 'Subs a ejecutar
 
 Sub Main
-  
-  
-  ToXY_Basic(30,-300,500,-90)
-  ToXY_Basic(30,0,0,0)
-
+  StartArm()
+  GUnivEncMG(0,20,40)
+  GUnivEncMG(20,0,40)
+  BMoveD(90,140)
+  EncoderRectoMG(30,80)
+  BMoveD0(90)
+  BMoveA(90,180)
+  EncoderRectoMG(-30,30)
+  GUnivEncMG(20,-20,60)
+  EncoderRectoMG(30,60)
+  GUnivEncMG(-20,20,55)
+  BMoveAD(90,90,60,160)
+  Program.Delay(1000)
+  EncoderRectoMG(-30,200)
+  BMoveAD0(90,90)
 EndSub
 
 Sub Main2
@@ -196,10 +208,10 @@ Sub MainControl
   
   While "True"
     If Buttons.Current = "U" Then
-      angle_A -= 1
+      angle_A -= 0.5
       Program.Delay(1)
     ElseIf Buttons.Current = "D" Then
-      angle_A += 1
+      angle_A += 0.5
       Program.Delay(1)
     ElseIf Buttons.Current = "L" Then
       angle_D -= 1
@@ -371,6 +383,7 @@ Function BMoveD(in number degrees_per_second, in number degrees)
   
   #Para usar con control PID en paralelo
   
+  degrees *= @Sentido_D
   rotation = degrees - @angle_D
   sign = Math.Abs(rotation)/rotation
   progress = 0
@@ -392,6 +405,7 @@ Function BMoveAD(in number degrees_per_second_A, in number degrees_per_second_D,
   
   #Para usar con control PID en paralelo
   
+  degrees_D *= @Sentido_D
   While @angle_A <> degrees_A Or @angle_D <> degrees_D
     
     If Math.Round(@angle_A) < degrees_A - 5 and Math.Round(@angle_A) < degrees_A Then

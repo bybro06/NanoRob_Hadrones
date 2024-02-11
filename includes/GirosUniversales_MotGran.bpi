@@ -1,0 +1,181 @@
+'Giros Universales
+
+Function GUnivEncMG(in number V1, in number V2, in number Angle)
+  I = "B"
+  D = "C"
+  
+  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
+  G1 = 58/18
+  
+  Signo = (V1 / V2) / Math.Abs(V1 / V2)
+  
+  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
+  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
+  
+  Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  
+  Motor.MoveSync(I + D, V1, V2, Encodr, "True")
+  
+  V1 = 0
+  V2 = 0
+  Angle = 0
+EndFunction
+
+Function GUnivEncMGF(in number V1, in number V2, in number Angle)
+  I = "B"
+  D = "C"
+  
+  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
+  G1 = 58/18
+  
+  Signo = (V1 / V2) / Math.Abs(V1 / V2)
+  
+  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
+  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
+  
+  Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  
+  Motor.MoveSync(I + D, V1, V2, Encodr, "False")
+  
+  V1 = 0
+  V2 = 0
+  Angle = 0
+EndFunction
+
+'Giros de Spin personalizado
+
+Function Spin180(in number Velocidad)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Cantidad de encoders necesarios para girar 180 grados
+  Encodr = 176 * G1
+  
+  ' Movimiento de giro
+  Motor.MoveSync(I + D, Velocidad, -Velocidad, Encodr, "True")
+  
+  ' Reinicio del ángulo
+  Angle = 0
+EndFunction
+
+Function Spin180F(in number Velocidad)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Cantidad de encoders necesarios para girar 180 grados
+  Encodr = 176 * G1
+  
+  ' Movimiento de giro
+  Motor.MoveSync(I + D, Velocidad, -Velocidad, Encodr, "False")
+  
+  ' Reinicio del ángulo
+  Angle = 0
+EndFunction
+
+Function Spin90(in number Velocidad)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Cantidad de encoders necesarios para girar 90 grados
+  Encodr = 90 * G1
+  
+  ' Movimiento de giro
+  Motor.Move(I + D, Velocidad, -Velocidad, Encodr, "True")
+  
+  ' Reinicio del ángulo
+  Angle = 0
+EndFunction
+
+Function Spin90F(in number Velocidad)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Cantidad de encoders necesarios para girar 90 grados
+  Encodr = 90 * G1
+  
+  ' Movimiento de giro
+  Motor.Move(I + D, Velocidad, -Velocidad, Encodr, "False")
+  
+  ' Reinicio del ángulo
+  Angle = 0
+EndFunction
+
+Function SpinHastaNegro(in number Velocidad, in number Angle)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Ajuste del ángulo para evitar malas lecturas
+  Angle *= 0.8
+  
+  ' Cantidad de encoders necesarios para el giro inicial
+  EncodrInicial = Angle * G1
+  
+  ' Movimiento de giro inicial
+  Motor.Move(I + D, Velocidad, -Velocidad, EncodrInicial, "True")
+  
+  ' Determinar el sensor de detección en función del sentido de giro
+  If Velocidad > 0 Then
+    sens = 4
+  Else
+    sens = 1
+  EndIf
+  
+  ' Movimiento de giro hasta detectar negro con el sensor
+  While Sensor.ReadPercent(sens) > 10
+    Motor.StartSync(I + D, Velocidad, -Velocidad)
+  EndWhile
+  Motor.Stop(I + D, "False")
+  
+  ' Movimiento adicional después de detectar negro
+  Motor.MoveSync(I + D, Velocidad, -Velocidad, 67, "True")
+  
+EndFunction
+
+Function SpinHastaNegroF(in number Velocidad, in number Angle)
+  I = "B"
+  D = "C"
+  
+  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
+  G1 = 3.07
+  
+  ' Ajuste del ángulo para evitar malas lecturas
+  Angle *= 0.8
+  
+  ' Cantidad de encoders necesarios para el giro inicial
+  EncodrInicial = Angle * G1
+  
+  ' Movimiento de giro inicial
+  Motor.MoveSync(I + D, Velocidad, -Velocidad, EncodrInicial, "True")
+  
+  ' Determinar el sensor de detección en función del sentido de giro
+  If Velocidad > 0 Then
+    sens = 4
+  Else
+    sens = 1
+  EndIf
+  
+  ' Movimiento de giro hasta detectar negro con el sensor
+  While Sensor.ReadPercent(sens) > 10
+    Motor.StartSync(I + D, -Velocidad, -Velocidad)
+  EndWhile
+  Motor.Stop(I + D, "False")
+  
+  ' Movimiento adicional después de detectar negro
+  Motor.Move(I + D, -Velocidad, 67, "False")
+  
+EndFunction

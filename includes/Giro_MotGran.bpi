@@ -1,0 +1,154 @@
+'Giro con Motores Medianos
+
+'Sentido de los motores
+Sentido_Motores = -1
+
+'Por encoder
+Function EncoderGiroMG(in number Velocidad1, in number Velocidad2, in number Encoder)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  diametro = 5.6
+  
+  distancia = Encoder / (diametro * Math.Pi) * 360
+  
+  Motor.MoveSync("BC", Velocidad1, Velocidad2, distancia, "True")
+  
+EndFunction
+
+Function EncoderGiroMGF(in number Velocidad1, in number Velocidad2, in number Encoder)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  diametro = 5.6
+  
+  distancia = Encoder / (diametro * Math.Pi)* 360
+  
+  Motor.MoveSync("BC", Velocidad1, Velocidad2, distancia, "False")
+  
+EndFunction
+
+'Hasta Negro en 1 sensor
+Function 1NegroGiroMG(in number Velocidad1, in number Velocidad2, in number sens)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens) > 15
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 1NegroGiroMGF(in number Velocidad1, in number Velocidad2, in number sens)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens) > 15
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta Negro en 2 sensores
+Function 2NegrosGiroMG(in number Velocidad1, in number Velocidad2, in number sens1, in number sens2)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 2NegrosGiroMGF(in number Velocidad1, in number Velocidad2, in number sens1, in number sens2)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta Blanco en 1 sensor
+Function 1BlancoGiroMG(in number Velocidad1, in number Velocidad2, in number sens)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens) < 40
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 1BlancoGiroMGF(in number Velocidad1, in number Velocidad2, in number sens)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadPercent(sens) < 40
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta un color (0-7) en 1 sensor
+Function 1ColorGiroMG(in number Velocidad, in number Velocidad2, in number sens, in number Color)
+  mode = Sensor.GetMode(sens)
+  Sensor.SetMode(sens,2)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadRawValue(sens,0) <> Color
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+  Sensor.SetMode(sens,mode)
+EndFunction
+
+Function 1ColorGiroMGF(in number Velocidad1, in number Velocidad2, in number sens, in number Color)
+  mode = Sensor.GetMode(sens)
+  Sensor.SetMode(sens,2)
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Sensor.ReadRawValue(sens,0) <> Color
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+  Sensor.SetMode(sens,mode)
+EndFunction
+
+'Por tiempo
+Function TiempoGiroMG(in number Velocidad1, in number Velocidad2, in number Tiempo)
+  Time.Reset3()
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Time.Get3() < Tiempo
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function TiempoGiroMGF(in number Velocidad1, in number Velocidad2, in number Tiempo)
+  Time.Reset3()
+  
+  Velocidad1 *= @Sentido_Motores
+  Velocidad2 *= @Sentido_Motores
+  
+  While Time.Get3() < Tiempo
+    Motor.StartSync("BC", Velocidad1, Velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction

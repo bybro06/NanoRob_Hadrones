@@ -1,0 +1,321 @@
+'Sentido de los motores
+Sentido_Motores = -1
+
+'Deceleración Sinusoidal
+
+Function sinDecelMG(in number V0, in number VMin, in number distancia)
+  
+  #Conversión de cm a grados
+  grados = distancia * 360 / 5.6 / Math.Pi  '5.6 es el diámetro de la rueda
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  V0 = Math.Min(90,V0)
+  VMin = Math.Min(8,VMin) 'Limitamos las potencias
+  
+  Vel = 0
+  Kp = 3
+  Ki = 0.001
+  Kd = 250/(V0+5)
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  
+  While MotorC.GetTacho() < grados 
+    
+    #Cálculo de velocidad con función del coseno 
+    #Se añade /2 para que el máximo esté en la distancia pedida
+    
+    Vel = (V0-VMin) * Math.Cos(Math.Pi * MotorC.GetTacho() / grados / 2) + VMin
+    
+    #Correción PID para mantener el robot recto
+    
+    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    errsum += error
+    correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
+    olderror = error
+    Motor.StartSync("BC",(Vel-correccion)*@Sentido_Motores,(Vel+correccion)*@Sentido_Motores)
+  EndWhile
+  
+  MotorBC.OffAndBrake()
+  
+  LCD.Clear()
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+EndFunction
+
+Function sinDecelMMF(in number V0, in number VMin, in number distancia)
+  
+  #Conversión de cm a grados
+  grados = distancia * 360 / 5.6 / Math.Pi  '5.6 es el diámetro de la rueda
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  V0 = Math.Min(90,V0)
+  VMin = Math.Min(8,VMin) 'Limitamos las potencias
+  
+  Vel = 0
+  Kp = 3
+  Ki = 0.001
+  Kd = 250/(V0+5)
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  
+  While MotorC.GetTacho() < grados 
+    
+    #Cálculo de velocidad con función del coseno 
+    #Se añade /2 para que el máximo esté en la distancia pedida
+    
+    Vel = (V0-VMin) * Math.Cos(Math.Pi * MotorC.GetTacho() / grados / 2) + VMin
+    
+    #Correción PID para mantener el robot recto
+    
+    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    errsum += error
+    correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
+    olderror = error
+    Motor.StartSync("BC",(Vel-correccion)*@Sentido_Motores,(Vel+correccion)*@Sentido_Motores)
+  EndWhile
+  
+  MotorBC.Off()
+  
+  LCD.Clear()
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+EndFunction
+
+'Deceleración Lineal
+
+Function linDecelMM(in number V0, in number VMin, in number distancia1,in number distancia2)
+  
+  V0 = Math.Min(90,V0)
+  VMin = Math.Max(8,VMin) 'Limitamos las potencias
+  
+  Vel = 0
+  Kp = 3
+  Ki = 0.001
+  Kd = 5
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  grados1 = distancia1*360/(5.6*math.pi)
+  grados2 = distancia2*360/(5.6*math.pi)
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  While MotorC.GetTacho() < grados1 + grados2
+    
+    #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+    pendiente = (VMin - V0) / grados1
+    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    #Correción PID para mantener el robot recto
+    
+    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    errsum += error
+    correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
+    olderror = error
+    Motor.StartSync("BC",(Vel-correccion)*@Sentido_Motores,(Vel+correccion)*@Sentido_Motores)
+    
+  EndWhile
+  
+  MotorBC.OffAndBrake()
+  
+  LCD.Clear()
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+EndFunction
+
+Function linDecelMMF(in number V0, in number VMin, in number distancia1,in number distancia2)
+  
+  V0 = Math.Min(90,V0)
+  VMin = Math.Max(8,VMin) 'Limitamos las potencias
+  
+  Vel = 0
+  Kp = 3
+  Ki = 0.001
+  Kd = 5
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  grados1 = distancia1*360/(5.6*math.pi)
+  grados2 = distancia2*360/(5.6*math.pi)
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  While MotorC.GetTacho() < grados1 + grados2
+    
+    #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+    pendiente = (VMin - V0) / grados1
+    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    #Correción PID para mantener el robot recto
+    
+    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    errsum += error
+    correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
+    olderror = error
+    Motor.StartSync("BC",(Vel-correccion)*@Sentido_Motores,(Vel+correccion)*@Sentido_Motores)
+    
+  EndWhile
+  
+  MotorBC.Off()
+  
+  LCD.Clear()
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+EndFunction
+
+'Deceleración con siguelíneas hasta cruce
+
+Function SL14SFC(in number V0, in number VMin, in number kp, in number kd, in number DecelEncoder)
+  'Siguelíneas 14 PID Smart Final Cruce
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  
+  u = 0
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) > 10 Or Sensor.ReadPercent(4) > 10
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (Motor.GetCount("C") / DecelEncoder)), VMin)
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    'Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido
+    errsum += error
+    u = (error * kp + (error - olderror) * kd + errsum * ki) / 7.5
+    Motor.StartSync("BC", (Vel + u)*@Sentido_Motores, (Vel - u)*@Sentido_Motores)
+    olderror = error
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function SL14SFCF(in number V0, in number VMin, in number kp, in number kd, in number DecelEncoder)
+  'Siguelíneas 14 PID Smart Final Cruce
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  
+  u = 0
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) > 10 Or Sensor.ReadPercent(4) > 10
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (Motor.GetCount("C") / DecelEncoder)), VMin)
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    'Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido
+    errsum += error
+    u = (error * kp + (error - olderror) * kd + errsum * ki) / 7.5
+    Motor.StartSync("BC", (Vel + u)*@Sentido_Motores, (Vel - u)*@Sentido_Motores)
+    olderror = error
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Deceleración con siguelíneas por encoder
+
+Function SL14SFE(in number V0, in number VMin, in number kp, in number kd, in number ki, in number DecelEncoder, in number Encoder)
+  'Siguelíneas 14 PID Smart Final Encoder
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  
+  u = 0
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While math.abs(Motor.GetCount("C")) < Encoder
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (math.abs(Motor.GetCount("C")) / DecelEncoder)), VMin)
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    'Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido
+    errsum += error
+    u = (error * kp + (error - olderror) * kd + errsum * ki) / 7.5
+    Motor.StartSync("BC", -(Vel + u)*@Sentido_Motores, (Vel - u)*@Sentido_Motores)
+    olderror = error
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function SL14SFEF(in number V0, in number VMin, in number kp, in number kd, in number ki, in number DecelEncoder, in number Encoder)
+  'Siguelíneas 14 PID Smart Final Encoder Sin Frenos
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  
+  u = 0
+  error = 0
+  olderror = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While math.abs(Motor.GetCount("C")) < Encoder
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (math.abs(Motor.GetCount("C")) / DecelEncoder)), VMin)
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    'Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido
+    errsum += error
+    u = (error * kp + (error - olderror) * kd + errsum * ki) / 7.5
+    Motor.StartSync("BC", -(Vel + u)*@Sentido_Motores, (Vel - u)*@Sentido_Motores)
+    olderror = error
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Deceleración por encoder
+
+Function SFE(in number V0, in number VMin, in number DecelEncoder, in number Encoder)
+  'Smart Final Encoder
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  Encoder = (Encoder / (5.6 * Math.Pi)) * 360
+  
+  Motor.ResetCount("C")
+  
+  While math.abs(Motor.GetCount("C")) < Encoder
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (math.abs(Motor.GetCount("C")) / DecelEncoder)), VMin)
+    Motor.StartSync("BC", Vel*@Sentido_Motores, Vel*@Sentido_Motores)
+  EndWhile
+  
+  Motor.Stop("BC", "True")
+  
+EndFunction
+
+Function SFEF(in number V0, in number VMin, in number DecelEncoder, in number Encoder)
+  'Smart Final Encoder Sin Frenos
+  
+  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  Encoder = (Encoder / (5.6 * Math.Pi)) * 360
+  
+  Motor.ResetCount("C")
+  
+  While math.abs(Motor.GetCount("C")) < Encoder
+    Vel = Math.Max(V0 - (VMin * ((V0 / VMin) / 1.2) * (math.abs(Motor.GetCount("C")) / DecelEncoder)), VMin)
+    Motor.StartSync("BC", Vel*@Sentido_Motores, Vel*@Sentido_Motores)
+  EndWhile
+  
+  Motor.Stop("BC", "False")
+EndFunction
