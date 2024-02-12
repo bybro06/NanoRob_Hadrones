@@ -1,5 +1,8 @@
 'Giros Universales
 
+'Sentido de los motores
+Sentido_Motores = -1
+
 Function GUnivEncMG(in number V1, in number V2, in number Angle)
   I = "B"
   D = "C"
@@ -14,7 +17,7 @@ Function GUnivEncMG(in number V1, in number V2, in number Angle)
   
   Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
-  Motor.MoveSync(I + D, V1, V2, Encodr, "True")
+  Motor.MoveSync(I + D, V1*@Sentido_Motores, V2*@Sentido_Motores, Encodr, "True")
   
   V1 = 0
   V2 = 0
@@ -35,7 +38,7 @@ Function GUnivEncMGF(in number V1, in number V2, in number Angle)
   
   Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
-  Motor.MoveSync(I + D, V1, V2, Encodr, "False")
+  Motor.MoveSync(I + D, V1*@Sentido_Motores, V2*@Sentido_Motores, Encodr, "False")
   
   V1 = 0
   V2 = 0

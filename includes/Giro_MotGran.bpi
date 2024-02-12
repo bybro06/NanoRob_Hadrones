@@ -9,7 +9,7 @@ Function EncoderGiroMG(in number Velocidad1, in number Velocidad2, in number Enc
   Velocidad1 *= @Sentido_Motores
   Velocidad2 *= @Sentido_Motores
   
-  diametro = 5.6
+  diametro = 56
   
   distancia = Encoder / (diametro * Math.Pi) * 360
   
@@ -22,7 +22,7 @@ Function EncoderGiroMGF(in number Velocidad1, in number Velocidad2, in number En
   Velocidad1 *= @Sentido_Motores
   Velocidad2 *= @Sentido_Motores
   
-  diametro = 5.6
+  diametro = 56
   
   distancia = Encoder / (diametro * Math.Pi)* 360
   

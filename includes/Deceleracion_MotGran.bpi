@@ -6,10 +6,13 @@ Sentido_Motores = -1
 Function sinDecelMG(in number V0, in number VMin, in number distancia)
   
   #Conversión de cm a grados
-  grados = distancia * 360 / 5.6 / Math.Pi  '5.6 es el diámetro de la rueda
+  grados = distancia * 360 / 56 / Math.Pi  '56 es el diámetro de la rueda
   
-  MotorB.ResetCount()
-  MotorC.ResetCount()
+  Start_B = Motor.GetCount("B")
+  Start_C = Motor.GetCount("C")
+  
+  encoder_B = 0
+  encoder_C = 0
   
   V0 = Math.Min(90,V0)
   VMin = Math.Min(8,VMin) 'Limitamos las potencias
@@ -24,16 +27,19 @@ Function sinDecelMG(in number V0, in number VMin, in number distancia)
   errsum = 0
   
   
-  While MotorC.GetTacho() < grados 
+  While encoder_C < grados 
+    
+    encoder_B = (Motor.GetCount("B") - Start_B)*@Sentido_Motores
+    encoder_C = (Motor.GetCount("C") - Start_C)*@Sentido_Motores
     
     #Cálculo de velocidad con función del coseno 
     #Se añade /2 para que el máximo esté en la distancia pedida
     
-    Vel = (V0-VMin) * Math.Cos(Math.Pi * MotorC.GetTacho() / grados / 2) + VMin
+    Vel = (V0-VMin) * Math.Cos(Math.Pi * encoder_C / grados / 2) + VMin
     
     #Correción PID para mantener el robot recto
     
-    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    error = (encoder_B - encoder_C)
     errsum += error
     correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
     olderror = error
@@ -43,16 +49,19 @@ Function sinDecelMG(in number V0, in number VMin, in number distancia)
   MotorBC.OffAndBrake()
   
   LCD.Clear()
-  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 56 * Math.Pi /360)
 EndFunction
 
 Function sinDecelMMF(in number V0, in number VMin, in number distancia)
   
   #Conversión de cm a grados
-  grados = distancia * 360 / 5.6 / Math.Pi  '5.6 es el diámetro de la rueda
+  grados = distancia * 360 / 56 / Math.Pi  '56 es el diámetro de la rueda
   
-  MotorB.ResetCount()
-  MotorC.ResetCount()
+  Start_B = Motor.GetCount("B")
+  Start_C = Motor.GetCount("C")
+  
+  encoder_B = 0
+  encoder_C = 0
   
   V0 = Math.Min(90,V0)
   VMin = Math.Min(8,VMin) 'Limitamos las potencias
@@ -67,16 +76,19 @@ Function sinDecelMMF(in number V0, in number VMin, in number distancia)
   errsum = 0
   
   
-  While MotorC.GetTacho() < grados 
+  While encoder_C < grados 
+    
+    encoder_B = (Motor.GetCount("B") - Start_B)*@Sentido_Motores
+    encoder_C = (Motor.GetCount("C") - Start_C)*@Sentido_Motores
     
     #Cálculo de velocidad con función del coseno 
     #Se añade /2 para que el máximo esté en la distancia pedida
     
-    Vel = (V0-VMin) * Math.Cos(Math.Pi * MotorC.GetTacho() / grados / 2) + VMin
+    Vel = (V0-VMin) * Math.Cos(Math.Pi * encoder_C / grados / 2) + VMin
     
     #Correción PID para mantener el robot recto
     
-    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    error = (encoder_B - encoder_C)
     errsum += error
     correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
     olderror = error
@@ -86,13 +98,19 @@ Function sinDecelMMF(in number V0, in number VMin, in number distancia)
   MotorBC.Off()
   
   LCD.Clear()
-  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 56 * Math.Pi /360)
 EndFunction
 
 'Deceleración Lineal
 
 Function linDecelMM(in number V0, in number VMin, in number distancia1,in number distancia2)
   
+  Start_B = Motor.GetCount("B")
+  Start_C = Motor.GetCount("C")
+  
+  encoder_B = 0
+  encoder_C = 0
+  
   V0 = Math.Min(90,V0)
   VMin = Math.Max(8,VMin) 'Limitamos las potencias
   
@@ -105,20 +123,20 @@ Function linDecelMM(in number V0, in number VMin, in number distancia1,in number
   olderror = 0
   errsum = 0
   
-  grados1 = distancia1*360/(5.6*math.pi)
-  grados2 = distancia2*360/(5.6*math.pi)
+  grados1 = distancia1*360/(56*math.pi)
+  grados2 = distancia2*360/(56*math.pi)
   
-  MotorB.ResetCount()
-  MotorC.ResetCount()
-  
-  While MotorC.GetTacho() < grados1 + grados2
+  While encoder_C < grados1 + grados2
+    
+    encoder_B = (Motor.GetCount("B") - Start_B)*@Sentido_Motores
+    encoder_C = (Motor.GetCount("C") - Start_C)*@Sentido_Motores
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
     pendiente = (VMin - V0) / grados1
-    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    Vel = Math.Min(VMin, pendiente * encoder_C + V0)    
     #Correción PID para mantener el robot recto
     
-    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    error = (encoder_B - encoder_C)
     errsum += error
     correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
     olderror = error
@@ -129,10 +147,16 @@ Function linDecelMM(in number V0, in number VMin, in number distancia1,in number
   MotorBC.OffAndBrake()
   
   LCD.Clear()
-  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 56 * Math.Pi /360)
 EndFunction
 
 Function linDecelMMF(in number V0, in number VMin, in number distancia1,in number distancia2)
+  
+  Start_B = Motor.GetCount("B")
+  Start_C = Motor.GetCount("C")
+  
+  encoder_B = 0
+  encoder_C = 0
   
   V0 = Math.Min(90,V0)
   VMin = Math.Max(8,VMin) 'Limitamos las potencias
@@ -146,20 +170,20 @@ Function linDecelMMF(in number V0, in number VMin, in number distancia1,in numbe
   olderror = 0
   errsum = 0
   
-  grados1 = distancia1*360/(5.6*math.pi)
-  grados2 = distancia2*360/(5.6*math.pi)
+  grados1 = distancia1*360/(56*math.pi)
+  grados2 = distancia2*360/(56*math.pi)
   
-  MotorB.ResetCount()
-  MotorC.ResetCount()
-  
-  While MotorC.GetTacho() < grados1 + grados2
+  While encoder_C < grados1 + grados2
+    
+    encoder_B = (Motor.GetCount("B") - Start_B)*@Sentido_Motores
+    encoder_C = (Motor.GetCount("C") - Start_C)*@Sentido_Motores
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
     pendiente = (VMin - V0) / grados1
-    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    Vel = Math.Min(VMin, pendiente * encoder_C + V0)    
     #Correción PID para mantener el robot recto
     
-    error = (MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
+    error = (encoder_B - encoder_C)
     errsum += error
     correccion = error*Kp + (error-olderror)*Kd + errsum*Ki 
     olderror = error
@@ -170,7 +194,7 @@ Function linDecelMMF(in number V0, in number VMin, in number distancia1,in numbe
   MotorBC.Off()
   
   LCD.Clear()
-  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 5.6 * Math.Pi /360)
+  LCD.Write(5,10,"Distancia cm: " + MotorC.GetTacho() * 56 * Math.Pi /360)
 EndFunction
 
 'Deceleración con siguelíneas hasta cruce
@@ -178,7 +202,7 @@ EndFunction
 Function SL14SFC(in number V0, in number VMin, in number kp, in number kd, in number DecelEncoder)
   'Siguelíneas 14 PID Smart Final Cruce
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
   
   u = 0
   error = 0
@@ -205,7 +229,7 @@ EndFunction
 Function SL14SFCF(in number V0, in number VMin, in number kp, in number kd, in number DecelEncoder)
   'Siguelíneas 14 PID Smart Final Cruce
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
   
   u = 0
   error = 0
@@ -234,7 +258,7 @@ EndFunction
 Function SL14SFE(in number V0, in number VMin, in number kp, in number kd, in number ki, in number DecelEncoder, in number Encoder)
   'Siguelíneas 14 PID Smart Final Encoder
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
   
   u = 0
   error = 0
@@ -261,7 +285,7 @@ EndFunction
 Function SL14SFEF(in number V0, in number VMin, in number kp, in number kd, in number ki, in number DecelEncoder, in number Encoder)
   'Siguelíneas 14 PID Smart Final Encoder Sin Frenos
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
   
   u = 0
   error = 0
@@ -290,8 +314,8 @@ EndFunction
 Function SFE(in number V0, in number VMin, in number DecelEncoder, in number Encoder)
   'Smart Final Encoder
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
-  Encoder = (Encoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
+  Encoder = (Encoder / (56 * Math.Pi)) * 360
   
   Motor.ResetCount("C")
   
@@ -307,8 +331,8 @@ EndFunction
 Function SFEF(in number V0, in number VMin, in number DecelEncoder, in number Encoder)
   'Smart Final Encoder Sin Frenos
   
-  DecelEncoder = (DecelEncoder / (5.6 * Math.Pi)) * 360
-  Encoder = (Encoder / (5.6 * Math.Pi)) * 360
+  DecelEncoder = (DecelEncoder / (56 * Math.Pi)) * 360
+  Encoder = (Encoder / (56 * Math.Pi)) * 360
   
   Motor.ResetCount("C")
   
