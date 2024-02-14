@@ -6,6 +6,7 @@ xtcorrect = 0
 ytcorrect = 0
 thetatcorrect = 0
 Sentido_D = 1
+D_T = 0
 
 include "includes\Aceleracion_MotGran"
 include "includes\Movimiento_Recto_MotGran"
@@ -41,6 +42,70 @@ Sub StartArm
 EndSub
 
 'Subs de control paralelo
+
+Function Kalman_Filter(in number omegaI_k1, in number omegaD_k1)
+  
+  radio = 56/2
+  
+  P1[0] = 1
+  P1[1] = 0
+  P1[2] = 0
+  
+  P2[0] = 0
+  P2[1] = 1
+  P2[2] = 0
+  
+  P3[0] = 0
+  P3[1] = 0
+  P3[2] = 1
+  
+  x_k_k1 = 0
+  y_k_k1 = 0
+  theta_k_k1 = 0
+  
+  delta_t = EV3.Time
+  old_t = 0
+  While "True"
+    delta_t = EV3.Time - old_t
+    old_t = EV3.Time
+    x_k_k1 = x_k_k1 + ((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Cos(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
+    y_k_k1 = y_k_k1 + ((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Sin(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
+    theta_k_k1 = theta_k_k1 + ((omegaD_k1-omegaI_k1)*radio*delta_t)/(2*@Dw)
+    
+    F_k_x[0] = 1
+    F_k_x[1] = 0
+    F_k_x[2] = -1*((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Sin(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
+    
+    F_k_y[0] = 0
+    F_k_y[1] = 1
+    F_k_y[2] = ((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Cos(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
+    
+    F_k_theta[0] = 0
+    F_k_theta[1] = 0
+    F_k_theta[2] = 1
+  
+    
+    Q_x_k1[0] = 0.5*0.5
+    Q_x_k1[1] = 0
+    Q_x_k1[2] = 0
+    
+    Q_y_k1[0] = 0
+    Q_y_k1[1] = 0.5*0.5
+    Q_y_k1[2] = 0
+    
+    Q_theta_k1[0] = 0
+    Q_theta_k1[1] = 0
+    Q_theta_k1[2] = Math.GetRadians(3)*Math.GetRadians(3)
+    
+    @D_T = delta_t
+    MultiMatrices3x3(F_k_x,F_k_y,F_k_theta,P1,P2,P3,U1,U2,U3)
+    TraspMatriz3x3(F_k_x,F_k_y,F_k_theta,V1,V2,V3)
+    MultiMatrices3x3(U1,U2,U3,V1,V2,V3,W1,W2,W3)
+    SumaMatrices3x3(W1,W2,W3,Q_x_k1,Q_y_k1,Q_theta_k1,P1,P2,P3)
+    
+  EndWhile
+  
+EndFunction
 
 Sub Odometry
   
@@ -156,13 +221,14 @@ Sub Display
     LCD.Write(5,15,"yt: "+Math.Round(yt[i]*100)/100)
     LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
     LCD.Write(5,35,"centro: "+centro)
-    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
-    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
+    'LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    'LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
+    LCD.Write(5,45,"Delta T:  "+D_T)
     LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
     LCD.Write(5,85,"Obj de A:  "+angle_A)
     LCD.Write(5,95,"Angulo de D:  "+MotorD.GetTacho())
     LCD.Write(5,105,"Obj de D:  "+angle_D)
-    LCD.Write(5,115,"Sentido0 de D:  "+Sentido_D)
+    LCD.Write(5,115,"Sentido de D:  "+Sentido_D)
     LCD.Update()
     Program.Delay(50)
   EndWhile
@@ -171,6 +237,7 @@ EndSub
 'Subs a ejecutar
 
 Sub Main
+  Kalman_Filter(1,1)
   StartArm()
   GUnivEncMG(0,20,40)
   GUnivEncMG(20,0,40)
@@ -323,6 +390,54 @@ EndFunction
 Function ToXY_Giro(in number Velocidad, in number x, in number y, in number theta)
 EndFunction
 
+
+Function SumaMatrices3x3(in number[] M1, in number[] M2, in number[] M3, in number[] N1, in number[] N2, in number[] N3, out number[] S1, out number[] S2, out number[] S3)
+  
+  S1[0] = M1[0] + N1[0]
+  S1[1] = M1[1] + N1[1]
+  S1[2] = M1[2] + N1[2]
+  
+  S2[0] = M2[0] + N2[0]
+  S2[1] = M2[1] + N2[1]
+  S2[2] = M2[2] + N2[2]
+  
+  S3[0] = M3[0] + N3[0]
+  S3[1] = M3[1] + N3[1]
+  S3[2] = M3[2] + N3[2]
+  
+EndFunction
+
+Function TraspMatriz3x3(in number[] M1, in number[] M2, in number[] M3, out number[] S1, out number[] S2, out number[] S3)
+  
+  S1[0] = M1[0] 
+  S1[1] = M2[0] 
+  S1[2] = M3[0] 
+  
+  S2[0] = M1[1] 
+  S2[1] = M2[1] 
+  S2[2] = M3[1] 
+  
+  S3[0] = M1[2] 
+  S3[1] = M2[2] 
+  S3[2] = M3[2] 
+  
+EndFunction
+
+Function MultiMatrices3x3(in number[] M1, in number[] M2, in number[] M3, in number[] N1, in number[] N2, in number[] N3, out number[] S1, out number[] S2, out number[] S3)
+  
+  S1[0] = M1[0] * N1[0] + M1[1] * N2[0] + M1[2] * N3[0]
+  S1[1] = M1[0] * N1[1] + M1[1] * N2[1] + M1[2] * N3[1]
+  S1[2] = M1[0] * N1[2] + M1[1] * N2[2] + M1[2] * N3[2]
+  
+  S2[0] = M2[0] * N1[0] + M2[1] * N2[0] + M2[2] * N3[0]
+  S2[1] = M2[0] * N1[1] + M2[1] * N2[1] + M2[2] * N3[1]
+  S2[2] = M2[0] * N1[2] + M2[1] * N2[2] + M2[2] * N3[2]
+  
+  S3[0] = M3[0] * N1[0] + M3[1] * N2[0] + M3[2] * N3[0]
+  S3[1] = M3[0] * N1[1] + M3[1] * N2[1] + M3[2] * N3[1]
+  S3[2] = M3[0] * N1[2] + M3[1] * N2[2] + M3[2] * N3[2]
+  
+EndFunction
 
 
 Function BMoveA(in number degrees_per_second, in number degrees)

@@ -1,26 +1,64 @@
-lv_degrees_per_second_41 = 0
-lv_degrees_per_second_40 = 0
-lv_v1_34 = 0
-lv_v2_34 = 0
-lv_angle_34 = 0
-lv_degrees_per_second_38 = 0
-lv_degrees_38 = 0
+lv_degrees_per_second_45 = 0
+lv_degrees_per_second_44 = 0
+lv_omegai_k1_33 = 0
+lv_omegad_k1_33 = 0
+lv_v1_35 = 0
+lv_v2_35 = 0
+lv_angle_35 = 0
+lv_degrees_per_second_42 = 0
+lv_degrees_42 = 0
 lv_velocidad_19 = 0
 lv_distancia_19 = 0
-lv_degrees_per_second_36 = 0
-lv_degrees_36 = 0
-lv_degrees_per_second_a_39 = 0
-lv_degrees_per_second_d_39 = 0
-lv_degrees_a_39 = 0
-lv_degrees_d_39 = 0
-lv_degrees_per_second_a_42 = 0
-lv_degrees_per_second_d_42 = 0
+lv_degrees_per_second_40 = 0
+lv_degrees_40 = 0
+lv_degrees_per_second_a_43 = 0
+lv_degrees_per_second_d_43 = 0
+lv_degrees_a_43 = 0
+lv_degrees_d_43 = 0
+lv_degrees_per_second_a_46 = 0
+lv_degrees_per_second_d_46 = 0
 lv_v0_14 = 0
 lv_vmax_14 = 0
 lv_kp_14 = 0
 lv_ki_14 = 0
 lv_kd_14 = 0
 lv_accelencoder_14 = 0
+lv_m1_39 [ 0 ] = 0
+lv_m2_39 [ 0 ] = 0
+lv_m3_39 [ 0 ] = 0
+lv_n1_39 [ 0 ] = 0
+lv_n2_39 [ 0 ] = 0
+lv_n3_39 [ 0 ] = 0
+lv_s1_39 [ 0 ] = 0
+lv_s2_39 [ 0 ] = 0
+lv_s3_39 [ 0 ] = 0
+lv_m1_38 [ 0 ] = 0
+lv_m2_38 [ 0 ] = 0
+lv_m3_38 [ 0 ] = 0
+lv_s1_38 [ 0 ] = 0
+lv_s2_38 [ 0 ] = 0
+lv_s3_38 [ 0 ] = 0
+lv_m1_37 [ 0 ] = 0
+lv_m2_37 [ 0 ] = 0
+lv_m3_37 [ 0 ] = 0
+lv_n1_37 [ 0 ] = 0
+lv_n2_37 [ 0 ] = 0
+lv_n3_37 [ 0 ] = 0
+lv_s1_37 [ 0 ] = 0
+lv_s2_37 [ 0 ] = 0
+lv_s3_37 [ 0 ] = 0
+lv_u1_33 [ 0 ] = 0
+lv_u2_33 [ 0 ] = 0
+lv_u3_33 [ 0 ] = 0
+lv_v1_33 [ 0 ] = 0
+lv_v2_33 [ 0 ] = 0
+lv_v3_33 [ 0 ] = 0
+lv_w1_33 [ 0 ] = 0
+lv_w2_33 [ 0 ] = 0
+lv_w3_33 [ 0 ] = 0
+lv_p1_33 [ 0 ] = 0
+lv_p2_33 [ 0 ] = 0
+lv_p3_33 [ 0 ] = 0
 gv_centro = 0
 gv_xtime = 0
 gv_ytime = 0
@@ -29,6 +67,7 @@ gv_xtcorrect = 0
 gv_ytcorrect = 0
 gv_thetatcorrect = 0
 gv_sentido_d = 0
+gv_d_t = 0
 gv_sentido_motores = 0
 gv_angle_a = 0
 gv_angle_d = 0
@@ -40,6 +79,7 @@ gv_xtcorrect = 0
 gv_ytcorrect = 0
 gv_thetatcorrect = 0
 gv_sentido_d = 1
+gv_d_t = 0
 gv_sentido_motores = - 1
 gv_sentido_motores = - 1
 Thread.Run = f_pidcontrol_ad_0
@@ -57,15 +97,15 @@ Program.Delay ( 3 )
 EndWhile
 Program.Delay ( 500 )
 If Math.Abs ( Motor.GetCount ( "D" ) ) < 60 Then
-lv_degrees_per_second_41 = 90
+lv_degrees_per_second_45 = 90
 f_bmoved0_1 ()
 gv_sentido_d = - 1
 Else
-lv_degrees_per_second_41 = 90
+lv_degrees_per_second_45 = 90
 f_bmoved0_1 ()
 gv_sentido_d = 1
 EndIf
-lv_degrees_per_second_40 = 90
+lv_degrees_per_second_44 = 90
 f_bmovea0_1 ()
 Program.Delay ( 100 )
 EndSub
@@ -148,63 +188,65 @@ LCD.Write ( 5 , 5 , "xt: " + Math.Round ( gv_xt [ gv_i ] * 100 ) / 100 )
 LCD.Write ( 5 , 15 , "yt: " + Math.Round ( gv_yt [ gv_i ] * 100 ) / 100 )
 LCD.Write ( 5 , 25 , "thetat: " + math.getdegrees ( gv_thetat [ gv_i ] ) )
 LCD.Write ( 5 , 35 , "centro: " + gv_centro )
-LCD.Write ( 5 , 45 , "Velocidad de B:  " + MotorB.GetSpeed () * - 1 )
-LCD.Write ( 5 , 55 , "Velocidad de C:  " + MotorC.GetSpeed () * - 1 )
+LCD.Write ( 5 , 45 , "Delta T:  " + gv_d_t )
 LCD.Write ( 5 , 75 , "Angulo de A:  " + MotorA.GetTacho () )
 LCD.Write ( 5 , 85 , "Obj de A:  " + gv_angle_a )
 LCD.Write ( 5 , 95 , "Angulo de D:  " + MotorD.GetTacho () )
 LCD.Write ( 5 , 105 , "Obj de D:  " + gv_angle_d )
-LCD.Write ( 5 , 115 , "Sentido0 de D:  " + gv_sentido_d )
+LCD.Write ( 5 , 115 , "Sentido de D:  " + gv_sentido_d )
 LCD.Update ()
 Program.Delay ( 50 )
 EndWhile
 EndSub
 Sub f_main_0
+lv_omegai_k1_33 = 1
+lv_omegad_k1_33 = 1
+f_kalman_filter_2 ()
 f_startarm_0 ()
-lv_v1_34 = 0
-lv_v2_34 = 20
-lv_angle_34 = 40
+lv_v1_35 = 0
+lv_v2_35 = 20
+lv_angle_35 = 40
 f_gunivencmg_3 ()
-lv_v1_34 = 20
-lv_v2_34 = 0
-lv_angle_34 = 40
+lv_v1_35 = 20
+lv_v2_35 = 0
+lv_angle_35 = 40
 f_gunivencmg_3 ()
-lv_degrees_per_second_38 = 90
-lv_degrees_38 = 140
+lv_degrees_per_second_42 = 90
+lv_degrees_42 = 140
 f_bmoved_2 ()
 lv_velocidad_19 = 30
 lv_distancia_19 = 80
 f_encoderrectomg_2 ()
-lv_degrees_per_second_41 = 90
+lv_degrees_per_second_45 = 90
 f_bmoved0_1 ()
-lv_degrees_per_second_36 = 90
-lv_degrees_36 = 180
+lv_degrees_per_second_40 = 90
+lv_degrees_40 = 180
 f_bmovea_2 ()
 lv_velocidad_19 = - 30
 lv_distancia_19 = 30
 f_encoderrectomg_2 ()
-lv_v1_34 = 20
-lv_v2_34 = - 20
-lv_angle_34 = 60
+lv_v1_35 = 20
+lv_v2_35 = - 20
+lv_angle_35 = 60
 f_gunivencmg_3 ()
 lv_velocidad_19 = 30
 lv_distancia_19 = 60
 f_encoderrectomg_2 ()
-lv_v1_34 = - 20
-lv_v2_34 = 20
-lv_angle_34 = 55
+lv_v1_35 = - 20
+lv_v2_35 = 20
+lv_angle_35 = 55
 f_gunivencmg_3 ()
-lv_degrees_per_second_a_39 = 90
-lv_degrees_per_second_d_39 = 90
-lv_degrees_a_39 = 60
-lv_degrees_d_39 = 160
+lv_degrees_per_second_a_43 = 90
+lv_degrees_per_second_d_43 = 90
+lv_degrees_a_43 = 60
+lv_degrees_d_43 = 160
 f_bmovead_4 ()
 Program.Delay ( 1000 )
 lv_velocidad_19 = - 30
 lv_distancia_19 = 200
 f_encoderrectomg_2 ()
-lv_degrees_per_second_a_42 = 90
-lv_degrees_per_second_d_42 = 90
+lv_degrees_per_second_a_46 = 90
+lv_degrees_per_second_d_46 = 90
 f_bmovead0_2 ()
 EndSub
 Sub f_sl14sicf_6
@@ -243,66 +285,131 @@ Motor.StartSync ( "BC" , ( lv_velocidad_19 - lv_proporcial_19 ) * gv_sentido_mot
 EndWhile
 Motor.Stop ( "BC" , "True" )
 EndSub
+Sub f_kalman_filter_2
+lv_radio_33 = 56 / 2
+lv_p1_33 [ 0 ] = 1
+lv_p1_33 [ 1 ] = 0
+lv_p1_33 [ 2 ] = 0
+lv_p2_33 [ 0 ] = 0
+lv_p2_33 [ 1 ] = 1
+lv_p2_33 [ 2 ] = 0
+lv_p3_33 [ 0 ] = 0
+lv_p3_33 [ 1 ] = 0
+lv_p3_33 [ 2 ] = 1
+lv_x_k_k1_33 = 0
+lv_y_k_k1_33 = 0
+lv_theta_k_k1_33 = 0
+lv_delta_t_33 = EV3.Time
+lv_old_t_33 = 0
+While "True"
+lv_delta_t_33 = EV3.Time - lv_old_t_33
+lv_old_t_33 = EV3.Time
+lv_x_k_k1_33 = lv_x_k_k1_33 + ( ( lv_omegai_k1_33 + lv_omegad_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / 2 * Math.Cos ( lv_theta_k_k1_33 + ( ( lv_omegad_k1_33 - lv_omegai_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / ( 4 * gv_dw ) )
+lv_y_k_k1_33 = lv_y_k_k1_33 + ( ( lv_omegai_k1_33 + lv_omegad_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / 2 * Math.Sin ( lv_theta_k_k1_33 + ( ( lv_omegad_k1_33 - lv_omegai_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / ( 4 * gv_dw ) )
+lv_theta_k_k1_33 = lv_theta_k_k1_33 + ( ( lv_omegad_k1_33 - lv_omegai_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / ( 2 * gv_dw )
+lv_f_k_x_33 [ 0 ] = 1
+lv_f_k_x_33 [ 1 ] = 0
+lv_f_k_x_33 [ 2 ] = - 1 * ( ( lv_omegai_k1_33 + lv_omegad_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / 2 * Math.Sin ( lv_theta_k_k1_33 + ( ( lv_omegad_k1_33 - lv_omegai_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / ( 4 * gv_dw ) )
+lv_f_k_y_33 [ 0 ] = 0
+lv_f_k_y_33 [ 1 ] = 1
+lv_f_k_y_33 [ 2 ] = ( ( lv_omegai_k1_33 + lv_omegad_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / 2 * Math.Cos ( lv_theta_k_k1_33 + ( ( lv_omegad_k1_33 - lv_omegai_k1_33 ) * lv_radio_33 * lv_delta_t_33 ) / ( 4 * gv_dw ) )
+lv_f_k_theta_33 [ 0 ] = 0
+lv_f_k_theta_33 [ 1 ] = 0
+lv_f_k_theta_33 [ 2 ] = 1
+lv_q_x_k1_33 [ 0 ] = 0.5 * 0.5
+lv_q_x_k1_33 [ 1 ] = 0
+lv_q_x_k1_33 [ 2 ] = 0
+lv_q_y_k1_33 [ 0 ] = 0
+lv_q_y_k1_33 [ 1 ] = 0.5 * 0.5
+lv_q_y_k1_33 [ 2 ] = 0
+lv_q_theta_k1_33 [ 0 ] = 0
+lv_q_theta_k1_33 [ 1 ] = 0
+lv_q_theta_k1_33 [ 2 ] = Math.GetRadians ( 3 ) * Math.GetRadians ( 3 )
+gv_d_t = lv_delta_t_33
+lv_m1_39 = lv_f_k_x_33
+lv_m2_39 = lv_f_k_y_33
+lv_m3_39 = lv_f_k_theta_33
+lv_n1_39 = lv_p1_33
+lv_n2_39 = lv_p2_33
+lv_n3_39 = lv_p3_33
+f_multimatrices3x3_9 ()
+lv_u1_33 = lv_s1_39
+lv_u2_33 = lv_s2_39
+lv_u3_33 = lv_s3_39
+lv_m1_38 = lv_f_k_x_33
+lv_m2_38 = lv_f_k_y_33
+lv_m3_38 = lv_f_k_theta_33
+f_traspmatriz3x3_6 ()
+lv_v1_33 = lv_s1_38
+lv_v2_33 = lv_s2_38
+lv_v3_33 = lv_s3_38
+lv_m1_39 = lv_u1_33
+lv_m2_39 = lv_u2_33
+lv_m3_39 = lv_u3_33
+lv_n1_39 = lv_v1_33
+lv_n2_39 = lv_v2_33
+lv_n3_39 = lv_v3_33
+f_multimatrices3x3_9 ()
+lv_w1_33 = lv_s1_39
+lv_w2_33 = lv_s2_39
+lv_w3_33 = lv_s3_39
+lv_m1_37 = lv_w1_33
+lv_m2_37 = lv_w2_33
+lv_m3_37 = lv_w3_33
+lv_n1_37 = lv_q_x_k1_33
+lv_n2_37 = lv_q_y_k1_33
+lv_n3_37 = lv_q_theta_k1_33
+f_sumamatrices3x3_9 ()
+lv_p1_33 = lv_s1_37
+lv_p2_33 = lv_s2_37
+lv_p3_33 = lv_s3_37
+EndWhile
+EndSub
 Sub f_gunivencmg_3
-lv_i_34 = "B"
-lv_d_34 = "C"
-lv_g1_34 = 110 / 36
-lv_signo_34 = ( lv_v1_34 / lv_v2_34 ) / Math.Abs ( lv_v1_34 / lv_v2_34 )
-lv_vmin_34 = Math.Min ( Math.Abs ( lv_v1_34 ) , Math.Abs ( lv_v2_34 ) )
-lv_vmax_34 = Math.Max ( Math.Abs ( lv_v1_34 ) , Math.Abs ( lv_v2_34 ) )
-gv_centro = ( - 8.5 * ( lv_vmin_34 / lv_vmax_34 ) * lv_signo_34 - 8.5 ) / ( ( lv_vmin_34 / lv_vmax_34 ) * lv_signo_34 - 1 )
-lv_encodr_34 = lv_angle_34 * lv_g1_34 * ( - 2 / ( lv_signo_34 * lv_vmin_34 / lv_vmax_34 - 1 ) )
-Motor.MoveSync ( lv_i_34 + lv_d_34 , - lv_v1_34 , - lv_v2_34 , lv_encodr_34 , "True" )
+lv_i_35 = "B"
+lv_d_35 = "C"
+lv_g1_35 = 110 / 36
+lv_signo_35 = ( lv_v1_35 / lv_v2_35 ) / Math.Abs ( lv_v1_35 / lv_v2_35 )
+lv_vmin_35 = Math.Min ( Math.Abs ( lv_v1_35 ) , Math.Abs ( lv_v2_35 ) )
+lv_vmax_35 = Math.Max ( Math.Abs ( lv_v1_35 ) , Math.Abs ( lv_v2_35 ) )
+gv_centro = ( - 8.5 * ( lv_vmin_35 / lv_vmax_35 ) * lv_signo_35 - 8.5 ) / ( ( lv_vmin_35 / lv_vmax_35 ) * lv_signo_35 - 1 )
+lv_encodr_35 = lv_angle_35 * lv_g1_35 * ( - 2 / ( lv_signo_35 * lv_vmin_35 / lv_vmax_35 - 1 ) )
+Motor.MoveSync ( lv_i_35 + lv_d_35 , - lv_v1_35 , - lv_v2_35 , lv_encodr_35 , "True" )
+EndSub
+Sub f_sumamatrices3x3_9
+lv_s1_37 [ 0 ] = lv_m1_37 [ 0 ] + lv_n1_37 [ 0 ]
+lv_s1_37 [ 1 ] = lv_m1_37 [ 1 ] + lv_n1_37 [ 1 ]
+lv_s1_37 [ 2 ] = lv_m1_37 [ 2 ] + lv_n1_37 [ 2 ]
+lv_s2_37 [ 0 ] = lv_m2_37 [ 0 ] + lv_n2_37 [ 0 ]
+lv_s2_37 [ 1 ] = lv_m2_37 [ 1 ] + lv_n2_37 [ 1 ]
+lv_s2_37 [ 2 ] = lv_m2_37 [ 2 ] + lv_n2_37 [ 2 ]
+lv_s3_37 [ 0 ] = lv_m3_37 [ 0 ] + lv_n3_37 [ 0 ]
+lv_s3_37 [ 1 ] = lv_m3_37 [ 1 ] + lv_n3_37 [ 1 ]
+lv_s3_37 [ 2 ] = lv_m3_37 [ 2 ] + lv_n3_37 [ 2 ]
+EndSub
+Sub f_traspmatriz3x3_6
+lv_s1_38 [ 0 ] = lv_m1_38 [ 0 ]
+lv_s1_38 [ 1 ] = lv_m2_38 [ 0 ]
+lv_s1_38 [ 2 ] = lv_m3_38 [ 0 ]
+lv_s2_38 [ 0 ] = lv_m1_38 [ 1 ]
+lv_s2_38 [ 1 ] = lv_m2_38 [ 1 ]
+lv_s2_38 [ 2 ] = lv_m3_38 [ 1 ]
+lv_s3_38 [ 0 ] = lv_m1_38 [ 2 ]
+lv_s3_38 [ 1 ] = lv_m2_38 [ 2 ]
+lv_s3_38 [ 2 ] = lv_m3_38 [ 2 ]
+EndSub
+Sub f_multimatrices3x3_9
+lv_s1_39 [ 0 ] = lv_m1_39 [ 0 ] * lv_n1_39 [ 0 ] + lv_m1_39 [ 1 ] * lv_n2_39 [ 0 ] + lv_m1_39 [ 2 ] * lv_n3_39 [ 0 ]
+lv_s1_39 [ 1 ] = lv_m1_39 [ 0 ] * lv_n1_39 [ 1 ] + lv_m1_39 [ 1 ] * lv_n2_39 [ 1 ] + lv_m1_39 [ 2 ] * lv_n3_39 [ 1 ]
+lv_s1_39 [ 2 ] = lv_m1_39 [ 0 ] * lv_n1_39 [ 2 ] + lv_m1_39 [ 1 ] * lv_n2_39 [ 2 ] + lv_m1_39 [ 2 ] * lv_n3_39 [ 2 ]
+lv_s2_39 [ 0 ] = lv_m2_39 [ 0 ] * lv_n1_39 [ 0 ] + lv_m2_39 [ 1 ] * lv_n2_39 [ 0 ] + lv_m2_39 [ 2 ] * lv_n3_39 [ 0 ]
+lv_s2_39 [ 1 ] = lv_m2_39 [ 0 ] * lv_n1_39 [ 1 ] + lv_m2_39 [ 1 ] * lv_n2_39 [ 1 ] + lv_m2_39 [ 2 ] * lv_n3_39 [ 1 ]
+lv_s2_39 [ 2 ] = lv_m2_39 [ 0 ] * lv_n1_39 [ 2 ] + lv_m2_39 [ 1 ] * lv_n2_39 [ 2 ] + lv_m2_39 [ 2 ] * lv_n3_39 [ 2 ]
+lv_s3_39 [ 0 ] = lv_m3_39 [ 0 ] * lv_n1_39 [ 0 ] + lv_m3_39 [ 1 ] * lv_n2_39 [ 0 ] + lv_m3_39 [ 2 ] * lv_n3_39 [ 0 ]
+lv_s3_39 [ 1 ] = lv_m3_39 [ 0 ] * lv_n1_39 [ 1 ] + lv_m3_39 [ 1 ] * lv_n2_39 [ 1 ] + lv_m3_39 [ 2 ] * lv_n3_39 [ 1 ]
+lv_s3_39 [ 2 ] = lv_m3_39 [ 0 ] * lv_n1_39 [ 2 ] + lv_m3_39 [ 1 ] * lv_n2_39 [ 2 ] + lv_m3_39 [ 2 ] * lv_n3_39 [ 2 ]
 EndSub
 Sub f_bmovea_2
-lv_rotation_36 = lv_degrees_36 - gv_angle_a
-lv_sign_36 = Math.Abs ( lv_rotation_36 ) / lv_rotation_36
-lv_progress_36 = 0
-lv_degrees_per_interval_36 = lv_degrees_per_second_36 * lv_sign_36 / 50
-While Math.Abs ( lv_rotation_36 - lv_progress_36 ) > 5
-gv_angle_a = gv_angle_a + lv_degrees_per_interval_36
-lv_progress_36 = lv_progress_36 + lv_degrees_per_interval_36
-Program.Delay ( 1 )
-EndWhile
-gv_angle_a = lv_degrees_36
-EndSub
-Sub f_bmoved_2
-lv_degrees_38 = lv_degrees_38 * gv_sentido_d
-lv_rotation_38 = lv_degrees_38 - gv_angle_d
-lv_sign_38 = Math.Abs ( lv_rotation_38 ) / lv_rotation_38
-lv_progress_38 = 0
-lv_degrees_per_interval_38 = lv_degrees_per_second_38 * lv_sign_38 / 50
-While Math.Abs ( lv_rotation_38 - lv_progress_38 ) > 5
-gv_angle_d = gv_angle_d + lv_degrees_per_interval_38
-lv_progress_38 = lv_progress_38 + lv_degrees_per_interval_38
-Program.Delay ( 1 )
-EndWhile
-gv_angle_d = lv_degrees_38
-EndSub
-Sub f_bmovead_4
-lv_degrees_d_39 = lv_degrees_d_39 * gv_sentido_d
-While gv_angle_a <> lv_degrees_a_39 Or gv_angle_d <> lv_degrees_d_39
-If Math.Round ( gv_angle_a ) < lv_degrees_a_39 - 5 and Math.Round ( gv_angle_a ) < lv_degrees_a_39 Then
-gv_angle_a = gv_angle_a + Math.Min ( lv_degrees_per_second_a_39 , lv_degrees_per_second_a_39 / 2 + ( lv_degrees_a_39 - gv_angle_a ) / 10 ) / 50
-ElseIf Math.Round ( gv_angle_a ) > lv_degrees_a_39 + 5 and Math.Round ( gv_angle_a ) > lv_degrees_a_39 Then
-gv_angle_a = gv_angle_a - Math.Max ( lv_degrees_per_second_a_39 , lv_degrees_per_second_a_39 / 2 + ( lv_degrees_a_39 - gv_angle_a ) / 10 ) / 50
-Else
-gv_angle_a = lv_degrees_a_39
-EndIf
-If Math.Round ( gv_angle_d ) < lv_degrees_d_39 Then
-gv_angle_d = gv_angle_d + Math.Min ( lv_degrees_per_second_d_39 , lv_degrees_per_second_d_39 / 2 + ( lv_degrees_d_39 - gv_angle_d ) / 10 ) / 50
-ElseIf Math.Round ( gv_angle_d ) > lv_degrees_d_39 Then
-gv_angle_d = gv_angle_d - Math.Max ( lv_degrees_per_second_d_39 , lv_degrees_per_second_d_39 / 2 + ( lv_degrees_d_39 - gv_angle_d ) / 10 ) / 50
-Else
-gv_angle_d = lv_degrees_d_39
-EndIf
-Program.Delay ( 1 )
-EndWhile
-gv_angle_a = lv_degrees_a_39
-gv_angle_d = lv_degrees_d_39
-EndSub
-Sub f_bmovea0_1
-lv_degrees_40 = 0
 lv_rotation_40 = lv_degrees_40 - gv_angle_a
 lv_sign_40 = Math.Abs ( lv_rotation_40 ) / lv_rotation_40
 lv_progress_40 = 0
@@ -314,39 +421,87 @@ Program.Delay ( 1 )
 EndWhile
 gv_angle_a = lv_degrees_40
 EndSub
-Sub f_bmoved0_1
-lv_degrees_41 = 0
-lv_rotation_41 = lv_degrees_41 - gv_angle_d
-lv_sign_41 = Math.Abs ( lv_rotation_41 ) / lv_rotation_41
-lv_progress_41 = 0
-lv_degrees_per_interval_41 = lv_degrees_per_second_41 * lv_sign_41 / 50
-While Math.Abs ( lv_rotation_41 - lv_progress_41 ) > 5
-gv_angle_d = gv_angle_d + lv_degrees_per_interval_41
-lv_progress_41 = lv_progress_41 + lv_degrees_per_interval_41
+Sub f_bmoved_2
+lv_degrees_42 = lv_degrees_42 * gv_sentido_d
+lv_rotation_42 = lv_degrees_42 - gv_angle_d
+lv_sign_42 = Math.Abs ( lv_rotation_42 ) / lv_rotation_42
+lv_progress_42 = 0
+lv_degrees_per_interval_42 = lv_degrees_per_second_42 * lv_sign_42 / 50
+While Math.Abs ( lv_rotation_42 - lv_progress_42 ) > 5
+gv_angle_d = gv_angle_d + lv_degrees_per_interval_42
+lv_progress_42 = lv_progress_42 + lv_degrees_per_interval_42
 Program.Delay ( 1 )
 EndWhile
-gv_angle_d = lv_degrees_41
+gv_angle_d = lv_degrees_42
+EndSub
+Sub f_bmovead_4
+lv_degrees_d_43 = lv_degrees_d_43 * gv_sentido_d
+While gv_angle_a <> lv_degrees_a_43 Or gv_angle_d <> lv_degrees_d_43
+If Math.Round ( gv_angle_a ) < lv_degrees_a_43 - 5 and Math.Round ( gv_angle_a ) < lv_degrees_a_43 Then
+gv_angle_a = gv_angle_a + Math.Min ( lv_degrees_per_second_a_43 , lv_degrees_per_second_a_43 / 2 + ( lv_degrees_a_43 - gv_angle_a ) / 10 ) / 50
+ElseIf Math.Round ( gv_angle_a ) > lv_degrees_a_43 + 5 and Math.Round ( gv_angle_a ) > lv_degrees_a_43 Then
+gv_angle_a = gv_angle_a - Math.Max ( lv_degrees_per_second_a_43 , lv_degrees_per_second_a_43 / 2 + ( lv_degrees_a_43 - gv_angle_a ) / 10 ) / 50
+Else
+gv_angle_a = lv_degrees_a_43
+EndIf
+If Math.Round ( gv_angle_d ) < lv_degrees_d_43 Then
+gv_angle_d = gv_angle_d + Math.Min ( lv_degrees_per_second_d_43 , lv_degrees_per_second_d_43 / 2 + ( lv_degrees_d_43 - gv_angle_d ) / 10 ) / 50
+ElseIf Math.Round ( gv_angle_d ) > lv_degrees_d_43 Then
+gv_angle_d = gv_angle_d - Math.Max ( lv_degrees_per_second_d_43 , lv_degrees_per_second_d_43 / 2 + ( lv_degrees_d_43 - gv_angle_d ) / 10 ) / 50
+Else
+gv_angle_d = lv_degrees_d_43
+EndIf
+Program.Delay ( 1 )
+EndWhile
+gv_angle_a = lv_degrees_a_43
+gv_angle_d = lv_degrees_d_43
+EndSub
+Sub f_bmovea0_1
+lv_degrees_44 = 0
+lv_rotation_44 = lv_degrees_44 - gv_angle_a
+lv_sign_44 = Math.Abs ( lv_rotation_44 ) / lv_rotation_44
+lv_progress_44 = 0
+lv_degrees_per_interval_44 = lv_degrees_per_second_44 * lv_sign_44 / 50
+While Math.Abs ( lv_rotation_44 - lv_progress_44 ) > 5
+gv_angle_a = gv_angle_a + lv_degrees_per_interval_44
+lv_progress_44 = lv_progress_44 + lv_degrees_per_interval_44
+Program.Delay ( 1 )
+EndWhile
+gv_angle_a = lv_degrees_44
+EndSub
+Sub f_bmoved0_1
+lv_degrees_45 = 0
+lv_rotation_45 = lv_degrees_45 - gv_angle_d
+lv_sign_45 = Math.Abs ( lv_rotation_45 ) / lv_rotation_45
+lv_progress_45 = 0
+lv_degrees_per_interval_45 = lv_degrees_per_second_45 * lv_sign_45 / 50
+While Math.Abs ( lv_rotation_45 - lv_progress_45 ) > 5
+gv_angle_d = gv_angle_d + lv_degrees_per_interval_45
+lv_progress_45 = lv_progress_45 + lv_degrees_per_interval_45
+Program.Delay ( 1 )
+EndWhile
+gv_angle_d = lv_degrees_45
 EndSub
 Sub f_bmovead0_2
-lv_degrees_a_42 = 0
-lv_degrees_d_42 = 0
-While gv_angle_a <> lv_degrees_a_42 Or gv_angle_d <> lv_degrees_d_42
-If Math.Round ( gv_angle_a ) < lv_degrees_a_42 Then
-gv_angle_a = gv_angle_a + Math.Min ( lv_degrees_per_second_a_42 , lv_degrees_per_second_a_42 / 2 + ( lv_degrees_a_42 - gv_angle_a ) / 10 ) / 50
-ElseIf Math.Round ( gv_angle_a ) > lv_degrees_a_42 Then
-gv_angle_a = gv_angle_a - Math.Max ( lv_degrees_per_second_a_42 , lv_degrees_per_second_a_42 / 2 + ( lv_degrees_a_42 - gv_angle_a ) / 10 ) / 50
+lv_degrees_a_46 = 0
+lv_degrees_d_46 = 0
+While gv_angle_a <> lv_degrees_a_46 Or gv_angle_d <> lv_degrees_d_46
+If Math.Round ( gv_angle_a ) < lv_degrees_a_46 Then
+gv_angle_a = gv_angle_a + Math.Min ( lv_degrees_per_second_a_46 , lv_degrees_per_second_a_46 / 2 + ( lv_degrees_a_46 - gv_angle_a ) / 10 ) / 50
+ElseIf Math.Round ( gv_angle_a ) > lv_degrees_a_46 Then
+gv_angle_a = gv_angle_a - Math.Max ( lv_degrees_per_second_a_46 , lv_degrees_per_second_a_46 / 2 + ( lv_degrees_a_46 - gv_angle_a ) / 10 ) / 50
 Else
-gv_angle_a = lv_degrees_a_42
+gv_angle_a = lv_degrees_a_46
 EndIf
-If Math.Round ( gv_angle_d ) < lv_degrees_d_42 Then
-gv_angle_d = gv_angle_d + Math.Min ( lv_degrees_per_second_d_42 , lv_degrees_per_second_d_42 / 2 + ( lv_degrees_d_42 - gv_angle_d ) / 10 ) / 50
-ElseIf Math.Round ( gv_angle_d ) > lv_degrees_d_42 Then
-gv_angle_d = gv_angle_d - Math.Max ( lv_degrees_per_second_d_42 , lv_degrees_per_second_d_42 / 2 + ( lv_degrees_d_42 - gv_angle_d ) / 10 ) / 50
+If Math.Round ( gv_angle_d ) < lv_degrees_d_46 Then
+gv_angle_d = gv_angle_d + Math.Min ( lv_degrees_per_second_d_46 , lv_degrees_per_second_d_46 / 2 + ( lv_degrees_d_46 - gv_angle_d ) / 10 ) / 50
+ElseIf Math.Round ( gv_angle_d ) > lv_degrees_d_46 Then
+gv_angle_d = gv_angle_d - Math.Max ( lv_degrees_per_second_d_46 , lv_degrees_per_second_d_46 / 2 + ( lv_degrees_d_46 - gv_angle_d ) / 10 ) / 50
 Else
-gv_angle_d = lv_degrees_d_42
+gv_angle_d = lv_degrees_d_46
 EndIf
 Program.Delay ( 1 )
 EndWhile
-gv_angle_a = lv_degrees_a_42
-gv_angle_d = lv_degrees_d_42
+gv_angle_a = lv_degrees_a_46
+gv_angle_d = lv_degrees_d_46
 EndSub
