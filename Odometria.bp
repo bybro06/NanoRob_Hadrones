@@ -8,6 +8,7 @@ thetatcorrect = 0
 Sentido_D = 1
 D_T = 0
 
+
 include "includes\Aceleracion_MotGran"
 include "includes\Movimiento_Recto_MotGran"
 
@@ -47,17 +48,25 @@ Function Kalman_Filter(in number omegaI_k1, in number omegaD_k1)
   
   radio = 56/2
   
-  P1[0] = 1
-  P1[1] = 0
-  P1[2] = 0
+  P = Vector.Data(3*3,"1 0 0  0 1 0  0 0 1")
   
-  P2[0] = 0
-  P2[1] = 1
-  P2[2] = 0
+  df_k = Vector.Init(3*3)
+  df_k[2] = -1*((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Sin(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
+  df_k[2] = ((omegaI_k1+omegaD_k1)*radio*delta_t)/2*Math.Cos(theta_k_k1+((omegaD_k1-omegaI_k1)*radio*delta_t)/(4*@Dw))
   
-  P3[0] = 0
-  P3[1] = 0
-  P3[2] = 1
+  F_k = Vector.Add(3*3,P,df_k)
+  
+  'P1[0] = 1
+  'P1[1] = 0
+  'P1[2] = 0
+  
+  'P2[0] = 0
+  'P2[1] = 1
+  'P2[2] = 0
+  
+  'P3[0] = 0
+  'P3[1] = 0
+  'P3[2] = 1
   
   x_k_k1 = 0
   y_k_k1 = 0
@@ -439,6 +448,28 @@ Function MultiMatrices3x3(in number[] M1, in number[] M2, in number[] M3, in num
   
 EndFunction
 
+Function InvMatriz3x3(in number[] M1, in number[] M2, in number[] M3, out number[] S1, out number[] S2, out number[] S3)
+  
+  'Hallamos determinante
+  
+  Determinante = M1[0]*(M2[1]*M3[2]-M2[2]*M3[1]) - M1[1]*(M2[0]*M3[2]-M2[2]*M3[0]) + M1[2]*(M2[0]*M3[1]-M2[1]*M3[0])
+  If Determinante <> 0 Then
+    
+    S1[0] = (M2[1]*M3[2]-M2[2]*M3[1]) / Determinante
+    S1[1] = (M2[0]*M3[2]-M2[2]*M3[0]) / Determinante
+    S1[2] = (M2[0]*M3[1]-M2[1]*M3[0]) / Determinante
+    
+    S2[0] = (M1[1]*M3[2]-M1[2]*M3[1]) / Determinante
+    S2[1] = (M1[0]*M3[2]-M1[2]*M3[0]) / Determinante
+    S2[2] = (M1[0]*M3[1]-M1[1]*M3[0]) / Determinante
+    
+    S3[0] = (M1[1]*M2[2]-M1[2]*M2[1]) / Determinante
+    S3[1] = (M1[0]*M2[2]-M1[2]*M2[0]) / Determinante
+    S3[2] = (M1[0]*M2[1]-M1[1]*M2[0]) / Determinante
+    
+  EndIf
+  
+EndFunction
 
 Function BMoveA(in number degrees_per_second, in number degrees)
   
