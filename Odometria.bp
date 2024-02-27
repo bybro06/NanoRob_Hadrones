@@ -15,12 +15,12 @@ D_T = 0
 include "includes\Aceleracion_MotGran"
 include "includes\Movimiento_Recto_MotGran"
 
-Sensor.SetMode(1,0)
-Sensor.SetMode(2,1)
-Sensor.Wait(2)
+'Sensor.SetMode(1,0)
+'Sensor.SetMode(2,1)
+'Sensor.Wait(2)
 Thread.Run = PIDControl_AD
 Thread.Run = Odometry
-Thread.Run = Display
+Thread.Run = DisplayVelocidades
 Main()
 Program.Delay(10000)
 
@@ -50,11 +50,21 @@ EndSub
 
 'Subs de control paralelo
 
-Function Kalman_Filter(in number omegaI_k1[], in number omegaD_k1[])
+Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
   
+  iteracion = 0
   radio = 56/2
   
-  I = Vector.Data(3*3,"1 0 0  0 1 0  0 0 1")
+  MultiMatrizCoef(velI_k1,-1,velI)
+  MultiMatrizCoef(velD_k1,-1,velD)
+  
+  'Paso de velocidad a rad/s
+  
+  MultiMatrizCoef(velI_k1,56.1197,omegaI_k1)
+  MultiMatrizCoef(velD_k1,59.879,omegaD_k1)
+  
+  I = Vector.Data(9,"1 0 0  0 1 0  0 0 1")
+  minus_1 = Vector.Data(9,"-1 0 0 0 -1 0 0 0 -1")
   
   df_k = Vector.Init(3*3,0)
   
@@ -70,6 +80,8 @@ Function Kalman_Filter(in number omegaI_k1[], in number omegaD_k1[])
   old_I = -1*MotorB.GetTacho()
   old_D = -1*MotorC.GetTacho()
   
+  log_file = EV3File.OpenWrite("log")
+  
   While "True"
     
     delta_t = EV3.Time - old_t
@@ -77,12 +89,14 @@ Function Kalman_Filter(in number omegaI_k1[], in number omegaD_k1[])
     
     @D_T = delta_t
     
-    k_k1[0] = k_k1[0] + ((omegaI_k1[iteracion]+omegaD_k1)*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    k_k1[1] = k_k1[1] + ((omegaI_k1[iteracion]+omegaD_k1)*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    k_k1[2] = k_k1[2] + ((omegaD_k1-omegaI_k1[iteracion])*radio*delta_t)/(2*@Dw)
+    Motor.StartSync("BC",velI[iteracion],velD[iteracion])
     
-    df_k[2] = -1*((omegaI_k1[iteracion]+omegaD_k1)*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    df_k[2] = ((omegaI_k1[iteracion]+omegaD_k1)*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
+    k_k1[0] = k_k1[0] + ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
+    k_k1[1] = k_k1[1] + ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
+    k_k1[2] = k_k1[2] + ((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(2*@Dw)
+    
+    df_k[2] = -1*((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
+    df_k[2] = ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
     
     F_k = Vector.Add(3*3,I,df_k)
     
@@ -116,8 +130,6 @@ Function Kalman_Filter(in number omegaI_k1[], in number omegaD_k1[])
     z[1] = -1*MotorB.GetTacho() - old_I
     z[2] = -1*MotorC.GetTacho() - old_D
     
-    minus_1 = Vector.Data(9,"-1 0 0 0 -1 0 0 0 -1")
-    
     minus_H = Vector.Multiply(1,3,3,H,minus_1)
     
     y = Vector.Add(3,z,minus_H)
@@ -143,6 +155,17 @@ Function Kalman_Filter(in number omegaI_k1[], in number omegaD_k1[])
     
     #Matriz de covarianza actualizada
     P = Vector.Multiply(3,3,3,P1,P_k_k1)
+    
+    EV3File.WriteLine(log_file,"Medidas de entrada Izq: "+omegaI_k1[iteracion])
+    
+    EV3File.WriteLine(log_file,"Medidas de entrada Dch: "+omegaD_k1[iteracion])
+    
+    EV3File.WriteLine(log_file,"Sensores:")
+    EV3File.WriteNumberArray(log_file,3,z)
+    
+    EV3File.WriteLine(log_file,"---------------")
+
+    iteracion ++
     
     old_I = -1*MotorB.GetTacho()
     old_D = -1*MotorC.GetTacho()
@@ -253,30 +276,83 @@ Sub PIDControl_AD
 EndSub
 
 Sub Display
+  old_B = 0
+  old_C = 0
   While "True"
     LCD.StopUpdate()
     LCD.Clear()
+    
     LCD.Write(5,5,"xt: "+Math.Round(xt[i]*100)/100)
     LCD.Write(5,15,"yt: "+Math.Round(yt[i]*100)/100)
     LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
+    
+    
     LCD.Write(5,35,"centro: "+centro)
-    'LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
-    'LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
-    LCD.Write(5,45,"Delta T:  "+D_T)
-    LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
-    LCD.Write(5,85,"Obj de A:  "+angle_A)
-    LCD.Write(5,95,"Angulo de D:  "+MotorD.GetTacho())
-    LCD.Write(5,105,"Obj de D:  "+angle_D)
-    LCD.Write(5,115,"Sentido de D:  "+Sentido_D)
+    
+    
+    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
+    
+    LCD.Write(5,65,"rad/s de B:  "+Math.GetRadians(MotorB.GetTacho()-old_B)/0.05*-1)
+    LCD.Write(5,75,"rad/s de C:  "+Math.GetRadians(MotorC.GetTacho()-old_C)/0.05*-1)
+    
+    
+    'LCD.Write(5,45,"Delta T:  "+D_T)
+    
+    
+    'LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
+    'LCD.Write(5,85,"Obj de A:  "+angle_A)
+    
+    'LCD.Write(5,95,"Angulo de D:  "+MotorD.GetTacho())
+    'LCD.Write(5,105,"Obj de D:  "+angle_D)
+    
+    'LCD.Write(5,115,"Sentido de D:  "+Sentido_D)
     LCD.Update()
     Program.Delay(50)
+    old_B = MotorB.GetTacho()
+    old_C = MotorC.GetTacho()
+  EndWhile
+EndSub
+
+Sub DisplayVelocidades
+  old_B = 0
+  old_C = 0
+  agg_B = 0
+  agg_C = 0
+  iteracion = 0
+  While "True"
+    iteracion++
+    LCD.StopUpdate()
+    LCD.Clear()
+    
+    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
+    
+    rads_B = Math.GetRadians(MotorB.GetTacho()-old_B)/0.05*-1
+    rads_C = Math.GetRadians(MotorC.GetTacho()-old_C)/0.05*-1
+    
+    agg_B += rads_B
+    agg_C += rads_C
+    
+    media_B = agg_B/iteracion
+    media_C = agg_C/iteracion
+    
+    LCD.Write(5,65,"rad/s de B: "+media_B)
+    LCD.Write(5,75,"rad/s de C: "+media_C)
+    
+    LCD.Update()
+    Program.Delay(50)
+    old_B = MotorB.GetTacho()
+    old_C = MotorC.GetTacho()
   EndWhile
 EndSub
 
 'Subs a ejecutar
 
 Sub Main
-  Kalman_Filter(1,1)
+  L = Vector.Init(100,10)
+  R = Vector.Init(100,10)
+  Kalman_Filter(L,R)
   StartArm()
   GUnivEncMG(0,20,40)
   GUnivEncMG(20,0,40)
@@ -308,7 +384,7 @@ Sub Main2
   Program.Delay(2000)
 EndSub
 
-Sub MainControl
+Sub MainControlBrazo
   angle_A = 0
   angle_D = 0  
   
@@ -329,6 +405,27 @@ Sub MainControl
   EndWhile
 EndSub
 
+Sub MainControlRuedas
+  vel_B = 92
+  vel_C = 92
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      vel_B -= 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "D" Then
+      vel_B += 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "L" Then
+      vel_C += 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "R" Then
+      vel_C -= 1
+      Program.Delay(1)
+    EndIf
+    Motor.StartSync("BC",-vel_B,-vel_C)
+  EndWhile
+EndSub
 
 Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   
@@ -539,6 +636,19 @@ Function InvMatVect3x3(in number[] M, out number[] S)
     S[8] = (M[0]*M[4]-M[1]*M[3]) / Determinante
     
   EndIf
+  
+EndFunction
+
+Function MultiMatrizCoef(in number[] M, in number k, out number[] S)
+  
+  i = 0
+  
+  While M[i] <> 0
+    
+    M[i] = k * M[i]
+    
+    i++
+  EndWhile
   
 EndFunction
 
