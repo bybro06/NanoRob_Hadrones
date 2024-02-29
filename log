@@ -1,0 +1,1600 @@
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 3
+Derivada Encoder D: 3
+Valor[0] de P: -2.42337e+06
+Valor[1] de P: 11534.7
+Valor[2] de P: -10336.7
+Valor[3] de P: 35.3178
+Valor[4] de P: -0.168119
+Valor[5] de P: 0.150645
+Valor[6] de P: -10314.4
+Valor[7] de P: 49.0943
+Valor[8] de P: -43.9951
+Iteración: 0
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -4.20473e+08
+Valor[1] de P: 388840
+Valor[2] de P: -512614
+Valor[3] de P: 316.853
+Valor[4] de P: -0.293015
+Valor[5] de P: 0.386287
+Valor[6] de P: -511986
+Valor[7] de P: 473.467
+Valor[8] de P: -624.181
+Iteración: 1
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 14
+Valor[0] de P: -6.47578e+08
+Valor[1] de P: 498678
+Valor[2] de P: -713047
+Valor[3] de P: 360.348
+Valor[4] de P: -0.277492
+Valor[5] de P: 0.396778
+Valor[6] de P: -712242
+Valor[7] de P: 548.474
+Valor[8] de P: -784.248
+Iteración: 2
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 13
+Valor[0] de P: -2.74918e+08
+Valor[1] de P: 300626
+Valor[2] de P: -372418
+Valor[3] de P: 273.22
+Valor[4] de P: -0.29877
+Valor[5] de P: 0.370118
+Valor[6] de P: -371931
+Valor[7] de P: 406.711
+Valor[8] de P: -503.837
+Iteración: 3
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -6.34734e+08
+Valor[1] de P: 493105
+Valor[2] de P: -702010
+Valor[3] de P: 358.435
+Valor[4] de P: -0.278457
+Valor[5] de P: 0.396426
+Valor[6] de P: -701214
+Valor[7] de P: 544.751
+Valor[8] de P: -775.536
+Iteración: 4
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -6.78568e+08
+Valor[1] de P: 511592
+Valor[2] de P: -739423
+Valor[3] de P: 364.407
+Valor[4] de P: -0.274738
+Valor[5] de P: 0.397088
+Valor[6] de P: -738597
+Valor[7] de P: 556.85
+Valor[8] de P: -804.836
+Iteración: 5
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -5.70533e+08
+Valor[1] de P: 464479
+Valor[2] de P: -646676
+Valor[3] de P: 348.305
+Valor[4] de P: -0.283561
+Valor[5] de P: 0.39479
+Valor[6] de P: -645926
+Valor[7] de P: 525.857
+Valor[8] de P: -732.13
+Iteración: 6
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 11
+Valor[0] de P: -4.65598e+08
+Valor[1] de P: 412901
+Valor[2] de P: -553728
+Valor[3] de P: 327.434
+Valor[4] de P: -0.290375
+Valor[5] de P: 0.389412
+Valor[6] de P: -553061
+Valor[7] de P: 490.464
+Valor[8] de P: -657.747
+Iteración: 7
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 12
+Valor[0] de P: -7.54917e+08
+Valor[1] de P: 541456
+Valor[2] de P: -804032
+Valor[3] de P: 372.52
+Valor[4] de P: -0.267186
+Valor[5] de P: 0.396756
+Valor[6] de P: -803158
+Valor[7] de P: 576.056
+Valor[8] de P: -855.411
+Iteración: 8
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 11
+Valor[0] de P: -6.09422e+08
+Valor[1] de P: 482112
+Valor[2] de P: -680335
+Valor[3] de P: 354.723
+Valor[4] de P: -0.280621
+Valor[5] de P: 0.395999
+Valor[6] de P: -679556
+Valor[7] de P: 537.596
+Valor[8] de P: -758.63
+Iteración: 9
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -4.07734e+08
+Valor[1] de P: 381805
+Valor[2] de P: -500844
+Valor[3] de P: 313.654
+Valor[4] de P: -0.293709
+Valor[5] de P: 0.385281
+Valor[6] de P: -500227
+Valor[7] de P: 468.416
+Valor[8] de P: -614.459
+Iteración: 10
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 14
+Derivada Encoder D: 14
+Valor[0] de P: -6.60071e+08
+Valor[1] de P: 503942
+Valor[2] de P: -723698
+Valor[3] de P: 362.039
+Valor[4] de P: -0.276405
+Valor[5] de P: 0.396938
+Valor[6] de P: -722884
+Valor[7] de P: 551.898
+Valor[8] de P: -792.566
+Iteración: 11
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 13
+Valor[0] de P: -3.39276e+08
+Valor[1] de P: 341882
+Valor[2] de P: -436082
+Valor[3] de P: 294.556
+Valor[4] de P: -0.296819
+Valor[5] de P: 0.378602
+Valor[6] de P: -435528
+Valor[7] de P: 438.873
+Valor[8] de P: -559.797
+Iteración: 12
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 16
+Derivada Encoder D: 16
+Valor[0] de P: -4.98347e+08
+Valor[1] de P: 429650
+Valor[2] de P: -583116
+Valor[3] de P: 334.519
+Valor[4] de P: -0.288406
+Valor[5] de P: 0.391421
+Valor[6] de P: -582422
+Valor[7] de P: 502.135
+Valor[8] de P: -681.493
+Iteración: 13
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 14
+Derivada Encoder D: 13
+Valor[0] de P: -2.36826e+08
+Valor[1] de P: 274133
+Valor[2] de P: -333128
+Valor[3] de P: 258.667
+Valor[4] de P: -0.299415
+Valor[5] de P: 0.36385
+Valor[6] de P: -332683
+Valor[7] de P: 385.089
+Valor[8] de P: -467.962
+Iteración: 14
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 14
+Derivada Encoder D: 14
+Valor[0] de P: -4.20473e+08
+Valor[1] de P: 388840
+Valor[2] de P: -512614
+Valor[3] de P: 316.853
+Valor[4] de P: -0.293015
+Valor[5] de P: 0.386287
+Valor[6] de P: -511986
+Valor[7] de P: 473.467
+Valor[8] de P: -624.181
+Iteración: 15
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 8
+Valor[0] de P: -4.72289e+08
+Valor[1] de P: 416431
+Valor[2] de P: -559809
+Valor[3] de P: 329.001
+Valor[4] de P: -0.29009
+Valor[5] de P: 0.389968
+Valor[6] de P: -559136
+Valor[7] de P: 493.007
+Valor[8] de P: -662.75
+Iteración: 16
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -5.37789e+08
+Valor[1] de P: 449029
+Valor[2] de P: -618038
+Valor[3] de P: 342.361
+Valor[4] de P: -0.285856
+Valor[5] de P: 0.393448
+Valor[6] de P: -617313
+Valor[7] de P: 515.427
+Valor[8] de P: -709.428
+Iteración: 17
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 10
+Valor[0] de P: -6.96926e+08
+Valor[1] de P: 519079
+Valor[2] de P: -755029
+Valor[3] de P: 366.67
+Valor[4] de P: -0.273101
+Valor[5] de P: 0.397239
+Valor[6] de P: -754191
+Valor[7] de P: 561.731
+Valor[8] de P: -817.068
+Iteración: 18
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 11
+Valor[0] de P: -7.2061e+08
+Valor[1] de P: 528408
+Valor[2] de P: -775055
+Valor[3] de P: 369.249
+Valor[4] de P: -0.270763
+Valor[5] de P: 0.397147
+Valor[6] de P: -774202
+Valor[7] de P: 567.706
+Valor[8] de P: -832.697
+Iteración: 19
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -6.09422e+08
+Valor[1] de P: 482112
+Valor[2] de P: -680335
+Valor[3] de P: 354.723
+Valor[4] de P: -0.280621
+Valor[5] de P: 0.395999
+Valor[6] de P: -679556
+Valor[7] de P: 537.596
+Valor[8] de P: -758.63
+Iteración: 20
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 14
+Derivada Encoder D: 14
+Valor[0] de P: -5.37789e+08
+Valor[1] de P: 449029
+Valor[2] de P: -618038
+Valor[3] de P: 342.361
+Valor[4] de P: -0.285856
+Valor[5] de P: 0.393448
+Valor[6] de P: -617313
+Valor[7] de P: 515.427
+Valor[8] de P: -709.428
+Iteración: 21
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 12
+Valor[0] de P: -5.24735e+08
+Valor[1] de P: 442741
+Valor[2] de P: -606559
+Valor[3] de P: 339.89
+Valor[4] de P: -0.28678
+Valor[5] de P: 0.392889
+Valor[6] de P: -605844
+Valor[7] de P: 511.176
+Valor[8] de P: -700.315
+Iteración: 22
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 12
+Valor[0] de P: -4.91804e+08
+Valor[1] de P: 426361
+Valor[2] de P: -577282
+Valor[3] de P: 333.157
+Valor[4] de P: -0.288825
+Valor[5] de P: 0.391061
+Valor[6] de P: -576593
+Valor[7] de P: 499.867
+Valor[8] de P: -676.807
+Iteración: 23
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -7.08559e+08
+Valor[1] de P: 523596
+Valor[2] de P: -764803
+Valor[3] de P: 367.852
+Valor[4] de P: -0.271827
+Valor[5] de P: 0.397051
+Valor[6] de P: -763958
+Valor[7] de P: 564.533
+Valor[8] de P: -824.599
+Iteración: 24
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -7.43866e+08
+Valor[1] de P: 537387
+Valor[2] de P: -794746
+Valor[3] de P: 371.614
+Valor[4] de P: -0.268463
+Valor[5] de P: 0.397032
+Valor[6] de P: -793879
+Valor[7] de P: 573.517
+Valor[8] de P: -848.179
+Iteración: 25
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -6.15687e+08
+Valor[1] de P: 484829
+Valor[2] de P: -685687
+Valor[3] de P: 355.628
+Valor[4] de P: -0.280043
+Valor[5] de P: 0.396061
+Valor[6] de P: -684905
+Valor[7] de P: 539.335
+Valor[8] de P: -762.774
+Iteración: 26
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 14
+Valor[0] de P: -5.70533e+08
+Valor[1] de P: 464479
+Valor[2] de P: -646676
+Valor[3] de P: 348.305
+Valor[4] de P: -0.283561
+Valor[5] de P: 0.39479
+Valor[6] de P: -645926
+Valor[7] de P: 525.857
+Valor[8] de P: -732.13
+Iteración: 27
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 29
+Derivada Encoder D: 30
+Valor[0] de P: -7.66108e+08
+Valor[1] de P: 545630
+Valor[2] de P: -813512
+Valor[3] de P: 373.509
+Valor[4] de P: -0.266017
+Valor[5] de P: 0.396621
+Valor[6] de P: -812631
+Valor[7] de P: 578.764
+Valor[8] de P: -862.913
+Iteración: 28
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 13
+Valor[0] de P: 2.11056e+07
+Valor[1] de P: 114175
+Valor[2] de P: -77181
+Valor[3] de P: -250.926
+Valor[4] de P: -1.35743
+Valor[5] de P: 0.917611
+Valor[6] de P: -76974.3
+Valor[7] de P: -416.409
+Valor[8] de P: 281.488
+Iteración: 29
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -6.34734e+08
+Valor[1] de P: 493105
+Valor[2] de P: -702010
+Valor[3] de P: 358.435
+Valor[4] de P: -0.278457
+Valor[5] de P: 0.396426
+Valor[6] de P: -701214
+Valor[7] de P: 544.751
+Valor[8] de P: -775.536
+Iteración: 30
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -5.18169e+08
+Valor[1] de P: 439532
+Valor[2] de P: -600756
+Valor[3] de P: 338.6
+Valor[4] de P: -0.287214
+Valor[5] de P: 0.392566
+Valor[6] de P: -600046
+Valor[7] de P: 508.982
+Valor[8] de P: -695.682
+Iteración: 31
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.0278e+08
+Valor[1] de P: 521367
+Valor[2] de P: -759953
+Valor[3] de P: 367.281
+Valor[4] de P: -0.272472
+Valor[5] de P: 0.39716
+Valor[6] de P: -759112
+Valor[7] de P: 563.157
+Valor[8] de P: -820.868
+Iteración: 32
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 14
+Valor[0] de P: -7.93067e+08
+Valor[1] de P: 555382
+Valor[2] de P: -836350
+Valor[3] de P: 375.564
+Valor[4] de P: -0.263007
+Valor[5] de P: 0.396062
+Valor[6] de P: -835454
+Valor[7] de P: 585.066
+Valor[8] de P: -881.052
+Iteración: 33
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -4.98347e+08
+Valor[1] de P: 429650
+Valor[2] de P: -583116
+Valor[3] de P: 334.519
+Valor[4] de P: -0.288406
+Valor[5] de P: 0.391421
+Valor[6] de P: -582422
+Valor[7] de P: 502.135
+Valor[8] de P: -681.493
+Iteración: 34
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -5.18169e+08
+Valor[1] de P: 439532
+Valor[2] de P: -600756
+Valor[3] de P: 338.6
+Valor[4] de P: -0.287214
+Valor[5] de P: 0.392566
+Valor[6] de P: -600046
+Valor[7] de P: 508.982
+Valor[8] de P: -695.682
+Iteración: 35
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 11
+Valor[0] de P: -4.85346e+08
+Valor[1] de P: 423119
+Valor[2] de P: -571530
+Valor[3] de P: 331.828
+Valor[4] de P: -0.289284
+Valor[5] de P: 0.390751
+Valor[6] de P: -570846
+Valor[7] de P: 497.657
+Valor[8] de P: -672.212
+Iteración: 36
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -5.77063e+08
+Valor[1] de P: 467498
+Valor[2] de P: -652356
+Valor[3] de P: 349.436
+Valor[4] de P: -0.28309
+Valor[5] de P: 0.395029
+Valor[6] de P: -651601
+Valor[7] de P: 527.883
+Valor[8] de P: -736.62
+Iteración: 37
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 10
+Valor[0] de P: -6.96926e+08
+Valor[1] de P: 519079
+Valor[2] de P: -755029
+Valor[3] de P: 366.67
+Valor[4] de P: -0.273101
+Valor[5] de P: 0.397239
+Valor[6] de P: -754191
+Valor[7] de P: 561.731
+Valor[8] de P: -817.068
+Iteración: 38
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -4.72289e+08
+Valor[1] de P: 416431
+Valor[2] de P: -559809
+Valor[3] de P: 329.001
+Valor[4] de P: -0.29009
+Valor[5] de P: 0.389968
+Valor[6] de P: -559136
+Valor[7] de P: 493.007
+Valor[8] de P: -662.75
+Iteración: 39
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 11
+Valor[0] de P: -6.78568e+08
+Valor[1] de P: 511592
+Valor[2] de P: -739423
+Valor[3] de P: 364.407
+Valor[4] de P: -0.274738
+Valor[5] de P: 0.397088
+Valor[6] de P: -738597
+Valor[7] de P: 556.85
+Valor[8] de P: -804.836
+Iteración: 40
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -5.83555e+08
+Valor[1] de P: 470468
+Valor[2] de P: -657985
+Valor[3] de P: 350.53
+Valor[4] de P: -0.282601
+Valor[5] de P: 0.395239
+Valor[6] de P: -657226
+Valor[7] de P: 529.862
+Valor[8] de P: -741.053
+Iteración: 41
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -4.3984e+08
+Valor[1] de P: 399369
+Valor[2] de P: -530399
+Valor[3] de P: 321.591
+Valor[4] de P: -0.292001
+Valor[5] de P: 0.387804
+Valor[6] de P: -529754
+Valor[7] de P: 481.01
+Valor[8] de P: -638.826
+Iteración: 42
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 11
+Valor[0] de P: -6.60071e+08
+Valor[1] de P: 503942
+Valor[2] de P: -723698
+Valor[3] de P: 362.039
+Valor[4] de P: -0.276405
+Valor[5] de P: 0.396938
+Valor[6] de P: -722884
+Valor[7] de P: 551.898
+Valor[8] de P: -792.566
+Iteración: 43
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -5.89894e+08
+Valor[1] de P: 473300
+Valor[2] de P: -663438
+Valor[3] de P: 351.52
+Valor[4] de P: -0.282042
+Valor[5] de P: 0.395345
+Valor[6] de P: -662674
+Valor[7] de P: 531.694
+Valor[8] de P: -745.29
+Iteración: 44
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 13
+Valor[0] de P: -4.98347e+08
+Valor[1] de P: 429650
+Valor[2] de P: -583116
+Valor[3] de P: 334.519
+Valor[4] de P: -0.288406
+Valor[5] de P: 0.391421
+Valor[6] de P: -582422
+Valor[7] de P: 502.135
+Valor[8] de P: -681.493
+Iteración: 45
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 12
+Valor[0] de P: -6.41012e+08
+Valor[1] de P: 495786
+Valor[2] de P: -707370
+Valor[3] de P: 359.315
+Valor[4] de P: -0.277909
+Valor[5] de P: 0.396511
+Valor[6] de P: -706570
+Valor[7] de P: 546.491
+Valor[8] de P: -779.714
+Iteración: 46
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 9
+Valor[0] de P: -4.26896e+08
+Valor[1] de P: 392353
+Valor[2] de P: -518526
+Valor[3] de P: 318.441
+Valor[4] de P: -0.292674
+Valor[5] de P: 0.386792
+Valor[6] de P: -517892
+Valor[7] de P: 475.986
+Valor[8] de P: -629.055
+Iteración: 47
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -5.37789e+08
+Valor[1] de P: 449029
+Valor[2] de P: -618038
+Valor[3] de P: 342.361
+Valor[4] de P: -0.285856
+Valor[5] de P: 0.393448
+Valor[6] de P: -617313
+Valor[7] de P: 515.427
+Valor[8] de P: -709.428
+Iteración: 48
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 10
+Valor[0] de P: -7.77054e+08
+Valor[1] de P: 549636
+Valor[2] de P: -822779
+Valor[3] de P: 374.395
+Valor[4] de P: -0.264822
+Valor[5] de P: 0.396426
+Valor[6] de P: -821892
+Valor[7] de P: 581.352
+Valor[8] de P: -870.256
+Iteración: 49
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 10
+Valor[0] de P: -4.07734e+08
+Valor[1] de P: 381805
+Valor[2] de P: -500844
+Valor[3] de P: 313.654
+Valor[4] de P: -0.293709
+Valor[5] de P: 0.385281
+Valor[6] de P: -500227
+Valor[7] de P: 468.416
+Valor[8] de P: -614.459
+Iteración: 50
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 10
+Valor[0] de P: -7.60559e+08
+Valor[1] de P: 543575
+Valor[2] de P: -808814
+Valor[3] de P: 373.036
+Valor[4] de P: -0.266611
+Valor[5] de P: 0.396704
+Valor[6] de P: -807938
+Valor[7] de P: 577.437
+Valor[8] de P: -859.2
+Iteración: 51
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 15
+Derivada Encoder D: 14
+Valor[0] de P: -5.04973e+08
+Valor[1] de P: 432985
+Valor[2] de P: -589033
+Valor[3] de P: 335.915
+Valor[4] de P: -0.288028
+Valor[5] de P: 0.391833
+Valor[6] de P: -588334
+Valor[7] de P: 504.462
+Valor[8] de P: -686.271
+Iteración: 52
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 11
+Valor[0] de P: -7.14746e+08
+Valor[1] de P: 526122
+Valor[2] de P: -770099
+Valor[3] de P: 368.633
+Valor[4] de P: -0.27135
+Valor[5] de P: 0.397182
+Valor[6] de P: -769250
+Valor[7] de P: 566.243
+Valor[8] de P: -828.825
+Iteración: 53
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.54917e+08
+Valor[1] de P: 541456
+Valor[2] de P: -804032
+Valor[3] de P: 372.52
+Valor[4] de P: -0.267186
+Valor[5] de P: 0.396756
+Valor[6] de P: -803158
+Valor[7] de P: 576.056
+Valor[8] de P: -855.411
+Iteración: 54
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -5.18169e+08
+Valor[1] de P: 439532
+Valor[2] de P: -600756
+Valor[3] de P: 338.6
+Valor[4] de P: -0.287214
+Valor[5] de P: 0.392566
+Valor[6] de P: -600046
+Valor[7] de P: 508.982
+Valor[8] de P: -695.682
+Iteración: 55
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 14
+Derivada Encoder D: 13
+Valor[0] de P: -5.11479e+08
+Valor[1] de P: 436192
+Valor[2] de P: -594794
+Valor[3] de P: 337.207
+Valor[4] de P: -0.287573
+Valor[5] de P: 0.392135
+Valor[6] de P: -594090
+Valor[7] de P: 506.643
+Valor[8] de P: -690.862
+Iteración: 56
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 55
+Derivada Encoder D: 54
+Valor[0] de P: -5.77063e+08
+Valor[1] de P: 467498
+Valor[2] de P: -652356
+Valor[3] de P: 349.436
+Valor[4] de P: -0.28309
+Valor[5] de P: 0.395029
+Valor[6] de P: -651601
+Valor[7] de P: 527.883
+Valor[8] de P: -736.62
+Iteración: 57
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -3.59438e+08
+Valor[1] de P: 4.41155e+06
+Valor[2] de P: 134188
+Valor[3] de P: 65.6245
+Valor[4] de P: -0.80544
+Valor[5] de P: -0.0244993
+Valor[6] de P: 141142
+Valor[7] de P: -1732.3
+Valor[8] de P: -52.6921
+Iteración: 58
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 12
+Valor[0] de P: -6.60071e+08
+Valor[1] de P: 503942
+Valor[2] de P: -723698
+Valor[3] de P: 362.039
+Valor[4] de P: -0.276405
+Valor[5] de P: 0.396938
+Valor[6] de P: -722884
+Valor[7] de P: 551.898
+Valor[8] de P: -792.566
+Iteración: 59
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 11
+Valor[0] de P: -4.65598e+08
+Valor[1] de P: 412901
+Valor[2] de P: -553728
+Valor[3] de P: 327.434
+Valor[4] de P: -0.290375
+Valor[5] de P: 0.389412
+Valor[6] de P: -553061
+Valor[7] de P: 490.464
+Valor[8] de P: -657.747
+Iteración: 60
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -5.96522e+08
+Valor[1] de P: 476347
+Valor[2] de P: -669208
+Valor[3] de P: 352.67
+Valor[4] de P: -0.281622
+Valor[5] de P: 0.395643
+Valor[6] de P: -668439
+Valor[7] de P: 533.776
+Valor[8] de P: -749.888
+Iteración: 61
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 14
+Valor[0] de P: -4.52682e+08
+Valor[1] de P: 406163
+Valor[2] de P: -542061
+Valor[3] de P: 324.543
+Valor[4] de P: -0.291192
+Valor[5] de P: 0.388621
+Valor[6] de P: -541404
+Valor[7] de P: 485.767
+Valor[8] de P: -648.3
+Iteración: 62
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.43866e+08
+Valor[1] de P: 537387
+Valor[2] de P: -794746
+Valor[3] de P: 371.614
+Valor[4] de P: -0.268463
+Valor[5] de P: 0.397032
+Valor[6] de P: -793879
+Valor[7] de P: 573.517
+Valor[8] de P: -848.179
+Iteración: 63
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -6.22127e+08
+Valor[1] de P: 487670
+Valor[2] de P: -691230
+Valor[3] de P: 356.624
+Valor[4] de P: -0.279549
+Valor[5] de P: 0.396236
+Valor[6] de P: -690443
+Valor[7] de P: 541.222
+Valor[8] de P: -767.135
+Iteración: 64
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -3.69917e+08
+Valor[1] de P: 360181
+Valor[2] de P: -465379
+Valor[3] de P: 303.478
+Valor[4] de P: -0.295491
+Valor[5] de P: 0.381794
+Valor[6] de P: -464796
+Valor[7] de P: 452.562
+Valor[8] de P: -584.741
+Iteración: 65
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -6.90758e+08
+Valor[1] de P: 516553
+Valor[2] de P: -749770
+Valor[3] de P: 365.893
+Valor[4] de P: -0.273617
+Valor[5] de P: 0.397151
+Valor[6] de P: -748936
+Valor[7] de P: 560.058
+Valor[8] de P: -812.918
+Iteración: 66
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 12
+Valor[0] de P: -4.26896e+08
+Valor[1] de P: 392353
+Valor[2] de P: -518526
+Valor[3] de P: 318.441
+Valor[4] de P: -0.292674
+Valor[5] de P: 0.386792
+Valor[6] de P: -517892
+Valor[7] de P: 475.986
+Valor[8] de P: -629.055
+Iteración: 67
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -4.46263e+08
+Valor[1] de P: 402783
+Valor[2] de P: -536243
+Valor[3] de P: 323.083
+Valor[4] de P: -0.291605
+Valor[5] de P: 0.388226
+Valor[6] de P: -535592
+Valor[7] de P: 483.409
+Valor[8] de P: -643.583
+Iteración: 68
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -5.31171e+08
+Valor[1] de P: 445820
+Valor[2] de P: -612199
+Valor[3] de P: 341.076
+Valor[4] de P: -0.286271
+Valor[5] de P: 0.393106
+Valor[6] de P: -611479
+Valor[7] de P: 513.223
+Valor[8] de P: -704.758
+Iteración: 69
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 10
+Valor[0] de P: -6.47578e+08
+Valor[1] de P: 498678
+Valor[2] de P: -713047
+Valor[3] de P: 360.348
+Valor[4] de P: -0.277492
+Valor[5] de P: 0.396778
+Valor[6] de P: -712242
+Valor[7] de P: 548.474
+Valor[8] de P: -784.248
+Iteración: 70
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -5.11479e+08
+Valor[1] de P: 436192
+Valor[2] de P: -594794
+Valor[3] de P: 337.207
+Valor[4] de P: -0.287573
+Valor[5] de P: 0.392135
+Valor[6] de P: -594090
+Valor[7] de P: 506.643
+Valor[8] de P: -690.862
+Iteración: 71
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -7.54917e+08
+Valor[1] de P: 541456
+Valor[2] de P: -804032
+Valor[3] de P: 372.52
+Valor[4] de P: -0.267186
+Valor[5] de P: 0.396756
+Valor[6] de P: -803158
+Valor[7] de P: 576.056
+Valor[8] de P: -855.411
+Iteración: 72
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 11
+Valor[0] de P: -6.72312e+08
+Valor[1] de P: 508980
+Valor[2] de P: -734079
+Valor[3] de P: 363.573
+Valor[4] de P: -0.275247
+Valor[5] de P: 0.396976
+Valor[6] de P: -733258
+Valor[7] de P: 555.12
+Valor[8] de P: -800.625
+Iteración: 73
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -4.85346e+08
+Valor[1] de P: 423119
+Valor[2] de P: -571530
+Valor[3] de P: 331.828
+Valor[4] de P: -0.289284
+Valor[5] de P: 0.390751
+Valor[6] de P: -570846
+Valor[7] de P: 497.657
+Valor[8] de P: -672.212
+Iteración: 74
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -5.63966e+08
+Valor[1] de P: 461413
+Valor[2] de P: -640946
+Valor[3] de P: 347.138
+Valor[4] de P: -0.284013
+Valor[5] de P: 0.394521
+Valor[6] de P: -640201
+Valor[7] de P: 523.785
+Valor[8] de P: -727.587
+Iteración: 75
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -7.08559e+08
+Valor[1] de P: 523596
+Valor[2] de P: -764803
+Valor[3] de P: 367.852
+Valor[4] de P: -0.271827
+Valor[5] de P: 0.397051
+Valor[6] de P: -763958
+Valor[7] de P: 564.533
+Valor[8] de P: -824.599
+Iteración: 76
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 9
+Valor[0] de P: -7.32344e+08
+Valor[1] de P: 532977
+Valor[2] de P: -784996
+Valor[3] de P: 370.482
+Valor[4] de P: -0.269626
+Valor[5] de P: 0.397118
+Valor[6] de P: -784136
+Valor[7] de P: 570.67
+Valor[8] de P: -840.512
+Iteración: 77
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 12
+Valor[0] de P: -4.98347e+08
+Valor[1] de P: 429650
+Valor[2] de P: -583116
+Valor[3] de P: 334.519
+Valor[4] de P: -0.288406
+Valor[5] de P: 0.391421
+Valor[6] de P: -582422
+Valor[7] de P: 502.135
+Valor[8] de P: -681.493
+Iteración: 78
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.2061e+08
+Valor[1] de P: 528408
+Valor[2] de P: -775055
+Valor[3] de P: 369.249
+Valor[4] de P: -0.270763
+Valor[5] de P: 0.397147
+Valor[6] de P: -774202
+Valor[7] de P: 567.706
+Valor[8] de P: -832.697
+Iteración: 79
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.49313e+08
+Valor[1] de P: 539364
+Valor[2] de P: -799299
+Valor[3] de P: 372.026
+Valor[4] de P: -0.267789
+Valor[5] de P: 0.396843
+Valor[6] de P: -798429
+Valor[7] de P: 574.718
+Valor[8] de P: -851.691
+Iteración: 80
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -5.70533e+08
+Valor[1] de P: 464479
+Valor[2] de P: -646676
+Valor[3] de P: 348.305
+Valor[4] de P: -0.283561
+Valor[5] de P: 0.39479
+Valor[6] de P: -645926
+Valor[7] de P: 525.857
+Valor[8] de P: -732.13
+Iteración: 81
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 11
+Derivada Encoder D: 11
+Valor[0] de P: -6.90758e+08
+Valor[1] de P: 516553
+Valor[2] de P: -749770
+Valor[3] de P: 365.893
+Valor[4] de P: -0.273617
+Valor[5] de P: 0.397151
+Valor[6] de P: -748936
+Valor[7] de P: 560.058
+Valor[8] de P: -812.918
+Iteración: 82
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 11
+Valor[0] de P: -7.43866e+08
+Valor[1] de P: 537387
+Valor[2] de P: -794746
+Valor[3] de P: 371.614
+Valor[4] de P: -0.268463
+Valor[5] de P: 0.397032
+Valor[6] de P: -793879
+Valor[7] de P: 573.517
+Valor[8] de P: -848.179
+Iteración: 83
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 9
+Valor[0] de P: -6.41012e+08
+Valor[1] de P: 495786
+Valor[2] de P: -707370
+Valor[3] de P: 359.315
+Valor[4] de P: -0.277909
+Valor[5] de P: 0.396511
+Valor[6] de P: -706570
+Valor[7] de P: 546.491
+Valor[8] de P: -779.714
+Iteración: 84
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -5.77063e+08
+Valor[1] de P: 467498
+Valor[2] de P: -652356
+Valor[3] de P: 349.436
+Valor[4] de P: -0.28309
+Valor[5] de P: 0.395029
+Valor[6] de P: -651601
+Valor[7] de P: 527.883
+Valor[8] de P: -736.62
+Iteración: 85
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 9
+Valor[0] de P: -7.32344e+08
+Valor[1] de P: 532977
+Valor[2] de P: -784996
+Valor[3] de P: 370.482
+Valor[4] de P: -0.269626
+Valor[5] de P: 0.397118
+Valor[6] de P: -784136
+Valor[7] de P: 570.67
+Valor[8] de P: -840.512
+Iteración: 86
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 14
+Valor[0] de P: -6.72312e+08
+Valor[1] de P: 508980
+Valor[2] de P: -734079
+Valor[3] de P: 363.573
+Valor[4] de P: -0.275247
+Valor[5] de P: 0.396976
+Valor[6] de P: -733258
+Valor[7] de P: 555.12
+Valor[8] de P: -800.625
+Iteración: 87
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -5.18169e+08
+Valor[1] de P: 439532
+Valor[2] de P: -600756
+Valor[3] de P: 338.6
+Valor[4] de P: -0.287214
+Valor[5] de P: 0.392566
+Valor[6] de P: -600046
+Valor[7] de P: 508.982
+Valor[8] de P: -695.682
+Iteración: 88
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -7.32344e+08
+Valor[1] de P: 532977
+Valor[2] de P: -784996
+Valor[3] de P: 370.482
+Valor[4] de P: -0.269626
+Valor[5] de P: 0.397118
+Valor[6] de P: -784136
+Valor[7] de P: 570.67
+Valor[8] de P: -840.512
+Iteración: 89
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 10
+Valor[0] de P: -5.18169e+08
+Valor[1] de P: 439532
+Valor[2] de P: -600756
+Valor[3] de P: 338.6
+Valor[4] de P: -0.287214
+Valor[5] de P: 0.392566
+Valor[6] de P: -600046
+Valor[7] de P: 508.982
+Valor[8] de P: -695.682
+Iteración: 90
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 11
+Valor[0] de P: -5.83555e+08
+Valor[1] de P: 470468
+Valor[2] de P: -657985
+Valor[3] de P: 350.53
+Valor[4] de P: -0.282601
+Valor[5] de P: 0.395239
+Valor[6] de P: -657226
+Valor[7] de P: 529.862
+Valor[8] de P: -741.053
+Iteración: 91
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -4.91804e+08
+Valor[1] de P: 426361
+Valor[2] de P: -577282
+Valor[3] de P: 333.157
+Valor[4] de P: -0.288825
+Valor[5] de P: 0.391061
+Valor[6] de P: -576593
+Valor[7] de P: 499.867
+Valor[8] de P: -676.807
+Iteración: 92
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 13
+Valor[0] de P: -7.08559e+08
+Valor[1] de P: 523596
+Valor[2] de P: -764803
+Valor[3] de P: 367.852
+Valor[4] de P: -0.271827
+Valor[5] de P: 0.397051
+Valor[6] de P: -763958
+Valor[7] de P: 564.533
+Valor[8] de P: -824.599
+Iteración: 93
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 12
+Valor[0] de P: -6.09422e+08
+Valor[1] de P: 482112
+Valor[2] de P: -680335
+Valor[3] de P: 354.723
+Valor[4] de P: -0.280621
+Valor[5] de P: 0.395999
+Valor[6] de P: -679556
+Valor[7] de P: 537.596
+Valor[8] de P: -758.63
+Iteración: 94
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 13
+Valor[0] de P: -4.3332e+08
+Valor[1] de P: 395834
+Valor[2] de P: -524417
+Valor[3] de P: 319.997
+Valor[4] de P: -0.292315
+Valor[5] de P: 0.38727
+Valor[6] de P: -523777
+Valor[7] de P: 478.466
+Valor[8] de P: -633.891
+Iteración: 95
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 9
+Derivada Encoder D: 9
+Valor[0] de P: -6.60071e+08
+Valor[1] de P: 503942
+Valor[2] de P: -723698
+Valor[3] de P: 362.039
+Valor[4] de P: -0.276405
+Valor[5] de P: 0.396938
+Valor[6] de P: -722884
+Valor[7] de P: 551.898
+Valor[8] de P: -792.566
+Iteración: 96
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 12
+Derivada Encoder D: 10
+Valor[0] de P: -7.77054e+08
+Valor[1] de P: 549636
+Valor[2] de P: -822779
+Valor[3] de P: 374.395
+Valor[4] de P: -0.264822
+Valor[5] de P: 0.396426
+Valor[6] de P: -821892
+Valor[7] de P: 581.352
+Valor[8] de P: -870.256
+Iteración: 97
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 13
+Derivada Encoder D: 13
+Valor[0] de P: -4.07734e+08
+Valor[1] de P: 381805
+Valor[2] de P: -500844
+Valor[3] de P: 313.654
+Valor[4] de P: -0.293709
+Valor[5] de P: 0.385281
+Valor[6] de P: -500227
+Valor[7] de P: 468.416
+Valor[8] de P: -614.459
+Iteración: 98
+---------------
+Medidas de entrada Izq: 0.17819
+Medidas de entrada Dch: 0.167001
+Sensor color: 0
+Derivada Encoder I: 10
+Derivada Encoder D: 11
+Valor[0] de P: -6.34734e+08
+Valor[1] de P: 493105
+Valor[2] de P: -702010
+Valor[3] de P: 358.435
+Valor[4] de P: -0.278457
+Valor[5] de P: 0.396426
+Valor[6] de P: -701214
+Valor[7] de P: 544.751
+Valor[8] de P: -775.536
+Iteración: 99
+---------------

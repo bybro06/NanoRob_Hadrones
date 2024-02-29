@@ -20,9 +20,9 @@ include "includes\Movimiento_Recto_MotGran"
 'Sensor.Wait(2)
 Thread.Run = PIDControl_AD
 Thread.Run = Odometry
-Thread.Run = DisplayVelocidades
+Thread.Run = Display
 Main()
-Program.Delay(10000)
+'Program.Delay(10000)
 
 Sub StartArm
 
@@ -52,7 +52,7 @@ EndSub
 
 Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
   
-  iteracion = 0
+  itreal = 0
   radio = 56/2
   
   MultiMatrizCoef(velI_k1,-1,velI)
@@ -60,19 +60,13 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
   
   'Paso de velocidad a rad/s
   
-  MultiMatrizCoef(velI_k1,56.1197,omegaI_k1)
-  MultiMatrizCoef(velD_k1,59.879,omegaD_k1)
+  MultiMatrizCoef(velI_k1,1/56.12,omegaI_k1) #56.12
+  MultiMatrizCoef(velD_k1,1/59.88,omegaD_k1) #59.88
   
   I = Vector.Data(9,"1 0 0  0 1 0  0 0 1")
   minus_1 = Vector.Data(9,"-1 0 0 0 -1 0 0 0 -1")
   
-  df_k = Vector.Init(3*3,0)
-  
-  #Matriz de estimación de posición
-  k_k1 = Vector.Init(3,0)
-  
-  #Matriz de posición ajustada
-  k1_k = Vector.Init(3,0)
+  Q_k1 = Vector.Data(3*3, "0.25 0 0  0 0.25 0 0 0 0.002")
   
   delta_t = EV3.Time
   old_t = 0
@@ -80,39 +74,53 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
   old_I = -1*MotorB.GetTacho()
   old_D = -1*MotorC.GetTacho()
   
-  log_file = EV3File.OpenWrite("log")
+  log_file = EV3File.OpenWrite("WRO2024/log")
   
-  While "True"
+  While omegaI_k1[itreal] <> 0 Or omegaD_k1[itreal] <> 0
+    
+    df_k = Vector.Init(3*3,0)
+    
+    #Matriz de estimación de posición
+    k_k1 = Vector.Init(3,0)
+    
+    #Matriz de posición ajustada
+    k1_k = Vector.Init(3,0)
+    
+    H = Vector.Init(3,0)
+    
+    dH = Vector.Init(9,0)
+    
+    R = Vector.Data(9,"0.25 0 0  0 0.25 0 0 0 0.002")
+    
+    #Matriz de valores de los sensores
+    z = Vector.Init(3,0)
+    
     
     delta_t = EV3.Time - old_t
     old_t = EV3.Time
     
     @D_T = delta_t
     
-    Motor.StartSync("BC",velI[iteracion],velD[iteracion])
+    Motor.StartSync("BC",velI[itreal],velD[itreal])
     
-    k_k1[0] = k_k1[0] + ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    k_k1[1] = k_k1[1] + ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    k_k1[2] = k_k1[2] + ((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(2*@Dw)
+    k_k1[0] = k_k1[0] + ((omegaI_k1[itreal]+omegaD_k1[itreal])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[itreal]-omegaI_k1[itreal])*radio*delta_t)/(4*@Dw))
+    k_k1[1] = k_k1[1] + ((omegaI_k1[itreal]+omegaD_k1[itreal])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[itreal]-omegaI_k1[itreal])*radio*delta_t)/(4*@Dw))
+    k_k1[2] = k_k1[2] + ((omegaD_k1[itreal]-omegaI_k1[itreal])*radio*delta_t)/(2*@Dw)
     
-    df_k[2] = -1*((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
-    df_k[2] = ((omegaI_k1[iteracion]+omegaD_k1[iteracion])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[iteracion]-omegaI_k1[iteracion])*radio*delta_t)/(4*@Dw))
+    df_k[2] = -1*((omegaI_k1[itreal]+omegaD_k1[itreal])*radio*delta_t)/2*Math.Sin(k_k1[2]+((omegaD_k1[itreal]-omegaI_k1[itreal])*radio*delta_t)/(4*@Dw))
+    df_k[2] = ((omegaI_k1[itreal]+omegaD_k1[itreal])*radio*delta_t)/2*Math.Cos(k_k1[2]+((omegaD_k1[itreal]-omegaI_k1[itreal])*radio*delta_t)/(4*@Dw))
     
     F_k = Vector.Add(3*3,I,df_k)
-    
-    Q_k1 = Vector.Data(3*3, "0.25 0 0  0 0.25 0 0 0 0.002")
     
     U = Vector.Multiply(3,3,3,F_k,I)
     TraspMatVect3x3(U,V)
     W = Vector.Multiply(3,3,3,U,V)
     P_k_k1 = Vector.Add(3*3,W,Q_k1)
     
-    H = Vector.Init(3,0)
     H[0] = (k_k1[2] - k1_k[2])*delta_t
     H[1] = (Math.SquareRoot(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2)) - @Dw*(k_k1[2]-k1_k[2])) / radio
     H[2] = (Math.SquareRoot(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2)) + @Dw*(k_k1[2]-k1_k[2])) / radio
     
-    dH = Vector.Init(9,0)
     dH[2] = 1/delta_t
     dH[3] = Math.Power(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2),-1/2)*(k_k1[0]-k1_k[0])/radio
     dH[4] = Math.Power(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2),-1/2)*(k_k1[1]-k1_k[1])/radio
@@ -120,11 +128,6 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
     dH[6] = Math.Power(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2),-1/2)*(k_k1[0]-k1_k[0])/radio
     dH[7] = Math.Power(Math.Power(k_k1[0]-k1_k[0],2)+Math.Power(k_k1[1]-k1_k[1],2),-1/2)*(k_k1[1]-k1_k[1])/radio
     dH[8] = @Dw/radio
-    
-    R = Vector.Data(9,"0.25 0 0  0 0.25 0 0 0 0.002")
-    
-    #Matriz de valores de los sensores
-    z = Vector.Init(3,0)
     
     z[0] = Sensor.ReadRawValue(2,0)
     z[1] = -1*MotorB.GetTacho() - old_I
@@ -156,16 +159,23 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
     #Matriz de covarianza actualizada
     P = Vector.Multiply(3,3,3,P1,P_k_k1)
     
-    EV3File.WriteLine(log_file,"Medidas de entrada Izq: "+omegaI_k1[iteracion])
+    EV3File.WriteLine(log_file,"Medidas de entrada Izq: "+omegaI_k1[itreal])
     
-    EV3File.WriteLine(log_file,"Medidas de entrada Dch: "+omegaD_k1[iteracion])
+    EV3File.WriteLine(log_file,"Medidas de entrada Dch: "+omegaD_k1[itreal])
     
-    EV3File.WriteLine(log_file,"Sensores:")
-    EV3File.WriteNumberArray(log_file,3,z)
+    EV3File.WriteLine(log_file,"Sensor color: "+z[0])
+    EV3File.WriteLine(log_file,"Derivada Encoder I: "+z[1])
+    EV3File.WriteLine(log_file,"Derivada Encoder D: "+z[2])
+    
+    For j = 0 To 8
+      EV3File.WriteLine(log_file,"Valor["+j+"] de P: "+P[j])
+    EndFor
+    
+    EV3File.WriteLine(log_file,"Iteración: "+itreal)
     
     EV3File.WriteLine(log_file,"---------------")
 
-    iteracion ++
+    itreal ++
     
     old_I = -1*MotorB.GetTacho()
     old_D = -1*MotorC.GetTacho()
@@ -188,8 +198,8 @@ Sub Odometry
   i = 0
   While "True"
 
-    alpha_L[i] = Math.GetRadians(MotorB.GetTacho())
-    alpha_R[i] = Math.GetRadians(MotorC.GetTacho())
+    alpha_L[i] = Math.GetRadians(MotorB.GetTacho()*-1)
+    alpha_R[i] = Math.GetRadians(MotorC.GetTacho()*-1)
     
     
     d_L = (alpha_L[i]-alpha_L[i-1]) * Diameter/2
@@ -199,34 +209,18 @@ Sub Odometry
 
     delta_theta = (d_R - d_L) / (2 * Dw)
 
-    If xtcorrect <> 0 Then
-      xt[i+1] = xtcorrect
-      xtcorrect = 0
-    Else
-      xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])*-1
-    EndIf
+    xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])*-1
     
-    If ytcorrect <> 0 Then
-      yt[i+1] = ytcorrect
-      ytcorrect = 0
-    Else
-      yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
-    EndIf
-    
-    If thetatcorrect <> 0 Then
-      thetat[i+1] = thetatcorrect
-      thetatcorrect = 0
-    Else
-      thetat[i+1] = thetat[i] + delta_theta
-    EndIf
+    yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])*-1
+   
+    thetat[i+1] = thetat[i] + delta_theta
     
     xtime = xt[i+1]
     ytime = yt[i+1]
     thetatime = thetat[i+1]
     
     i++
-    
-    
+
     Program.Delay(10)
     
   EndWhile
@@ -297,7 +291,7 @@ Sub Display
     LCD.Write(5,75,"rad/s de C:  "+Math.GetRadians(MotorC.GetTacho()-old_C)/0.05*-1)
     
     
-    'LCD.Write(5,45,"Delta T:  "+D_T)
+    LCD.Write(5,85,"Delta T:  "+D_T)
     
     
     'LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
@@ -353,6 +347,7 @@ Sub Main
   L = Vector.Init(100,10)
   R = Vector.Init(100,10)
   Kalman_Filter(L,R)
+  Program.End()
   StartArm()
   GUnivEncMG(0,20,40)
   GUnivEncMG(20,0,40)
@@ -426,6 +421,7 @@ Sub MainControlRuedas
     Motor.StartSync("BC",-vel_B,-vel_C)
   EndWhile
 EndSub
+
 
 Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   
@@ -527,38 +523,6 @@ Function ToXY_Giro(in number Velocidad, in number x, in number y, in number thet
 EndFunction
 
 
-Function SumaMatrices3x3(in number[] M1, in number[] M2, in number[] M3, in number[] N1, in number[] N2, in number[] N3, out number[] S1, out number[] S2, out number[] S3)
-  
-  S1[0] = M1[0] + N1[0]
-  S1[1] = M1[1] + N1[1]
-  S1[2] = M1[2] + N1[2]
-  
-  S2[0] = M2[0] + N2[0]
-  S2[1] = M2[1] + N2[1]
-  S2[2] = M2[2] + N2[2]
-  
-  S3[0] = M3[0] + N3[0]
-  S3[1] = M3[1] + N3[1]
-  S3[2] = M3[2] + N3[2]
-  
-EndFunction
-
-Function TraspMatriz3x3(in number[] M1, in number[] M2, in number[] M3, out number[] S1, out number[] S2, out number[] S3)
-  
-  S1[0] = M1[0] 
-  S1[1] = M2[0] 
-  S1[2] = M3[0] 
-  
-  S2[0] = M1[1] 
-  S2[1] = M2[1] 
-  S2[2] = M3[1] 
-  
-  S3[0] = M1[2] 
-  S3[1] = M2[2] 
-  S3[2] = M3[2] 
-  
-EndFunction
-
 Function TraspMatVect3x3(in number[] M, out number[] S)
   
   S = Vector.Init(3*3,0)
@@ -574,45 +538,6 @@ Function TraspMatVect3x3(in number[] M, out number[] S)
   S[6] = M[2] 
   S[7] = M[5] 
   S[8] = M[8] 
-  
-EndFunction
-
-Function MultiMatrices3x3(in number[] M1, in number[] M2, in number[] M3, in number[] N1, in number[] N2, in number[] N3, out number[] S1, out number[] S2, out number[] S3)
-  
-  S1[0] = M1[0] * N1[0] + M1[1] * N2[0] + M1[2] * N3[0]
-  S1[1] = M1[0] * N1[1] + M1[1] * N2[1] + M1[2] * N3[1]
-  S1[2] = M1[0] * N1[2] + M1[1] * N2[2] + M1[2] * N3[2]
-  
-  S2[0] = M2[0] * N1[0] + M2[1] * N2[0] + M2[2] * N3[0]
-  S2[1] = M2[0] * N1[1] + M2[1] * N2[1] + M2[2] * N3[1]
-  S2[2] = M2[0] * N1[2] + M2[1] * N2[2] + M2[2] * N3[2]
-  
-  S3[0] = M3[0] * N1[0] + M3[1] * N2[0] + M3[2] * N3[0]
-  S3[1] = M3[0] * N1[1] + M3[1] * N2[1] + M3[2] * N3[1]
-  S3[2] = M3[0] * N1[2] + M3[1] * N2[2] + M3[2] * N3[2]
-  
-EndFunction
-
-Function InvMatriz3x3(in number[] M1, in number[] M2, in number[] M3, out number[] S1, out number[] S2, out number[] S3)
-  
-  'Hallamos determinante
-  
-  Determinante = M1[0]*(M2[1]*M3[2]-M2[2]*M3[1]) - M1[1]*(M2[0]*M3[2]-M2[2]*M3[0]) + M1[2]*(M2[0]*M3[1]-M2[1]*M3[0])
-  If Determinante <> 0 Then
-    
-    S1[0] = (M2[1]*M3[2]-M2[2]*M3[1]) / Determinante
-    S1[1] = (M2[0]*M3[2]-M2[2]*M3[0]) / Determinante
-    S1[2] = (M2[0]*M3[1]-M2[1]*M3[0]) / Determinante
-    
-    S2[0] = (M1[1]*M3[2]-M1[2]*M3[1]) / Determinante
-    S2[1] = (M1[0]*M3[2]-M1[2]*M3[0]) / Determinante
-    S2[2] = (M1[0]*M3[1]-M1[1]*M3[0]) / Determinante
-    
-    S3[0] = (M1[1]*M2[2]-M1[2]*M2[1]) / Determinante
-    S3[1] = (M1[0]*M2[2]-M1[2]*M2[0]) / Determinante
-    S3[2] = (M1[0]*M2[1]-M1[1]*M2[0]) / Determinante
-    
-  EndIf
   
 EndFunction
 
@@ -645,12 +570,13 @@ Function MultiMatrizCoef(in number[] M, in number k, out number[] S)
   
   While M[i] <> 0
     
-    M[i] = k * M[i]
+    S[i] = k * M[i]
     
     i++
   EndWhile
   
 EndFunction
+
 
 Function BMoveA(in number degrees_per_second, in number degrees)
   
