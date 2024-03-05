@@ -74,7 +74,7 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
   old_I = -1*MotorB.GetTacho()
   old_D = -1*MotorC.GetTacho()
   
-  log_file = EV3File.OpenWrite("WRO2024/log")
+  log_file = EV3File.OpenWrite("WRO2024/log.txt")
   
   While omegaI_k1[itreal] <> 0 Or omegaD_k1[itreal] <> 0
     
@@ -94,7 +94,6 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
     
     #Matriz de valores de los sensores
     z = Vector.Init(3,0)
-    
     
     delta_t = EV3.Time - old_t
     old_t = EV3.Time
@@ -164,16 +163,18 @@ Function Kalman_Filter(in number[] velI_k1, in number[] velD_k1)
     EV3File.WriteLine(log_file,"Medidas de entrada Dch: "+omegaD_k1[itreal])
     
     EV3File.WriteLine(log_file,"Sensor color: "+z[0])
-    EV3File.WriteLine(log_file,"Derivada Encoder I: "+z[1])
-    EV3File.WriteLine(log_file,"Derivada Encoder D: "+z[2])
+    EV3File.WriteLine(log_file,"Encoder I: "+MotorB.GetTacho()*-1)
+    EV3File.WriteLine(log_file,"Encoder D: "+MotorC.GetTacho()*-1)
     
-    For j = 0 To 8
-      EV3File.WriteLine(log_file,"Valor["+j+"] de P: "+P[j])
-    EndFor
+    'For j = 0 To 8
+      'EV3File.WriteLine(log_file,"Valor["+j+"] de P: "+P[j])
+    'EndFor
     
     EV3File.WriteLine(log_file,"Iteración: "+itreal)
+    EV3File.WriteLine(log_file,"Delta t: "+delta_t+" ms")
     
     EV3File.WriteLine(log_file,"---------------")
+    EV3File.WriteLine(log_file,"")
 
     itreal ++
     
@@ -344,8 +345,8 @@ EndSub
 'Subs a ejecutar
 
 Sub Main
-  L = Vector.Init(100,10)
-  R = Vector.Init(100,10)
+  L = Vector.Init(100,50)
+  R = Vector.Init(100,50)
   Kalman_Filter(L,R)
   Program.End()
   StartArm()
@@ -435,6 +436,10 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   
   diff_x = x - @xtime
   diff_y = y - @ytime
+  
+  if  Then
+  EndIf
+  
   
   angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
   

@@ -168,8 +168,8 @@ gv_old_c = MotorC.GetTacho ()
 EndWhile
 EndSub
 Sub f_main_0
-gv_l = Vector.Init ( 100 , 10 )
-gv_r = Vector.Init ( 100 , 10 )
+gv_l = Vector.Init ( 100 , 50 )
+gv_r = Vector.Init ( 100 , 50 )
 lv_veli_k1_33 = gv_l
 lv_veld_k1_33 = gv_r
 f_kalman_filter_2 ()
@@ -283,7 +283,7 @@ lv_delta_t_33 = EV3.Time
 lv_old_t_33 = 0
 lv_old_i_33 = - 1 * MotorB.GetTacho ()
 lv_old_d_33 = - 1 * MotorC.GetTacho ()
-lv_log_file_33 = EV3File.OpenWrite ( "WRO2024/log" )
+lv_log_file_33 = EV3File.OpenWrite ( "WRO2024/log.txt" )
 While lv_omegai_k1_33 [ lv_itreal_33 ] <> 0 Or lv_omegad_k1_33 [ lv_itreal_33 ] <> 0
 lv_df_k_33 = Vector.Init ( 3 * 3 , 0 )
 lv_k_k1_33 = Vector.Init ( 3 , 0 )
@@ -343,13 +343,12 @@ lv_p_33 = Vector.Multiply ( 3 , 3 , 3 , lv_p1_33 , lv_p_k_k1_33 )
 EV3File.WriteLine ( lv_log_file_33 , "Medidas de entrada Izq: " + lv_omegai_k1_33 [ lv_itreal_33 ] )
 EV3File.WriteLine ( lv_log_file_33 , "Medidas de entrada Dch: " + lv_omegad_k1_33 [ lv_itreal_33 ] )
 EV3File.WriteLine ( lv_log_file_33 , "Sensor color: " + lv_z_33 [ 0 ] )
-EV3File.WriteLine ( lv_log_file_33 , "Derivada Encoder I: " + lv_z_33 [ 1 ] )
-EV3File.WriteLine ( lv_log_file_33 , "Derivada Encoder D: " + lv_z_33 [ 2 ] )
-For lv_j_33 = 0 To 8
-EV3File.WriteLine ( lv_log_file_33 , "Valor[" + lv_j_33 + "] de P: " + lv_p_33 [ lv_j_33 ] )
-EndFor
+EV3File.WriteLine ( lv_log_file_33 , "Encoder I: " + MotorB.GetTacho () * - 1 )
+EV3File.WriteLine ( lv_log_file_33 , "Encoder D: " + MotorC.GetTacho () * - 1 )
 EV3File.WriteLine ( lv_log_file_33 , "Iteración: " + lv_itreal_33 )
+EV3File.WriteLine ( lv_log_file_33 , "Delta t: " + lv_delta_t_33 + " ms" )
 EV3File.WriteLine ( lv_log_file_33 , "---------------" )
+EV3File.WriteLine ( lv_log_file_33 , "" )
 lv_itreal_33 = lv_itreal_33 + 1
 lv_old_i_33 = - 1 * MotorB.GetTacho ()
 lv_old_d_33 = - 1 * MotorC.GetTacho ()
