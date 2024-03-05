@@ -1,0 +1,181 @@
+Function SL14PIDUniversal(in number Velocidad, in number kp, in number ki, in number kd, in number mode, in number encodb, in number Sens, in number col)
+  'Siguelíneas 1-4 PID Universal
+  
+  I = "B"
+  D = "C"
+  error = 0
+  olderror = 0
+  errsum = 0
+  u = 0
+  Signo = Velocidad / Math.Abs(Velocidad)
+  
+  if mode = 0 Then
+    
+    Motor.ResetCount("C")
+    While Math.Abs(Motor.GetCount("C")) < encodb
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum * ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    
+  ElseIf mode = 2 Then
+    
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 2)
+    while Sensor.ReadRawValue(Sens, 0) <> col
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Sensor.SetMode(Sens, smode)
+    
+  ElseIf mode = 1 Then
+    
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 0)
+    while Sensor.ReadPercent(Sens) > col
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Sensor.SetMode(Sens, smode)
+    
+  EndIf
+  Motor.Stop(I+D, "True")
+EndFunction
+
+Function SL14PIDUniversalF(in number Velocidad, in number kp, in number ki, in number kd, in number mode, in number encodb, in number Sens, in number col)
+  'Siguelíneas 1-4 PID Universal Sin Frenos
+  
+  I = "B"
+  D = "C"
+  error = 0
+  olderror = 0
+  errsum = 0
+  u = 0
+  Signo = Velocidad / Math.Abs(Velocidad)
+  
+  if mode = 0 Then
+    
+    Motor.ResetCount("C")
+    While Math.Abs(Motor.GetCount("C")) < encodb
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum * ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    
+  ElseIf mode = 2 Then
+    
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 2)
+    while Sensor.ReadRawValue(Sens, 0) <> col
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Sensor.SetMode(Sens, smode)
+    
+  ElseIf mode = 1 Then
+    
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 0)
+    while Sensor.ReadPercent(Sens) > col
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * Signo
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Sensor.SetMode(Sens, smode)
+    
+  EndIf
+  Motor.Stop(I+D, "False")
+EndFunction
+
+Function SL1SPIDUniversal(in number Velocidad, in number kp, in number ki, in number kd, in string lad, in number S, in number mode, in number encodb, in number Sens, in number col)
+  'Siguelíneas 1 Sensor PID Universal
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  u = 0
+  
+  if lad = "I" then
+    lado = -1
+  Else
+    lado = 1
+  EndIf
+  
+  if mode = 0 Then
+    Motor.ResetCount("C")
+    While math.abs(Motor.GetCount("C")) < encodb
+      error = 50 - Sensor.ReadPercent(S) 
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync("BC", -(Velocidad+u*lado), Velocidad - u*lado)
+      olderror = error
+    EndWhile
+    Motor.Stop("BC", "True")
+  ElseIf mode = 1 Then
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 2)
+    while Sensor.ReadRawValue(Sens, 0) <> col
+      error = 50 - Sensor.ReadPercent(S) 
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync("BC", -(Velocidad+u*lado), Velocidad - u*lado)
+      olderror = error
+    EndWhile
+    Motor.Stop("BC", "True")
+    Sensor.SetMode(Sens, smode)
+    EndIf
+EndFunction
+
+Function SL1SPIDUniversalF(in number Velocidad, in number kp, in number ki, in number kd, in string lad, in number S, in number mode, in number encodb, in number Sens, in number col)
+  'Siguelíneas 1 Sensor PID Universal
+  
+  error = 0
+  olderror = 0
+  errsum = 0
+  u = 0
+  
+  if lad = "I" then
+    lado = -1
+  Else
+    lado = 1
+  EndIf
+  
+  if mode = 0 Then
+    Motor.ResetCount(("C"))
+    While math.abs(Motor.GetCount(("C"))) < encodb
+      error = 50 - Sensor.ReadPercent(S) 
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync("BC", -(Velocidad+u*lado), Velocidad - u*lado)
+      olderror = error
+    EndWhile
+    Motor.Stop("BC", "True")
+  ElseIf mode = 1 Then
+    smode = Sensor.GetMode(Sens)
+    Sensor.SetMode(Sens, 2)
+    while Sensor.ReadRawValue(Sens, 0) <> col
+      error = 50 - Sensor.ReadPercent(S) 
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync("BC", -(Velocidad+u*lado), Velocidad - u*lado)
+      olderror = error
+    EndWhile
+    Motor.Stop("BC", "False")
+    Sensor.SetMode(Sens, smode)
+    EndIf
+EndFunction

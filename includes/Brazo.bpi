@@ -1,0 +1,340 @@
+'Movimiento de brazos
+
+'Brazo Izq - A
+
+'Brazo por encoder
+
+Function BMoveA(in number V, in number aenc)
+  
+  encDiff = aenc - Motor.GetCount("A")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  If encDiff <> 0 Then
+    MotorA.StartSpeed(signo * V)
+    
+    While Math.Abs(Motor.GetCount("A") - aenc) > 5
+      ' Puedes ajustar el valor (5) para controlar la precisión
+    EndWhile
+    
+    Motor.Stop("A", "True")
+  EndIf
+  
+EndFunction
+
+'Brazo hasta posición inicial aproximada
+
+Function BMoveA0(in number V)
+  encDiff = -5 - Motor.GetCount("A")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  If encDiff <> 0 Then
+    MotorA.StartSpeed(signo * V)
+    
+    While Math.Abs(Motor.GetCount("A") + 5) > 5
+      ' Puedes ajustar el valor (5) para controlar la precisión
+    EndWhile
+    
+    Motor.Stop("A", "True")
+  EndIf
+EndFunction
+
+'Brazo hasta posición inicial absoluta
+
+Function BMoveA0True(in number V)
+  If Motor.GetCount("A") > 0 Then
+    
+    ' Bajada de Brazo
+    While Motor.GetCount("A") > 0
+      MotorA.StartSpeed(-V)
+    EndWhile
+    Motor.Stop("A", "True")
+    
+  ElseIf Motor.GetCount("A") < 0 Then
+    
+    ' Subida de Brazo
+    While Motor.GetCount("A") < 0
+      MotorA.StartSpeed(V)
+    EndWhile
+    Motor.Stop("A", "True")
+    
+  Else
+    Motor.Stop("A", "True")
+  EndIf
+EndFunction
+
+'Brazo por tiempo
+
+Function BMoveATimer(in number V, in number T)
+  Time.Reset1()
+  While Time.Get1() < T
+    MotorA.StartSpeed(V)
+  EndWhile
+  Motor.Stop("A", "True")
+EndFunction
+
+Function BMoveASafe(in number V, in number aenc)
+  
+  encDiff = aenc - Motor.GetCount("A")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(V/20)*650*2),400)
+  
+  Time.Reset3()
+  
+  If encDiff <> 0 Then
+    
+    While Math.Abs(Motor.GetCount("A") - aenc) > 5 and Time.Get3() < 2000
+      ' Puedes ajustar el valor (5) para controlar la precisión
+      MotorA.StartSpeed(signo * V)
+    EndWhile
+    
+    Motor.Stop("A", "True")
+  EndIf
+  
+EndFunction
+
+'Ambos brazos - AD
+
+'Brazos por encoder
+
+Function BMoveAD(in number V, in number aenc)
+  
+  While MotorA.GetTacho() <> aenc Or MotorD.GetTacho() <> aenc
+    
+    If MotorA.GetTacho() < aenc Then
+      MotorA.StartSpeed(Math.Min(V, V/2 + (aenc - MotorA.GetTacho()) / 10))
+    ElseIf MotorA.GetTacho() > aenc Then
+      MotorA.StartSpeed(-Math.Min(V, V/2 + (MotorA.GetTacho() - aenc) / 10))
+    Else
+      MotorA.OffAndBrake()
+    EndIf
+    
+    If MotorD.GetTacho() < aenc Then
+      MotorD.StartSpeed(Math.Min(V, V/2 + (aenc - MotorD.GetTacho()) / 10))
+    ElseIf MotorD.GetTacho() > aenc Then
+      MotorD.StartSpeed(-Math.Min(V, V/2 + (MotorD.GetTacho() - aenc) / 10))
+    Else
+      MotorD.OffAndBrake()
+    EndIf
+  EndWhile
+  MotorAD.OffAndBrake()
+EndFunction
+
+'Brazos hasta posición inicial aproximada
+
+Function BMoveAD0(in number V)
+  aenc = -10
+  
+  While MotorA.GetTacho() <> aenc Or MotorD.GetTacho() <> aenc
+    
+    If MotorA.GetTacho() < aenc Then
+      MotorA.StartSpeed(Math.Min(V, V/2 + (aenc - MotorA.GetTacho()) / 10))
+    ElseIf MotorA.GetTacho() > aenc Then
+      MotorA.StartSpeed(-Math.Min(V, V/2 + (MotorA.GetTacho() - aenc) / 10))
+    Else
+      MotorA.OffAndBrake()
+    EndIf
+    
+    If MotorD.GetTacho() < aenc Then
+      MotorD.StartSpeed(Math.Min(V, V/2 + (aenc - MotorD.GetTacho()) / 10))
+    ElseIf MotorD.GetTacho() > aenc Then
+      MotorD.StartSpeed(-Math.Min(V, V/2 + (MotorD.GetTacho() - aenc) / 10))
+    Else
+      MotorD.OffAndBrake()
+    EndIf
+  EndWhile
+  MotorAD.OffAndBrake()
+EndFunction
+
+'Brazo hasta posición inicial absoluta
+
+Function BMoveAD0True(in number V)
+  aenc = 0
+  
+  While MotorA.GetTacho() <> aenc Or MotorD.GetTacho() <> aenc
+    
+    If MotorA.GetTacho() < aenc Then
+      MotorA.StartSpeed(Math.Min(V, V/2 + (aenc - MotorA.GetTacho()) / 10))
+    ElseIf MotorA.GetTacho() > aenc Then
+      MotorA.StartSpeed(-Math.Min(V, V/2 + (MotorA.GetTacho() - aenc) / 10))
+    Else
+      MotorA.OffAndBrake()
+    EndIf
+    
+    If MotorD.GetTacho() < aenc Then
+      MotorD.StartSpeed(Math.Min(V, V/2 + (aenc - MotorD.GetTacho()) / 10))
+    ElseIf MotorD.GetTacho() > aenc Then
+      MotorD.StartSpeed(-Math.Min(V, V/2 + (MotorD.GetTacho() - aenc) / 10))
+    Else
+      MotorD.OffAndBrake()
+    EndIf
+  EndWhile
+EndFunction
+
+'Brazo por tiempo
+
+Function BMoveADTimer(in number V, in number T)
+  Time.Reset1()
+  While Time.Get1() < T
+    MotorAD.StartSpeed(V)
+  EndWhile
+  Motor.Stop("AD", "True")
+EndFunction
+
+Function BMoveADSafe(in number V, in number Grados)
+  
+  '650 ms = 100º a potencia 20
+  
+	DiffA = Grados - MotorA.GetTacho()
+	DiffD = Grados - MotorD.GetTacho()
+  
+  SafetyTimer = Math.Max(((Math.Max(Math.abs(DiffA),Math.abs(DiffD))/100)/(V/20)*650*2),400)
+  
+	SignoA = DiffA/Math.Abs(DiffA)
+	SignoD = DiffD/Math.Abs(DiffD)
+	
+	VelA = Vel * SignoA
+  VelD = Vel * SignoD
+  
+  Motor.MoveSync("AD",VelA,VelD,5,"False")
+  
+  LCD.Clear()
+  
+  Time.Reset3()
+	While MotorA.GetSpeed() <> 0 Or MotorD.GetSpeed() <> 0
+		
+		If DiffA * SignoA > 0 Then
+			MotorA.StartSpeed(VelA)
+		Else
+			MotorA.OffAndBrake()
+		EndIf
+		
+		If DiffD * SignoD > 0 Then
+			MotorD.StartSpeed(VelD)
+		Else
+			MotorD.OffAndBrake()
+    EndIf
+    
+    If Time.Get3() > SafetyTimer Then
+      MotorBC.OffAndBrake()
+    EndIf
+		
+		DiffA = Grados - MotorA.GetTacho()
+    DiffD = Grados - MotorD.GetTacho()
+    
+    LCD.Clear()
+		LCD.Write(5,30,"SafetyTimer: "+SafetyTimer)
+	EndWhile
+	
+	MotorAD.OffAndBrake()
+	
+EndFunction
+
+'Brazo Dch - D
+
+'Brazo por encoder
+
+Function BMoveD(in number V, in number aenc)
+  
+  encDiff = aenc - Motor.GetCount("D")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  If encDiff <> 0 Then
+    MotorD.StartSpeed(signo * V)
+    
+    While Math.Abs(Motor.GetCount("D") - aenc) > 5
+      ' Puedes ajustar el valor (5) para controlar la precisión
+    EndWhile
+    
+    Motor.Stop("D", "True")
+  EndIf
+  
+EndFunction
+
+'Brazo hasta posición inicial aproximada
+
+Function BMoveD0(in number V)
+  
+  If Motor.GetCount("D") > -10 Then
+    
+    'Bajada de Brazo
+    While Motor.GetCount("D") > -10
+      MotorD.StartSpeed(-V)
+    EndWhile
+    Motor.Stop("D", "True")
+    
+  ElseIf Motor.GetCount("D") < -10 Then
+    'Subida de Brazo
+    
+    While Motor.GetCount("D") < -10
+      MotorD.StartSpeed(V)
+    EndWhile
+    Motor.Stop("D", "True")
+    
+  Else
+    Motor.Stop("D", "True")
+  EndIf
+EndFunction
+
+'Brazo hasta posición inicial absoluta
+
+Function BMoveD0True(in number V)
+  
+  If Motor.GetCount("D") > 0 Then
+    
+    'Bajada de Brazo
+    While Motor.GetCount("D") > 0
+      MotorD.StartSpeed(-V)
+    EndWhile
+    Motor.Stop("D", "True")
+    
+  ElseIf Motor.GetCount("D") < 0 Then
+    'Subida de Brazo
+    
+    While Motor.GetCount("D") < 0
+      MotorD.StartSpeed(V)
+    EndWhile
+    Motor.Stop("D", "True")
+    
+  Else
+    Motor.Stop("D", "True")
+  EndIf
+EndFunction
+
+'Brazo por tiempo
+
+Function BMoveDTimer(in number V, in number T)
+  Time.Reset1()
+  While Time.Get1() < T
+    MotorD.StartSpeed(V)
+  EndWhile
+  Motor.Stop("D", "True")
+EndFunction
+
+Function BMoveDSafe(in number V, in number aenc)
+  
+  encDiff = aenc - Motor.GetCount("D")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(V/20)*650*2),400)
+  
+  Time.Reset3()
+  
+  If encDiff <> 0 Then
+    
+    While Math.Abs(Motor.GetCount("D") - aenc) > 5 and Time.Get3() < SafetyTimer
+      ' Puedes ajustar el valor (5) para controlar la precisión
+      MotorD.StartSpeed(signo * V)
+      LCD.Clear()
+		  LCD.Write(5,30,"SafetyTimer: "+SafetyTimer)
+    EndWhile
+    
+    Motor.Stop("D", "True")
+  EndIf
+  
+EndFunction

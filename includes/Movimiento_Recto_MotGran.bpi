@@ -1,0 +1,319 @@
+'Movimiento Recto con Motores Medianos
+
+'Sentido de los motores
+Sentido_Motores = -1
+
+'Por encoder
+Function EncoderRectoMG(in number Velocidad, in number Distancia)
+   
+  diametro = 56
+
+  Enc = Distancia*360 / Math.Pi / diametro
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+  
+  encoder_C = Motor.GetCount ("C") - Start_C
+
+  While Math.abs(encoder_C) < Enc
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+
+  EndWhile
+
+  Motor.Stop("BC", "True")
+
+EndFunction
+
+Function EncoderRectoMGF(in number Velocidad, in number Distancia)
+ 
+  diametro = 56
+
+  Enc = Distancia*360 / Math.Pi / diametro
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+  
+  encoder_C = Motor.GetCount ("C") - Start_C
+
+  While Math.abs(encoder_C) < Enc
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+
+  EndWhile
+
+  Motor.Stop("BC", "True")
+
+EndFunction
+
+'Hasta negro en 1 sensor
+Function 1NegroRectoMG(in number Velocidad, in number sens)
+ 
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens) > 10
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial), (Velocidad+proporcial))
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 1NegroRectoMGF(in number Velocidad, in number sens)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens) > 10
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial), (Velocidad+proporcial))
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta blanco en 1 sensor
+Function 1BlancoRectoMG(in number Velocidad, in number sens)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens) < 40
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 1BlancoRectoMGF(in number Velocidad, in number sens)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens) < 40
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta negro en 2 sensores
+Function 2NegrosRectoMG(in number Velocidad, in number sens1, in number sens2)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 2NegrosRectoMGF(in number Velocidad, in number sens1, in number sens2)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta blanco en 2 sensores
+Function 2BlancosRectoMG(in number Velocidad, in number sens1, in number sens2)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens1) < 70 Or Sensor.ReadPercent(sens2) < 70
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function 2BlancosRectoMGF(in number Velocidad, in number sens1, in number sens2)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  While Sensor.ReadPercent(sens1) < 70 Or Sensor.ReadPercent(sens2) < 70
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction
+
+'Hasta color en 1 sensor
+Function 1ColorRectoMG(in number Velocidad, in number sens, in number Color)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  mode = Sensor.GetMode(sens)
+  Sensor.SetMode(sens,2)
+  
+  While Sensor.ReadRawValue(sens,0) <> Color
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "True")
+  Sensor.SetMode(sens,mode)
+EndFunction
+
+Function 1ColorRectoMGF(in number Velocidad, in number sens, in number Color)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  mode = Sensor.GetMode(sens)
+  Sensor.SetMode(sens,2)
+  
+  While Sensor.ReadRawValue(sens,0) <> Color
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "False")
+  Sensor.SetMode(sens,mode)
+EndFunction
+
+'Por tiempo
+Function TiempoRectoMG(in number Velocidad, in number Tiempo)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  Time.Reset3()
+  
+  While Time.Get3() < Tiempo
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "True")
+EndFunction
+
+Function TiempoRectoMGF(in number Velocidad, in number Tiempo)  
+   
+  
+  Start_B = Motor.GetCount ("B")
+  Start_C = Motor.GetCount ("C")
+
+  Time.Reset3()
+  
+  While Time.Get3() < Tiempo
+    
+    encoder_B = (Motor.GetCount ("B") - Start_B)*@Sentido_Motores
+    encoder_C =( Motor.GetCount ("C") - Start_C)*@Sentido_Motores
+    
+    error = (encoder_B - encoder_C)
+
+    proporcial = error*2
+
+    Motor.StartSync("BC", (Velocidad-proporcial)*@Sentido_Motores, (Velocidad+proporcial)*@Sentido_Motores)
+  EndWhile
+  Motor.Stop("BC", "False")
+EndFunction

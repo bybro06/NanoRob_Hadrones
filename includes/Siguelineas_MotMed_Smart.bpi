@@ -1,0 +1,289 @@
+'Siguelíneas con Smart Inicio
+
+'Sentido de los motores
+Sentido_Motores = 1
+
+'Siguelíneas hasta cruce
+
+Function Smart14PID(in number VMax, in number kp, in number ki, in number kd)
+  ' Siguelíneas 14 PID Smart Inicio Encoder
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  olderror = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+    Vel = (Motor.GetCount("C") / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum = errsum * 0.9 + error  ' Aplicar factor de olvido en el término integral
+    u = error * kp + (error - olderror) * kd + errsum * ki
+    Motor.StartSync(I + D, -(Vel + u), Vel - u)
+    olderror = error
+  EndWhile
+  
+  Motor.Stop(I + D, "True")
+EndFunction
+
+Function Smart14PIDF(in number VMax, in number kp, in number ki, in number kd)
+  ' Siguelíneas 14 PID Smart Inicio Encoder
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  olderror = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+    Vel = (Motor.GetCount("C") / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum = errsum * 0.9 + error  ' Aplicar factor de olvido en el término integral
+    u = error * kp + (error - olderror) * kd + errsum * ki
+    Motor.StartSync(I + D, -(Vel + u), Vel - u)
+    olderror = error
+  EndWhile
+  
+  Motor.Stop(I + D, "False")  ' Detener los motores sin frenar
+EndFunction
+
+'Siguelíneas hasta ambos blancos
+
+Function Smart14PIDHastaBlanco(in number VMax, in number kp, in number ki, in number kd)
+  ' Siguelíneas 14 PID Smart Inicio Encoder
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) < 90 Or Sensor.ReadPercent(4) < 90
+    Vel = (Motor.GetCount("C") / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum = errsum * 0.9 + error  ' Aplicar factor de olvido en el término integral
+    u = error * kp + (error - olderror) * kd + errsum * ki
+    Motor.StartSync(I + D, -(Vel + u), Vel - u)
+    olderror = error
+  EndWhile
+  
+  Motor.Stop(I + D, "False")  ' Detener los motores sin frenar
+EndFunction
+
+Function Smart14PIDHastaBlancoF(in number VMax, in number kp, in number ki, in number kd)
+  'Siguelíneas 14 PID Smart Inicio Encoder
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  
+  Motor.ResetCount("C")
+  
+  While Sensor.ReadPercent(1) < 90 Or Sensor.ReadPercent(4) < 90
+    Vel = (Motor.GetCount("C") / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum += error
+    u = error*kp + (error-olderror)*kd + errsum*ki
+    Motor.StartSync(I+D, -(Vel+u), Vel-u)
+    olderror = error
+  EndWhile
+  Motor.Stop(I+D, "False")
+  
+EndFunction
+
+'Siguelíneas por encoder
+
+Function Smart14PIDEnc(in number VMax, in number kp, in number ki, in number kd, in number Encoder)
+  ' Siguelíneas 14 PID Smart Inicio Encoder
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  olderror = 0
+  
+  Encoder = Encoder * (360 / (5.6 * Math.Pi))  ' Convertir Encoder a grados
+  
+  Start_C = Motor.GetCount("C")
+  encoder_C = 0
+  
+  
+  While Math.Abs(encoder_C) < Encoder
+    
+    encoder_C = Motor.GetCount("C") - Start_C
+    Vel = (encoder_C / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum = errsum * 0.9 + error  ' Aplicar factor de olvido en el término integral
+    u = error * kp + (error - olderror) * kd + errsum * ki
+    Motor.StartSync(I + D, -(Vel + u), Vel - u)
+    olderror = error
+  EndWhile
+  
+  Motor.Stop(I + D, "True")
+  
+EndFunction
+
+Function Smart14PIDEncF(in number VMax, in number kp, in number ki, in number kd, in number Encoder)
+  ' Siguelíneas 14 PID Smart Inicio Encoder
+  
+  
+  VMax *= @Sentido_Motores
+  
+  I = "B"
+  D = "C"
+  V0 = 10 * @Sentido_Motores
+  AccelEncoder = 150
+  u = 0
+  errsum = 0
+  olderror = 0
+  
+  Encoder = Encoder * (360 / (5.6 * Math.Pi))  ' Convertir Encoder a grados
+  
+  Start_C = Motor.GetCount("C")
+  encoder_C = 0
+  
+  
+  While Math.Abs(encoder_C) < Encoder
+    
+    encoder_C = Motor.GetCount("C") - Start_C
+    Vel = (encoder_C / AccelEncoder) * (VMax + V0) + V0
+    Vel = Math.Min(Vel, VMax)  ' Limitar la velocidad a VMax
+    
+    sentido = Vel / Math.Abs(Vel)
+    
+    ' Siguelíneas 1-4 PID
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    errsum = errsum * 0.9 + error  ' Aplicar factor de olvido en el término integral
+    u = error * kp + (error - olderror) * kd + errsum * ki
+    Motor.StartSync(I + D, -(Vel + u), Vel - u)
+    olderror = error
+  EndWhile
+  
+  Motor.Stop(I + D, "False")  ' Detener motores sin freno
+  
+EndFunction
+
+'Siguelíneas hasta x cruces
+
+Function Smart14PIDCruces(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+  
+  Smart14PIDF(Velocidad,kp,ki,kd)
+  
+  Cruces --
+  i=0
+  
+  Velocidad *= @Sentido_Motores
+  
+  While i < Cruces
+    Motor.MoveSync("BC",-Velocidad,Velocidad,100,"False")
+    
+    I = "B"
+    D = "C"
+    error = 0
+    olderror = 0
+    errsum = 0
+    u = 0
+    sentido = Velocidad / Math.Abs(Velocidad)
+    
+    While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Motor.Stop(I+D, "False")
+    i ++
+  EndWhile
+  
+  
+  MotorBC.OffAndBrake()
+  
+EndFunction
+
+Function Smart14PIDCrucesF(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+  
+  Smart14PIDF(Velocidad,kp,ki,kd)
+  
+  Cruces --
+  i=0
+  
+  Velocidad *= @Sentido_Motores
+  
+  While i < Cruces
+    Motor.MoveSync("BC",-Velocidad,Velocidad,100,"False")
+    
+    I = "B"
+    D = "C"
+    error = 0
+    olderror = 0
+    errsum = 0
+    u = 0
+    sentido = Velocidad / Math.Abs(Velocidad)
+    
+    While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+      error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+      errsum += error
+      u = error*kp + (error-olderror)*kd + errsum*ki
+      Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
+      olderror = error
+    EndWhile
+    Motor.Stop(I+D, "False")
+    i ++
+  EndWhile
+  
+  
+  MotorBC.Off()
+  
+EndFunction
