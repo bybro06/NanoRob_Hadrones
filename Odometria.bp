@@ -437,11 +437,16 @@ Function ToXY_Basic(in number Velocidad, in number x, in number y, in number the
   diff_x = x - @xtime
   diff_y = y - @ytime
   
-  if  Then
-  EndIf
-  
-  
   angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
+  
+  @angulo = angulo_giro_inicial
+  If diff_y < 0 Then
+    If diff_x < 0 Then
+			angulo_giro_inicial = angulo_giro_inicial - 180 - @thetatime
+		ElseIf diff_x > 0 Then
+			angulo_giro_inicial = 0 - @thetatime - angulo_giro_inicial
+    EndIf
+  EndIf
   
   If angulo_giro_inicial > 0 Then
     V1 = Velocidad
