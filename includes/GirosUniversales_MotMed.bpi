@@ -1,18 +1,18 @@
 'Giros Universales
 
+'Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
+G1 = 65/18
+
 Function GUnivEncMM(in number V1, in number V2, in number Angle)
   I = "B"
   D = "C"
-  
-  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-  G1 = 58/18
   
   Signo = (V1 / V2) / Math.Abs(V1 / V2)
   
   Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
   Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
   
-  Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  Encodr = Angle * @G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
   Motor.MoveSync(I + D, -V1, V2, Encodr, "True")
   
@@ -25,15 +25,12 @@ Function GUnivEncMMF(in number V1, in number V2, in number Angle)
   I = "B"
   D = "C"
   
-  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-  G1 = 58/18
-  
   Signo = (V1 / V2) / Math.Abs(V1 / V2)
   
   Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
   Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
   
-  Encodr = Angle * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  Encodr = Angle * @G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
   Motor.MoveSync(I + D, -V1, V2, Encodr, "False")
   
@@ -48,11 +45,8 @@ Function Spin180(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Cantidad de encoders necesarios para girar 180 grados
-  Encodr = 176 * G1
+  Encodr = 180 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "True")
@@ -65,11 +59,8 @@ Function Spin180F(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Cantidad de encoders necesarios para girar 180 grados
-  Encodr = 176 * G1
+  Encodr = 180 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "False")
@@ -82,11 +73,8 @@ Function Spin90(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 90 * G1
+  Encodr = 90 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "True")
@@ -99,11 +87,8 @@ Function Spin90F(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 90 * G1
+  Encodr = 90 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "False")
@@ -116,14 +101,11 @@ Function SpinHastaNegro(in number Velocidad, in number Angle)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Ajuste del ángulo para evitar malas lecturas
   Angle *= 0.8
   
   ' Cantidad de encoders necesarios para el giro inicial
-  EncodrInicial = Angle * G1
+  EncodrInicial = Angle * @G1
   
   ' Movimiento de giro inicial
   Motor.Move(I + D, -Velocidad, EncodrInicial, "True")
@@ -150,14 +132,11 @@ Function SpinHastaNegroF(in number Velocidad, in number Angle)
   I = "B"
   D = "C"
   
-  ' Constante precalculada: grados de encoder necesarios para girar 1 grado en spin
-  G1 = 3.07
-  
   ' Ajuste del ángulo para evitar malas lecturas
   Angle *= 0.8
   
   ' Cantidad de encoders necesarios para el giro inicial
-  EncodrInicial = Angle * G1
+  EncodrInicial = Angle * @G1
   
   ' Movimiento de giro inicial
   Motor.Move(I + D, -Velocidad, EncodrInicial, "True")

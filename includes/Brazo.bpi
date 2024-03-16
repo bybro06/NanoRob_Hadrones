@@ -246,7 +246,7 @@ Function BMoveD(in number V, in number aenc)
   If encDiff <> 0 Then
     MotorD.StartSpeed(signo * V)
     
-    While Math.Abs(Motor.GetCount("D") - aenc) > 5
+    While Math.Abs(Motor.GetCount("D") - aenc) >10
       ' Puedes ajustar el valor (5) para controlar la precisión
     EndWhile
     

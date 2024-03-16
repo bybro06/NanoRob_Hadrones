@@ -1,5 +1,5 @@
 'Sentido de los motores
-Sentido_Motores = 1 #1 para izq reverso, -1 para dch reverso
+Sentido_Motores = 1 '1 para izq reverso, -1 para dch reverso
 
 'Deceleración Sinusoidal
 
