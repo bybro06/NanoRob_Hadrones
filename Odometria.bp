@@ -43,7 +43,7 @@ EndSub
 Sub StartArm
   
   Time.Reset1()
-  While Time.Get1() <700
+  While Time.Get1() < 850
     MotorA.StartSpeed(30)
     MotorD.StartSpeed(30)
   EndWhile
@@ -317,6 +317,8 @@ EndSub
 
 Sub Main
   
+  
+  
   bomboclat = Row.Init(2,0)
   StartArm()
   
@@ -344,33 +346,23 @@ Sub MainPrueba
   Lectura(floor)
   EncoderRectoMM(-30,5)
   
-  BMoveDSafe(40,-250)
-  BMoveA(30,-840)
-  BMoveDTimer(-40,200)
-  BMoveA0(30)
+  Coger_Abajo()
   
-  EncoderRectoMM(-30,5)
-  Spin90(30)
-  
-  EncoderRectoMM(30,12)
-  Spin90(-30)
-  
-  EncoderRectoMM(30,15)
+  EncoderRectoMM(30,20)
   Lectura(floor)
-  BMoveA(30,-600)
+  EncoderRectoMM(-30,6.5)
   
-  BMoveD(20,-200)
-  BMoveA(10,-750)
+  Coger_Arriba()
   
-  BMoveDSafe(40,-250)
-  BMoveA(30,-840)
-  BMoveDTimer(-40,200)
-  BMoveA0(30)
-  Program.End()
+  Program.Delay(4000)
   
-  BMoveD0(20)
+  Soltar_Uno()
+  
+  EncoderRectoMM(-30,10)
+  
+  Soltar_Todo()
+  
   BMoveAD0(30)
-  Program.Delay(10000)
 EndSub
 
 Sub MainControlBrazo
@@ -417,6 +409,12 @@ Sub MainControlRuedas
 EndSub
 
 Sub Caso_Arriba
+  
+  rojos = 0
+  amarillos = 0
+  verdes = 0
+  azules = 0
+  
   SL14PIDEnc(30,0.3,0.0001,6,15)
   Spin90(30)
   
@@ -426,14 +424,22 @@ Sub Caso_Arriba
   
   Lectura(bloque)
   bomboclat[0] = bloque
-  EncoderRectoMM(-30,5)
-  
-  'Coge el primero
-  
-  BMoveDSafe(40,-250)
-  BMoveA(30,-840)
-  BMoveDTimer(-40,200)
-  BMoveA0(30)
+  If bloque = 0 Then
+    numero_bloques = 0
+  Else
+    numero_bloques = 1
+    
+    If bloque = 3 Then
+      verdes ++
+    Else
+      azules ++
+    EndIf
+    
+    EncoderRectoMM(-30,5)
+    
+    Coger_Abajo()
+    
+  EndIf
   
   'Gira al segundo
   
@@ -445,19 +451,25 @@ Sub Caso_Arriba
   
   EncoderRectoMM(30,15)
   Lectura(bloque)
-  bomboclat[1] = bloque
-  BMoveA(30,-600)
   
-  'Coge el segundo
-  
-  BMoveD(20,-200)
-  BMoveA(10,-750)
-  
-  BMoveDSafe(40,-250)
-  BMoveA(30,-840)
-  BMoveDTimer(-40,200)
-  BMoveA0(30)
-  
+  If bloque = 0 Then
+    bomboclat[1] = bomboclat[0]
+    
+    bomboclat[0] = 0
+  Else
+    bomboclat[1] = bloque
+    numero_bloques ++
+    
+    If numero_bloques = 1 Then
+      
+      Coger_Abajo()
+      
+    Else
+    
+      Coger_Arriba()
+    EndIf
+    
+  EndIf
   'Se jubila
   
   1BlancoRectoMM(-30,1)
@@ -466,17 +478,159 @@ Sub Caso_Arriba
   GPerfDDEFINITIVOMM(30)
   
   SL1SPIDCross(30,0.3,0.0001,6,1,4)
+  SL14PIDEnc(30,0.3,0.0001,5,25)
   
-  If bomboclat[1] = 2 Then
+  If numero_bloques > 0 Then
+    
+    Spin90(30)
     EncoderRectoMM(30,20)
-  ElseIf bomboclat[1] = 3 Then
-    EncoderRectoMM(30,30)
+    
+    If bomboclat[1] = 2 Then
+      
+      'bloque azul abajo 
+      
+      GUnivEncMM(30,0,35)
+      BMoveA(10,-800)
+      BMoveDSafe(40,-200)
+      
+      numero_bloques --
+      
+      If numero_bloques = 2 and bomboclat[0] = 3 Then
+        
+        'azul y verde
+        
+        BMoveA(10,-750)
+        BMoveDSafe(40,-250)
+        BMoveDTimer(-40,200)
+        
+        BMoveA(30,-500)
+        
+        GUnivEncMM(-30,0,35)
+        GUnivEncMM(0,30,35)
+        
+        BMoveA(10,-800)
+        BMoveDSafe(40,-200)
+        
+        numero_bloques = 0
+        GUnivEncMM(0,-30,35)
+        
+      Else
+        
+        'uno o dos azules
+        
+        numero_bloques = 0
+        BMoveAD0(30)
+        GUnivEncMM(-30,0,35)
+
+      EndIf
+      
+
+    ElseIf bomboclat[1] = 3 Then
+      
+      'abajo verde
+      
+      GUnivEncMM(0,30,35)
+      BMoveA(10,-800)
+      BMoveDSafe(40,-200)
+      
+      numero_bloques --
+    
+      If numero_bloques = 2 and bomboclat[0] = 2 Then
+        
+        'verde y azul
+        
+        BMoveA(10,-750)
+        BMoveDSafe(40,-250)
+        BMoveDTimer(-40,200)
+        
+        BMoveA(30,-500)
+        
+        GUnivEncMM(0,-30,35)
+        GUnivEncMM(30,0,35)
+        
+        BMoveA(10,-800)
+        BMoveDSafe(40,-200)
+        
+        numero_bloques = 0
+        
+        BMoveAD0(30)
+        GUnivEncMM(-30,0,35)
+        
+      Else
+        
+        'uno o dos verdes
+        
+        numero_bloques = 0
+        BMoveAD0(30)
+        GUnivEncMM(0,-30,35)
+
+      EndIf
+      
+    EndIf
+    
+    EncoderRectoMM(-30,10)
+    Spin180(30)
+    
+    1BlancoRectoMM(-30,1)
+    1NegroRectoMM(-30,1)
+    
+    EncoderRectoMM(30,5)
+  Else
+    Spin90(-30)
   EndIf
   
 EndSub
 
 Sub Caso_Abajo
 EndSub
+
+Function Coger_Abajo()
+  
+  'Coge el primero
+  
+  BMoveD(40,-250)
+  BMoveA(20,-700)
+  BMoveDTimer(-40,200)
+  BMoveA(20,-300)
+  
+EndFunction
+
+Function Coger_Arriba()
+  
+  BMoveA(10,-600)
+  
+  'Coge el segundo
+  
+  BMoveD(20,-200)
+  BMoveA(10,-650)
+  
+  BMoveDSafe(40,-250)
+  BMoveA(20,-700)
+  BMoveDTimer(-40,200)
+  BMoveA(20,-300)
+  
+EndFunction
+
+Function Soltar_Todo()
+  
+  BMoveA(10,-700)
+  BMoveDSafe(40,-200)
+  
+  BMoveA(10,-500)
+  
+EndFunction
+
+Function Soltar_Uno()
+  
+  BMoveA(10,-700)
+  BMoveDSafe(40,-200)
+  BMoveA(10,-630)
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,200)
+  
+  BMoveA(10,-500)
+  
+EndFunction
 
 Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   
@@ -567,9 +721,10 @@ Function ToXY_Giro(in number Velocidad, in number x, in number y, in number thet
 EndFunction
 
 Function Lectura(out number read)
-  BmoveA(30,-650)
+  BmoveA(15,-600)
   RGBDetect2(5,read)
   LeerColor(read)
+  BmoveA(15,-450)
 EndFunction
 
 Function TraspMatVect3x3(in number[] M, out number[] S)

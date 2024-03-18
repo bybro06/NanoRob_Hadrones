@@ -11,10 +11,10 @@ Function BMoveA(in number V, in number aenc)
   signo = encDiff / Math.Abs(encDiff)
   
   If encDiff <> 0 Then
-    MotorA.StartSpeed(signo * V)
     
-    While Math.Abs(Motor.GetCount("A") - aenc) > 5
-      ' Puedes ajustar el valor (5) para controlar la precisión
+    While Math.Abs(Motor.GetCount("A") - aenc) > 10
+      ' Puedes ajustar el valor (10) para controlar la precisión
+      MotorA.StartSpeed(signo * V)
     EndWhile
     
     Motor.Stop("A", "True")
