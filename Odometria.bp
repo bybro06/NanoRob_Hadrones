@@ -30,7 +30,7 @@ include "includes\RGBRead"
 Setup()
 Thread.Run = Odometry
 Thread.Run = Display
-Main()
+MainPrueba()
 
 
 Sub Setup
@@ -45,7 +45,7 @@ Sub StartArm
   Time.Reset1()
   While Time.Get1() <700
     MotorA.StartSpeed(30)
-    MotorD.StartSpeed(40)
+    MotorD.StartSpeed(30)
   EndWhile
   
   MotorAD.OffAndBrake()
@@ -317,28 +317,56 @@ EndSub
 
 Sub Main
   
+  bomboclat = Row.Init(2,0)
   StartArm()
   
   EncoderRectoMM(30,10)
+  Spin90(30)
+  
+  EncoderRectoMMF(30,10)
+  Time.Reset2()
+  SL1SPIDCross(30,0.3,0.0001,6,-1,1)
+  
+  If Time.Get2() > 1200 Then
+    Caso_Arriba()
+  Else
+    Caso_Abajo()
+  EndIf
+  
+  
+EndSub
+
+Sub MainPrueba
+  
+  StartArm()
+  
+  EncoderRectoMM(30,15)
   Lectura(floor)
   EncoderRectoMM(-30,5)
   
+  BMoveDSafe(40,-250)
   BMoveA(30,-840)
-  BMoveDSafe(40,-280)
   BMoveDTimer(-40,200)
   BMoveA0(30)
   
-  EncoderRectoMM(30,20)
+  EncoderRectoMM(-30,5)
+  Spin90(30)
+  
+  EncoderRectoMM(30,12)
+  Spin90(-30)
+  
+  EncoderRectoMM(30,15)
   Lectura(floor)
   BMoveA(30,-600)
   
-  EncoderRectoMM(-30,6)
-  
-  BMoveA(30,-700)
-  BMoveD(20,-300)
+  BMoveD(20,-200)
   BMoveA(10,-750)
   
-  Program.Delay(400)
+  BMoveDSafe(40,-250)
+  BMoveA(30,-840)
+  BMoveDTimer(-40,200)
+  BMoveA0(30)
+  Program.End()
   
   BMoveD0(20)
   BMoveAD0(30)
@@ -388,6 +416,67 @@ Sub MainControlRuedas
   EndWhile
 EndSub
 
+Sub Caso_Arriba
+  SL14PIDEnc(30,0.3,0.0001,6,15)
+  Spin90(30)
+  
+  'Se coloca frente a verde y azul
+  
+  EncoderRectoMM(30,15)
+  
+  Lectura(bloque)
+  bomboclat[0] = bloque
+  EncoderRectoMM(-30,5)
+  
+  'Coge el primero
+  
+  BMoveDSafe(40,-250)
+  BMoveA(30,-840)
+  BMoveDTimer(-40,200)
+  BMoveA0(30)
+  
+  'Gira al segundo
+  
+  EncoderRectoMM(-30,5)
+  Spin90(30)
+  
+  EncoderRectoMM(30,12)
+  Spin90(-30)
+  
+  EncoderRectoMM(30,15)
+  Lectura(bloque)
+  bomboclat[1] = bloque
+  BMoveA(30,-600)
+  
+  'Coge el segundo
+  
+  BMoveD(20,-200)
+  BMoveA(10,-750)
+  
+  BMoveDSafe(40,-250)
+  BMoveA(30,-840)
+  BMoveDTimer(-40,200)
+  BMoveA0(30)
+  
+  'Se jubila
+  
+  1BlancoRectoMM(-30,1)
+  1NegroRectoMM(-30,1)
+  
+  GPerfDDEFINITIVOMM(30)
+  
+  SL1SPIDCross(30,0.3,0.0001,6,1,4)
+  
+  If bomboclat[1] = 2 Then
+    EncoderRectoMM(30,20)
+  ElseIf bomboclat[1] = 3 Then
+    EncoderRectoMM(30,30)
+  EndIf
+  
+EndSub
+
+Sub Caso_Abajo
+EndSub
 
 Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   

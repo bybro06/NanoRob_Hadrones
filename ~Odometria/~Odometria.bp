@@ -2,16 +2,30 @@ lv_v_105 = 0
 lv_aenc_105 = 0
 lv_velocidad_1 = 0
 lv_distancia_1 = 0
+lv_velocidad_39 = 0
+lv_velocidad_2 = 0
+lv_distancia_2 = 0
+lv_velocidad_81 = 0
+lv_kp_81 = 0
+lv_ki_81 = 0
+lv_kd_81 = 0
+lv_lado_81 = 0
+lv_sens_81 = 0
 lv_read_126 = 0
-lv_v_95 = 0
-lv_aenc_95 = 0
 lv_v_109 = 0
 lv_aenc_109 = 0
+lv_v_95 = 0
+lv_aenc_95 = 0
 lv_v_108 = 0
 lv_t_108 = 0
 lv_v_96 = 0
 lv_v_106 = 0
 lv_v_101 = 0
+lv_velocidad_75 = 0
+lv_kp_75 = 0
+lv_ki_75 = 0
+lv_kd_75 = 0
+lv_encoder_75 = 0
 lv_v0_56 = 0
 lv_vmax_56 = 0
 lv_kp_56 = 0
@@ -95,7 +109,7 @@ gv_sentido_motores = 1
 f_setup_0 ()
 Thread.Run = f_odometry_0
 Thread.Run = f_display_0
-f_main_0 ()
+f_mainprueba_0 ()
 Sub f_setup_0
 Sensor.SetMode ( 1 , 0 )
 Sensor.SetMode ( 2 , 4 )
@@ -106,7 +120,7 @@ Sub f_startarm_0
 Time.Reset1 ()
 While Time.Get1 () < 700
 MotorA.StartSpeed ( 30 )
-MotorD.StartSpeed ( 40 )
+MotorD.StartSpeed ( 30 )
 EndWhile
 MotorAD.OffAndBrake ()
 MotorA.ResetCount ()
@@ -166,53 +180,83 @@ gv_old_b = MotorB.GetTacho ()
 gv_old_c = MotorC.GetTacho ()
 EndWhile
 EndSub
-Sub f_main_0
+Sub f_mainprueba_0
 f_startarm_0 ()
 lv_velocidad_1 = 30
-lv_distancia_1 = 10
+lv_distancia_1 = 15
 f_encoderrectomm_2 ()
 f_lectura_1 ()
 gv_floor = lv_read_126
 lv_velocidad_1 = - 30
 lv_distancia_1 = 5
 f_encoderrectomm_2 ()
+lv_v_109 = 40
+lv_aenc_109 = - 250
+f_bmovedsafe_2 ()
 lv_v_95 = 30
 lv_aenc_95 = - 840
 f_bmovea_2 ()
-lv_v_109 = 40
-lv_aenc_109 = - 280
-f_bmovedsafe_2 ()
 lv_v_108 = - 40
 lv_t_108 = 200
 f_bmovedtimer_2 ()
 lv_v_96 = 30
 f_bmovea0_1 ()
+lv_velocidad_1 = - 30
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_velocidad_39 = 30
+f_spin90_1 ()
 lv_velocidad_1 = 30
-lv_distancia_1 = 20
+lv_distancia_1 = 12
+f_encoderrectomm_2 ()
+lv_velocidad_39 = - 30
+f_spin90_1 ()
+lv_velocidad_1 = 30
+lv_distancia_1 = 8
 f_encoderrectomm_2 ()
 f_lectura_1 ()
 gv_floor = lv_read_126
 lv_v_95 = 30
 lv_aenc_95 = - 600
 f_bmovea_2 ()
-lv_velocidad_1 = - 30
-lv_distancia_1 = 6
-f_encoderrectomm_2 ()
-lv_v_95 = 30
-lv_aenc_95 = - 700
-f_bmovea_2 ()
 lv_v_105 = 20
-lv_aenc_105 = - 300
+lv_aenc_105 = - 200
 f_bmoved_2 ()
 lv_v_95 = 10
 lv_aenc_95 = - 750
 f_bmovea_2 ()
-Program.Delay ( 400 )
+lv_v_109 = 40
+lv_aenc_109 = - 250
+f_bmovedsafe_2 ()
+lv_v_95 = 30
+lv_aenc_95 = - 840
+f_bmovea_2 ()
+lv_v_108 = - 40
+lv_t_108 = 200
+f_bmovedtimer_2 ()
+lv_v_96 = 30
+f_bmovea0_1 ()
+Program.End ()
 lv_v_106 = 20
 f_bmoved0_1 ()
 lv_v_101 = 30
 f_bmovead0_1 ()
 Program.Delay ( 10000 )
+EndSub
+Sub f_caso_arriba_0
+lv_velocidad_75 = 30
+lv_kp_75 = 0.3
+lv_ki_75 = 0.0001
+lv_kd_75 = 6
+lv_encoder_75 = 15
+f_sl14pidenc_5 ()
+lv_velocidad_39 = 30
+f_spin90_1 ()
+lv_velocidad_1 = 30
+lv_distancia_1 = 15
+f_encoderrectomm_2 ()
+EndSub
+Sub f_caso_abajo_0
 EndSub
 Sub f_encoderrectomm_2
 lv_velocidad_1 = lv_velocidad_1 * gv_sentido_motores
@@ -229,6 +273,29 @@ lv_proporcial_1 = lv_error_1 * 2
 Motor.StartSync ( "BC" , - ( lv_velocidad_1 - lv_proporcial_1 ) , lv_velocidad_1 + lv_proporcial_1 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
+EndSub
+Sub f_encoderrectommf_2
+lv_velocidad_2 = lv_velocidad_2 * gv_sentido_motores
+lv_diametro_2 = 5.6
+lv_enc_2 = lv_distancia_2 * 360 / Math.Pi / lv_diametro_2
+lv_start_b_2 = Motor.GetCount ( "B" ) * - 1
+lv_start_c_2 = Motor.GetCount ( "C" )
+lv_encoder_c_2 = Motor.GetCount ( "C" ) - lv_start_c_2
+While Math.abs ( lv_encoder_c_2 ) < lv_enc_2
+lv_encoder_b_2 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_2
+lv_encoder_c_2 = Motor.GetCount ( "C" ) - lv_start_c_2
+lv_error_2 = ( lv_encoder_b_2 - lv_encoder_c_2 ) * gv_sentido_motores
+lv_proporcial_2 = lv_error_2 * 2
+Motor.StartSync ( "BC" , - ( lv_velocidad_2 - lv_proporcial_2 ) , lv_velocidad_2 + lv_proporcial_2 )
+EndWhile
+Motor.Stop ( "BC" , "True" )
+EndSub
+Sub f_spin90_1
+lv_i_39 = "B"
+lv_d_39 = "C"
+lv_encodr_39 = 90 * gv_g1
+Motor.Move ( lv_i_39 + lv_d_39 , - lv_velocidad_39 , lv_encodr_39 , "True" )
+lv_angle_39 = 0
 EndSub
 Sub f_sl14sicf_6
 lv_i_56 = "B"
@@ -269,6 +336,28 @@ lv_olderror_72 = lv_error_72
 EndWhile
 Motor.Stop ( lv_i_72 + lv_d_72 , "False" )
 EndSub
+Sub f_sl14pidenc_5
+lv_velocidad_75 = lv_velocidad_75 * gv_sentido_motores
+lv_i_75 = "B"
+lv_d_75 = "C"
+lv_error_75 = 0
+lv_olderror_75 = 0
+lv_errsum_75 = 0
+lv_u_75 = 0
+lv_sentido_75 = lv_velocidad_75 / Math.Abs ( lv_velocidad_75 )
+lv_encoder_75 = lv_encoder_75 / ( 5.6 * Math.Pi ) * 360
+lv_start_c_75 = Motor.GetCount ( "C" )
+lv_encoder_c_75 = 0
+While Math.Abs ( lv_encoder_c_75 ) < lv_encoder_75
+lv_encoder_c_75 = Motor.GetCount ( "C" ) - lv_start_c_75
+lv_error_75 = ( Sensor.ReadPercent ( 1 ) - Sensor.ReadPercent ( 4 ) ) * lv_sentido_75 * gv_sentido_motores
+lv_errsum_75 = lv_errsum_75 + lv_error_75
+lv_u_75 = lv_error_75 * lv_kp_75 + ( lv_error_75 - lv_olderror_75 ) * lv_kd_75 + lv_errsum_75 * lv_ki_75
+Motor.StartSync ( lv_i_75 + lv_d_75 , - ( lv_velocidad_75 + lv_u_75 ) , lv_velocidad_75 - lv_u_75 )
+lv_olderror_75 = lv_error_75
+EndWhile
+Motor.Stop ( lv_i_75 + lv_d_75 , "True" )
+EndSub
 Sub f_sl14pidencf_5
 lv_velocidad_76 = lv_velocidad_76 * gv_sentido_motores
 lv_i_76 = "B"
@@ -290,6 +379,29 @@ Motor.StartSync ( lv_i_76 + lv_d_76 , - ( lv_velocidad_76 + lv_u_76 ) , lv_veloc
 lv_olderror_76 = lv_error_76
 EndWhile
 Motor.Stop ( lv_i_76 + lv_d_76 , "False" )
+EndSub
+Sub f_sl1spidcross_6
+lv_velocidad_81 = lv_velocidad_81 * gv_sentido_motores
+lv_i_81 = "B"
+lv_d_81 = "C"
+lv_error_81 = 0
+lv_olderror_81 = 0
+lv_errsum_81 = 0
+lv_u_81 = 0
+lv_sentido_81 = lv_velocidad_81 / Math.Abs ( lv_velocidad_81 )
+If lv_sens_81 = 1 Then
+lv_reader_81 = 4
+Else
+lv_reader_81 = 1
+EndIf
+While Sensor.ReadPercent ( lv_reader_81 ) > 10
+lv_error_81 = ( Sensor.ReadPercent ( lv_sens_81 ) - 50 ) * lv_sentido_81 * lv_lado_81 * gv_sentido_motores
+lv_errsum_81 = lv_errsum_81 + lv_error_81
+lv_u_81 = lv_error_81 * lv_kp_81 + ( lv_error_81 - lv_olderror_81 ) * lv_kd_81 + lv_errsum_81 * lv_ki_81
+Motor.StartSync ( lv_i_81 + lv_d_81 , - ( lv_velocidad_81 + lv_u_81 ) , lv_velocidad_81 - lv_u_81 )
+lv_olderror_81 = lv_error_81
+EndWhile
+Motor.Stop ( lv_i_81 + lv_d_81 , "True" )
 EndSub
 Sub f_smart14pidf_4
 lv_vmax_88 = lv_vmax_88 * gv_sentido_motores
