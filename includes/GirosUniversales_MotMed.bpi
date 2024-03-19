@@ -74,7 +74,7 @@ Function Spin90(in number Velocidad)
   D = "C"
   
   ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 90 * @G1
+  Encodr = 84 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "True")
@@ -88,7 +88,7 @@ Function Spin90F(in number Velocidad)
   D = "C"
   
   ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 90 * @G1
+  Encodr = 84 * @G1
   
   ' Movimiento de giro
   Motor.Move(I + D, -Velocidad, Encodr, "False")

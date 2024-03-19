@@ -196,8 +196,8 @@ Function BMoveADSafe(in number V, in number Grados)
 	SignoA = DiffA/Math.Abs(DiffA)
 	SignoD = DiffD/Math.Abs(DiffD)
 	
-	VelA = Vel * SignoA
-  VelD = Vel * SignoD
+	VelA = V * SignoA
+  VelD = V * SignoD
   
   Motor.MoveSync("AD",VelA,VelD,5,"False")
   

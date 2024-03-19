@@ -289,7 +289,7 @@ Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number
     reader = 1
   EndIf
   
-  While Sensor.ReadPercent(reader) > 10
+  While Sensor.ReadPercent(reader) > 15
     error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
@@ -322,7 +322,7 @@ Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in numbe
     reader = 1
   EndIf
   
-  While Sensor.ReadPercent(reader) > 10
+  While Sensor.ReadPercent(reader) > 20
     error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
