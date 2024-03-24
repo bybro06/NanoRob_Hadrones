@@ -312,7 +312,7 @@ Function BMoveDTimer(in number V, in number T)
   While Time.Get1() < T
     MotorD.StartSpeed(V)
   EndWhile
-  Motor.Stop("D", "True")
+  MotorD.OffAndBrake()
 EndFunction
 
 Function BMoveDSafe(in number V, in number aenc)

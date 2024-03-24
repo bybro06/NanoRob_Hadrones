@@ -31,7 +31,7 @@ Setup()
 Thread.Run = Odometry
 Thread.Run = Display
 Thread.Run = Stop
-Main()
+MainPrueba()
 
 
 Sub Setup
@@ -339,29 +339,65 @@ EndSub
 
 Sub MainPrueba
   
+  rojos = 0
+  amarillos = 0
+  verdes = 0
+  azules = 0
+  
   StartArm()
   
-  EncoderRectoMM(30,15)
-  Lectura(floor)
-  EncoderRectoMM(-30,5)
+  EncoderRectoMM(20,12)
   
-  Coger_Abajo()
+  Lectura(bloque)
+  bomboclat[0] = bloque
+  If bloque = 0 Then
+    numero_bloques = 0
+  Else
+    numero_bloques = 1
+    
+    If bloque = 3 Then
+      verdes ++
+    Else
+      azules ++
+    EndIf
+    
+    Coger_Abajo()
+    
+  EndIf
   
-  EncoderRectoMM(30,20)
-  Lectura(floor)
-  EncoderRectoMM(-30,6.5)
+  'Gira al segundo
   
-  Coger_Arriba()
+  EncoderRectoMM(-20,5)
+  Spin90(20)
   
-  Program.Delay(4000)
+  EncoderRectoMM(20,10)
+  Spin90(-20)
   
-  Soltar_Uno()
+  EncoderRectoMM(20,14)
+  Lectura(bloque)
   
-  EncoderRectoMM(-30,10)
-  
+  If bloque = 0 Then
+    bomboclat[1] = bomboclat[0]
+    
+    bomboclat[0] = 0
+  Else
+    bomboclat[1] = bloque
+    numero_bloques ++
+    
+    If numero_bloques = 1 Then
+      
+      Coger_Abajo()
+      
+    Else
+    
+      Coger_Arriba()
+      
+    EndIf
+    
+  EndIf
+  Program.Delay(3000)
   Soltar_Todo()
-  
-  BMoveAD0(30)
+  BMoveAD0(20)
 EndSub
 
 Sub MainControlBrazo
@@ -407,6 +443,7 @@ Sub MainControlRuedas
   EndWhile
 EndSub
 
+
 Sub Caso_Arriba
   
   rojos = 0
@@ -419,7 +456,7 @@ Sub Caso_Arriba
   
   'Se coloca frente a verde y azul
   
-  EncoderRectoMM(30,12)
+  EncoderRectoMM(20,12)
   
   Lectura(bloque)
   bomboclat[0] = bloque
@@ -434,21 +471,19 @@ Sub Caso_Arriba
       azules ++
     EndIf
     
-    EncoderRectoMM(-30,5)
-    
     Coger_Abajo()
     
   EndIf
   
   'Gira al segundo
   
-  EncoderRectoMM(-30,5)
-  Spin90(30)
+  EncoderRectoMM(-20,5)
+  Spin90(20)
   
-  EncoderRectoMM(30,12)
-  Spin90(-30)
+  EncoderRectoMM(20,10)
+  Spin90(-20)
   
-  EncoderRectoMM(30,12)
+  EncoderRectoMM(20,14)
   Lectura(bloque)
   
   If bloque = 0 Then
@@ -458,8 +493,6 @@ Sub Caso_Arriba
   Else
     bomboclat[1] = bloque
     numero_bloques ++
-    
-    EncoderRectoMM(-30,5)
     
     If numero_bloques = 1 Then
       
@@ -472,6 +505,7 @@ Sub Caso_Arriba
     EndIf
     
   EndIf
+  
   'Se jubila
   
   1BlancoRectoMM(-30,1)
@@ -625,53 +659,64 @@ Sub Stop
   EndWhile
 EndSub
 
+
 Function Coger_Abajo()
+  
+  EncoderRectoMM(-30,5)
   
   'Coge el primero
   
-  'BMoveD(40,-250)
-  'BMoveA(20,-750)
-  'BMoveDTimer(-40,200)
-  'BMoveA(20,-300)
+  BMoveD(40,-220)
+  BMoveA(20,-780)
+  BMoveDTimer(-40,350)
+  BMoveA(20,-300)
   
 EndFunction
 
 Function Coger_Arriba()
   
-  'BMoveA(10,-600)
+  EncoderRectoMM(-20,5.5)
+  
+  BMoveA(10,-670)
+  BMoveD(20,-200)
   
   'Coge el segundo
   
-  'BMoveD(20,-200)
-  'BMoveA(10,-700)
+  EncoderRectoMM(-10,0.75)
+  BMoveA(10,-770)
   
-  'BMoveDSafe(40,-250)
-  'BMoveA(20,-750)
-  'BMoveDTimer(-40,200)
-  'BMoveA(20,-300)
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,200)
+  BMoveA(20,-400)
   
 EndFunction
 
 Function Soltar_Todo()
   
-  'BMoveA(10,-700)
-  'BMoveDSafe(40,-200)
+  EncoderRectoMM(-30,5)
   
-  'BMoveA(10,-500)
+  BMoveA(10,-750)
+  BMoveDSafe(40,-200)
+  
+  BMoveA(10,-500)
   
 EndFunction
 
 Function Soltar_Uno()
   
-  'BMoveA(10,-700)
-  'BMoveDSafe(40,-200)
-  'BMoveA(10,-630)
-  'BMoveDSafe(40,-250)
-  'BMoveDTimer(-40,200)
+  EncoderRectoMM(-30,5)
   
-  'BMoveA(10,-500)
+  BMoveA(10,-760)
+  BMoveDSafe(40,-200)
+  
+  BMoveA(10,-660)
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,200)
+  
+  BMoveA(10,-500)
   
 EndFunction
+
 
 Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
   
@@ -761,12 +806,14 @@ EndFunction
 Function ToXY_Giro(in number Velocidad, in number x, in number y, in number theta)
 EndFunction
 
+
 Function Lectura(out number read)
-  'BmoveA(15,-650)
+  BmoveA(15,-650)
   RGBDetect2(5,read)
   LeerColor(read)
-  'BmoveA(15,-200)
+  BmoveA(15,-200)
 EndFunction
+
 
 Function TraspMatVect3x3(in number[] M, out number[] S)
   

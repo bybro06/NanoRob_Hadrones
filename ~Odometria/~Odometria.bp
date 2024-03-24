@@ -73,7 +73,6 @@ lv_m_131 [ 0 ] = 0
 lv_s_131 [ 0 ] = 0
 lv_m_132 [ 0 ] = 0
 lv_s_132 [ 0 ] = 0
-gv_floor = 0
 gv_bloque = 0
 lv_color_114 = 0
 lv_color_115 = 0
@@ -129,7 +128,7 @@ f_setup_0 ()
 Thread.Run = f_odometry_0
 Thread.Run = f_display_0
 Thread.Run = f_stop_0
-f_main_0 ()
+f_mainprueba_0 ()
 Sub f_setup_0
 Sensor.SetMode ( 1 , 0 )
 Sensor.SetMode ( 2 , 4 )
@@ -200,35 +199,60 @@ gv_old_b = MotorB.GetTacho ()
 gv_old_c = MotorC.GetTacho ()
 EndWhile
 EndSub
-Sub f_main_0
+Sub f_mainprueba_0
+gv_rojos = 0
+gv_amarillos = 0
+gv_verdes = 0
+gv_azules = 0
 f_startarm_0 ()
-lv_velocidad_1 = 30
-lv_distancia_1 = 9
+lv_velocidad_1 = 20
+lv_distancia_1 = 12
 f_encoderrectomm_2 ()
-lv_velocidad_39 = 30
-f_spin90_1 ()
-lv_velocidad_2 = 30
-lv_distancia_2 = 10
-f_encoderrectommf_2 ()
-Time.Reset2 ()
-lv_velocidad_76 = 30
-lv_kp_76 = 0.2
-lv_ki_76 = 0.0001
-lv_kd_76 = 1
-lv_encoder_76 = 8
-f_sl14pidencf_5 ()
-lv_velocidad_82 = 30
-lv_kp_82 = 0.2
-lv_ki_82 = 0.0001
-lv_kd_82 = 3
-lv_lado_82 = 1
-lv_sens_82 = 1
-f_sl1spidcrossf_6 ()
-If Time.Get2 () > 1000 Then
-f_caso_arriba_0 ()
+f_lectura_1 ()
+gv_bloque = lv_read_130
+gv_bomboclat [ 0 ] = gv_bloque
+If gv_bloque = 0 Then
+gv_numero_bloques = 0
 Else
-f_caso_abajo_0 ()
+gv_numero_bloques = 1
+If gv_bloque = 3 Then
+gv_verdes = gv_verdes + 1
+Else
+gv_azules = gv_azules + 1
 EndIf
+f_coger_abajo_0 ()
+EndIf
+lv_velocidad_1 = - 20
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_velocidad_39 = 20
+f_spin90_1 ()
+lv_velocidad_1 = 20
+lv_distancia_1 = 10
+f_encoderrectomm_2 ()
+lv_velocidad_39 = - 20
+f_spin90_1 ()
+lv_velocidad_1 = 20
+lv_distancia_1 = 14
+f_encoderrectomm_2 ()
+f_lectura_1 ()
+gv_bloque = lv_read_130
+If gv_bloque = 0 Then
+gv_bomboclat [ 1 ] = gv_bomboclat [ 0 ]
+gv_bomboclat [ 0 ] = 0
+Else
+gv_bomboclat [ 1 ] = gv_bloque
+gv_numero_bloques = gv_numero_bloques + 1
+If gv_numero_bloques = 1 Then
+f_coger_abajo_0 ()
+Else
+f_coger_arriba_0 ()
+EndIf
+EndIf
+Program.Delay ( 3000 )
+f_soltar_todo_0 ()
+lv_v_101 = 20
+f_bmovead0_1 ()
 EndSub
 Sub f_caso_arriba_0
 gv_rojos = 0
@@ -445,7 +469,7 @@ lv_distancia_1 = 5
 f_encoderrectomm_2 ()
 f_coger_abajo_0 ()
 lv_velocidad_1 = - 30
-lv_distancia_1 = 11
+lv_distancia_1 = 9
 f_encoderrectomm_2 ()
 lv_velocidad_39 = 30
 f_spin90_1 ()
@@ -453,7 +477,7 @@ lv_velocidad_75 = 30
 lv_kp_75 = 0.2
 lv_ki_75 = 0.0001
 lv_kd_75 = 1
-lv_encoder_75 = 12
+lv_encoder_75 = 8
 f_sl14pidenc_5 ()
 lv_velocidad_39 = - 30
 f_spin90_1 ()
@@ -798,7 +822,7 @@ Time.Reset1 ()
 While Time.Get1 () < lv_t_108
 MotorD.StartSpeed ( lv_v_108 )
 EndWhile
-Motor.Stop ( "D" , "True" )
+MotorD.OffAndBrake ()
 EndSub
 Sub f_bmovedsafe_2
 lv_encdiff_109 = lv_aenc_109 - Motor.GetCount ( "D" )
@@ -1206,19 +1230,74 @@ Speaker.Play ( 100 , "WRO2023/Brown" )
 EndIf
 EndSub
 Sub f_coger_abajo_0
+lv_velocidad_1 = - 30
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_v_105 = 40
+lv_aenc_105 = - 220
+f_bmoved_2 ()
+lv_v_95 = 20
+lv_aenc_95 = - 780
+f_bmovea_2 ()
+lv_v_108 = - 40
+lv_t_108 = 350
+f_bmovedtimer_2 ()
+lv_v_95 = 20
+lv_aenc_95 = - 300
+f_bmovea_2 ()
 EndSub
 Sub f_coger_arriba_0
+lv_velocidad_1 = - 20
+lv_distancia_1 = 5.5
+f_encoderrectomm_2 ()
+lv_v_95 = 10
+lv_aenc_95 = - 670
+f_bmovea_2 ()
+lv_v_105 = 20
+lv_aenc_105 = - 200
+f_bmoved_2 ()
+lv_velocidad_1 = - 10
+lv_distancia_1 = 0.75
+f_encoderrectomm_2 ()
+lv_v_95 = 10
+lv_aenc_95 = - 770
+f_bmovea_2 ()
+lv_v_109 = 40
+lv_aenc_109 = - 250
+f_bmovedsafe_2 ()
+lv_v_108 = - 40
+lv_t_108 = 200
+f_bmovedtimer_2 ()
+lv_v_95 = 20
+lv_aenc_95 = - 400
+f_bmovea_2 ()
 EndSub
 Sub f_soltar_todo_0
-EndSub
-Sub f_soltar_uno_0
+lv_velocidad_1 = - 30
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_v_95 = 10
+lv_aenc_95 = - 750
+f_bmovea_2 ()
+lv_v_109 = 40
+lv_aenc_109 = - 200
+f_bmovedsafe_2 ()
+lv_v_95 = 10
+lv_aenc_95 = - 500
+f_bmovea_2 ()
 EndSub
 Sub f_lectura_1
+lv_v_95 = 15
+lv_aenc_95 = - 650
+f_bmovea_2 ()
 lv_reps_111 = 5
 f_rgbdetect2_2 ()
 lv_read_130 = lv_color_111
 lv_color_122 = lv_read_130
 f_leercolor_1 ()
+lv_v_95 = 15
+lv_aenc_95 = - 200
+f_bmovea_2 ()
 EndSub
 Sub f_traspmatvect3x3_2
 lv_s_131 = Vector.Init ( 3 * 3 , 0 )
