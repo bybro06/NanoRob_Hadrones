@@ -40,7 +40,7 @@ Setup()
 Thread.Run = Odometry
 Thread.Run = Display
 Thread.Run = Stop
-MainPrueba()
+Main()
 
 
 Sub Setup
@@ -329,7 +329,7 @@ Sub Main
   
   StartArm()
   
-  EncoderRectoMM(Velocidad*0.3,9)
+  EncoderRectoMM(Velocidad*0.3,7)
   Spin90(Velocidad*0.3)
   
   EncoderRectoMMF(Velocidad*0.3,10)
@@ -355,58 +355,7 @@ Sub MainPrueba
   
   StartArm()
   
-  EncoderRectoMM(Velocidad*0.2,12)
-  
-  Lectura(bloque)
-  bomboclat[0] = bloque
-  If bloque = 0 Then
-    numero_bloques = 0
-  Else
-    numero_bloques = 1
-    
-    If bloque = 3 Then
-      verdes ++
-    Else
-      azules ++
-    EndIf
-    
-    Coger_Abajo()
-    
-  EndIf
-  
-  'Gira al segundo
-  
-  EncoderRectoMM(Velocidad*-0.2,5)
-  Spin90(20)
-  
-  EncoderRectoMM(Velocidad*0.2,10)
-  Spin90(-20)
-  
-  EncoderRectoMM(Velocidad*0.2,14)
-  Lectura(bloque)
-  
-  If bloque = 0 Then
-    bomboclat[1] = bomboclat[0]
-    
-    bomboclat[0] = 0
-  Else
-    bomboclat[1] = bloque
-    numero_bloques ++
-    
-    If numero_bloques = 1 Then
-      
-      Coger_Abajo()
-      
-    Else
-    
-      Coger_Arriba()
-      
-    EndIf
-    
-  EndIf
-  Program.Delay(3000)
-  Soltar_Todo()
-  BMoveAD0(20)
+  Motor.Move("BC",30,1173/4,"True")
 EndSub
 
 Sub MainControlBrazo
@@ -460,7 +409,7 @@ Sub Caso_Arriba
   verdes = 0
   azules = 0
   
-  SL14PIDEnc(Velocidad*0.3,kp,ki,kd*3,23.5)
+  SL14PIDEnc(Velocidad*0.3,kp,ki,kd*3,24.5)
   Spin90(Velocidad*0.3)
   
   'Se coloca frente a verde y azul
@@ -469,8 +418,11 @@ Sub Caso_Arriba
   
   Lectura(bloque)
   bomboclat[0] = bloque
-  If bloque = 0 Then
+  If bloque = 0 or bloque = 6 or bloque = 1 or bloque = 7 Then
     numero_bloques = 0
+  
+    EncoderRectoMM(-30,5)
+  
   Else
     numero_bloques = 1
     
@@ -487,22 +439,25 @@ Sub Caso_Arriba
   'Gira al segundo
   
   EncoderRectoMM(Velocidad*-0.2,5)
-  Spin90(Velocidad*0.2)
+  Spin90(20)
   
-  EncoderRectoMM(Velocidad*0.2,10)
-  Spin90(Velocidad*-0.2)
+  SL14PIDEnc(Velocidad*0.2,kp,ki,kd,13)
+  'EncoderRectoMM(Velocidad*0.2,10)
+  Spin90(-20)
   
   EncoderRectoMM(Velocidad*0.2,14)
   Lectura(bloque)
   
-  If bloque = 0 Then
+  If bloque = 0 or bloque = 6 or bloque = 1 or bloque = 7 Then
     bomboclat[1] = bomboclat[0]
-    
+  
+    EncoderRectoMM(-30,5)
+  
     bomboclat[0] = 0
   Else
     bomboclat[1] = bloque
     numero_bloques ++
-    
+  
     If numero_bloques = 1 Then
       
       Coger_Abajo()
@@ -522,7 +477,7 @@ Sub Caso_Arriba
   
   GPerfDDEFINITIVOMM(Velocidad*0.3)
   
-  SL14PIDEnc(Velocidad*0.3,kp,ki,kd*3,37)
+  SL14PIDEnc(Velocidad*0.3,kp,ki,kd*3,40)
   
   If numero_bloques > 0 Then
     
@@ -616,40 +571,65 @@ Sub Caso_Arriba
     1BlancoRectoMM(Velocidad*0.3,1)
     1NegroRectoMM(Velocidad*0.3,1)
     GPerfDDEFINITIVOMM(Velocidad*0.3)
+    SL14PID(Velocidad*0.1,kp,ki,kd)
+    EncoderRectoMM(Velocidad*0.3, 18)
+    
+    Coger_Abajo()
+    EncoderRectoMM (Velocidad*-0.3, 7.5)
+    Spin90(Velocidad*0.3)
+    SL14PIDEnc(Velocidad*0.3,kp,ki,kd,8)
+    Spin90(Velocidad*-0.3)
+    EncoderRectoMM (Velocidad*0.3, 16)
+    Coger_Arriba()
+    
+    1BlancoRectoMM(Velocidad*-0.3,1)
+    1NegroRectoMM(Velocidad*-0.3,1)
+    GPerfIDEFINITIVOMM(Velocidad*0.3)
+    
+    SL14PIDEncF(Velocidad*0.3,kp,ki,kd,5)
+    SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,1,1)
+    SL14PIDEnc(Velocidad*0.3,kp,ki,kd,12)
+    
+    Spin90(Velocidad*-0.3)
+    
+    1BlancoRectoMM(Velocidad*0.3,1)
+    Soltar_Todo()
+    
+    BMoveADSafe(30,0)
+    
+    Spin90(Velocidad*-0.3)
+    
+    EncoderRectoMM(Velocidad*0.3,5)
+    1BlancoRectoMM(Velocidad*0.3,1)
+    1NegroRectoMM(Velocidad*0.3,1)
+    
+    GPerfIDEFINITIVOMM(Velocidad*-0.3)
+    
     SL14PID(Velocidad*0.3,kp,ki,kd)
-    EncoderRectoMM(Velocidad*0.3, 16)
-    EncoderRectoMM(Velocidad*-0.3,5)
+    
+    EncoderRectoMM(Velocidad*0.3,15)
+    
     Coger_Abajo()
     EncoderRectoMM (Velocidad*-0.3, 9)
     Spin90(Velocidad*0.3)
     SL14PIDEnc(Velocidad*0.3,kp,ki,kd,8)
     Spin90(Velocidad*-0.3)
     EncoderRectoMM (Velocidad*0.3, 16)
-    EncoderRectoMM (Velocidad*-0.3, 5)
     Coger_Arriba()
     
+    1BlancoRectoMM(Velocidad*-0.3,1)
+    1NegroRectoMM(Velocidad*-0.3,1)
+    GPerfIDEFINITIVOMM(Velocidad*0.3)
     
+    SL14PIDEncF(Velocidad*0.3,kp,ki,kd,5)
+    SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,1,1)
+    GPerfIDEFINITIVOMM(Velocidad*0.3)
     
+    SL14PIDEnc(Velocidad*0.3,kp,ki,kd,20)
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    'EncoderRectoMM(-30,10)
-    'Spin180(30)
-    
-    '1BlancoRectoMM(-30,1)
-    '1NegroRectoMM(-30,1)
-    
-    'EncoderRectoMM(30,5)
+    Soltar_Todo()
   Else
-    Spin90(-30)
+    Spin90(Velocidad*-0.3)
   EndIf
   
 EndSub
@@ -684,7 +664,7 @@ EndFunction
 
 Function Coger_Arriba()
   
-  EncoderRectoMM(-20,5.5)
+  EncoderRectoMM(-20,6.5)
   
   BMoveA(10,-670)
   BMoveD(20,-200)
