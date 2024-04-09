@@ -2,15 +2,14 @@ lv_v_105 = 0
 lv_aenc_105 = 0
 lv_velocidad_1 = 0
 lv_distancia_1 = 0
-lv_velocidad_39 = 0
+lv_v1_35 = 0
+lv_v2_35 = 0
+lv_angle_35 = 0
 lv_velocidad_2 = 0
 lv_distancia_2 = 0
 lv_reps_110 = 0
 lv_color_110 = 0
 lv_color_122 = 0
-lv_v1_35 = 0
-lv_v2_35 = 0
-lv_angle_35 = 0
 lv_velocidad1_15 = 0
 lv_velocidad2_15 = 0
 lv_encoder_15 = 0
@@ -18,6 +17,9 @@ lv_velocidad_3 = 0
 lv_sens_3 = 0
 lv_v_95 = 0
 lv_aenc_95 = 0
+lv_velocidad_39 = 0
+lv_velocidad_13 = 0
+lv_tiempo_13 = 0
 lv_v_104 = 0
 lv_grados_104 = 0
 lv_v0_56 = 0
@@ -193,8 +195,10 @@ f_startarm_0 ()
 lv_velocidad_1 = gv_velocidad * 0.3
 lv_distancia_1 = 35
 f_encoderrectomm_2 ()
-lv_velocidad_39 = gv_velocidad * 0.3
-f_spin90_1 ()
+lv_v1_35 = gv_velocidad * 0.2
+lv_v2_35 = gv_velocidad * - 0.2
+lv_angle_35 = 80
+f_gunivencmm_3 ()
 lv_velocidad_2 = gv_velocidad * 0.3
 lv_distancia_2 = 10
 f_encoderrectommf_2 ()
@@ -217,16 +221,21 @@ gv_verdes = 0
 gv_azules = 0
 lv_v1_35 = gv_velocidad * 0.2
 lv_v2_35 = gv_velocidad * - 0.2
-lv_angle_35 = 175
+lv_angle_35 = 166
 f_gunivencmm_3 ()
+Program.Delay ( 500 )
+lv_velocidad_1 = gv_velocidad * - 0.3
+lv_distancia_1 = 2
+f_encoderrectomm_2 ()
 lv_velocidad1_15 = gv_velocidad * 0.3
-lv_velocidad2_15 = gv_velocidad * 0.5
+lv_velocidad2_15 = gv_velocidad * 0.375
 lv_encoder_15 = 34
 f_encodergiromm_3 ()
-lv_velocidad1_15 = gv_velocidad * 0.5
-lv_velocidad2_15 = gv_velocidad * 0.4
+lv_velocidad1_15 = gv_velocidad * 0.375
+lv_velocidad2_15 = gv_velocidad * 0.3
 lv_encoder_15 = 32
 f_encodergiromm_3 ()
+Program.Delay ( 500 )
 lv_velocidad_3 = gv_velocidad * 0.12
 lv_sens_3 = 1
 f_1negrorectomm_2 ()
@@ -237,7 +246,7 @@ lv_v_105 = 20
 lv_aenc_105 = - 300
 f_bmoved_2 ()
 lv_v_95 = 20
-lv_aenc_95 = - 760
+lv_aenc_95 = - 780
 f_bmovea_2 ()
 lv_v1_35 = gv_velocidad * - 0.2
 lv_v2_35 = gv_velocidad * 0.2
@@ -247,10 +256,38 @@ lv_velocidad_1 = gv_velocidad * 0.12
 lv_distancia_1 = 6
 f_encoderrectomm_2 ()
 lv_v_95 = 20
-lv_aenc_95 = - 620
+lv_aenc_95 = - 580
 f_bmovea_2 ()
-lv_velocidad_39 = 20
+lv_velocidad_39 = 10
 f_spin90_1 ()
+lv_velocidad_1 = gv_velocidad * - 0.3
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_v1_35 = gv_velocidad * 0.2
+lv_v2_35 = gv_velocidad * - 0.2
+lv_angle_35 = 17
+f_gunivencmm_3 ()
+lv_velocidad_13 = gv_velocidad * - 0.8
+lv_tiempo_13 = 3000
+f_tiemporectomm_2 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 5
+f_encoderrectomm_2 ()
+lv_v1_35 = gv_velocidad * - 0.2
+lv_v2_35 = gv_velocidad * 0.2
+lv_angle_35 = 80
+f_gunivencmm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 14
+f_encoderrectomm_2 ()
+lv_v1_35 = gv_velocidad * 0.2
+lv_v2_35 = gv_velocidad * - 0.2
+lv_angle_35 = 80
+f_gunivencmm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 4
+f_encoderrectomm_2 ()
+f_coger_abajo_basura_0 ()
 EndSub
 Sub f_caso_abajo_0
 EndSub
@@ -308,6 +345,20 @@ lv_encoder_c_3 = Motor.GetCount ( "C" ) - lv_start_c_3
 lv_error_3 = ( lv_encoder_b_3 - lv_encoder_c_3 ) * gv_sentido_motores
 lv_proporcial_3 = lv_error_3 * 2
 Motor.StartSync ( "BC" , - ( lv_velocidad_3 - lv_proporcial_3 ) , ( lv_velocidad_3 + lv_proporcial_3 ) )
+EndWhile
+Motor.Stop ( "BC" , "True" )
+EndSub
+Sub f_tiemporectomm_2
+lv_velocidad_13 = lv_velocidad_13 * gv_sentido_motores
+lv_start_b_13 = Motor.GetCount ( "B" ) * - 1
+lv_start_c_13 = Motor.GetCount ( "C" )
+Time.Reset3 ()
+While Time.Get3 () < lv_tiempo_13
+lv_encoder_b_13 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_13
+lv_encoder_c_13 = Motor.GetCount ( "C" ) - lv_start_c_13
+lv_error_13 = ( lv_encoder_b_13 - lv_encoder_c_13 ) * gv_sentido_motores
+lv_proporcial_13 = lv_error_13 * 2
+Motor.StartSync ( "BC" , - ( lv_velocidad_13 - lv_proporcial_13 ) , lv_velocidad_13 + lv_proporcial_13 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
 EndSub
@@ -883,6 +934,23 @@ Speaker.Play ( 100 , "WRO2023/White" )
 ElseIf lv_color_122 = 7 Then
 Speaker.Play ( 100 , "WRO2023/Brown" )
 EndIf
+EndSub
+Sub f_coger_abajo_basura_0
+lv_velocidad_1 = - 30
+lv_distancia_1 = 2
+f_encoderrectomm_2 ()
+lv_v_105 = 40
+lv_aenc_105 = - 220
+f_bmoved_2 ()
+lv_v_95 = 20
+lv_aenc_95 = - 780
+f_bmovea_2 ()
+lv_v_108 = - 40
+lv_t_108 = 350
+f_bmovedtimer_2 ()
+lv_v_95 = 20
+lv_aenc_95 = - 300
+f_bmovea_2 ()
 EndSub
 Sub f_traspmatvect3x3_2
 lv_s_132 = Vector.Init ( 3 * 3 , 0 )

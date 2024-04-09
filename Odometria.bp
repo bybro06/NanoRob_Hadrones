@@ -329,7 +329,7 @@ Sub Main
   StartArm()
   
   EncoderRectoMM(Velocidad*0.3,35)
-  Spin90(Velocidad*0.3)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,80)
   
   EncoderRectoMMF(Velocidad*0.3,10)
   
@@ -408,19 +408,32 @@ Sub Caso_Arriba
   verdes = 0
   azules = 0
   
-  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,175)
-  
-  EncoderGiroMM(Velocidad*0.3,Velocidad*0.5,34)
-  EncoderGiroMM(Velocidad*0.5,Velocidad*0.4,32)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,166)
+  Program.Delay(500)
+  EncoderRectoMM(Velocidad*-0.3,2)
+  EncoderGiroMM(Velocidad*0.3,Velocidad*0.375,34)
+  EncoderGiroMM(Velocidad*0.375,Velocidad*0.3,32)
+  Program.Delay(500)
   
   1NegroRectoMM(Velocidad*0.12,1)
   EncoderRectoMM(Velocidad*-0.3,15)
   BMoveD(20,-300)
-  BMoveA(20,-760)
+  BMoveA(20,-780)
   GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,15)
   EncoderRectoMM(Velocidad*0.12,6)
   BMoveA(20,-580)
-  Spin90(20)
+  Spin90(10)
+  EncoderRectoMM(Velocidad*-0.3,5)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,17)
+  TiempoRectoMM(Velocidad*-0.8,3000)
+  EncoderRectoMM(Velocidad*0.3,5)
+  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,80)
+  EncoderRectoMM(Velocidad*0.3,14)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,80)
+  EncoderRectoMM(Velocidad*0.3,4)
+  Coger_Abajo_Basura()
+  
+  
   
   
   
