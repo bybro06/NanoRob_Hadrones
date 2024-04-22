@@ -730,7 +730,7 @@ While Math.abs ( lv_encoder_c_1 ) < lv_enc_1
 lv_encoder_b_1 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_1
 lv_encoder_c_1 = Motor.GetCount ( "C" ) - lv_start_c_1
 lv_error_1 = ( lv_encoder_b_1 - lv_encoder_c_1 ) * gv_sentido_motores
-lv_proporcial_1 = lv_error_1 * 2
+lv_proporcial_1 = lv_error_1 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_1 - lv_proporcial_1 ) , lv_velocidad_1 + lv_proporcial_1 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -746,7 +746,7 @@ While Math.abs ( lv_encoder_c_2 ) < lv_enc_2
 lv_encoder_b_2 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_2
 lv_encoder_c_2 = Motor.GetCount ( "C" ) - lv_start_c_2
 lv_error_2 = ( lv_encoder_b_2 - lv_encoder_c_2 ) * gv_sentido_motores
-lv_proporcial_2 = lv_error_2 * 2
+lv_proporcial_2 = lv_error_2 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_2 - lv_proporcial_2 ) , lv_velocidad_2 + lv_proporcial_2 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -759,7 +759,7 @@ While Sensor.ReadPercent ( lv_sens_3 ) > 10
 lv_encoder_b_3 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_3
 lv_encoder_c_3 = Motor.GetCount ( "C" ) - lv_start_c_3
 lv_error_3 = ( lv_encoder_b_3 - lv_encoder_c_3 ) * gv_sentido_motores
-lv_proporcial_3 = lv_error_3 * 2
+lv_proporcial_3 = lv_error_3 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_3 - lv_proporcial_3 ) , ( lv_velocidad_3 + lv_proporcial_3 ) )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -772,7 +772,7 @@ While Sensor.ReadPercent ( lv_sens_4 ) > 10
 lv_encoder_b_4 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_4
 lv_encoder_c_4 = Motor.GetCount ( "C" ) - lv_start_c_4
 lv_error_4 = ( lv_encoder_b_4 - lv_encoder_c_4 ) * gv_sentido_motores
-lv_proporcial_4 = lv_error_4 * 2
+lv_proporcial_4 = lv_error_4 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_4 - lv_proporcial_4 ) , lv_velocidad_4 + lv_proporcial_4 )
 EndWhile
 Motor.Stop ( "BC" , "False" )
@@ -785,7 +785,7 @@ While Sensor.ReadPercent ( lv_sens_5 ) < 40
 lv_encoder_b_5 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_5
 lv_encoder_c_5 = Motor.GetCount ( "C" ) - lv_start_c_5
 lv_error_5 = ( lv_encoder_b_5 - lv_encoder_c_5 ) * gv_sentido_motores
-lv_proporcial_5 = lv_error_5 * 2
+lv_proporcial_5 = lv_error_5 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_5 - lv_proporcial_5 ) , lv_velocidad_5 + lv_proporcial_5 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -798,7 +798,7 @@ While Sensor.ReadPercent ( lv_sens_6 ) < 40
 lv_encoder_b_6 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_6
 lv_encoder_c_6 = Motor.GetCount ( "C" ) - lv_start_c_6
 lv_error_6 = ( lv_encoder_b_6 - lv_encoder_c_6 ) * gv_sentido_motores
-lv_proporcial_6 = lv_error_6 * 2
+lv_proporcial_6 = lv_error_6 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_6 - lv_proporcial_6 ) , lv_velocidad_6 + lv_proporcial_6 )
 EndWhile
 Motor.Stop ( "BC" , "False" )
@@ -812,7 +812,7 @@ While Time.Get3 () < lv_tiempo_13
 lv_encoder_b_13 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_13
 lv_encoder_c_13 = Motor.GetCount ( "C" ) - lv_start_c_13
 lv_error_13 = ( lv_encoder_b_13 - lv_encoder_c_13 ) * gv_sentido_motores
-lv_proporcial_13 = lv_error_13 * 2
+lv_proporcial_13 = lv_error_13 * 1.5
 Motor.StartSync ( "BC" , - ( lv_velocidad_13 - lv_proporcial_13 ) , lv_velocidad_13 + lv_proporcial_13 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -1583,7 +1583,7 @@ f_bmovea_2 ()
 EndSub
 Sub f_coger_arriba_0
 lv_velocidad_1 = - 20
-lv_distancia_1 = 7.5
+lv_distancia_1 = 7
 f_encoderrectomm_2 ()
 lv_v_95 = 10
 lv_aenc_95 = - 670

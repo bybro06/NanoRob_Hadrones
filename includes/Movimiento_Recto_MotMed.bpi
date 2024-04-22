@@ -23,7 +23,7 @@ Function EncoderRectoMM(in number Velocidad, in number Distancia)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
 
@@ -52,7 +52,7 @@ Function EncoderRectoMMF(in number Velocidad, in number Distancia)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
 
@@ -77,7 +77,7 @@ Function 1NegroRectoMM(in number Velocidad, in number sens)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), (Velocidad+proporcial))
   EndWhile
@@ -98,7 +98,7 @@ Function 1NegroRectoMMF(in number Velocidad, in number sens)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -120,7 +120,7 @@ Function 1BlancoRectoMM(in number Velocidad, in number sens)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -141,7 +141,7 @@ Function 1BlancoRectoMMF(in number Velocidad, in number sens)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -163,7 +163,7 @@ Function 2NegrosRectoMM(in number Velocidad, in number sens1, in number sens2)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -184,7 +184,7 @@ Function 2NegrosRectoMMF(in number Velocidad, in number sens1, in number sens2)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -206,7 +206,7 @@ Function 2BlancosRectoMM(in number Velocidad, in number sens1, in number sens2)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -227,7 +227,7 @@ Function 2BlancosRectoMMF(in number Velocidad, in number sens1, in number sens2)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -252,7 +252,7 @@ Function 1ColorRectoMM(in number Velocidad, in number sens, in number Color)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -277,7 +277,7 @@ Function 1ColorRectoMMF(in number Velocidad, in number sens, in number Color)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -302,7 +302,7 @@ Function TiempoRectoMM(in number Velocidad, in number Tiempo)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
@@ -325,7 +325,7 @@ Function TiempoRectoMMF(in number Velocidad, in number Tiempo)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*2
+    proporcial = error*1.5
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
   EndWhile
