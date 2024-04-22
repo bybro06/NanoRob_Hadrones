@@ -40,7 +40,7 @@ Setup()
 Thread.Run = Odometry
 Thread.Run = Display
 Thread.Run = Stop
-Main()
+MainPrueba()
 
 Sub Setup
   Sensor.SetMode(1,0)
@@ -355,7 +355,66 @@ Sub MainPrueba
   
   StartArm()
   
-  Motor.Move("BC",30,1173/4,"True")
+  EncoderRectoMM(30,15)
+  Lectura(bloque)
+  If bloque <> 3 And bloque <> 2 Then
+    'Si no hay bloque
+    numero_bloques = 0
+    bomboclat[0] = 0
+  Else
+    bomboclat[0] = bloque
+    numero_bloques = 1
+    
+    If bloque = 3 Then
+      verdes ++
+    Else
+      azules ++
+    EndIf
+    
+    Coger_Abajo()
+    
+  EndIf
+  
+  'Gira al segundo
+  
+  EncoderRectoMM(Velocidad*-0.2,5)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,92)
+  
+  EncoderRectoMM(Velocidad*0.2,11.5)
+  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,95)
+  
+  EncoderRectoMM(Velocidad*0.2,14)
+  Lectura(bloque)
+  
+  If bloque <> 3 and bloque <> 2 Then
+    bomboclat[1] = bomboclat[0]
+    
+    bomboclat[0] = 0
+  Else
+    bomboclat[1] = bloque
+    numero_bloques ++
+    
+    If numero_bloques = 1 Then
+      
+      'Si no lleva bloque
+      Coger_Abajo()
+      
+    Else
+      
+      'Si lleva Bloque
+      Coger_Arriba()
+      
+    EndIf
+    
+    Soltar_Uno()
+    
+    EncoderRectoMM(-30,10)
+    
+    Soltar_Todo()
+    
+    BMoveAD0(20)
+  EndIf
+  
 EndSub
 
 Sub MainControlBrazo
@@ -552,12 +611,18 @@ Sub Caso_Verde
       
       If bomboclat[0] = bomboclat[1] Then
         
+        'Si los dos son del mismo color
         
         If bomboclat[0] = 2 Then
+          
+          'Los dos son azules
           GUnivEncMM(Velocidad*0.3,Velocidad*0.1,40)
           Soltar_Todo()
           GUnivEncMM(Velocidad*-0.3,Velocidad*-0.1,40)
+          
         Else
+          
+          'Los dos son verdes
           GUnivEncMM(Velocidad*0.1,Velocidad*0.3,40)
           Soltar_Todo()
           GUnivEncMM(Velocidad*-0.1,Velocidad*-0.3,40)
@@ -566,7 +631,11 @@ Sub Caso_Verde
         
       Else
         
+        'Si los dos son de distinto color
+        
         If bomboclat[0] = 2 Then
+          
+          'Son azul y verde
           
           GUnivEncMM(Velocidad*0.3,Velocidad*0.1,40)
           Soltar_Uno()
@@ -577,6 +646,8 @@ Sub Caso_Verde
           GUnivEncMM(Velocidad*-0.1,Velocidad*-0.3,40)
           
         Else
+          
+          'Son verde y azul
           
           GUnivEncMM(Velocidad*0.1,Velocidad*0.3,40)
           Soltar_Uno()
@@ -593,10 +664,12 @@ Sub Caso_Verde
       
     EndIf
     
+    'Vuelve a línea
     BMoveAD0(20)
     1BlancoRectoMM(Velocidad*-0.3,1)
     1NegroRectoMM(Velocidad*-0.3,1)
     
+    'Se va al cruce
     GPerfDDEFINITIVOMM(Velocidad*0.3)
     SL14PIDEnc(Velocidad*0.3,kp,ki,kd,5)
     SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,1,1)
@@ -705,7 +778,7 @@ EndFunction
 
 Function Coger_Arriba()
   
-  EncoderRectoMM(-20,6.5)
+  EncoderRectoMM(-20,7.5)
   
   BMoveA(10,-670)
   BMoveD(20,-200)
