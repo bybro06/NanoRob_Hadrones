@@ -126,9 +126,17 @@ EndFunction
 'Brazos hasta posición inicial aproximada
 
 Function BMoveAD0(in number V)
-  aenc = -10
+  aenc = 0
   
-  While MotorA.GetTacho() <> aenc Or MotorD.GetTacho() <> aenc
+  encDiff = aenc - Motor.GetCount("A")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(V/20)*650*2)*2/3,400)
+  
+  Time.Reset3()
+  
+  While (MotorA.GetTacho() <> aenc Or MotorD.GetTacho() <> aenc) And Time.Get3() < SafetyTimer
     
     If MotorA.GetTacho() < aenc Then
       MotorA.StartSpeed(Math.Min(V, V/2 + (aenc - MotorA.GetTacho()) / 10))
