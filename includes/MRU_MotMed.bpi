@@ -2,7 +2,7 @@
 
 'Sentido de los motores
 Sentido_Motores = 1
-Correcion = 99
+Correccion = 0
 
 'Por encoder
 Function EncoderRectoMM(in number Velocidad, in number Distancia)
@@ -12,7 +12,7 @@ Function EncoderRectoMM(in number Velocidad, in number Distancia)
 
   Enc = Distancia*360 / Math.Pi / diametro
   
-  Start_B = Motor.GetCount ("B") *-1 + @Correccion
+  Start_B = Motor.GetCount ("B") *-1 + (@Correccion/30*Velocidad)
   Start_C = Motor.GetCount ("C")
   
   encoder_C = Motor.GetCount ("C") - Start_C

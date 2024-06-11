@@ -12,7 +12,7 @@ Velocidad = 100
 
 kp = 0.2
 ki = 0.0001
-kd = 1
+kd = 6
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -20,11 +20,12 @@ Dw = 102
 Diameter = 56
 D_T = 0
 
-include "includes\Movimiento_Recto_MotMed"
+include "includes\MRU_MotMed"
 
 include "includes\Giro_MotMed"
 include "includes\GirosPerfectos_MotMed"
 include "includes\GirosUniversales_MotMed"
+G1 = 125/36
 
 include "includes\Aceleracion_MotMed"
 include "includes\Deceleracion_MotMed"
@@ -195,7 +196,7 @@ Sub Main
   StartArm()
   
   'Gira hacia tubería
-  GUnivEncMM(Velocidad*0.1,Velocidad*0.3,91)
+  GUnivEncMM(Velocidad*0.13,Velocidad*0.3,90)
   BMoveA(20,-100) 'Esto con el caso de arriba no se necesitaba
   
   rojos = 0
@@ -205,7 +206,7 @@ Sub Main
   
   'Avanza a tubería
 
-  EncoderRectoMM(Velocidad*0.425,32)
+  EncoderRectoMM(Velocidad*0.425,9.5)
   Program.Delay(500)
   
   'Cierra y Baja brazo
@@ -213,7 +214,7 @@ Sub Main
   BMoveA(20,-780)
   
   'Recoloca
-  GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,35)
+  GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,30)
   Program.Delay(1000)
   EncoderRectoMM(Velocidad*0.12,6)
   BMoveA(20,-820)
@@ -241,8 +242,8 @@ Sub Main
   EncoderRectoMM(Velocidad*0.3,5.5)
   
   'Gira hacia bloques azules/verdes y avanza
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,101)
-  EncoderRectoMM(Velocidad*0.3,31)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
+  EncoderRectoMM(Velocidad*0.3,29)
   Program.Delay(1000)
   
   Lectura(bloque)
@@ -274,7 +275,7 @@ Sub Main
   
   TiempoRectoMM(Velocidad*-0.8,500)
   EncoderRectoMM(Velocidad*0.2,13)
-  Spin90(-20)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
   
   EncoderRectoMM(Velocidad*0.2,14)
   Lectura(bloque)
@@ -304,18 +305,18 @@ Sub Main
   'Gira hacia linea
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,171)
   EncoderRectoMM(Velocidad*0.5,72)
-  GUnivEncMM(Velocidad*-0.2, Velocidad*0.2,90)
+  GUnivEncMM(Velocidad*-0.2, Velocidad*0.2,100)
   
   'Lee línea
   TiempoRectoMM(Velocidad*-0.3,1000)
-  1BlancoRectoMM(Velocidad*0.3,1)
+  1BlancoRectoMM(Velocidad*0.2,1)
   1NegroRectoMM(Velocidad*0.2,1)
   EncoderRectoMM(Velocidad*0.3,6)
   
   'Gira a derecha y avanza hasta cruce
   'GPerfDDEFINITIVOMM(Velocidad*0.2)
   1NegroGiroMM(30,-30,1)
-  SL14PIDEncF(Velocidad*0.3,kp*0.6,ki,kd,3)
+  SL14PIDEncF(Velocidad*0.3,kp*2,ki,kd,5)
   SL14PIDEnc(Velocidad*0.3,kp*0.6,ki,kd,10)
   
   If numero_bloques > 0 Then
@@ -431,7 +432,7 @@ Sub Main
   SL14PID(Velocidad*0.3,kp,ki,kd)
   Motor.Stop("ABCD","True")
   
-  EncoderRectoMM(Velocidad*0.3,18)
+  EncoderRectoMM(Velocidad*0.3,16.5)
   
   Coger_Abajo()
   1BlancoRectoMM(Velocidad*-0.15,1)
@@ -592,7 +593,7 @@ EndFunction
 
 Function Coger_Arriba()
   
-  EncoderRectoMM(-20,7)
+  EncoderRectoMM(-20,6.5)
   
   BMoveA(10,-670)
   BMoveD(20,-200)
