@@ -2,6 +2,7 @@
 
 'Sentido de los motores
 Sentido_Motores = 1
+Correcion = 99
 
 'Por encoder
 Function EncoderRectoMM(in number Velocidad, in number Distancia)
@@ -11,15 +12,14 @@ Function EncoderRectoMM(in number Velocidad, in number Distancia)
 
   Enc = Distancia*360 / Math.Pi / diametro
   
-  Motor.Move("C",Velocidad,80,"False")
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
   
   encoder_C = Motor.GetCount ("C") - Start_C
   
   While Math.abs(encoder_C) < Enc
     
-    encoder_B = Motor.GetCount ("B")*-1.01 - Start_B
+    encoder_B = Motor.GetCount ("B")*-1 - Start_B
     encoder_C = Motor.GetCount ("C") - Start_C
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
@@ -41,7 +41,7 @@ Function EncoderRectoMMF(in number Velocidad, in number Distancia)
 
   Enc = Distancia*360 / Math.Pi / diametro
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
   
   encoder_C = Motor.GetCount ("C") - Start_C
@@ -68,7 +68,7 @@ Function 1NegroRectoMM(in number Velocidad, in number sens)
 
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens) > 10
@@ -89,7 +89,7 @@ Function 1NegroRectoMMF(in number Velocidad, in number sens)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens) > 10
@@ -111,7 +111,7 @@ Function 1BlancoRectoMM(in number Velocidad, in number sens)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens) < 40
@@ -132,7 +132,7 @@ Function 1BlancoRectoMMF(in number Velocidad, in number sens)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens) < 40
@@ -154,7 +154,7 @@ Function 2NegrosRectoMM(in number Velocidad, in number sens1, in number sens2)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
@@ -175,7 +175,7 @@ Function 2NegrosRectoMMF(in number Velocidad, in number sens1, in number sens2)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens1) > 5 Or Sensor.ReadPercent(sens2) > 5
@@ -197,7 +197,7 @@ Function 2BlancosRectoMM(in number Velocidad, in number sens1, in number sens2)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens1) < 70 Or Sensor.ReadPercent(sens2) < 70
@@ -218,7 +218,7 @@ Function 2BlancosRectoMMF(in number Velocidad, in number sens1, in number sens2)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   While Sensor.ReadPercent(sens1) < 70 Or Sensor.ReadPercent(sens2) < 70
@@ -240,7 +240,7 @@ Function 1ColorRectoMM(in number Velocidad, in number sens, in number Color)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   mode = Sensor.GetMode(sens)
@@ -265,7 +265,7 @@ Function 1ColorRectoMMF(in number Velocidad, in number sens, in number Color)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   mode = Sensor.GetMode(sens)
@@ -291,7 +291,7 @@ Function TiempoRectoMM(in number Velocidad, in number Tiempo)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   Time.Reset3()
@@ -314,7 +314,7 @@ Function TiempoRectoMMF(in number Velocidad, in number Tiempo)
   
   Velocidad *= @Sentido_Motores
   
-  Start_B = Motor.GetCount ("B") *-1
+  Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
   Time.Reset3()
