@@ -19,6 +19,8 @@ Function GUnivEncMM(in number V1, in number V2, in number Angle)
   V1 = 0
   V2 = 0
   Angle = 0
+  
+  Program.Delay(200)
 EndFunction
 
 Function GUnivEncMMF(in number V1, in number V2, in number Angle)
