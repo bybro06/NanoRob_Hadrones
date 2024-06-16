@@ -20,7 +20,7 @@ Dw = 102
 Diameter = 56
 D_T = 0
 
-include "includes\Movimiento_Recto_MotMed"
+include "includes\MRU_MotMed"
 
 include "includes\Giro_MotMed"
 include "includes\GirosPerfectos_MotMed"
@@ -40,7 +40,7 @@ Setup()
 Thread.Run = Odometry
 Thread.Run = Display
 Thread.Run = Stop
-Main()
+MainPrueba()
 
 Sub Setup
   Sensor.SetMode(1,0)
@@ -348,26 +348,7 @@ EndSub
 
 Sub MainPrueba
   
-  rojos = 0
-  amarillos = 0
-  verdes = 0
-  azules = 0
-  
-  StartArm()
-  
-  SL1SPIDCrossF(Velocidad*0.2,kp,ki,kd,-1,4)
-  SL14PIDEncF(Velocidad*0.4,kp*0.8,ki,kd*1.2,20)
-  
-  linAccelDecelMM(Velocidad*0.4,Velocidad*0.98,15,40,5)
-  
-  BMoveD(20,-300)
-  BMoveA(20,-780)
-  
-  EncoderGiroMM(Velocidad*0.3,Velocidad*0.19,9)
-  
-  BMoveA(20,-520)
-  EncoderGiroMM(Velocidad*0.3,Velocidad*0.1,14)
-  BMoveAD0(30)
+  Spin90(30)
   
 EndSub
 

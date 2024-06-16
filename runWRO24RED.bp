@@ -1,25 +1,16 @@
-centro = 0
-xtime = 0
-ytime = 0
-thetatime = 0
-xtcorrect = 0
-ytcorrect = 0
-thetatcorrect = 0
-Sentido_D = 1
-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Velocidad = 100
 
 kp = 0.2
-ki = 0.0002
-kd = 8
+ki = 0.0001
+kd = 3
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Dw = 102
 Diameter = 56
-D_T = 0
 
+centro = 0
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 include "includes\MRU_MotMed"
 
 include "includes\Giro_MotMed"
@@ -36,9 +27,11 @@ include "includes\Brazo"
 
 include "includes\RGBRead"
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Setup()
-StartArm()
-main()
+Thread.Run = Display
+Thread.Run = Stop
+Main()
 
 Sub Setup
   Sensor.SetMode(1,0)
@@ -47,7 +40,6 @@ Sub Setup
   Sensor.SetMode(4,0)
 EndSub
 
-'Comiensa la baina loca
 Sub StartArm
   
   Time.Reset1()
@@ -68,49 +60,38 @@ Sub StartArm
   Program.Delay(100)
 EndSub
 
-Sub mainPrueba
-  Coger_Abajo_Basura()
+'Subs de control paralelo
 
-  EncoderRectoMM(Velocidad*-0.3,5)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,85)
-  Program.Delay(250)
-EncoderRectoMM(Velocidad*0.3,13)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,85)
-  Program.Delay(250)
-  EncoderRectoMM(Velocidad*0.3,9)
-  BMoveA(20,-820)
-
-'Se viene girito 😘
-
- GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,15)
-  Program.Delay(1000)
-  EncoderRectoMM(Velocidad*0.12,6)
-  
-  
-  TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1000)
-  Program.Delay(500)
-  GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,6)
-  
-  BMoveA(20,-580)
-  Program.Delay(1000)
-  
-  Spin90(10)
-  Spin90(-10)
-BMoveA0(30)
-
-
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,133)
-  Program.Delay(250)
-  EncoderRectoMM(Velocidad*0.95,160)
-  EncoderGiroMM(Velocidad*0.2, Velocidad*0.23,20)
-  BMoveA(20,-780)
-  BMoveD0(20)
-  
-  EncoderRectoMM(Velocidad*0.2, 6)
-EncoderRectoMM(Velocidad*-0.2, 6)
+Sub Display
+  old_B = 0
+  old_C = 0
+  While "True"
+    LCD.StopUpdate()
+    LCD.Clear()
+    
+    LCD.Write(5,35,"centro: "+centro)
+    
+    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed())
+    
+    LCD.Write(5,65,"rad/s de B:  "+Math.GetRadians(MotorB.GetTacho()-old_B)/0.05*-1)
+    LCD.Write(5,75,"rad/s de C:  "+Math.GetRadians(MotorC.GetTacho()-old_C)/0.05)
+    
+    LCD.Write(5,85,"Encoder de B:  "+MotorB.GetTacho()*-1)
+    LCD.Write(5,95,"Encoder de C:  "+MotorC.GetTacho())
+    
+    LCD.Update()
+    Program.Delay(50)
+    old_B = MotorB.GetTacho()
+    old_C = MotorC.GetTacho()
+  EndWhile
 EndSub
 
-Sub main
+'Subs a ejecutar
+
+'Comiensa la baina loca
+
+Sub Main
 
   'Va hacia tuberia
 
@@ -219,6 +200,103 @@ BMoveA0(30)
 EncoderRectoMM(Velocidad*-0.2, 6)
 EndSub
 
+Sub MainPrueba
+  Coger_Abajo_Basura()
+
+  EncoderRectoMM(Velocidad*-0.3,5)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,85)
+  Program.Delay(250)
+EncoderRectoMM(Velocidad*0.3,13)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,85)
+  Program.Delay(250)
+  EncoderRectoMM(Velocidad*0.3,9)
+  BMoveA(20,-820)
+
+'Se viene girito 😘
+
+ GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,15)
+  Program.Delay(1000)
+  EncoderRectoMM(Velocidad*0.12,6)
+  
+  
+  TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1000)
+  Program.Delay(500)
+  GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,6)
+  
+  BMoveA(20,-580)
+  Program.Delay(1000)
+  
+  Spin90(10)
+  Spin90(-10)
+BMoveA0(30)
+
+
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,133)
+  Program.Delay(250)
+  EncoderRectoMM(Velocidad*0.95,160)
+  EncoderGiroMM(Velocidad*0.2, Velocidad*0.23,20)
+  BMoveA(20,-780)
+  BMoveD0(20)
+  
+  EncoderRectoMM(Velocidad*0.2, 6)
+EncoderRectoMM(Velocidad*-0.2, 6)
+EndSub
+
+Sub MainControlBrazo
+  angle_A = 0
+  angle_D = 0  
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      angle_A -= 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "D" Then
+      angle_A += 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "L" Then
+      angle_D -= 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "R" Then
+      angle_D += 1
+      Program.Delay(1)
+    EndIf
+  EndWhile
+EndSub
+
+Sub MainControlRuedas
+  vel_B = 92
+  vel_C = 92
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      vel_B -= 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "D" Then
+      vel_B += 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "L" Then
+      vel_C += 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "R" Then
+      vel_C -= 1
+      Program.Delay(1)
+    EndIf
+    Motor.StartSync("BC",-vel_B,-vel_C)
+  EndWhile
+EndSub
+
+
+Sub Stop
+  While "True"
+    if Buttons.Current = "E" Then
+      MotorBC.OffAndBrake()
+      MotorAD.OffAndBrake()
+      BMoveADSafe(20,0)
+      Program.End()
+    EndIf
+  EndWhile
+EndSub
+
 
 Function Coger_Abajo()
   
@@ -248,7 +326,7 @@ EndFunction
 
 Function Coger_Arriba()
   
-  EncoderRectoMM(-20,7)
+  EncoderRectoMM(-20,6.5)
   
   BMoveA(10,-670)
   BMoveD(20,-200)
@@ -292,10 +370,10 @@ Function Soltar_Uno()
   
 EndFunction
 
+
 Function Lectura(out number read)
   BmoveA(15,-650)
   RGBDetect2(5,read)
   LeerColor(read)
   BmoveA(15,-200)
 EndFunction
-

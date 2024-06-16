@@ -12,30 +12,14 @@ lv_distancia_2 = 0
 lv_reps_110 = 0
 lv_color_110 = 0
 lv_color_122 = 0
-lv_velocidad_82 = 0
-lv_kp_82 = 0
-lv_ki_82 = 0
-lv_kd_82 = 0
-lv_lado_82 = 0
-lv_sens_82 = 0
-lv_velocidad_76 = 0
-lv_kp_76 = 0
-lv_ki_76 = 0
-lv_kd_76 = 0
-lv_encoder_76 = 0
-lv_v0_49 = 0
-lv_vmax_49 = 0
-lv_distancia1_49 = 0
-lv_distancia2_49 = 0
-lv_distancia3_49 = 0
+lv_velocidad_39 = 0
 lv_velocidad1_15 = 0
 lv_velocidad2_15 = 0
 lv_encoder_15 = 0
-lv_v_101 = 0
 lv_velocidad1_25 = 0
 lv_velocidad2_25 = 0
 lv_tiempo_25 = 0
-lv_velocidad_39 = 0
+lv_v_101 = 0
 lv_velocidad_13 = 0
 lv_tiempo_13 = 0
 lv_read_131 = 0
@@ -46,11 +30,22 @@ lv_sens_3 = 0
 lv_velocidad1_17 = 0
 lv_velocidad2_17 = 0
 lv_sens_17 = 0
+lv_velocidad_76 = 0
+lv_kp_76 = 0
+lv_ki_76 = 0
+lv_kd_76 = 0
+lv_encoder_76 = 0
 lv_velocidad_75 = 0
 lv_kp_75 = 0
 lv_ki_75 = 0
 lv_kd_75 = 0
 lv_encoder_75 = 0
+lv_velocidad_82 = 0
+lv_kp_82 = 0
+lv_ki_82 = 0
+lv_kd_82 = 0
+lv_lado_82 = 0
+lv_sens_82 = 0
 lv_velocidad_37 = 0
 lv_vel_33 = 0
 lv_vel_31 = 0
@@ -58,6 +53,11 @@ lv_velocidad_71 = 0
 lv_kp_71 = 0
 lv_ki_71 = 0
 lv_kd_71 = 0
+lv_v0_49 = 0
+lv_vmax_49 = 0
+lv_distancia1_49 = 0
+lv_distancia2_49 = 0
+lv_distancia3_49 = 0
 lv_velocidad_6 = 0
 lv_sens_6 = 0
 lv_velocidad_4 = 0
@@ -78,6 +78,9 @@ lv_encoder_16 = 0
 lv_v_106 = 0
 lv_v_104 = 0
 lv_grados_104 = 0
+lv_v1_36 = 0
+lv_v2_36 = 0
+lv_angle_36 = 0
 lv_v0_56 = 0
 lv_vmax_56 = 0
 lv_kp_56 = 0
@@ -139,13 +142,8 @@ gv_dw = 0
 gv_diameter = 0
 gv_d_t = 0
 gv_sentido_motores = 0
+gv_correccion = 0
 gv_g1 = 0
-gv_rojos = 0
-gv_amarillos = 0
-gv_verdes = 0
-gv_azules = 0
-gv_numero_bloques = 0
-gv_bomboclat [ 0 ] = 0
 gv_centro = 0
 gv_xtime = 0
 gv_ytime = 0
@@ -162,9 +160,10 @@ gv_dw = 102
 gv_diameter = 56
 gv_d_t = 0
 gv_sentido_motores = 1
+gv_correccion = 0
 gv_sentido_motores = 1
 gv_sentido_motores = 1
-gv_g1 = 1250 / 360
+gv_g1 = 125 / 36
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
@@ -173,7 +172,7 @@ f_setup_0 ()
 Thread.Run = f_odometry_0
 Thread.Run = f_display_0
 Thread.Run = f_stop_0
-f_main_0 ()
+f_mainprueba_0 ()
 Sub f_setup_0
 Sensor.SetMode ( 1 , 0 )
 Sensor.SetMode ( 2 , 4 )
@@ -244,32 +243,9 @@ gv_old_b = MotorB.GetTacho ()
 gv_old_c = MotorC.GetTacho ()
 EndWhile
 EndSub
-Sub f_main_0
-f_startarm_0 ()
-lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 35
-f_encoderrectomm_2 ()
-lv_v1_35 = gv_velocidad * 0.2
-lv_v2_35 = gv_velocidad * - 0.2
-lv_angle_35 = 81
-f_gunivencmm_3 ()
-lv_v_95 = 20
-lv_aenc_95 = - 100
-f_bmovea_2 ()
-lv_velocidad_2 = gv_velocidad * 0.3
-lv_distancia_2 = 10
-f_encoderrectommf_2 ()
-lv_reps_110 = 5
-f_rgbdetect1_2 ()
-gv_caso = lv_color_110
-lv_color_122 = gv_caso
-f_leercolor_1 ()
-Sensor.SetMode ( 1 , 0 )
-If gv_caso = 3 Then
-f_caso_verde_0 ()
-Else
-f_caso_rojo_0 ()
-EndIf
+Sub f_mainprueba_0
+lv_velocidad_39 = 30
+f_spin90_1 ()
 EndSub
 Sub f_caso_verde_0
 gv_rojos = 0
@@ -660,9 +636,9 @@ f_encodergiromm_3 ()
 f_soltar_todo_0 ()
 lv_v_101 = 20
 f_bmovead0_1 ()
-lv_velocidad_1 = gv_velocidad * - 50
-lv_distancia_1 = 30
-f_encoderrectomm_2 ()
+lv_velocidad_13 = gv_velocidad * - 50
+lv_tiempo_13 = 2000
+f_tiemporectomm_2 ()
 lv_velocidad_5 = gv_velocidad * 0.2
 lv_sens_5 = 4
 f_1blancorectomm_2 ()
@@ -926,14 +902,14 @@ Sub f_encoderrectomm_2
 lv_velocidad_1 = lv_velocidad_1 * gv_sentido_motores
 lv_diametro_1 = 5.6
 lv_enc_1 = lv_distancia_1 * 360 / Math.Pi / lv_diametro_1
-lv_start_b_1 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_1 = Motor.GetCount ( "B" ) * - 1 + ( gv_correccion / 30 * lv_velocidad_1 )
 lv_start_c_1 = Motor.GetCount ( "C" )
 lv_encoder_c_1 = Motor.GetCount ( "C" ) - lv_start_c_1
 While Math.abs ( lv_encoder_c_1 ) < lv_enc_1
 lv_encoder_b_1 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_1
 lv_encoder_c_1 = Motor.GetCount ( "C" ) - lv_start_c_1
 lv_error_1 = ( lv_encoder_b_1 - lv_encoder_c_1 ) * gv_sentido_motores
-lv_proporcial_1 = lv_error_1 * 1.5
+lv_proporcial_1 = lv_error_1 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_1 - lv_proporcial_1 ) , lv_velocidad_1 + lv_proporcial_1 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -942,80 +918,80 @@ Sub f_encoderrectommf_2
 lv_velocidad_2 = lv_velocidad_2 * gv_sentido_motores
 lv_diametro_2 = 5.6
 lv_enc_2 = lv_distancia_2 * 360 / Math.Pi / lv_diametro_2
-lv_start_b_2 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_2 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_2 = Motor.GetCount ( "C" )
 lv_encoder_c_2 = Motor.GetCount ( "C" ) - lv_start_c_2
 While Math.abs ( lv_encoder_c_2 ) < lv_enc_2
 lv_encoder_b_2 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_2
 lv_encoder_c_2 = Motor.GetCount ( "C" ) - lv_start_c_2
 lv_error_2 = ( lv_encoder_b_2 - lv_encoder_c_2 ) * gv_sentido_motores
-lv_proporcial_2 = lv_error_2 * 1.5
+lv_proporcial_2 = lv_error_2 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_2 - lv_proporcial_2 ) , lv_velocidad_2 + lv_proporcial_2 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
 EndSub
 Sub f_1negrorectomm_2
 lv_velocidad_3 = lv_velocidad_3 * gv_sentido_motores
-lv_start_b_3 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_3 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_3 = Motor.GetCount ( "C" )
 While Sensor.ReadPercent ( lv_sens_3 ) > 10
 lv_encoder_b_3 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_3
 lv_encoder_c_3 = Motor.GetCount ( "C" ) - lv_start_c_3
 lv_error_3 = ( lv_encoder_b_3 - lv_encoder_c_3 ) * gv_sentido_motores
-lv_proporcial_3 = lv_error_3 * 1.5
+lv_proporcial_3 = lv_error_3 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_3 - lv_proporcial_3 ) , ( lv_velocidad_3 + lv_proporcial_3 ) )
 EndWhile
 Motor.Stop ( "BC" , "True" )
 EndSub
 Sub f_1negrorectommf_2
 lv_velocidad_4 = lv_velocidad_4 * gv_sentido_motores
-lv_start_b_4 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_4 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_4 = Motor.GetCount ( "C" )
 While Sensor.ReadPercent ( lv_sens_4 ) > 10
 lv_encoder_b_4 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_4
 lv_encoder_c_4 = Motor.GetCount ( "C" ) - lv_start_c_4
 lv_error_4 = ( lv_encoder_b_4 - lv_encoder_c_4 ) * gv_sentido_motores
-lv_proporcial_4 = lv_error_4 * 1.5
+lv_proporcial_4 = lv_error_4 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_4 - lv_proporcial_4 ) , lv_velocidad_4 + lv_proporcial_4 )
 EndWhile
 Motor.Stop ( "BC" , "False" )
 EndSub
 Sub f_1blancorectomm_2
 lv_velocidad_5 = lv_velocidad_5 * gv_sentido_motores
-lv_start_b_5 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_5 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_5 = Motor.GetCount ( "C" )
 While Sensor.ReadPercent ( lv_sens_5 ) < 40
 lv_encoder_b_5 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_5
 lv_encoder_c_5 = Motor.GetCount ( "C" ) - lv_start_c_5
 lv_error_5 = ( lv_encoder_b_5 - lv_encoder_c_5 ) * gv_sentido_motores
-lv_proporcial_5 = lv_error_5 * 1.5
+lv_proporcial_5 = lv_error_5 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_5 - lv_proporcial_5 ) , lv_velocidad_5 + lv_proporcial_5 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
 EndSub
 Sub f_1blancorectommf_2
 lv_velocidad_6 = lv_velocidad_6 * gv_sentido_motores
-lv_start_b_6 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_6 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_6 = Motor.GetCount ( "C" )
 While Sensor.ReadPercent ( lv_sens_6 ) < 40
 lv_encoder_b_6 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_6
 lv_encoder_c_6 = Motor.GetCount ( "C" ) - lv_start_c_6
 lv_error_6 = ( lv_encoder_b_6 - lv_encoder_c_6 ) * gv_sentido_motores
-lv_proporcial_6 = lv_error_6 * 1.5
+lv_proporcial_6 = lv_error_6 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_6 - lv_proporcial_6 ) , lv_velocidad_6 + lv_proporcial_6 )
 EndWhile
 Motor.Stop ( "BC" , "False" )
 EndSub
 Sub f_tiemporectomm_2
 lv_velocidad_13 = lv_velocidad_13 * gv_sentido_motores
-lv_start_b_13 = Motor.GetCount ( "B" ) * - 1
+lv_start_b_13 = Motor.GetCount ( "B" ) * - 1 + gv_correccion
 lv_start_c_13 = Motor.GetCount ( "C" )
 Time.Reset3 ()
 While Time.Get3 () < lv_tiempo_13
 lv_encoder_b_13 = Motor.GetCount ( "B" ) * - 1 - lv_start_b_13
 lv_encoder_c_13 = Motor.GetCount ( "C" ) - lv_start_c_13
 lv_error_13 = ( lv_encoder_b_13 - lv_encoder_c_13 ) * gv_sentido_motores
-lv_proporcial_13 = lv_error_13 * 1.5
+lv_proporcial_13 = lv_error_13 * 1.2
 Motor.StartSync ( "BC" , - ( lv_velocidad_13 - lv_proporcial_13 ) , lv_velocidad_13 + lv_proporcial_13 )
 EndWhile
 Motor.Stop ( "BC" , "True" )
@@ -1092,19 +1068,36 @@ Motor.MoveSync ( lv_i_35 + lv_d_35 , - lv_v1_35 , lv_v2_35 , lv_encodr_35 , "Tru
 lv_v1_35 = 0
 lv_v2_35 = 0
 lv_angle_35 = 0
+Program.Delay ( 200 )
+EndSub
+Sub f_gunivencmmf_3
+lv_i_36 = "B"
+lv_d_36 = "C"
+lv_signo_36 = ( lv_v1_36 / lv_v2_36 ) / Math.Abs ( lv_v1_36 / lv_v2_36 )
+lv_vmin_36 = Math.Min ( Math.Abs ( lv_v1_36 ) , Math.Abs ( lv_v2_36 ) )
+lv_vmax_36 = Math.Max ( Math.Abs ( lv_v1_36 ) , Math.Abs ( lv_v2_36 ) )
+lv_encodr_36 = lv_angle_36 * gv_g1 * ( - 2 / ( lv_signo_36 * lv_vmin_36 / lv_vmax_36 - 1 ) )
+Motor.MoveSync ( lv_i_36 + lv_d_36 , - lv_v1_36 , lv_v2_36 , lv_encodr_36 , "False" )
+lv_v1_36 = 0
+lv_v2_36 = 0
+lv_angle_36 = 0
 EndSub
 Sub f_spin180_1
 lv_i_37 = "B"
 lv_d_37 = "C"
-lv_encodr_37 = 180 * gv_g1
-Motor.Move ( lv_i_37 + lv_d_37 , - lv_velocidad_37 , lv_encodr_37 , "True" )
+lv_v1_35 = lv_velocidad_37
+lv_v2_35 = lv_velocidad_37 * - 1
+lv_angle_35 = 180
+f_gunivencmm_3 ()
 lv_angle_37 = 0
 EndSub
 Sub f_spin90_1
 lv_i_39 = "B"
 lv_d_39 = "C"
-lv_encodr_39 = 84 * gv_g1
-Motor.Move ( lv_i_39 + lv_d_39 , - lv_velocidad_39 , lv_encodr_39 , "True" )
+lv_v1_35 = lv_velocidad_39
+lv_v2_35 = lv_velocidad_39 * - 1
+lv_angle_35 = 90
+f_gunivencmm_3 ()
 lv_angle_39 = 0
 EndSub
 Sub f_sinaccelmmf_3

@@ -1,7 +1,7 @@
 'Giros Universales
 
 'Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-G1 = 135/36
+G1 = 125/36
 
 Function GUnivEncMM(in number V1, in number V2, in number Angle)
   I = "B"
@@ -47,11 +47,7 @@ Function Spin180(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Cantidad de encoders necesarios para girar 180 grados
-  Encodr = 180 * @G1
-  
-  ' Movimiento de giro
-  Motor.Move(I + D, -Velocidad, Encodr, "True")
+  GUnivEncMM(Velocidad,Velocidad*-1,180)
   
   ' Reinicio del ángulo
   Angle = 0
@@ -61,11 +57,7 @@ Function Spin180F(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Cantidad de encoders necesarios para girar 180 grados
-  Encodr = 180 * @G1
-  
-  ' Movimiento de giro
-  Motor.Move(I + D, -Velocidad, Encodr, "False")
+  GUnivEncMMF(Velocidad,Velocidad*-1,180)
   
   ' Reinicio del ángulo
   Angle = 0
@@ -75,11 +67,7 @@ Function Spin90(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 84 * @G1
-  
-  ' Movimiento de giro
-  Motor.Move(I + D, -Velocidad, Encodr, "True")
+  GUnivEncMM(Velocidad,Velocidad*-1,90)
   
   ' Reinicio del ángulo
   Angle = 0
@@ -89,11 +77,7 @@ Function Spin90F(in number Velocidad)
   I = "B"
   D = "C"
   
-  ' Cantidad de encoders necesarios para girar 90 grados
-  Encodr = 84 * @G1
-  
-  ' Movimiento de giro
-  Motor.Move(I + D, -Velocidad, Encodr, "False")
+  GUnivEncMM(Velocidad,Velocidad*-1,90)
   
   ' Reinicio del ángulo
   Angle = 0

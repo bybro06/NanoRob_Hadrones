@@ -1,31 +1,21 @@
-centro = 0
-xtime = 0
-ytime = 0
-thetatime = 0
-xtcorrect = 0
-ytcorrect = 0
-thetatcorrect = 0
-Sentido_D = 1
-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Velocidad = 100
 
 kp = 0.2
 ki = 0.0001
-kd = 2
+kd = 3
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Dw = 102
 Diameter = 56
-D_T = 0
 
+centro = 0
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 include "includes\MRU_MotMed"
 
 include "includes\Giro_MotMed"
 include "includes\GirosPerfectos_MotMed"
 include "includes\GirosUniversales_MotMed"
-G1 = 125/36
 
 include "includes\Aceleracion_MotMed"
 include "includes\Deceleracion_MotMed"
@@ -37,8 +27,8 @@ include "includes\Brazo"
 
 include "includes\RGBRead"
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Setup()
-Thread.Run = Odometry
 Thread.Run = Display
 Thread.Run = Stop
 Main()
@@ -72,60 +62,12 @@ EndSub
 
 'Subs de control paralelo
 
-Sub Odometry
-  
-  alpha_L[0] = 0
-  alpha_R[0] = 0
-  
-  oldB = 0
-  oldC = 0
-
-  xt[0] = 0
-  yt[0] = 0
-  thetat[0] = 0
-
-  i = 0
-  While "True"
-
-    alpha_L[i] = Math.GetRadians(MotorB.GetTacho()*-1)
-    alpha_R[i] = Math.GetRadians(MotorC.GetTacho())
-    
-    
-    d_L = (alpha_L[i]-alpha_L[i-1]) * Diameter/2
-    d_R = (alpha_R[i]-alpha_R[i-1]) * Diameter/2
-
-    d = (d_L + d_R) / 2
-
-    delta_theta = (d_R - d_L) / (2 * Dw)
-
-    xt[i+1] = (d * Math.Sin(thetat[i] + delta_theta / 2) + xt[i])
-    
-    yt[i+1] = (d * Math.Cos(thetat[i] + delta_theta / 2) + yt[i])
-   
-    thetat[i+1] = thetat[i] + delta_theta
-    
-    xtime = xt[i+1]
-    ytime = yt[i+1]
-    thetatime = thetat[i+1]
-    
-    i++
-
-    Program.Delay(10)
-    
-  EndWhile
-EndSub
-
 Sub Display
   old_B = 0
   old_C = 0
   While "True"
     LCD.StopUpdate()
     LCD.Clear()
-    
-    LCD.Write(5,5,"xt: "+Math.Round(xt[i]*100)/100)
-    LCD.Write(5,15,"yt: "+Math.Round(yt[i]*100)/100)
-    LCD.Write(5,25,"thetat: "+math.getdegrees(thetat[i]))
-    
     
     LCD.Write(5,35,"centro: "+centro)
     
@@ -138,49 +80,6 @@ Sub Display
     
     LCD.Write(5,85,"Encoder de B:  "+MotorB.GetTacho()*-1)
     LCD.Write(5,95,"Encoder de C:  "+MotorC.GetTacho())
-    
-    LCD.Write(5,105,"Delta T:  "+D_T)
-    
-    
-    'LCD.Write(5,75,"Angulo de A:  "+MotorA.GetTacho())
-    'LCD.Write(5,85,"Obj de A:  "+angle_A)
-    
-    'LCD.Write(5,95,"Angulo de D:  "+MotorD.GetTacho())
-    'LCD.Write(5,105,"Obj de D:  "+angle_D)
-    
-    'LCD.Write(5,115,"Sentido de D:  "+Sentido_D)
-    LCD.Update()
-    Program.Delay(50)
-    old_B = MotorB.GetTacho()
-    old_C = MotorC.GetTacho()
-  EndWhile
-EndSub
-
-Sub DisplayVelocidades
-  old_B = 0
-  old_C = 0
-  agg_B = 0
-  agg_C = 0
-  iteracion = 0
-  While "True"
-    iteracion++
-    LCD.StopUpdate()
-    LCD.Clear()
-    
-    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
-    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed()*-1)
-    
-    rads_B = Math.GetRadians(MotorB.GetTacho()-old_B)/0.05*-1
-    rads_C = Math.GetRadians(MotorC.GetTacho()-old_C)/0.05*-1
-    
-    agg_B += rads_B
-    agg_C += rads_C
-    
-    media_B = agg_B/iteracion
-    media_C = agg_C/iteracion
-    
-    LCD.Write(5,65,"rad/s de B: "+media_B)
-    LCD.Write(5,75,"rad/s de C: "+media_C)
     
     LCD.Update()
     Program.Delay(50)
@@ -650,153 +549,9 @@ Function Soltar_Uno()
 EndFunction
 
 
-Function ToXY_Basic(in number Velocidad, in number x, in number y, in number theta)
-  
-  I = "B"
-  D = "C"
-  
-  ' Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-  G1 = 110/36
-  
-  Signo = -1
-  
-  diff_x = x - @xtime
-  diff_y = y - @ytime
-  
-  angulo_giro_inicial = Math.getDegrees(Math.ArcTan((x-@xtime)/(y-@ytime)))
-  
-  @angulo = angulo_giro_inicial
-  If diff_y < 0 Then
-    If diff_x < 0 Then
-			angulo_giro_inicial = angulo_giro_inicial - 180 - @thetatime
-		ElseIf diff_x > 0 Then
-			angulo_giro_inicial = 0 - @thetatime - angulo_giro_inicial
-    EndIf
-  EndIf
-  
-  If angulo_giro_inicial > 0 Then
-    V1 = Velocidad
-    V2 = Velocidad * -1
-  Else
-    V1 = Velocidad * -1
-    V2 = Velocidad
-  EndIf
-  
-  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
-  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
-  
-  @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
-  Encodr = angulo_giro_inicial * G1 * (-2 / (Signo * Vmin / Vmax - 1))
-  
-  Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
-  
-  distancia =  Math.SquareRoot(diff_x*diff_x + diff_y*diff_y)
-
-  Enc = distancia*360 / Math.Pi / @Diameter
-  
-  encoder_B_inicial = Motor.GetCount ("B")
-  encoder_C_inicial = Motor.GetCount ("C")
-
-  While Math.abs(Motor.GetCount ("C") - encoder_C_inicial) < Enc
-    
-    encoder_B = Motor.GetCount ("B") - encoder_B_inicial
-    encoder_C = Motor.GetCount ("C") - encoder_C_inicial
-    
-    error = encoder_B - encoder_C
-
-    proporcional = error*2
-
-    Motor.StartSync("BC", (Velocidad-proporcional), -(Velocidad+proporcional))
-
-  EndWhile
-
-  Motor.Stop("BC", "True")
-  
-  angulo_giro_final = theta - Math.GetDegrees(@thetatime)
-  
-  If angulo_giro_final > 0 Then
-    V1 = Velocidad
-    V2 = Velocidad * -1
-  Else
-    V1 = Velocidad * -1
-    V2 = Velocidad
-  EndIf
-  
-  Vmin = Math.Min(Math.Abs(V1), Math.Abs(V2))
-  Vmax = Math.Max(Math.Abs(V1), Math.Abs(V2))
-  
-  @centro = (-8.5*(Vmin/Vmax)*Signo-8.5)/((Vmin/Vmax)*Signo-1)
-  Encodr = angulo_giro_final * G1 * (-2 / (Signo * Vmin / Vmax - 1))
-  
-  Motor.MoveSync(I + D, -V1/2, -V2/2, Encodr, "True")
-  @xtcorrect = x
-  @ytcorrect = y
-  @thetatcorrect = math.getradians(theta)
-  
-EndFunction
-
-Function ToXY_Giro(in number Velocidad, in number x, in number y, in number theta)
-EndFunction
-
-
 Function Lectura(out number read)
   BmoveA(15,-650)
   RGBDetect2(5,read)
   LeerColor(read)
   BmoveA(15,-200)
-EndFunction
-
-
-Function TraspMatVect3x3(in number[] M, out number[] S)
-  
-  S = Vector.Init(3*3,0)
-  
-  S[0] = M[0] 
-  S[1] = M[3] 
-  S[2] = M[6] 
-  
-  S[3] = M[1] 
-  S[4] = M[4] 
-  S[5] = M[7] 
-  
-  S[6] = M[2] 
-  S[7] = M[5] 
-  S[8] = M[8] 
-  
-EndFunction
-
-Function InvMatVect3x3(in number[] M, out number[] S)
-  
-  'Hallamos determinante
-  
-  Determinante = M[0]*(M[4]*M[8]-M[5]*M[7]) - M[1]*(M[3]*M[8]-M[5]*M[6]) + M[2]*(M[3]*M[7]-M[4]*M[6])
-  If Determinante <> 0 Then
-    
-    S[0] = (M[4]*M[8]-M[5]*M[7]) / Determinante
-    S[1] = (M[3]*M[8]-M[5]*M[6]) / Determinante
-    S[2] = (M[3]*M[7]-M[4]*M[6]) / Determinante
-    
-    S[3] = (M[1]*M[8]-M[2]*M[7]) / Determinante
-    S[4] = (M[0]*M[8]-M[2]*M[6]) / Determinante
-    S[5] = (M[0]*M[7]-M[1]*M[6]) / Determinante
-    
-    S[6] = (M[1]*M[5]-M[2]*M[4]) / Determinante
-    S[7] = (M[0]*M[5]-M[2]*M[3]) / Determinante
-    S[8] = (M[0]*M[4]-M[1]*M[3]) / Determinante
-    
-  EndIf
-  
-EndFunction
-
-Function MultiMatrizCoef(in number[] M, in number k, out number[] S)
-  
-  i = 0
-  
-  While M[i] <> 0
-    
-    S[i] = k * M[i]
-    
-    i++
-  EndWhile
-  
 EndFunction
