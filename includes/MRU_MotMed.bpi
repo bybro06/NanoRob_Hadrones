@@ -53,7 +53,7 @@ Function EncoderRectoMMF(in number Velocidad, in number Distancia)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*1.5
+    proporcial = error*1.2
 
     Motor.StartSync("BC", -(Velocidad-proporcial), Velocidad+proporcial)
 
@@ -78,7 +78,7 @@ Function 1NegroRectoMM(in number Velocidad, in number sens)
     
     error = (encoder_B - encoder_C)*@Sentido_Motores
 
-    proporcial = error*1.5
+    proporcial = error*1.2
 
     Motor.StartSync("BC", -(Velocidad-proporcial), (Velocidad+proporcial))
   EndWhile
