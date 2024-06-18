@@ -12,13 +12,13 @@ lv_distancia_2 = 0
 lv_reps_110 = 0
 lv_color_110 = 0
 lv_color_122 = 0
-lv_velocidad_39 = 0
 lv_velocidad1_15 = 0
 lv_velocidad2_15 = 0
 lv_encoder_15 = 0
 lv_velocidad1_25 = 0
 lv_velocidad2_25 = 0
 lv_tiempo_25 = 0
+lv_velocidad_39 = 0
 lv_v_101 = 0
 lv_velocidad_13 = 0
 lv_tiempo_13 = 0
@@ -163,14 +163,13 @@ gv_sentido_motores = 1
 gv_correccion = 0
 gv_sentido_motores = 1
 gv_sentido_motores = 1
-gv_g1 = 125 / 36
+gv_g1 = 124 / 36
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 f_setup_0 ()
 Thread.Run = f_odometry_0
-Thread.Run = f_display_0
 Thread.Run = f_stop_0
 f_mainprueba_0 ()
 Sub f_setup_0
@@ -220,32 +219,12 @@ gv_i = gv_i + 1
 Program.Delay ( 10 )
 EndWhile
 EndSub
-Sub f_display_0
-gv_old_b = 0
-gv_old_c = 0
-While "True"
-LCD.StopUpdate ()
-LCD.Clear ()
-LCD.Write ( 5 , 5 , "xt: " + Math.Round ( gv_xt [ gv_i ] * 100 ) / 100 )
-LCD.Write ( 5 , 15 , "yt: " + Math.Round ( gv_yt [ gv_i ] * 100 ) / 100 )
-LCD.Write ( 5 , 25 , "thetat: " + math.getdegrees ( gv_thetat [ gv_i ] ) )
-LCD.Write ( 5 , 35 , "centro: " + gv_centro )
-LCD.Write ( 5 , 45 , "Velocidad de B:  " + MotorB.GetSpeed () * - 1 )
-LCD.Write ( 5 , 55 , "Velocidad de C:  " + MotorC.GetSpeed () )
-LCD.Write ( 5 , 65 , "rad/s de B:  " + Math.GetRadians ( MotorB.GetTacho () - gv_old_b ) / 0.05 * - 1 )
-LCD.Write ( 5 , 75 , "rad/s de C:  " + Math.GetRadians ( MotorC.GetTacho () - gv_old_c ) / 0.05 )
-LCD.Write ( 5 , 85 , "Encoder de B:  " + MotorB.GetTacho () * - 1 )
-LCD.Write ( 5 , 95 , "Encoder de C:  " + MotorC.GetTacho () )
-LCD.Write ( 5 , 105 , "Delta T:  " + gv_d_t )
-LCD.Update ()
-Program.Delay ( 50 )
-gv_old_b = MotorB.GetTacho ()
-gv_old_c = MotorC.GetTacho ()
-EndWhile
-EndSub
 Sub f_mainprueba_0
-lv_velocidad_39 = 30
-f_spin90_1 ()
+lv_v1_35 = 0
+lv_v2_35 = 30
+lv_angle_35 = 90
+f_gunivencmm_3 ()
+Program.Delay ( 2000 )
 EndSub
 Sub f_caso_verde_0
 gv_rojos = 0
@@ -1060,34 +1039,93 @@ EndSub
 Sub f_gunivencmm_3
 lv_i_35 = "B"
 lv_d_35 = "C"
+If lv_v2_35 > lv_v1_35 Then
+lv_g_35 = gv_g1 * 1.05
+Else
+lv_g_35 = gv_g1
+EndIf
+lv_iniciob_35 = MotorB.GetTacho ()
+lv_inicioc_35 = MotorC.GetTacho ()
 lv_signo_35 = ( lv_v1_35 / lv_v2_35 ) / Math.Abs ( lv_v1_35 / lv_v2_35 )
 lv_vmin_35 = Math.Min ( Math.Abs ( lv_v1_35 ) , Math.Abs ( lv_v2_35 ) )
 lv_vmax_35 = Math.Max ( Math.Abs ( lv_v1_35 ) , Math.Abs ( lv_v2_35 ) )
-lv_encodr_35 = lv_angle_35 * gv_g1 * ( - 2 / ( lv_signo_35 * lv_vmin_35 / lv_vmax_35 - 1 ) )
-Motor.MoveSync ( lv_i_35 + lv_d_35 , - lv_v1_35 , lv_v2_35 , lv_encodr_35 , "True" )
+lv_encodr_35 = lv_angle_35 * lv_g_35 * ( - 2 / ( lv_signo_35 * lv_vmin_35 / lv_vmax_35 - 1 ) )
+lv_objb_35 = lv_encodr_35 * lv_v1_35 * 2 / ( Math.Abs ( lv_v1_35 ) + Math.Abs ( lv_v2_35 ) )
+lv_objc_35 = lv_encodr_35 * lv_v2_35 * 2 / ( Math.Abs ( lv_v1_35 ) + Math.Abs ( lv_v2_35 ) )
+While ( Math.Abs ( MotorB.GetTacho () - lv_iniciob_35 ) + Math.Abs ( MotorC.GetTacho () - lv_inicioc_35 ) ) / 2 < Math.Abs ( lv_encodr_35 )
+lv_angulorecorrido_35 = ( ( Math.Abs ( MotorB.GetTacho () - lv_iniciob_35 ) + Math.Abs ( MotorC.GetTacho () - lv_inicioc_35 ) ) / 2 / Math.Abs ( lv_encodr_35 ) ) * lv_angle_35
+lv_angulorestante_35 = lv_angle_35 - lv_angulorecorrido_35
+If lv_angulorecorrido_35 < 30 Then
+lv_factorvelocidad_35 = 0.5 + 0.5 * ( lv_angulorecorrido_35 / 30 )
+ElseIf lv_angulorestante_35 < 30 Then
+lv_factorvelocidad_35 = 0.5 + 0.5 * ( lv_angulorestante_35 / 30 )
+Else
+lv_factorvelocidad_35 = 1
+EndIf
+lv_v1ajustado_35 = lv_v1_35 * lv_factorvelocidad_35
+lv_v2ajustado_35 = lv_v2_35 * lv_factorvelocidad_35
+MotorB.StartSpeed ( lv_v1ajustado_35 * - 1 )
+MotorC.StartSpeed ( lv_v2ajustado_35 )
+LCD.StopUpdate ()
+LCD.Clear ()
+LCD.Write ( 5 , 5 , "Motor B: " + MotorB.GetTacho () )
+LCD.Write ( 5 , 15 , "Motor C: " + MotorC.GetTacho () )
+LCD.Update ()
+EndWhile
 lv_v1_35 = 0
 lv_v2_35 = 0
 lv_angle_35 = 0
-Program.Delay ( 200 )
+MotorBC.OffAndBrake ()
+Program.Delay ( 2000 )
 EndSub
 Sub f_gunivencmmf_3
 lv_i_36 = "B"
 lv_d_36 = "C"
+If lv_v2_36 > lv_v1_36 Then
+lv_g_36 = gv_g1 * 1.05
+Else
+lv_g_36 = gv_g1
+EndIf
+lv_iniciob_36 = MotorB.GetTacho ()
+lv_inicioc_36 = MotorC.GetTacho ()
 lv_signo_36 = ( lv_v1_36 / lv_v2_36 ) / Math.Abs ( lv_v1_36 / lv_v2_36 )
 lv_vmin_36 = Math.Min ( Math.Abs ( lv_v1_36 ) , Math.Abs ( lv_v2_36 ) )
 lv_vmax_36 = Math.Max ( Math.Abs ( lv_v1_36 ) , Math.Abs ( lv_v2_36 ) )
-lv_encodr_36 = lv_angle_36 * gv_g1 * ( - 2 / ( lv_signo_36 * lv_vmin_36 / lv_vmax_36 - 1 ) )
-Motor.MoveSync ( lv_i_36 + lv_d_36 , - lv_v1_36 , lv_v2_36 , lv_encodr_36 , "False" )
+lv_encodr_36 = lv_angle_36 * lv_g_36 * ( - 2 / ( lv_signo_36 * lv_vmin_36 / lv_vmax_36 - 1 ) )
+lv_objb_36 = lv_encodr_36 * lv_v1_36 * 2 / ( Math.Abs ( lv_v1_36 ) + Math.Abs ( lv_v2_36 ) )
+lv_objc_36 = lv_encodr_36 * lv_v2_36 * 2 / ( Math.Abs ( lv_v1_36 ) + Math.Abs ( lv_v2_36 ) )
+While ( Math.Abs ( MotorB.GetTacho () - lv_iniciob_36 ) + Math.Abs ( MotorC.GetTacho () - lv_inicioc_36 ) ) / 2 < Math.Abs ( lv_encodr_36 )
+lv_angulorecorrido_36 = ( ( Math.Abs ( MotorB.GetTacho () - lv_iniciob_36 ) + Math.Abs ( MotorC.GetTacho () - lv_inicioc_36 ) ) / 2 / Math.Abs ( lv_encodr_36 ) ) * lv_angle_36
+lv_angulorestante_36 = lv_angle_36 - lv_angulorecorrido_36
+If lv_angulorecorrido_36 < 30 Then
+lv_factorvelocidad_36 = 0.5 + 0.5 * ( lv_angulorecorrido_36 / 30 )
+ElseIf lv_angulorestante_36 < 30 Then
+lv_factorvelocidad_36 = 0.5 + 0.5 * ( lv_angulorestante_36 / 30 )
+Else
+lv_factorvelocidad_36 = 1
+EndIf
+lv_v1ajustado_36 = lv_v1_36 * lv_factorvelocidad_36
+lv_v2ajustado_36 = lv_v2_36 * lv_factorvelocidad_36
+MotorB.StartSpeed ( lv_v1ajustado_36 * - 1 )
+MotorC.StartSpeed ( lv_v2ajustado_36 )
+LCD.StopUpdate ()
+LCD.Clear ()
+LCD.Write ( 5 , 5 , "Motor B: " + MotorB.GetTacho () )
+LCD.Write ( 5 , 15 , "Motor C: " + MotorC.GetTacho () )
+LCD.Update ()
+EndWhile
 lv_v1_36 = 0
 lv_v2_36 = 0
 lv_angle_36 = 0
+MotorBC.Off ()
+Program.Delay ( 2000 )
 EndSub
 Sub f_spin180_1
 lv_i_37 = "B"
 lv_d_37 = "C"
 lv_v1_35 = lv_velocidad_37
 lv_v2_35 = lv_velocidad_37 * - 1
-lv_angle_35 = 180
+lv_angle_35 = 176
 f_gunivencmm_3 ()
 lv_angle_37 = 0
 EndSub

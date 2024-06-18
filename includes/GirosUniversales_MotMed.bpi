@@ -1,7 +1,7 @@
 'Giros Universales
 
 'Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-G1 = 125/36
+G1 = 124/36
 
 Function GUnivEncMM(in number V1, in number V2, in number Angle)
   I = "B"
@@ -41,13 +41,14 @@ Function GUnivEncMMF(in number V1, in number V2, in number Angle)
   Angle = 0
 EndFunction
 
+
 'Giros de Spin personalizado
 
 Function Spin180(in number Velocidad)
   I = "B"
   D = "C"
   
-  GUnivEncMM(Velocidad,Velocidad*-1,180)
+  GUnivEncMM(Velocidad,Velocidad*-1,176)
   
   ' Reinicio del ángulo
   Angle = 0

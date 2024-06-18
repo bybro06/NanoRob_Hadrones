@@ -38,7 +38,7 @@ include "includes\RGBRead"
 
 Setup()
 Thread.Run = Odometry
-Thread.Run = Display
+'Thread.Run = Display
 Thread.Run = Stop
 MainPrueba()
 
@@ -348,7 +348,8 @@ EndSub
 
 Sub MainPrueba
   
-  Spin90(30)
+  GUnivEncMM(0,30,90)
+  Program.Delay(2000)
   
 EndSub
 
