@@ -1,4 +1,4 @@
-Velocidad = 100
+Velocidad = 90
 
 kp = 0.2
 ki = 0.0001
@@ -92,7 +92,8 @@ EndSub
 'Comiensa la baina loca
 
 Sub Main
-
+  
+  StartArm()
   'Va hacia tuberia
 
     EncoderRectoMM(Velocidad*0.4,20)
@@ -100,60 +101,58 @@ Sub Main
     
     GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,92)
     
-    EncoderRectoMM(Velocidad*0.4,42)
+    EncoderRectoMM(Velocidad*0.4,39)
     
     
     'Cierra y Baja brazo
     BMoveD(20,-300)
-    BMoveA(20,-780)
+    BMoveA(20,-770)
     
     'Recoloca
 
     GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,30)
     
     EncoderRectoMM(Velocidad*0.12,8.5)
-    BMoveA(20,-820)
+    BMoveA(20,-740)
     
     TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1000)
     Program.Delay(500)
     GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,6)
     
     BMoveA(20,-580)
-    Program.Delay(1000)
     
-    Spin90(10)
-    Spin90(-10)
-  BMoveAD0(30)
+    GUnivEncMM(Velocidad*0.1,Velocidad*-0.1,70)
+    GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,70)
+    BMoveAD0(30)
 
     
-    EncoderRectoMM(Velocidad*-0.3, 30)
-    BMoveAD0(30)
+    EncoderRectoMM(Velocidad*-0.3, 40)
+    BMoveA(30,-300)
     
     GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,100)
-    Program.Delay(1000)
     
-    EncoderRectoMM(Velocidad*0.6, 30)
-    1BlancoRectoMMF(Velocidad*0.3,1)
-    1NegroRectoMMF(Velocidad*0.2,1)
-    EncoderRectoMM(Velocidad*0.3,4)
+    EncoderRectoMM(Velocidad*0.6, 25)
+    1BlancoRectoMMF(Velocidad*0.2,4)
+    1NegroRectoMMF(Velocidad*0.2,4)
+    EncoderRectoMM(Velocidad*0.3,2)
     
     GPerfDDEFINITIVOMM(Velocidad*0.3)
     
-    SL14PIDEnc(Velocidad*0.25,kp*1.25,ki,kd,10)
+    SL14PIDEnc(Velocidad*0.15,kp*0.95,ki,kd,20)
     SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4,1)
     SL14PIDEnc(Velocidad*0.7,kp,ki,kd,36)
     
     EncoderGiroMM(Velocidad*0.3,Velocidad*0.2,22)
     EncoderGiroMM(Velocidad*0.2,Velocidad*0.3,25)
-    EncoderRectoMM(Velocidad*0.2,24)
+    EncoderRectoMM(Velocidad*0.2,23)
     
     
   Coger_Abajo_Basura()
 
-  EncoderRectoMM(Velocidad*-0.3,5)
+  EncoderRectoMM(Velocidad*-0.3,10)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,85)
   Program.Delay(250)
-EncoderRectoMM(Velocidad*0.3,13)
+  EncoderRectoMM(Velocidad*0.3,13)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,85)
   Program.Delay(250)
   EncoderRectoMM(Velocidad*0.3,9)
@@ -175,10 +174,10 @@ EncoderRectoMM(Velocidad*0.3,13)
   
   Spin90(10)
   Spin90(-10)
-BMoveA0(30)
+  BMoveA(30,-300)
 
 
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,145)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,165)
   Program.Delay(250)
   EncoderRectoMM(Velocidad*0.9,120)
   EncoderGiroMM(Velocidad*0.2, Velocidad*0.23,20)
@@ -197,49 +196,59 @@ BMoveA0(30)
   BMoveD0(20)
   
   EncoderRectoMM(Velocidad*0.2, 6)
-EncoderRectoMM(Velocidad*-0.2, 6)
+  EncoderRectoMM(Velocidad*-0.2, 20)
+  
+  BMoveA(30,-300)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.2,115)
+  
+  TiempoRectoMM(Velocidad*-0.55,2000)
+  EncoderRectoMM(Velocidad*0.25,10)
+  TiempoRectoMM(Velocidad*-0.55,1000)
+  
+  EncoderRectoMM(Velocidad*0.25,33)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.2,85)
+  EncoderRectoMM(Velocidad*0.25,44)
+  
+  1BlancoRectoMM(Velocidad*0.3,1)
+  1NegroRectoMMF(Velocidad*0.2,1)
+  
+  EncoderRectoMM(Velocidad*0.25,2)
+  
+  GPerfDDEFINITIVOMM(Velocidad*0.3)
+  SL14PID(Velocidad*0.3,kp,ki,kd)
+  Motor.Stop("ABCD","True")
+  
+  EncoderRectoMM(Velocidad*0.3,17.3)
+  
+  Coger_Abajo()
+  1BlancoRectoMM(Velocidad*-0.15,1)
+  1NegroRectoMM(Velocidad*-0.15,1)
+  EncoderRectoMM(Velocidad*0.15,4)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,89)
+  SL14PIDEnc(Velocidad*0.3,kp*1.5,ki,kd,13)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,87)
+  EncoderRectoMM(Velocidad*0.2,11.2)
+  Coger_Arriba()
+  
+  Spin180(Velocidad*0.3)
+  TiempoRectoMM(Velocidad*-0.3,1000)
+  
+  EncoderGiroMM(Velocidad*0.24,Velocidad*0.3,37)
+  
+  Soltar_Todo()
+  
+  BmoveAD0(20)
 EndSub
 
 Sub MainPrueba
-  Coger_Abajo_Basura()
-
-  EncoderRectoMM(Velocidad*-0.3,5)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,85)
-  Program.Delay(250)
-EncoderRectoMM(Velocidad*0.3,13)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,85)
-  Program.Delay(250)
-  EncoderRectoMM(Velocidad*0.3,9)
-  BMoveA(20,-820)
-
-'Se viene girito 😘
-
- GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,15)
-  Program.Delay(1000)
-  EncoderRectoMM(Velocidad*0.12,6)
-  
-  
-  TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1000)
-  Program.Delay(500)
-  GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,6)
-  
-  BMoveA(20,-580)
-  Program.Delay(1000)
-  
-  Spin90(10)
-  Spin90(-10)
-BMoveA0(30)
-
-
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,133)
-  Program.Delay(250)
-  EncoderRectoMM(Velocidad*0.95,160)
-  EncoderGiroMM(Velocidad*0.2, Velocidad*0.23,20)
-  BMoveA(20,-780)
-  BMoveD0(20)
-  
-  EncoderRectoMM(Velocidad*0.2, 6)
-EncoderRectoMM(Velocidad*-0.2, 6)
+  StartArm()
+  BMoveA(30,-750)
+  BMoveD(30,-230)
+  Program.Delay(6000)
+  BMoveAD0(20)
 EndSub
 
 Sub MainControlBrazo

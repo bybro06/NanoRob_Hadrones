@@ -11,7 +11,7 @@ lv_velocidad1_25 = 0
 lv_velocidad2_25 = 0
 lv_tiempo_25 = 0
 lv_velocidad_39 = 0
-lv_v_101 = 0
+lv_v_106 = 0
 lv_velocidad_13 = 0
 lv_tiempo_13 = 0
 lv_v_96 = 0
@@ -39,6 +39,7 @@ lv_ki_82 = 0
 lv_kd_82 = 0
 lv_lado_82 = 0
 lv_sens_82 = 0
+lv_v_101 = 0
 lv_vel_33 = 0
 lv_vel_31 = 0
 lv_velocidad_71 = 0
@@ -117,7 +118,7 @@ gv_sentido_motores = 1
 gv_correccion = 0
 gv_sentido_motores = 1
 gv_sentido_motores = 1
-gv_g1 = 125 / 36
+gv_g1 = 124 / 36
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
@@ -215,7 +216,7 @@ lv_v2_35 = gv_velocidad * 0.05
 lv_angle_35 = 5
 f_gunivencmm_3 ()
 lv_v_95 = 20
-lv_aenc_95 = - 450
+lv_aenc_95 = - 550
 f_bmovea_2 ()
 Program.Delay ( 1000 )
 lv_velocidad_39 = 10
@@ -225,8 +226,11 @@ f_spin90_1 ()
 lv_velocidad_1 = gv_velocidad * - 0.3
 lv_distancia_1 = 24
 f_encoderrectomm_2 ()
-lv_v_101 = 40
-f_bmovead0_1 ()
+lv_v_95 = 30
+lv_aenc_95 = - 300
+f_bmovea_2 ()
+lv_v_106 = 40
+f_bmoved0_1 ()
 lv_v1_35 = gv_velocidad * 0.2
 lv_v2_35 = gv_velocidad * - 0.2
 lv_angle_35 = 90
@@ -795,7 +799,7 @@ lv_i_37 = "B"
 lv_d_37 = "C"
 lv_v1_35 = lv_velocidad_37
 lv_v2_35 = lv_velocidad_37 * - 1
-lv_angle_35 = 180
+lv_angle_35 = 176
 f_gunivencmm_3 ()
 lv_angle_37 = 0
 EndSub
@@ -1074,6 +1078,21 @@ If lv_encdiff_105 <> 0 Then
 MotorD.StartSpeed ( lv_signo_105 * lv_v_105 )
 While Math.Abs ( Motor.GetCount ( "D" ) - lv_aenc_105 ) > 10
 EndWhile
+Motor.Stop ( "D" , "True" )
+EndIf
+EndSub
+Sub f_bmoved0_1
+If Motor.GetCount ( "D" ) > - 10 Then
+While Motor.GetCount ( "D" ) > - 10
+MotorD.StartSpeed ( - lv_v_106 )
+EndWhile
+Motor.Stop ( "D" , "True" )
+ElseIf Motor.GetCount ( "D" ) < - 10 Then
+While Motor.GetCount ( "D" ) < - 10
+MotorD.StartSpeed ( lv_v_106 )
+EndWhile
+Motor.Stop ( "D" , "True" )
+Else
 Motor.Stop ( "D" , "True" )
 EndIf
 EndSub

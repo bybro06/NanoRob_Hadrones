@@ -127,14 +127,15 @@ Sub Main
   GUnivEncMM(Velocidad*-0.05,Velocidad*0.05,5)
   
   'Sube Brazo y gira
-  BMoveA(20,-450)
+  BMoveA(20,-550)
   Program.Delay(1000)
   Spin90(10)
   Spin90(-10)
   
   'Echa hacia atrás
   EncoderRectoMM(Velocidad*-0.3,24)
-  BMoveAD0(40)
+  BMoveA(30,-300)
+  BMoveD0(40)
   
   'Gira para colocar con pared (x2)
   GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,90)
