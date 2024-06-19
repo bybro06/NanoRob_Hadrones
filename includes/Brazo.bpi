@@ -25,14 +25,14 @@ EndFunction
 'Brazo hasta posición inicial aproximada
 
 Function BMoveA0(in number V)
-  encDiff = -5 - Motor.GetCount("A")
+  encDiff = -300 - Motor.GetCount("A")
   
   signo = encDiff / Math.Abs(encDiff)
   
   If encDiff <> 0 Then
     MotorA.StartSpeed(signo * V)
     
-    While Math.Abs(Motor.GetCount("A") + 5) > 5
+    While Math.Abs(Motor.GetCount("A") + 300) > 5
       ' Puedes ajustar el valor (5) para controlar la precisión
     EndWhile
     

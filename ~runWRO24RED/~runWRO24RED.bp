@@ -1,5 +1,6 @@
 lv_v_105 = 0
 lv_aenc_105 = 0
+lv_v_96 = 0
 lv_velocidad_1 = 0
 lv_distancia_1 = 0
 lv_v1_35 = 0
@@ -16,17 +17,16 @@ lv_sens_6 = 0
 lv_velocidad_4 = 0
 lv_sens_4 = 0
 lv_vel_33 = 0
+lv_velocidad_81 = 0
+lv_kp_81 = 0
+lv_ki_81 = 0
+lv_kd_81 = 0
+lv_reader_81 = 0
 lv_velocidad_75 = 0
 lv_kp_75 = 0
 lv_ki_75 = 0
 lv_kd_75 = 0
 lv_encoder_75 = 0
-lv_velocidad_81 = 0
-lv_kp_81 = 0
-lv_ki_81 = 0
-lv_kd_81 = 0
-lv_lado_81 = 0
-lv_sens_81 = 0
 lv_velocidad1_15 = 0
 lv_velocidad2_15 = 0
 lv_encoder_15 = 0
@@ -116,7 +116,7 @@ f_main_0 ()
 Sub f_setup_0
 Sensor.SetMode ( 1 , 0 )
 Sensor.SetMode ( 2 , 4 )
-Sensor.SetMode ( 3 , 4 )
+Sensor.SetMode ( 3 , 0 )
 Sensor.SetMode ( 4 , 0 )
 EndSub
 Sub f_startarm_0
@@ -155,6 +155,8 @@ EndWhile
 EndSub
 Sub f_main_0
 f_startarm_0 ()
+lv_v_96 = 30
+f_bmovea0_1 ()
 lv_velocidad_1 = gv_velocidad * 0.4
 lv_distancia_1 = 20
 f_encoderrectomm_2 ()
@@ -227,19 +229,12 @@ lv_distancia_1 = 2
 f_encoderrectomm_2 ()
 lv_vel_33 = gv_velocidad * 0.3
 f_gperfddefinitivomm_1 ()
-lv_velocidad_75 = gv_velocidad * 0.15
-lv_kp_75 = gv_kp * 0.95
-lv_ki_75 = gv_ki
-lv_kd_75 = gv_kd
-lv_encoder_75 = 20
-f_sl14pidenc_5 ()
 lv_velocidad_81 = gv_velocidad * 0.3
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
-lv_lado_81 = 4
-lv_sens_81 = 1
-f_sl1spidcross_6 ()
+lv_reader_81 = 4
+f_sl1spidcross_5 ()
 lv_velocidad_75 = gv_velocidad * 0.7
 lv_kp_75 = gv_kp
 lv_ki_75 = gv_ki
@@ -340,6 +335,9 @@ lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
 lv_angle_35 = 90
 f_gunivencmm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.25
+lv_distancia_1 = 8
+f_encoderrectomm_2 ()
 lv_velocidad_5 = gv_velocidad * 0.3
 lv_sens_5 = 1
 f_1blancorectomm_2 ()
@@ -717,7 +715,7 @@ lv_olderror_76 = lv_error_76
 EndWhile
 Motor.Stop ( lv_i_76 + lv_d_76 , "False" )
 EndSub
-Sub f_sl1spidcross_6
+Sub f_sl1spidcross_5
 lv_velocidad_81 = lv_velocidad_81 * gv_sentido_motores
 lv_i_81 = "B"
 lv_d_81 = "C"
@@ -726,13 +724,15 @@ lv_olderror_81 = 0
 lv_errsum_81 = 0
 lv_u_81 = 0
 lv_sentido_81 = lv_velocidad_81 / Math.Abs ( lv_velocidad_81 )
-If lv_sens_81 = 1 Then
-lv_reader_81 = 4
+If lv_reader_81 = 3 Then
+lv_reader1_81 = 1
+lv_reader2_81 = 4
 Else
-lv_reader_81 = 1
+lv_reader1_81 = 3
+lv_reader2_81 = 1
 EndIf
-While Sensor.ReadPercent ( lv_reader_81 ) > 15
-lv_error_81 = ( Sensor.ReadPercent ( lv_sens_81 ) - 50 ) * lv_sentido_81 * lv_lado_81 * gv_sentido_motores
+While Sensor.ReadPercent ( lv_reader_81 ) > 20
+lv_error_81 = ( Sensor.ReadPercent ( lv_reader1_81 ) - Sensor.ReadPercent ( lv_reader2_81 ) ) * lv_sentido_81 * gv_sentido_motores
 lv_errsum_81 = lv_errsum_81 + lv_error_81
 lv_u_81 = lv_error_81 * lv_kp_81 + ( lv_error_81 - lv_olderror_81 ) * lv_kd_81 + lv_errsum_81 * lv_ki_81
 Motor.StartSync ( lv_i_81 + lv_d_81 , - ( lv_velocidad_81 + lv_u_81 ) , lv_velocidad_81 - lv_u_81 )
@@ -768,6 +768,16 @@ lv_signo_95 = lv_encdiff_95 / Math.Abs ( lv_encdiff_95 )
 If lv_encdiff_95 <> 0 Then
 While Math.Abs ( Motor.GetCount ( "A" ) - lv_aenc_95 ) > 10
 MotorA.StartSpeed ( lv_signo_95 * lv_v_95 )
+EndWhile
+Motor.Stop ( "A" , "True" )
+EndIf
+EndSub
+Sub f_bmovea0_1
+lv_encdiff_96 = - 300 - Motor.GetCount ( "A" )
+lv_signo_96 = lv_encdiff_96 / Math.Abs ( lv_encdiff_96 )
+If lv_encdiff_96 <> 0 Then
+MotorA.StartSpeed ( lv_signo_96 * lv_v_96 )
+While Math.Abs ( Motor.GetCount ( "A" ) + 300 ) > 5
 EndWhile
 Motor.Stop ( "A" , "True" )
 EndIf

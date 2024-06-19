@@ -1,12 +1,12 @@
 lv_v_105 = 0
 lv_aenc_105 = 0
+lv_v_95 = 0
+lv_aenc_95 = 0
 lv_velocidad_1 = 0
 lv_distancia_1 = 0
 lv_v1_35 = 0
 lv_v2_35 = 0
 lv_angle_35 = 0
-lv_v_95 = 0
-lv_aenc_95 = 0
 lv_velocidad1_25 = 0
 lv_velocidad2_25 = 0
 lv_tiempo_25 = 0
@@ -14,7 +14,6 @@ lv_velocidad_39 = 0
 lv_v_106 = 0
 lv_velocidad_13 = 0
 lv_tiempo_13 = 0
-lv_v_96 = 0
 lv_read_128 = 0
 lv_velocidad_5 = 0
 lv_sens_5 = 0
@@ -28,33 +27,41 @@ lv_kp_76 = 0
 lv_ki_76 = 0
 lv_kd_76 = 0
 lv_encoder_76 = 0
+lv_velocidad_81 = 0
+lv_kp_81 = 0
+lv_ki_81 = 0
+lv_kd_81 = 0
+lv_reader_81 = 0
 lv_velocidad_75 = 0
 lv_kp_75 = 0
 lv_ki_75 = 0
 lv_kd_75 = 0
 lv_encoder_75 = 0
+lv_v_101 = 0
+lv_vel_33 = 0
 lv_velocidad_82 = 0
 lv_kp_82 = 0
 lv_ki_82 = 0
 lv_kd_82 = 0
-lv_lado_82 = 0
-lv_sens_82 = 0
-lv_v_101 = 0
-lv_vel_33 = 0
+lv_reader_82 = 0
 lv_vel_31 = 0
 lv_velocidad_71 = 0
 lv_kp_71 = 0
 lv_ki_71 = 0
 lv_kd_71 = 0
 lv_velocidad_37 = 0
-lv_velocidad1_15 = 0
-lv_velocidad2_15 = 0
-lv_encoder_15 = 0
+lv_velocidad_72 = 0
+lv_kp_72 = 0
+lv_ki_72 = 0
+lv_kd_72 = 0
 lv_v0_49 = 0
 lv_vmax_49 = 0
 lv_distancia1_49 = 0
 lv_distancia2_49 = 0
 lv_distancia3_49 = 0
+lv_velocidad1_15 = 0
+lv_velocidad2_15 = 0
+lv_encoder_15 = 0
 lv_v_104 = 0
 lv_grados_104 = 0
 lv_v1_36 = 0
@@ -66,10 +73,6 @@ lv_kp_56 = 0
 lv_ki_56 = 0
 lv_kd_56 = 0
 lv_accelencoder_56 = 0
-lv_velocidad_72 = 0
-lv_kp_72 = 0
-lv_ki_72 = 0
-lv_kd_72 = 0
 lv_vmax_88 = 0
 lv_kp_88 = 0
 lv_ki_88 = 0
@@ -108,7 +111,7 @@ gv_verdes = 0
 gv_azules = 0
 gv_numero_bloques = 0
 gv_bomboclat [ 0 ] = 0
-gv_velocidad = 100
+gv_velocidad = 90
 gv_kp = 0.2
 gv_ki = 0.0001
 gv_kd = 3
@@ -130,7 +133,7 @@ f_main_0 ()
 Sub f_setup_0
 Sensor.SetMode ( 1 , 0 )
 Sensor.SetMode ( 2 , 4 )
-Sensor.SetMode ( 3 , 4 )
+Sensor.SetMode ( 3 , 0 )
 Sensor.SetMode ( 4 , 0 )
 EndSub
 Sub f_startarm_0
@@ -169,19 +172,19 @@ EndWhile
 EndSub
 Sub f_main_0
 f_startarm_0 ()
+lv_v_95 = 30
+lv_aenc_95 = - 300
+f_bmovea_2 ()
 lv_velocidad_1 = gv_velocidad * 0.3
 lv_distancia_1 = 30
 f_encoderrectomm_2 ()
 lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
-lv_angle_35 = 94
+lv_angle_35 = 90
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.3
 lv_distancia_1 = 25
 f_encoderrectomm_2 ()
-lv_v_95 = 20
-lv_aenc_95 = - 100
-f_bmovea_2 ()
 gv_rojos = 0
 gv_amarillos = 0
 gv_verdes = 0
@@ -194,7 +197,7 @@ lv_v_105 = 20
 lv_aenc_105 = - 300
 f_bmoved_2 ()
 lv_v_95 = 20
-lv_aenc_95 = - 780
+lv_aenc_95 = - 750
 f_bmovea_2 ()
 lv_v1_35 = gv_velocidad * - 0.1
 lv_v2_35 = gv_velocidad * 0.1
@@ -205,7 +208,7 @@ lv_velocidad_1 = gv_velocidad * 0.12
 lv_distancia_1 = 6
 f_encoderrectomm_2 ()
 lv_v_95 = 20
-lv_aenc_95 = - 820
+lv_aenc_95 = - 760
 f_bmovea_2 ()
 lv_velocidad1_25 = gv_velocidad * 0.1
 lv_velocidad2_25 = gv_velocidad * - 0.1
@@ -224,7 +227,7 @@ f_spin90_1 ()
 lv_velocidad_39 = - 10
 f_spin90_1 ()
 lv_velocidad_1 = gv_velocidad * - 0.3
-lv_distancia_1 = 24
+lv_distancia_1 = 10
 f_encoderrectomm_2 ()
 lv_v_95 = 30
 lv_aenc_95 = - 300
@@ -248,16 +251,14 @@ lv_velocidad_1 = gv_velocidad * 0.3
 lv_distancia_1 = 5.5
 f_encoderrectomm_2 ()
 lv_v_95 = 20
-lv_aenc_95 = - 100
+lv_aenc_95 = - 300
 f_bmovea_2 ()
 lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
-lv_angle_35 = 86
+lv_angle_35 = 92
 f_gunivencmm_3 ()
-lv_v_96 = 20
-f_bmovea0_1 ()
 lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 29
+lv_distancia_1 = 17
 f_encoderrectomm_2 ()
 Program.Delay ( 1000 )
 f_lectura_1 ()
@@ -275,12 +276,15 @@ gv_azules = gv_azules + 1
 EndIf
 f_coger_abajo_0 ()
 EndIf
+lv_v_95 = 30
+lv_aenc_95 = - 350
+f_bmovea_2 ()
 lv_velocidad_1 = gv_velocidad * - 0.2
-lv_distancia_1 = 10
+lv_distancia_1 = 11
 f_encoderrectomm_2 ()
 lv_v1_35 = gv_velocidad * 0.2
 lv_v2_35 = gv_velocidad * - 0.2
-lv_angle_35 = 92
+lv_angle_35 = 90
 f_gunivencmm_3 ()
 lv_velocidad_13 = gv_velocidad * - 0.9
 lv_tiempo_13 = 1000
@@ -292,14 +296,14 @@ lv_velocidad_13 = gv_velocidad * - 0.8
 lv_tiempo_13 = 500
 f_tiemporectomm_2 ()
 lv_velocidad_1 = gv_velocidad * 0.2
-lv_distancia_1 = 16
+lv_distancia_1 = 15.5
 f_encoderrectomm_2 ()
 lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
-lv_angle_35 = 85
+lv_angle_35 = 88
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.2
-lv_distancia_1 = 13
+lv_distancia_1 = 16
 f_encoderrectomm_2 ()
 f_lectura_1 ()
 gv_bloque = lv_read_128
@@ -324,7 +328,7 @@ lv_distancia_1 = 72
 f_encoderrectomm_2 ()
 lv_v1_35 = gv_velocidad * - 0.2
 lv_v2_35 = gv_velocidad * 0.2
-lv_angle_35 = 100
+lv_angle_35 = 85
 f_gunivencmm_3 ()
 lv_velocidad_13 = gv_velocidad * - 0.3
 lv_tiempo_13 = 1000
@@ -348,20 +352,13 @@ lv_ki_76 = gv_ki
 lv_kd_76 = gv_kd
 lv_encoder_76 = 5
 f_sl14pidencf_5 ()
-lv_velocidad_75 = gv_velocidad * 0.3
-lv_kp_75 = gv_kp * 0.6
-lv_ki_75 = gv_ki
-lv_kd_75 = gv_kd
-lv_encoder_75 = 5
-f_sl14pidenc_5 ()
 If gv_numero_bloques > 0 Then
-lv_velocidad_82 = gv_velocidad * 0.2
-lv_kp_82 = gv_kp
-lv_ki_82 = gv_ki
-lv_kd_82 = gv_kd
-lv_lado_82 = 1
-lv_sens_82 = 1
-f_sl1spidcrossf_6 ()
+lv_velocidad_81 = gv_velocidad * 0.2
+lv_kp_81 = gv_kp
+lv_ki_81 = gv_ki
+lv_kd_81 = gv_kd
+lv_reader_81 = 3
+f_sl1spidcross_5 ()
 lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
 lv_angle_35 = 180
@@ -370,7 +367,7 @@ lv_velocidad_75 = gv_velocidad * 0.3
 lv_kp_75 = gv_kp
 lv_ki_75 = gv_ki
 lv_kd_75 = gv_kd
-lv_encoder_75 = 30
+lv_encoder_75 = 25
 f_sl14pidenc_5 ()
 lv_v1_35 = gv_velocidad * 0.3
 lv_v2_35 = gv_velocidad * - 0.3
@@ -493,13 +490,12 @@ lv_ki_75 = gv_ki
 lv_kd_75 = gv_kd
 lv_encoder_75 = 7
 f_sl14pidenc_5 ()
-lv_velocidad_82 = gv_velocidad * 0.15
+lv_velocidad_82 = gv_velocidad * 0.3
 lv_kp_82 = gv_kp
 lv_ki_82 = gv_ki
 lv_kd_82 = gv_kd
-lv_lado_82 = 1
-lv_sens_82 = 1
-f_sl1spidcrossf_6 ()
+lv_reader_82 = 3
+f_sl1spidcrossf_5 ()
 Else
 lv_velocidad_75 = gv_velocidad * 0.3
 lv_kp_75 = gv_kp
@@ -511,9 +507,8 @@ lv_velocidad_82 = gv_velocidad * 0.15
 lv_kp_82 = gv_kp
 lv_ki_82 = gv_ki
 lv_kd_82 = gv_kd
-lv_lado_82 = 1
-lv_sens_82 = 1
-f_sl1spidcrossf_6 ()
+lv_reader_82 = 3
+f_sl1spidcrossf_5 ()
 EndIf
 lv_vel_31 = gv_velocidad * 0.3
 f_gperfidefinitivomm_1 ()
@@ -559,62 +554,48 @@ f_spin180_1 ()
 lv_velocidad_13 = gv_velocidad * - 0.3
 lv_tiempo_13 = 1000
 f_tiemporectomm_2 ()
-lv_velocidad1_15 = gv_velocidad * 0.24
-lv_velocidad2_15 = gv_velocidad * 0.3
-lv_encoder_15 = 37
-f_encodergiromm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.4
+lv_distancia_1 = 45
+f_encoderrectomm_2 ()
+lv_v1_35 = gv_velocidad * - 0.3
+lv_v2_35 = gv_velocidad * 0.3
+lv_angle_35 = 90
+f_gunivencmm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.4
+lv_distancia_1 = 25
+f_encoderrectomm_2 ()
+lv_velocidad_1 = gv_velocidad * - 0.4
+lv_distancia_1 = 25
+f_encoderrectomm_2 ()
 f_soltar_todo_0 ()
 lv_v_101 = 20
 f_bmovead0_1 ()
-lv_velocidad_13 = gv_velocidad * - 50
-lv_tiempo_13 = 2000
-f_tiemporectomm_2 ()
-lv_velocidad_5 = gv_velocidad * 0.2
-lv_sens_5 = 4
-f_1blancorectomm_2 ()
-lv_velocidad_3 = gv_velocidad * 0.2
-lv_sens_3 = 1
-f_1negrorectomm_2 ()
-lv_velocidad_1 = gv_velocidad * 0.3
+lv_velocidad_1 = gv_velocidad * - 0.3
 lv_distancia_1 = 4
 f_encoderrectomm_2 ()
-lv_velocidad1_17 = 30
-lv_velocidad2_17 = - 30
-lv_sens_17 = 1
-f_1negrogiromm_3 ()
-lv_velocidad_76 = gv_velocidad * 0.3
-lv_kp_76 = gv_kp * 3
-lv_ki_76 = gv_ki
-lv_kd_76 = gv_kd
-lv_encoder_76 = 45
-f_sl14pidencf_5 ()
+lv_v1_35 = gv_velocidad * - 0.3
+lv_v2_35 = gv_velocidad * 0.3
+lv_angle_35 = 90
+f_gunivencmm_3 ()
+lv_velocidad_72 = gv_velocidad * 0.3
+lv_kp_72 = gv_kp
+lv_ki_72 = gv_ki
+lv_kd_72 = gv_kd
+f_sl14pidf_4 ()
 lv_v1_35 = gv_velocidad * 0.3
 lv_v2_35 = gv_velocidad * - 0.3
-lv_angle_35 = 180
+lv_angle_35 = 90
 f_gunivencmm_3 ()
-lv_velocidad_76 = gv_velocidad * 0.4
-lv_kp_76 = gv_kp * 3
-lv_ki_76 = gv_ki
-lv_kd_76 = gv_kd * 1.2
-lv_encoder_76 = 6
-f_sl14pidencf_5 ()
-lv_velocidad_82 = gv_velocidad * 0.2
-lv_kp_82 = gv_kp
-lv_ki_82 = gv_ki
-lv_kd_82 = gv_kd
-lv_lado_82 = - 1
-lv_sens_82 = 4
-f_sl1spidcrossf_6 ()
-lv_velocidad_76 = gv_velocidad * 0.4
-lv_kp_76 = gv_kp * 0.8
-lv_ki_76 = gv_ki
-lv_kd_76 = gv_kd * 1.2
-lv_encoder_76 = 20
-f_sl14pidencf_5 ()
+lv_velocidad_75 = gv_velocidad * 0.15
+lv_kp_75 = gv_kp
+lv_ki_75 = gv_ki
+lv_kd_75 = gv_kd
+lv_encoder_75 = 12
+f_sl14pidenc_5 ()
 lv_v0_49 = gv_velocidad * 0.4
 lv_vmax_49 = gv_velocidad * 0.98
-lv_distancia1_49 = 15
-lv_distancia2_49 = 37
+lv_distancia1_49 = 11
+lv_distancia2_49 = 30
 lv_distancia3_49 = 5
 f_linacceldecelmm_5 ()
 lv_v_105 = 20
@@ -950,7 +931,32 @@ lv_olderror_76 = lv_error_76
 EndWhile
 Motor.Stop ( lv_i_76 + lv_d_76 , "False" )
 EndSub
-Sub f_sl1spidcrossf_6
+Sub f_sl1spidcross_5
+lv_velocidad_81 = lv_velocidad_81 * gv_sentido_motores
+lv_i_81 = "B"
+lv_d_81 = "C"
+lv_error_81 = 0
+lv_olderror_81 = 0
+lv_errsum_81 = 0
+lv_u_81 = 0
+lv_sentido_81 = lv_velocidad_81 / Math.Abs ( lv_velocidad_81 )
+If lv_reader_81 = 3 Then
+lv_reader1_81 = 1
+lv_reader2_81 = 4
+Else
+lv_reader1_81 = 3
+lv_reader2_81 = 1
+EndIf
+While Sensor.ReadPercent ( lv_reader_81 ) > 20
+lv_error_81 = ( Sensor.ReadPercent ( lv_reader1_81 ) - Sensor.ReadPercent ( lv_reader2_81 ) ) * lv_sentido_81 * gv_sentido_motores
+lv_errsum_81 = lv_errsum_81 + lv_error_81
+lv_u_81 = lv_error_81 * lv_kp_81 + ( lv_error_81 - lv_olderror_81 ) * lv_kd_81 + lv_errsum_81 * lv_ki_81
+Motor.StartSync ( lv_i_81 + lv_d_81 , - ( lv_velocidad_81 + lv_u_81 ) , lv_velocidad_81 - lv_u_81 )
+lv_olderror_81 = lv_error_81
+EndWhile
+Motor.Stop ( lv_i_81 + lv_d_81 , "True" )
+EndSub
+Sub f_sl1spidcrossf_5
 lv_velocidad_82 = lv_velocidad_82 * gv_sentido_motores
 lv_i_82 = "B"
 lv_d_82 = "C"
@@ -959,13 +965,15 @@ lv_olderror_82 = 0
 lv_errsum_82 = 0
 lv_u_82 = 0
 lv_sentido_82 = lv_velocidad_82 / Math.Abs ( lv_velocidad_82 )
-If lv_sens_82 = 1 Then
-lv_reader_82 = 4
+If lv_reader_82 = 3 Then
+lv_reader1_82 = 1
+lv_reader2_82 = 4
 Else
-lv_reader_82 = 1
+lv_reader1_82 = 3
+lv_reader2_82 = 1
 EndIf
 While Sensor.ReadPercent ( lv_reader_82 ) > 20
-lv_error_82 = ( Sensor.ReadPercent ( lv_sens_82 ) - 50 ) * lv_sentido_82 * lv_lado_82 * gv_sentido_motores
+lv_error_82 = ( Sensor.ReadPercent ( lv_reader1_82 ) - Sensor.ReadPercent ( lv_reader2_82 ) ) * lv_sentido_82 * gv_sentido_motores
 lv_errsum_82 = lv_errsum_82 + lv_error_82
 lv_u_82 = lv_error_82 * lv_kp_82 + ( lv_error_82 - lv_olderror_82 ) * lv_kd_82 + lv_errsum_82 * lv_ki_82
 Motor.StartSync ( lv_i_82 + lv_d_82 , - ( lv_velocidad_82 + lv_u_82 ) , lv_velocidad_82 - lv_u_82 )
@@ -1001,16 +1009,6 @@ lv_signo_95 = lv_encdiff_95 / Math.Abs ( lv_encdiff_95 )
 If lv_encdiff_95 <> 0 Then
 While Math.Abs ( Motor.GetCount ( "A" ) - lv_aenc_95 ) > 10
 MotorA.StartSpeed ( lv_signo_95 * lv_v_95 )
-EndWhile
-Motor.Stop ( "A" , "True" )
-EndIf
-EndSub
-Sub f_bmovea0_1
-lv_encdiff_96 = - 5 - Motor.GetCount ( "A" )
-lv_signo_96 = lv_encdiff_96 / Math.Abs ( lv_encdiff_96 )
-If lv_encdiff_96 <> 0 Then
-MotorA.StartSpeed ( lv_signo_96 * lv_v_96 )
-While Math.Abs ( Motor.GetCount ( "A" ) + 5 ) > 5
 EndWhile
 Motor.Stop ( "A" , "True" )
 EndIf

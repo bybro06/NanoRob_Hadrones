@@ -266,7 +266,7 @@ EndFunction
 
 'Siguelíneas hasta cruce negro por 1 lado
 
-Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
+Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
   'Siguelíneas 1-4 PID
   
   '"sens" especifica el sensor de lectura
@@ -283,14 +283,16 @@ Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
-  If sens = 1 Then
-    reader = 4
+  If reader = 3 Then
+    reader1 = 1
+    reader2 = 4
   Else
-    reader = 1
+    reader1 = 3
+    reader2 = 1
   EndIf
   
-  While Sensor.ReadPercent(reader) > 15
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
+  While Sensor.ReadPercent(reader) > 20
+    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
     Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
@@ -299,7 +301,7 @@ Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number
   Motor.Stop(I+D, "True")
 EndFunction
 
-Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
+Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
   'Siguelíneas 1-4 PID
   
   '"sens" especifica el sensor de lectura
@@ -316,14 +318,16 @@ Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in numbe
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
-  If sens = 1 Then
-    reader = 4
+  If reader = 3 Then
+    reader1 = 1
+    reader2 = 4
   Else
-    reader = 1
+    reader1 = 3
+    reader2 = 1
   EndIf
   
   While Sensor.ReadPercent(reader) > 20
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
+    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
     Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
