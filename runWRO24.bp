@@ -12,7 +12,7 @@ Velocidad = 100
 
 kp = 0.2
 ki = 0.0001
-kd = 1
+kd = 3
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -37,8 +37,7 @@ include "includes\Brazo"
 include "includes\RGBRead"
 
 Setup()
-Thread.Run = Odometry
-'Thread.Run = Display
+Thread.Run = Display
 Thread.Run = Stop
 MainPrueba()
 
@@ -328,18 +327,26 @@ Sub Main
   
   StartArm()
   
+  BMoveA0(30)
   EncoderRectoMM(Velocidad*0.3,35)
   GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,81)
-  BMoveA(20,-100) 'Esto con el caso de arriba no se necesitaba
   
   EncoderRectoMMF(Velocidad*0.3,10)
   
   RGBDetect1(5,caso)
   LeerColor(caso)
   Sensor.SetMode(1,0)
+  Program.Delay(500)
+  
+  EncoderRectoMMF(Velocidad*-0.3,10)
+  
+  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,81)
+  
   If caso = 3 Then
+    EncoderRectoMM(Velocidad*-0.2,5)
     Caso_Verde()
   Else
+    EncoderRectoMM(Velocidad*-0.2,15)
     Caso_Rojo()
   EndIf
   
@@ -805,6 +812,19 @@ Function Coger_Abajo()
   
 EndFunction
 
+Function Coger_Abajo_Comunistas()
+  
+  EncoderRectoMM(-30,5)
+  
+  'Coge el primero
+  
+  BMoveD(40,-230)
+  BMoveA(20,-780)
+  BMoveDTimer(-40,350)
+  BMoveA(20,-300)
+  
+EndFunction
+
 Function Coger_Abajo_Basura()
   
   EncoderRectoMM(-30,2)
@@ -820,14 +840,34 @@ EndFunction
 
 Function Coger_Arriba()
   
-  EncoderRectoMM(-20,7)
+  EncoderRectoMM(-20,6.5)
+  
+  BMoveA(10,-670)
+  BMoveD(20,-230)
+  
+  'Coge el segundo
+  
+  'EncoderRectoMM(10,0.75)
+  BMoveA(10,-780)
+  
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,800)
+  BMoveA(20,-400)
+  
+  
+  
+EndFunction
+
+Function Coger_Arriba_Rojo()
+  
+  EncoderRectoMM(-20,6.5)
   
   BMoveA(10,-670)
   BMoveD(20,-200)
   
   'Coge el segundo
   
-  'EncoderRectoMM(10,0.75)
+  EncoderRectoMM(10,1)
   BMoveA(10,-780)
   
   BMoveDSafe(40,-250)
@@ -840,7 +880,7 @@ EndFunction
 
 Function Soltar_Todo()
   
-  EncoderRectoMM(-30,5)
+  'EncoderRectoMM(-30,5)
   
   BMoveA(10,-750)
   BMoveDSafe(40,-200)
@@ -851,14 +891,14 @@ EndFunction
 
 Function Soltar_Uno()
   
-  EncoderRectoMM(-30,5)
+  'EncoderRectoMM(-30,5)
   
   BMoveA(10,-760)
   BMoveDSafe(40,-200)
   
   BMoveA(10,-660)
   BMoveDSafe(40,-250)
-  BMoveDTimer(-40,200)
+  BMoveDTimer(-40,500)
   
   BMoveA(10,-500)
   
@@ -955,7 +995,7 @@ EndFunction
 
 
 Function Lectura(out number read)
-  BmoveA(15,-650)
+  BmoveA(15,-690)
   RGBDetect2(5,read)
   LeerColor(read)
   BmoveA(15,-200)

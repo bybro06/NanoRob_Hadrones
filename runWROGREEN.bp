@@ -96,7 +96,7 @@ Sub Main
   
   'Gira hacia tubería
   
-  BMoveA(30,-300)
+  BMoveA0(30)
   EncoderRectoMM(Velocidad*0.3,30)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
   EncoderRectoMM(Velocidad*0.3,25)
