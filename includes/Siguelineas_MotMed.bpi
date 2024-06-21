@@ -463,3 +463,19 @@ Function SL1SPIDEncF(in number Velocidad, in number kp, in number ki, in number 
   EndWhile
   Motor.Stop(I+D, "False")
 EndFunction
+
+Function Shift14_31(in number Velocidad)
+  
+  MotorBC.Off()
+  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
+  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
+  
+EndFunction
+
+Function Shift31_14(in number Velocidad)
+  
+  MotorBC.Off()
+  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
+  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
+  
+EndFunction
