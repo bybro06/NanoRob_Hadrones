@@ -101,9 +101,9 @@ Sub Main
     EncoderRectoMM(Velocidad*0.4,20)
 
     
-    GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,92)
+    GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,88)
     
-    EncoderRectoMM(Velocidad*0.4,39)
+    EncoderRectoMM(Velocidad*0.4,38)
     
     
     'Cierra y Baja brazo
@@ -114,43 +114,45 @@ Sub Main
 
     GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,30)
     
-    EncoderRectoMM(Velocidad*0.12,8.5)
+    EncoderRectoMM(Velocidad*0.12,7.5)
     BMoveA(20,-740)
     
-    TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1000)
+    TiempoGiroMM(Velocidad*0.1,Velocidad*-0.1,1500)
     Program.Delay(500)
     GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,6)
     
     BMoveA(20,-580)
     
     GUnivEncMM(Velocidad*0.1,Velocidad*-0.1,70)
-    GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,70)
-    BMoveAD0(30)
+    GUnivEncMM(Velocidad*-0.1,Velocidad*0.1,85)
+    BMoveD0(30)
+    BMoveA(30,-450)
 
+    EncoderRectoMM(Velocidad*-0.3, 42)
     
-    EncoderRectoMM(Velocidad*-0.3, 40)
-    BMoveA(30,-300)
-    
-    GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,100)
+    GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
     
     EncoderRectoMM(Velocidad*0.6, 25)
     1BlancoRectoMMF(Velocidad*0.2,4)
     1NegroRectoMMF(Velocidad*0.2,4)
     EncoderRectoMM(Velocidad*0.3,2)
     
-    GPerfDDEFINITIVOMM(Velocidad*0.3)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,120)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,60)
     
     SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
-    SL14PIDEnc(Velocidad*0.7,kp,ki,kd,36)
+    Shift31_14(Velocidad*0.3)
+    SL14PIDEnc(Velocidad*0.7,kp,ki,kd,28)
     
     EncoderGiroMM(Velocidad*0.3,Velocidad*0.2,22)
     EncoderGiroMM(Velocidad*0.2,Velocidad*0.3,25)
-    EncoderRectoMM(Velocidad*0.2,23)
+    EncoderRectoMM(Velocidad*0.2,19)
     
     
   Coger_Abajo_Basura()
 
-  EncoderRectoMM(Velocidad*-0.3,10)
+  EncoderRectoMM(Velocidad*-0.3,11)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,85)
   Program.Delay(250)
   EncoderRectoMM(Velocidad*0.3,13)
@@ -178,16 +180,16 @@ Sub Main
   BMoveA(30,-300)
 
 
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,165)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,155)
   Program.Delay(250)
   EncoderRectoMM(Velocidad*0.9,120)
-  EncoderGiroMM(Velocidad*0.2, Velocidad*0.23,20)
+  EncoderGiroMM(Velocidad*0.4, Velocidad*0.37,23)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,90)
   TiempoRectoMM(Velocidad*-0.55,2000)
   EncoderRectoMM(Velocidad*0.25,10)
   TiempoRectoMM(Velocidad*-0.55,1000)
   
-  EncoderRectoMM(Velocidad*0.25,8)
+  EncoderRectoMM(Velocidad*0.25,10)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
   EncoderRectoMM(Velocidad*0.25,8)
   1BlancoRectoMM(Velocidad*0.3,1)
@@ -197,8 +199,7 @@ Sub Main
   BMoveA(20,-780)
   BMoveD0(20)
   
-  EncoderRectoMM(Velocidad*0.2, 6)
-  EncoderRectoMM(Velocidad*-0.2, 20)
+  EncoderRectoMM(Velocidad*-0.2, 12)
   
   BMoveA(30,-300)
   
@@ -210,7 +211,7 @@ Sub Main
   
   EncoderRectoMM(Velocidad*0.25,33)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.2,85)
-  EncoderRectoMM(Velocidad*0.25,44)
+  EncoderRectoMM(Velocidad*0.25,14)
   
   1BlancoRectoMM(Velocidad*0.3,1)
   1NegroRectoMMF(Velocidad*0.2,1)
@@ -218,12 +219,12 @@ Sub Main
   EncoderRectoMM(Velocidad*0.25,2)
   
   GPerfDDEFINITIVOMM(Velocidad*0.3)
-  SL14PID(Velocidad*0.3,kp,ki,kd)
+  SL14PID(Velocidad*0.15,kp,ki,kd)
   Motor.Stop("ABCD","True")
   
   EncoderRectoMM(Velocidad*0.3,17.3)
   
-  Coger_Abajo()
+  Coger_Abajo_Comunistas()
   1BlancoRectoMM(Velocidad*-0.15,1)
   1NegroRectoMM(Velocidad*-0.15,1)
   EncoderRectoMM(Velocidad*0.15,4)
@@ -233,24 +234,59 @@ Sub Main
   
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,87)
   EncoderRectoMM(Velocidad*0.2,11.2)
-  Coger_Arriba()
+  Coger_Arriba_Rojo()
   
   Spin180(Velocidad*0.3)
   TiempoRectoMM(Velocidad*-0.3,1000)
   
-  EncoderRectoMM(Velocidad*0.4,45)
+  EncoderRectoMM(Velocidad*0.4,46)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
+  EncoderRectoMM(Velocidad*-0.2,4)
   
   Soltar_Todo()
-  BmoveAD0(20)
+  BmoveA0(20)
+  BMoveD0(30)
+  
+  'Vamos a por los últimos escombros
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,70)
+  EncoderRectoMM(Velocidad*0.3,8)
+  
+  1BlancoRectoMM(Velocidad*0.15,4)
+  1NegroRectoMM(Velocidad*0.15,4)
+  
+  GUnivEncMM(Velocidad*-0.2,Velocidad*0.3,60)
+  
+  SL14PIDEnc(Velocidad*0.3,kp*1.5,ki,kd,8)
+  SL14PID(Velocidad*0.3,kp,ki,kd)
+  
+  EncoderRectoMM(Velocidad*0.3,4)
+  
+  Spin90(30)
+  
+  EncoderRectoMM(Velocidad*0.3,7)
+  Coger_Abajo_Basura()
+  
+  TiempoRectoMM(Velocidad*-0.85,3000)
+  EncoderRectoMM(Velocidad*0.25,10)
+  TiempoRectoMM(Velocidad*-0.55,1000)
+  
+  EncoderRectoMM(Velocidad*0.25,12)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
+  EncoderRectoMM(Velocidad*0.25,8)
+  1BlancoRectoMM(Velocidad*0.3,1)
+  EncoderRectoMM(Velocidad*-0.25,2)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,20)
+  
+  BMoveA(20,-780)
+  BMoveD0(20)
 EndSub
 
 Sub MainPrueba
   StartArm()
-  BMoveA(30,-750)
-  BMoveD(30,-230)
-  Program.Delay(6000)
-  BMoveAD0(20)
+  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
+  Shift31_14(Velocidad*0.3)
+  
 EndSub
 
 Sub MainControlBrazo
@@ -322,6 +358,19 @@ Function Coger_Abajo()
   
 EndFunction
 
+Function Coger_Abajo_Comunistas()
+  
+  EncoderRectoMM(-30,5)
+  
+  'Coge el primero
+  
+  BMoveD(40,-230)
+  BMoveA(20,-780)
+  BMoveDTimer(-40,350)
+  BMoveA(20,-300)
+  
+EndFunction
+
 Function Coger_Abajo_Basura()
   
   EncoderRectoMM(-30,2)
@@ -345,6 +394,26 @@ Function Coger_Arriba()
   'Coge el segundo
   
   'EncoderRectoMM(10,0.75)
+  BMoveA(10,-780)
+  
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,400)
+  BMoveA(20,-400)
+  
+  
+  
+EndFunction
+
+Function Coger_Arriba_Rojo()
+  
+  EncoderRectoMM(-20,6.5)
+  
+  BMoveA(10,-670)
+  BMoveD(20,-200)
+  
+  'Coge el segundo
+  
+  EncoderRectoMM(10,1)
   BMoveA(10,-780)
   
   BMoveDSafe(40,-250)
@@ -387,4 +456,20 @@ Function Lectura(out number read)
   RGBDetect2(5,read)
   LeerColor(read)
   BmoveA(15,-200)
+EndFunction
+
+Function Shift14_31(in number Velocidad)
+  
+  MotorBC.Off()
+  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
+  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
+  
+EndFunction
+
+Function Shift31_14(in number Velocidad)
+  
+  MotorBC.Off()
+  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
+  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
+  
 EndFunction

@@ -14,7 +14,7 @@ lv_velocidad_39 = 0
 lv_v_106 = 0
 lv_velocidad_13 = 0
 lv_tiempo_13 = 0
-lv_read_128 = 0
+lv_read_130 = 0
 lv_velocidad_5 = 0
 lv_sens_5 = 0
 lv_velocidad_3 = 0
@@ -50,15 +50,11 @@ lv_kp_71 = 0
 lv_ki_71 = 0
 lv_kd_71 = 0
 lv_velocidad_37 = 0
+lv_v_96 = 0
 lv_velocidad_72 = 0
 lv_kp_72 = 0
 lv_ki_72 = 0
 lv_kd_72 = 0
-lv_v0_49 = 0
-lv_vmax_49 = 0
-lv_distancia1_49 = 0
-lv_distancia2_49 = 0
-lv_distancia3_49 = 0
 lv_velocidad1_15 = 0
 lv_velocidad2_15 = 0
 lv_encoder_15 = 0
@@ -95,7 +91,7 @@ lv_color_114 = 0
 lv_color_115 = 0
 lv_color_116 = 0
 lv_color_117 = 0
-lv_read_128 = 0
+lv_read_130 = 0
 gv_velocidad = 0
 gv_kp = 0
 gv_ki = 0
@@ -262,7 +258,7 @@ lv_distancia_1 = 17
 f_encoderrectomm_2 ()
 Program.Delay ( 1000 )
 f_lectura_1 ()
-gv_bloque = lv_read_128
+gv_bloque = lv_read_130
 If gv_bloque <> 3 And gv_bloque <> 2 Then
 gv_numero_bloques = 0
 gv_bomboclat [ 0 ] = 0
@@ -306,7 +302,7 @@ lv_velocidad_1 = gv_velocidad * 0.2
 lv_distancia_1 = 16
 f_encoderrectomm_2 ()
 f_lectura_1 ()
-gv_bloque = lv_read_128
+gv_bloque = lv_read_130
 If gv_bloque <> 3 and gv_bloque <> 2 Then
 gv_bomboclat [ 1 ] = gv_bomboclat [ 0 ]
 gv_bomboclat [ 0 ] = 0
@@ -577,27 +573,38 @@ lv_v1_35 = gv_velocidad * - 0.3
 lv_v2_35 = gv_velocidad * 0.3
 lv_angle_35 = 90
 f_gunivencmm_3 ()
+lv_v_96 = 30
+f_bmovea0_1 ()
 lv_velocidad_72 = gv_velocidad * 0.3
 lv_kp_72 = gv_kp
 lv_ki_72 = gv_ki
 lv_kd_72 = gv_kd
 f_sl14pidf_4 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 6
+f_encoderrectomm_2 ()
 lv_v1_35 = gv_velocidad * 0.3
 lv_v2_35 = gv_velocidad * - 0.3
-lv_angle_35 = 90
+lv_angle_35 = 88
 f_gunivencmm_3 ()
-lv_velocidad_75 = gv_velocidad * 0.15
+lv_velocidad_75 = gv_velocidad * 0.3
 lv_kp_75 = gv_kp
 lv_ki_75 = gv_ki
 lv_kd_75 = gv_kd
-lv_encoder_75 = 12
+lv_encoder_75 = 18
 f_sl14pidenc_5 ()
-lv_v0_49 = gv_velocidad * 0.4
-lv_vmax_49 = gv_velocidad * 0.98
-lv_distancia1_49 = 11
-lv_distancia2_49 = 30
-lv_distancia3_49 = 5
-f_linacceldecelmm_5 ()
+lv_velocidad1_15 = gv_velocidad * 0.3
+lv_velocidad2_15 = gv_velocidad * 0.2
+lv_encoder_15 = 22
+f_encodergiromm_3 ()
+lv_velocidad1_15 = gv_velocidad * 0.2
+lv_velocidad2_15 = gv_velocidad * 0.3
+lv_encoder_15 = 25
+f_encodergiromm_3 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 15
+f_encoderrectomm_2 ()
+Program.Delay ( 5000 )
 lv_v_105 = 20
 lv_aenc_105 = - 300
 f_bmoved_2 ()
@@ -793,43 +800,6 @@ lv_angle_35 = 90
 f_gunivencmm_3 ()
 lv_angle_39 = 0
 EndSub
-Sub f_linacceldecelmm_5
-lv_start_b_49 = Motor.GetCount ( "B" )
-lv_start_c_49 = Motor.GetCount ( "C" )
-lv_encoder_b_49 = 0
-lv_encoder_c_49 = 0
-lv_v0_49 = Math.Max ( 8 , lv_v0_49 ) * gv_sentido_motores
-lv_vmax_49 = Math.Min ( 90 , lv_vmax_49 ) * gv_sentido_motores
-lv_vel_49 = 0
-lv_kp_49 = 3
-lv_ki_49 = 0.001
-lv_kd_49 = 5
-lv_error_49 = 0
-lv_olderror_49 = 0
-lv_errsum_49 = 0
-lv_grados1_49 = lv_distancia1_49 * 360 / ( 5.6 * math.pi )
-lv_grados2_49 = lv_distancia2_49 * 360 / ( 5.6 * math.pi )
-lv_grados3_49 = lv_distancia3_49 * 360 / ( 5.6 * math.pi )
-While lv_encoder_c_49 < lv_grados1_49 + lv_grados2_49 + lv_grados3_49
-lv_encoder_b_49 = Motor.GetCount ( "B" ) - lv_start_b_49
-lv_encoder_c_49 = Motor.GetCount ( "C" ) - lv_start_c_49
-If lv_encoder_c_49 < lv_grados1_49 + lv_grados2_49 Then
-lv_pendiente_49 = ( lv_vmax_49 - lv_v0_49 ) / lv_grados1_49
-lv_vel_49 = Math.Min ( lv_vmax_49 , lv_pendiente_49 * lv_encoder_c_49 + lv_v0_49 )
-Else
-lv_pendiente_49 = ( lv_v0_49 - lv_vmax_49 ) / lv_grados3_49
-lv_vel_49 = Math.Max ( lv_v0_49 , lv_pendiente_49 * ( lv_encoder_c_49 - lv_grados1_49 - lv_grados2_49 ) + lv_vmax_49 )
-EndIf
-lv_error_49 = ( - 1 * lv_encoder_b_49 - lv_encoder_c_49 ) * gv_sentido_motores
-lv_errsum_49 = lv_errsum_49 + lv_error_49
-lv_correccion_49 = lv_error_49 * lv_kp_49 + ( lv_error_49 - lv_olderror_49 ) * lv_kd_49 + lv_errsum_49 * lv_ki_49
-lv_olderror_49 = lv_error_49
-Motor.StartSync ( "BC" , - ( lv_vel_49 - lv_correccion_49 ) , ( lv_vel_49 + lv_correccion_49 ) )
-EndWhile
-MotorBC.OffAndBrake ()
-LCD.Clear ()
-LCD.Write ( 5 , 10 , "Distancia cm: " + MotorC.GetTacho () * 5.6 * Math.Pi / 360 )
-EndSub
 Sub f_sl14sicf_6
 lv_i_56 = "B"
 lv_d_56 = "C"
@@ -1013,24 +983,37 @@ EndWhile
 Motor.Stop ( "A" , "True" )
 EndIf
 EndSub
+Sub f_bmovea0_1
+lv_encdiff_96 = - 300 - Motor.GetCount ( "A" )
+lv_signo_96 = lv_encdiff_96 / Math.Abs ( lv_encdiff_96 )
+If lv_encdiff_96 <> 0 Then
+MotorA.StartSpeed ( lv_signo_96 * lv_v_96 )
+While Math.Abs ( Motor.GetCount ( "A" ) + 300 ) > 5
+EndWhile
+Motor.Stop ( "A" , "True" )
+EndIf
+EndSub
 Sub f_bmovead0_1
-lv_aenc_101 = 0
-lv_encdiff_101 = lv_aenc_101 - Motor.GetCount ( "A" )
-lv_signo_101 = lv_encdiff_101 / Math.Abs ( lv_encdiff_101 )
-lv_safetytimer_101 = Math.Max ( ( ( Math.abs ( lv_encdiff_101 ) / 100 ) / ( lv_v_101 / 20 ) * 650 * 2 ) * 2 / 3 , 400 )
+lv_aenca_101 = - 300
+lv_aencd_101 = 0
+lv_encdiffa_101 = lv_aenca_101 - Motor.GetCount ( "A" )
+lv_encdiffd_101 = lv_aencd_101 - Motor.GetCount ( "D" )
+lv_signoa_101 = lv_encdiffa_101 / Math.Abs ( lv_encdiffa_101 )
+lv_signod_101 = lv_encdiffd_101 / Math.Abs ( lv_encdiffd_101 )
+lv_safetytimer_101 = Math.Max ( ( ( Math.abs ( Math.Max ( Math.Abs ( lv_encdiffa_101 ) , Math.Abs ( lv_encdiffd_101 ) ) ) / 100 ) / ( lv_v_101 / 20 ) * 650 * 2 ) * 2 / 3 , 400 )
 Time.Reset3 ()
-While ( MotorA.GetTacho () <> lv_aenc_101 Or MotorD.GetTacho () <> lv_aenc_101 ) And Time.Get3 () < lv_safetytimer_101
-If MotorA.GetTacho () < lv_aenc_101 Then
-MotorA.StartSpeed ( Math.Min ( lv_v_101 , lv_v_101 / 2 + ( lv_aenc_101 - MotorA.GetTacho () ) / 10 ) )
-ElseIf MotorA.GetTacho () > lv_aenc_101 Then
-MotorA.StartSpeed ( - Math.Min ( lv_v_101 , lv_v_101 / 2 + ( MotorA.GetTacho () - lv_aenc_101 ) / 10 ) )
+While ( MotorA.GetTacho () <> lv_aenca_101 Or MotorD.GetTacho () <> lv_aencd_101 ) And Time.Get3 () < lv_safetytimer_101
+If MotorA.GetTacho () < lv_aenca_101 Then
+MotorA.StartSpeed ( Math.Min ( lv_v_101 , lv_v_101 / 2 + ( lv_aenca_101 - MotorA.GetTacho () ) / 10 ) )
+ElseIf MotorA.GetTacho () > lv_aenca_101 Then
+MotorA.StartSpeed ( - Math.Min ( lv_v_101 , lv_v_101 / 2 + ( MotorA.GetTacho () - lv_aenca_101 ) / 10 ) )
 Else
 MotorA.OffAndBrake ()
 EndIf
-If MotorD.GetTacho () < lv_aenc_101 Then
-MotorD.StartSpeed ( Math.Min ( lv_v_101 , lv_v_101 / 2 + ( lv_aenc_101 - MotorD.GetTacho () ) / 10 ) )
-ElseIf MotorD.GetTacho () > lv_aenc_101 Then
-MotorD.StartSpeed ( - Math.Min ( lv_v_101 , lv_v_101 / 2 + ( MotorD.GetTacho () - lv_aenc_101 ) / 10 ) )
+If MotorD.GetTacho () < lv_aencd_101 Then
+MotorD.StartSpeed ( Math.Min ( lv_v_101 , lv_v_101 / 2 + ( lv_aencd_101 - MotorD.GetTacho () ) / 10 ) )
+ElseIf MotorD.GetTacho () > lv_aencd_101 Then
+MotorD.StartSpeed ( - Math.Min ( lv_v_101 , lv_v_101 / 2 + ( MotorD.GetTacho () - lv_aencd_101 ) / 10 ) )
 Else
 MotorD.OffAndBrake ()
 EndIf
@@ -1585,12 +1568,12 @@ f_bmovea_2 ()
 EndSub
 Sub f_lectura_1
 lv_v_95 = 15
-lv_aenc_95 = - 650
+lv_aenc_95 = - 690
 f_bmovea_2 ()
 lv_reps_111 = 5
 f_rgbdetect2_2 ()
-lv_read_128 = lv_color_111
-lv_color_122 = lv_read_128
+lv_read_130 = lv_color_111
+lv_color_122 = lv_read_130
 f_leercolor_1 ()
 lv_v_95 = 15
 lv_aenc_95 = - 200
