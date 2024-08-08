@@ -1,0 +1,281 @@
+Velocidad = 100
+
+kp = 0.2
+ki = 0.0003
+kd = 5
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Diameter = 56
+
+centro = 0
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+include "includes\MRU_MotMed"
+
+include "includes\Giro_MotMed"
+include "includes\GirosPerfectos_MotMed"
+include "includes\GirosUniversales_MotMed"
+
+include "includes\Aceleracion_MotMed"
+include "includes\Deceleracion_MotMed"
+
+include "includes\Siguelineas_MotMed"
+include "includes\Siguelineas_MotMed_Smart"
+
+include "includes\Brazo"
+
+include "includes\RGBRead"
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Setup()
+'Thread.Run = Display
+Thread.Run = Stop
+'StartArm()
+'Program.End()
+MainPrueba()
+
+Sub Setup
+  Sensor.SetMode(1,0)
+  Sensor.SetMode(2,4)
+  Sensor.SetMode(3,0)
+  Sensor.SetMode(4,0)
+EndSub
+
+Sub StartArm
+  
+  Time.Reset1()
+  While Time.Get1() < 700
+    MotorA.StartSpeed(40)
+  EndWhile
+  MotorA.OffAndBrake()
+
+  Program.Delay(100)
+
+  Motor.Move("A",-30,350,"True")
+  
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  Program.Delay(100)
+EndSub
+
+'Subs de control paralelo
+
+Sub Display
+  old_B = 0
+  old_C = 0
+  While "True"
+    LCD.StopUpdate()
+    LCD.Clear()
+    
+    LCD.Write(5,35,"centro: "+centro)
+    
+    
+    LCD.Write(5,45,"Velocidad de B:  "+MotorB.GetSpeed()*-1)
+    LCD.Write(5,55,"Velocidad de C:  "+MotorC.GetSpeed())
+    
+    LCD.Write(5,65,"rad/s de B:  "+Math.GetRadians(MotorB.GetTacho()-old_B)/0.05*-1)
+    LCD.Write(5,75,"rad/s de C:  "+Math.GetRadians(MotorC.GetTacho()-old_C)/0.05)
+    
+    LCD.Write(5,85,"Encoder de B:  "+MotorB.GetTacho()*-1)
+    LCD.Write(5,95,"Encoder de C:  "+MotorC.GetTacho())
+    
+    LCD.Update()
+    Program.Delay(50)
+    old_B = MotorB.GetTacho()
+    old_C = MotorC.GetTacho()
+  EndWhile
+EndSub
+
+'Subs a ejecutar
+Sub Main
+EndSub
+
+Sub MainPrueba
+  
+  rojos = 0
+  amarillos = 0
+  verdes = 0
+  azules = 0
+  
+  'StartArm()
+  Coger()
+  Program.End()
+  GUnivEncMM(0,30,55)
+  GUnivEncMM(30,0,55)
+  SL31PIDEnc(40,kp,ki,kd,13)
+  'Ataca al 1º rojo
+  GUnivEncMM(30,-30,92)
+  EncoderRectoMM(30,5)
+  Program.Delay(500)
+  'Ataca al 2º rojo
+  EncoderRectoMM(-30,5)
+  GUnivEncMM(-30,30,92)
+  EncoderRectoMM(30,11)
+  GUnivEncMM(30,-30,95)
+  EncoderRectoMM(30,5)
+  Program.Delay(500)
+  'Vuelve a linea tras los 2 rojos (Comprueba)
+  EncoderRectoMM(-30,7)
+  GUnivEncMM(-30,30,92)
+  EncoderRectoMM(-40,25)
+  'Verificamos el lado
+  Program.Delay(500)
+  Time.Reset4()
+  SL1SPIDCross(30,kp,ki,kd,3)
+  Tiempohastalinea= Time.Get4()
+  'Muestra pantalla
+  LCD.Clear()
+  LCD.Write(5,5,Tiempohastalinea)
+  If Tiempohastalinea<1700 Then
+    CasoPSOE()
+  Else
+    CasoVOX()
+  EndIf
+  
+ 
+  
+  
+  
+EndSub
+
+Sub MainControlBrazo
+  angle_A = 0
+  angle_D = 0  
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      MotorA.StartSpeed(30)
+    ElseIf Buttons.Current = "D" Then
+      MotorA.StartSpeed(-30)
+    ElseIf Buttons.Current = "L" Then
+      MotorD.StartSpeed(30)
+    ElseIf Buttons.Current = "R" Then
+      MotorD.StartSpeed(-30)
+    Else
+      MotorAD.OffAndBrake()
+    EndIf
+  EndWhile
+EndSub
+
+Sub MainControlRuedas
+  vel_B = 92
+  vel_C = 92
+  
+  While "True"
+    If Buttons.Current = "U" Then
+      vel_B -= 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "D" Then
+      vel_B += 0.5
+      Program.Delay(1)
+    ElseIf Buttons.Current = "L" Then
+      vel_C += 1
+      Program.Delay(1)
+    ElseIf Buttons.Current = "R" Then
+      vel_C -= 1
+      Program.Delay(1)
+    EndIf
+    Motor.StartSync("BC",-vel_B,-vel_C)
+  EndWhile
+EndSub
+
+
+Sub CasoPSOE
+  'Sube hacia los dos rojos
+  EncoderRectoMM(30,3)
+  GUnivEncMM(-30,30,94)
+  SL14PID(50,kp,ki,kd)
+  EncoderRectoMM(30,4)
+  GUnivEncMM(30,-30,90)
+  SL14PIDEnc(40,kp,ki,kd,28.5)
+  'Ataca al 3º rojo
+  GUnivEncMM(-30,30,94)
+  EncoderRectoMM(50,6)
+  Program.Delay(500)
+  'Ataca al 4º rojo
+  EncoderRectoMM(-30,6)
+  GUnivEncMM(-30,30,94)
+  EncoderRectoMM(30,11)
+  GUnivEncMM(30,-30,91)
+  EncoderRectoMM(30,6)
+  Program.Delay(500)
+  EncoderRectoMM(-30,6)
+  'Dejamos los rojos
+  EncoderRectoMM(-40,30)
+  GUnivEncMM(-30,30,90)
+  EncoderRectoMM(40,26)
+  'Levantamos bracete
+  Program.Delay(1000)
+  'Atacamos amarillos
+  1BlancoRectoMM(-30,1)
+  GUnivEncMM(30,-30,94)
+  EncoderRectoMM(30,5)
+  'Ataca al 1º amarillo
+  SL14PID(30,kp,ki,kd)
+  EncoderRectoMM(30,11)
+  Program.Delay(500)
+  'Ataca al 2º amarillo
+  EncoderRectoMM(30,11)
+  GUnivEncMM(30,-30,93)
+  SL14PIDEnc(30,kp,ki,kd,11)
+  GUnivEncMM(-30,30,93)
+  EncoderRectoMM(30,6)
+  Program.Delay(500)
+ 
+  
+  
+  
+  
+EndSub
+
+Sub CasoVOX
+  
+EndSub
+
+Sub Stop
+  While "True"
+    if Buttons.Current = "E" Then
+      MotorBC.OffAndBrake()
+      MotorAD.OffAndBrake()
+      BMoveADSafe(20,0)
+      Program.End()
+    EndIf
+  EndWhile
+EndSub
+
+
+Function Coger()
+  
+  
+  'Suelta bloques anteriores y Coge el bloque nuevo
+  
+  'BMoveA(60,-230)
+  BMoveD(20,-220)
+  BMoveA(60,270)
+  BMoveDTimer(40,500)
+  BMoveA(60,0)
+EndFunction
+
+Function Soltar()
+  
+  'EncoderRectoMM(-30,5)
+  
+  BMoveA(10,-760)
+  BMoveDSafe(40,-200)
+  
+  BMoveA(10,-660)
+  BMoveDSafe(40,-250)
+  BMoveDTimer(-40,500)
+  
+  BMoveA(10,-500)
+  
+EndFunction
+
+
+Function Lectura(out number read)
+  BmoveA(15,-690)
+  RGBDetect2(5,read)
+  LeerColor(read)
+  BmoveA(15,-200)
+EndFunction
