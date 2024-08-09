@@ -25,7 +25,7 @@ EndFunction
 'Brazo hasta posición inicial aproximada
 
 Function BMoveA0(in number V)
-  encDiff = -300 - Motor.GetCount("A")
+  encDiff = 0 - Motor.GetCount("A")
   
   signo = encDiff / Math.Abs(encDiff)
   
@@ -137,7 +137,7 @@ EndFunction
 'Brazos hasta posición inicial aproximada
 
 Function BMoveAD0(in number V)
-  aencA = -300
+  aencA = 0
   aencD = 0
   
   encDiffA = aencA - Motor.GetCount("A")
