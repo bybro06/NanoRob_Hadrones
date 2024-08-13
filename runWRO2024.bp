@@ -10,6 +10,8 @@ Diameter = 56
 
 centro = 0
 
+num_bloques = 0
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 include "includes\MRU_MotMed"
 
@@ -29,11 +31,13 @@ include "includes\RGBRead"
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Setup()
-'Thread.Run = Display
+Thread.Run = Display
 Thread.Run = Stop
 'StartArm()
 'Program.End()
 MainPrueba()
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Sub Setup
   Sensor.SetMode(1,0)
@@ -87,16 +91,21 @@ Sub Display
   EndWhile
 EndSub
 
-'Subs a ejecutar
-Sub Main
+Sub Stop
+  While "True"
+    if Buttons.Current = "E" Then
+      MotorBC.OffAndBrake()
+      MotorAD.OffAndBrake()
+      BMoveASafe(20,0)
+      BMoveDSafe(20,0)
+      Program.End()
+    EndIf
+  EndWhile
 EndSub
 
-Sub MainPrueba
-  
-  rojos = 0
-  amarillos = 0
-  verdes = 0
-  azules = 0
+'Subs a ejecutar
+
+Sub Main
   
   StartArm()
   'While Buttons.Current <> "U"
@@ -144,6 +153,30 @@ Sub MainPrueba
     CasoVOX()
     FinPrueba()
   EndIf
+  
+EndSub
+
+Sub MainPrueba
+  
+  StartArm()
+  While Buttons.Current <> "E"
+    If Buttons.Current = "U" Then
+      Coger()
+    ElseIf Buttons.Current = "D" Then
+      Soltar()
+    ElseIf Buttons.Current = "L" Then
+      Program.Delay(1000)
+      Giro90Bloques(-20,20)
+    ElseIf Buttons.Current = "R" Then
+      Program.Delay(1000)
+      Giro90Bloques(20,-20)
+    Else
+      MotorBC.OffAndBrake()
+      MotorAD.OffAndBrake()
+    EndIf
+  EndWhile
+  
+  FinPrueba()
   
 EndSub
 
@@ -296,16 +329,6 @@ Sub CasoVOX
   
 EndSub
 
-Sub Stop
-  While "True"
-    if Buttons.Current = "E" Then
-      MotorBC.OffAndBrake()
-      MotorAD.OffAndBrake()
-      BMoveADSafe(20,0)
-      Program.End()
-    EndIf
-  EndWhile
-EndSub
 
 Sub FinPrueba
   MotorBC.OffAndBrake()
@@ -323,6 +346,8 @@ Function Coger()
   Program.Delay(150)
   BMoveA(60,20)
   BMoveD(40,70)
+  
+  @num_bloques += 1
   BMoveA(60,270)
   BMoveDTimer(40,500)
   BMoveA(60,-80)
@@ -336,10 +361,25 @@ Function Soltar()
   BMoveA(60,250)
   BMoveD(40,70)
   
+  @num_bloques = Math.Max(0, @num_bloques - 4)
+  
   BMoveA(60,-660)
-  EncoderRectoMM(-30,10)
+  EncoderRectoMM(-30,9.25)
   
   BMoveA(60,0)
+  
+EndFunction
+
+Function Giro90Bloques(in number Vel_B, in number Vel_C)
+  grados_90 = 84
+  If @num_bloques < 3 Then
+    
+    GUnivEncMM(Vel_B,Vel_C,grados_90)
+    
+  Else 
+    GUnivEncMM(Vel_B,Vel_C,grados_90+2)
+    
+  EndIf
   
 EndFunction
 
