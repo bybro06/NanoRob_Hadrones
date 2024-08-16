@@ -1,8 +1,8 @@
 Velocidad = 100
 
 kp = 0.2
-ki = 0.0003
-kd = 7
+ki = 0.0002
+kd = 6
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -35,7 +35,7 @@ Thread.Run = Display
 Thread.Run = Stop
 'StartArm()
 'Program.End()
-MainPrueba()
+Main()
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -71,6 +71,8 @@ Sub Display
   While "True"
     LCD.StopUpdate()
     LCD.Clear()
+    
+    LCD.Write(5,15,"Bloques: "+num_bloques)
     
     LCD.Write(5,35,"centro: "+centro)
     
@@ -108,25 +110,18 @@ EndSub
 Sub Main
   
   StartArm()
-  'While Buttons.Current <> "U"
-    'If Buttons.Current <> "" Then
-      'Coger()
-    'EndIf
-  'EndWhile
-  'Soltar()
-  'Program.End()
-  GUnivEncMM(0,30,62)
-  GUnivEncMM(30,0,62)
-  SL14PIDEnc(30,kp,ki,kd,16.5)
+  GUnivEncMMF(0,30,60)
+  GUnivEncMM(30,0,60)
+  SL14PIDEnc(30,kp*0.75,ki,kd,16.5)
   'Ataca al 1º rojo
   GUnivEncMM(30,-30,92)
   EncoderRectoMM(30,4.5)
   Coger()
   'Ataca al 2º rojo
-  EncoderRectoMM(-30,7.5)
+  EncoderRectoMM(-30,6.5)
   GUnivEncMM(-30,30,89)
   
-  SL14PIDEnc(30,kp*0.5,ki,kd*0.5,8.5)
+  SL14PIDEnc(30,kp*0.5,ki,kd*0.5,8)
   GUnivEncMM(30,-30,93)
   EncoderRectoMM(30,5)
   Coger()
@@ -134,19 +129,24 @@ Sub Main
 
   'Vuelve a linea tras los 2 rojos (Comprueba)
   EncoderRectoMM(-30,9)
-  GUnivEncMM(-30,30,92)
-  EncoderRectoMM(-40,22)
+  GUnivEncMM(-30,30,90)
+  EncoderRectoMM(-30,22)
  
   
   'Verificamos el lado
   SL14PIDEncF(30,kp*1.5,ki,kd,5)
   Time.Reset4()
-  SL1SPIDCross(30,kp,ki,kd,3)
+  SL1SPIDCrossF(50,kp*0.75,ki,kd,3)
   Tiempohastalinea = Time.Get4()
   'Muestra pantalla
   LCD.Clear()
   LCD.Write(5,5,Tiempohastalinea)
-  If Tiempohastalinea<1400 Then
+  'Sube hacia los dos rojos
+  EncoderRectoMM(30,3)
+  GUnivEncMM(-30,30,94)
+  SL14PID(40,kp*0.5,ki,kd)
+  
+  If Tiempohastalinea<900 Then
     CasoPSOE()
     FinPrueba()
   Else
@@ -223,11 +223,7 @@ EndSub
 
 
 Sub CasoPSOE
-  'Sube hacia los dos rojos
-  EncoderRectoMM(30,3)
-  GUnivEncMM(-30,30,94)
-  SL14PID(40,kp,ki,kd)
-  'EncoderRectoMM(30,2)
+  
   GUnivEncMM(20,-20,95)
   SL31PIDEnc(30,kp,ki,kd*1.5,27)
   'Ataca al 3º rojo
@@ -327,6 +323,34 @@ EndSub
 
 Sub CasoVOX
   
+  'Ataca al 3º rojo
+  EncoderRectoMM(Velocidad*0.3,9)
+  Coger()
+  'Ataca al 4º rojo
+  EncoderRectoMM(-30,7.5)
+  Giro90Bloques(20,-20)
+  SL14PIDEnc(15,kp*1.5,ki*1.5,kd,8)
+  Giro90Bloques(-20,20)
+  EncoderRectoMM(20,5)
+  Coger()
+  EncoderRectoMM(-30,6)
+  
+  Giro90Bloques(-20,20)
+  EncoderRectoMM(20,10)
+  Giro90Bloques(-20,20)
+  
+  SL31PIDEncF(25,kp*0.5,ki,kd,25)
+  EncoderRectoMM(25,5)
+  
+  Giro90Bloques(-20,20)
+  EncoderRectoMM(25,8)
+  Soltar()
+  
+  Giro90Bloques(20,-20)
+  
+  SL31PIDEncF(25,kp*0.5,ki,kd,5)
+  Shift31_14(25)
+  SL14PID(25,kp*0.5,ki,kd)
 EndSub
 
 
