@@ -1,8 +1,8 @@
 Velocidad = 100
 
-kp = 0.2
-ki = 0.0002
-kd = 6
+kp = 0.1
+ki = 0.0001
+kd = 2
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -48,19 +48,30 @@ EndSub
 
 Sub StartArm
   
+  
   Time.Reset1()
-  While Time.Get1() < 700
-    MotorA.StartSpeed(40)
+  While Time.Get1() < 800
+    MotorA.StartSpeed(85)
+    MotorD.StartSpeed(-80)
   EndWhile
-  MotorA.OffAndBrake()
+  MotorAD.OffAndBrake()
 
   Program.Delay(100)
-
-  Motor.Move("A",-50,350,"True")
+  
+  Thread.Run = ColocarD
+  ColocarA()
   
   MotorA.ResetCount()
   MotorD.ResetCount()
   Program.Delay(100)
+EndSub
+
+Sub ColocarA
+    Motor.Move("A",-50,350,"True")
+EndSub
+
+Sub ColocarD
+    Motor.Move("D",90,550,"True")
 EndSub
 
 'Subs de control paralelo
@@ -98,8 +109,8 @@ Sub Stop
     if Buttons.Current = "E" Then
       MotorBC.OffAndBrake()
       MotorAD.OffAndBrake()
-      BMoveASafe(20,0)
-      BMoveDSafe(20,0)
+      BMoveASafe(60,0)
+      BMoveDSafe(60,0)
       Program.End()
     EndIf
   EndWhile
@@ -112,41 +123,41 @@ Sub Main
   StartArm()
   GUnivEncMMF(0,30,60)
   GUnivEncMM(30,0,60)
-  SL14PIDEnc(30,kp*0.75,ki,kd,16.5)
+  SL14PIDEnc(25,kp,ki,kd,16.5)
   'Ataca al 1º rojo
-  GUnivEncMM(30,-30,92)
-  EncoderRectoMM(30,4.5)
+  GUnivEncMM(20,-20,96)
+  EncoderRectoMM(20,6)
   Coger()
+  EncoderRectoMM(-20,6.5)
+  GUnivEncMM(-20,20,94)
   'Ataca al 2º rojo
-  EncoderRectoMM(-30,6.5)
-  GUnivEncMM(-30,30,89)
-  
-  SL14PIDEnc(30,kp*0.5,ki,kd*0.5,8)
-  GUnivEncMM(30,-30,93)
-  EncoderRectoMM(30,5)
+  SL14PIDEnc(20,kp*0.5,ki,kd,10)
+  GUnivEncMM(20,-20,91)
+  EncoderRectoMM(30,5.5)
   Coger()
   BMoveA(Velocidad*0.4,-110)
 
   'Vuelve a linea tras los 2 rojos (Comprueba)
-  EncoderRectoMM(-30,9)
-  GUnivEncMM(-30,30,90)
+  EncoderRectoMM(-30,8)
+  GUnivEncMM(-30,30,96)
   EncoderRectoMM(-30,22)
- 
+  MotorBC.OffAndBrake()
+  Program.Delay(200)
   
   'Verificamos el lado
-  SL14PIDEncF(30,kp*1.5,ki,kd,5)
+  SL14PIDEncF(20,kp,ki,kd,7)
   Time.Reset4()
-  SL1SPIDCrossF(50,kp*0.75,ki,kd,3)
+  SL1SPIDCross(30,kp,ki,kd,3)
+  EncoderRectoMM(30,2.5)
   Tiempohastalinea = Time.Get4()
   'Muestra pantalla
   LCD.Clear()
   LCD.Write(5,5,Tiempohastalinea)
   'Sube hacia los dos rojos
-  EncoderRectoMM(30,3)
-  GUnivEncMM(-30,30,94)
-  SL14PID(40,kp*0.5,ki,kd)
+  GUnivEncMM(-30,30,95)
+  SL14PID(40,kp,ki,kd)
   
-  If Tiempohastalinea<900 Then
+  If Tiempohastalinea < 850 Then
     CasoPSOE()
     FinPrueba()
   Else
@@ -224,61 +235,61 @@ EndSub
 
 Sub CasoPSOE
   
-  GUnivEncMM(20,-20,95)
-  SL31PIDEnc(30,kp,ki,kd*1.5,27)
+  GUnivEncMM(20,-20,96)
+  SL31PIDEnc(30,kp,ki,kd,25.5)
   'Ataca al 3º rojo
-  GUnivEncMM(-20,20,90)
+  GUnivEncMM(-20,20,94)
   EncoderRectoMM(30,7)
   Coger()
   
   
   'Ataca al 4º rojo
   EncoderRectoMM(-30,7)
-  GUnivEncMM(-20,20,92)
-  SL14PIDEnc(30,kp,ki,kd,7.5)
-  GUnivEncMM(20,-20,93)
+  GUnivEncMM(-20,20,97)
+  SL14PIDEnc(15,kp*1.5,ki,kd,10)
+  GUnivEncMM(20,-20,96)
   EncoderRectoMM(20,5)
   Coger()
   EncoderRectoMM(-30,6)
   'Dejamos los rojos
   GUnivEncMM(-20,20,93)
-  SL14PIDEncF(30,kp,ki,kd,5)
+  SL14PIDEncF(20,kp,ki,kd,5)
   SL1SPIDCrossF(30,kp,ki,kd,3)
-  SL14PIDEnc(30,kp,ki,kd,25)
+  SL14PIDEnc(30,kp,ki,kd,22.5)
   
   'Levantamos bracete
-  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,93)  
-  EncoderRectoMM(Velocidad*0.3,13)
+  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,97)  
+  EncoderRectoMM(Velocidad*0.3,13.5)
   Soltar()
-  EncoderRectoMM(Velocidad*-0.3,3)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
+  EncoderRectoMM(Velocidad*-0.3,6)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
   'Atacamos amarillos
-  SL31PIDEncF(Velocidad*0.3,kp*1.5,ki,kd,5)
+  SL31PIDEncF(Velocidad*0.2,kp*1.25,ki,kd,5)
   SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,4)
   EncoderRectoMM(Velocidad*0.3,1)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,93)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
   EncoderRectoMM(Velocidad*0.3,7)
   Coger()
-  EncoderRectoMM(-30,8)
+  EncoderRectoMM(-30,6.5)
   GUnivEncMM(30,-30,95)
-  SL31PIDEnc(15,kp,ki,kd,8.5)
+  SL14PIDEnc(15,kp,ki,kd,11)
   GUnivEncMM(-30,30,93)
-  EncoderRectoMM(30,7)
+  EncoderRectoMM(30,5.5)
   Coger()
   EncoderRectoMM(-30,6)
   
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
-  SL14PIDEncF(Velocidad*0.3,kp*1.5,ki,kd,3)
+  SL14PIDEncF(Velocidad*0.3,kp,ki,kd,3)
   SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,3)
   EncoderRectoMM(Velocidad*0.3,2)
   
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
-  SL14PIDEnc(Velocidad*0.3,kp*1.5,ki,kd,20)
+  SL14PIDEnc(Velocidad*0.3,kp,ki,kd,20)
   EncoderRectoMM(Velocidad*0.3,15)
-  SL14PID(Velocidad*0.3,kp*1.5,ki,kd)
-  EncoderRectoMM(Velocidad*0.3,4)
+  SL14PID(Velocidad*0.3,kp,ki,kd)
+  EncoderRectoMM(Velocidad*0.3,2)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,93)
-  SL14PIDEnc(Velocidad*0.3,kp,ki,kd,8)
+  SL14PIDEnc(Velocidad*0.3,kp,ki,kd,9)
   'Ataca al 3º amarillo
   GUnivEncMM(30,-30,95)
   EncoderRectoMM(30,4.5)
@@ -324,32 +335,24 @@ EndSub
 Sub CasoVOX
   
   'Ataca al 3º rojo
-  EncoderRectoMM(Velocidad*0.3,9)
+  EncoderRectoMM(Velocidad*0.25,8)
   Coger()
   'Ataca al 4º rojo
   EncoderRectoMM(-30,7.5)
-  Giro90Bloques(20,-20)
-  SL14PIDEnc(15,kp*1.5,ki*1.5,kd,8)
-  Giro90Bloques(-20,20)
+  GUnivEncMM(20,-20,96)
+  SL14PIDEnc(15,kp,ki,kd,10)
+  GUnivEncMM(-20,20,96)
   EncoderRectoMM(20,5)
   Coger()
-  EncoderRectoMM(-30,6)
+  EncoderRectoMM(-30,36)
   
-  Giro90Bloques(-20,20)
-  EncoderRectoMM(20,10)
-  Giro90Bloques(-20,20)
   
-  SL31PIDEncF(25,kp*0.5,ki,kd,25)
-  EncoderRectoMM(25,5)
-  
-  Giro90Bloques(-20,20)
-  EncoderRectoMM(25,8)
+  GUnivEncMM(20,-20,94)
+  EncoderRectoMM(-30,4)
   Soltar()
+  EncoderRectoMM(-30,2)
+  GUnivEncMM(20,-20,94)
   
-  Giro90Bloques(20,-20)
-  
-  SL31PIDEncF(25,kp*0.5,ki,kd,5)
-  Shift31_14(25)
   SL14PID(25,kp*0.5,ki,kd)
 EndSub
 
@@ -369,11 +372,11 @@ Function Coger()
   
   Program.Delay(150)
   BMoveA(60,20)
-  BMoveD(40,70)
+  BMoveD(40,0)
   
   @num_bloques += 1
-  BMoveA(60,270)
-  BMoveDTimer(40,500)
+  BMoveA(60,360)
+  BMoveDTimer(-60,500)
   BMoveA(60,-80)
   
 EndFunction
@@ -383,7 +386,7 @@ Function Soltar()
   'EncoderRectoMM(-30,5)
   
   BMoveA(60,250)
-  BMoveD(40,70)
+  BMoveD(40,-70)
   
   @num_bloques = Math.Max(0, @num_bloques - 4)
   
@@ -395,7 +398,7 @@ Function Soltar()
 EndFunction
 
 Function Giro90Bloques(in number Vel_B, in number Vel_C)
-  grados_90 = 84
+  grados_90 = 82
   If @num_bloques < 3 Then
     
     GUnivEncMM(Vel_B,Vel_C,grados_90)
