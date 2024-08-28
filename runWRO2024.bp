@@ -1,8 +1,8 @@
 Velocidad = 100
 
-kp = 0.1
-ki = 0.0001
-kd = 2
+kp = 0.15
+ki = 0.0003
+kd = 2.5
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -125,70 +125,154 @@ Sub Main
   GUnivEncMM(30,0,60)
   SL14PIDEnc(25,kp,ki,kd,16.5)
   'Ataca al 1º rojo
-  GUnivEncMM(20,-20,96)
+  GUnivEncMM(20,-20,98)
   EncoderRectoMM(20,6)
   Coger()
   EncoderRectoMM(-20,6.5)
   GUnivEncMM(-20,20,94)
   'Ataca al 2º rojo
-  SL14PIDEnc(20,kp*0.5,ki,kd,10)
-  GUnivEncMM(20,-20,91)
-  EncoderRectoMM(30,5.5)
+  SL14PIDEnc(25,kp*0.5,ki,kd,9.5)
+  GUnivEncMM(20,-20,98)
+  EncoderRectoMM(20,5.5) 'EMPUJA MUCHO AL AMARILLO, VER EN OTRAS RUNS
   Coger()
   BMoveA(Velocidad*0.4,-110)
 
   'Vuelve a linea tras los 2 rojos (Comprueba)
-  EncoderRectoMM(-30,8)
-  GUnivEncMM(-30,30,96)
+  EncoderRectoMM(-30,9)
+  GUnivEncMM(-30,30,88)
   EncoderRectoMM(-30,22)
   MotorBC.OffAndBrake()
   Program.Delay(200)
   
   'Verificamos el lado
-  SL14PIDEncF(20,kp,ki,kd,7)
+  SL14PIDEncF(60,kp,ki,kd,7)
   Time.Reset4()
-  SL1SPIDCross(30,kp,ki,kd,3)
-  EncoderRectoMM(30,2.5)
+  SL1SPIDCross(35,kp,ki,kd,3)
+  EncoderRectoMM(30,2)
   Tiempohastalinea = Time.Get4()
   'Muestra pantalla
   LCD.Clear()
   LCD.Write(5,5,Tiempohastalinea)
   'Sube hacia los dos rojos
   GUnivEncMM(-30,30,95)
-  SL14PID(40,kp,ki,kd)
+  SL14PIDEncF(40,kp*0.6,ki,kd,20)
+  EncoderRectoMMF(40,15)
+  SL14PID(30,kp*0.8,ki,kd)
   
   If Tiempohastalinea < 850 Then
     CasoPSOE()
-    FinPrueba()
+    
   Else
     CasoVOX()
-    FinPrueba()
+    
   EndIf
   
+  'A por las basuras
+  
+  
+  EncoderRectoMM(Velocidad*-0.3,9)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,93)
+  'A POR LA MIERDA
+  
+  SL14PID(Velocidad*0.6,kp,ki,kd)
+  Program.Delay(400)
+  EncoderRectoMM(Velocidad*-0.3,15)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,95)
+  
+  EncoderRectoMM(Velocidad*0.5,48)
+  Program.Delay(250)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,97)
+  EncoderRectoMM(Velocidad*0.5,27)
+  Program.Delay(250)
+  
+  BMoveA(50,200)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,186)
+  EncoderRectoMM(Velocidad*0.5,50)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
+  
+  1BlancoRectoMM(30,1)
+  1NegroRectoMM(20,1)
+  EncoderRectoMM(Velocidad*0.3,2)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,80)
+  Program.Delay(250)
+  
+  BMoveA(50,0)
+  SL14PIDENC(Velocidad*0.3,kp,ki,kd,10)
+  SL14PID(Velocidad*0.6,kp,ki,kd)
+  Program.Delay(250)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
+  EncoderRectoMM(Velocidad*0.3,6)
+  
+  BMoveA(50,200)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,180)
+  BMoveA(50,0)
+  
+  EncoderRectoMM(Velocidad*0.7,45)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,94)
+  
+  EncoderRectoMM(Velocidad*0.8,50)
+  EncoderRectoMM(Velocidad*-0.5,35)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,125)
+  TiempoRectoMM(Velocidad*-0.8,1200)
+  
+  FinPrueba()
 EndSub
 
 Sub MainPrueba
   
   StartArm()
-  While Buttons.Current <> "E"
-    If Buttons.Current = "U" Then
-      Coger()
-    ElseIf Buttons.Current = "D" Then
-      Soltar()
-    ElseIf Buttons.Current = "L" Then
-      Program.Delay(1000)
-      Giro90Bloques(-20,20)
-    ElseIf Buttons.Current = "R" Then
-      Program.Delay(1000)
-      Giro90Bloques(20,-20)
-    Else
-      MotorBC.OffAndBrake()
-      MotorAD.OffAndBrake()
-    EndIf
-  EndWhile
+  
+  Soltar()
+  
+  EncoderRectoMM(Velocidad*-0.3,5.5)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
+  SL31PIDEnc(Velocidad*0.5,kp,ki,kd,35)
+  
+  EncoderGiroMMF(Velocidad*0.35,Velocidad*0.3,25)
+  EncoderGiroMM(Velocidad*0.3,Velocidad*0.35,25)
+  
+  BMoveA(50,210)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,94)
+  BMoveA(50,0)
+  
+  GUnivEncMM(Velocidad*0.6,Velocidad*0.3,170)
+  
+  1BlancoRectoMM(30,1)
+  1NegroRectoMM(20,1)
+  EncoderRectoMM(Velocidad*0.3,2)
+  
+  BMoveA(50,210)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,80)
+  Program.Delay(250)
+  
+  BMoveA(50,0)
+  SL14PIDENC(Velocidad*0.45,kp,ki,kd,25)
+  SL14PID(Velocidad*0.6,kp*0.5,ki,kd)
+  Program.Delay(250)
+  
+  EncoderRectoMM(Velocidad*-0.3,2)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
+  EncoderRectoMM(Velocidad*0.3,6.5)
+  
+  BMoveA(50,200)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,178)
+  BMoveA(50,0)
+  
+  EncoderRectoMM(Velocidad*0.7,45)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,84)
+  
+  EncoderRectoMM(Velocidad*0.8,45)
+  EncoderRectoMM(Velocidad*-0.5,35)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,125)
+  TiempoRectoMM(Velocidad*-0.8,1200)
   
   FinPrueba()
-  
 EndSub
 
 Sub MainControlBrazo
@@ -236,21 +320,21 @@ EndSub
 Sub CasoPSOE
   
   GUnivEncMM(20,-20,96)
-  SL31PIDEnc(30,kp,ki,kd,25.5)
+  SL31PIDEnc(30,kp,ki,kd,26.5)
   'Ataca al 3º rojo
-  GUnivEncMM(-20,20,94)
+  GUnivEncMM(-20,20,98)
   EncoderRectoMM(30,7)
   Coger()
   
   
   'Ataca al 4º rojo
-  EncoderRectoMM(-30,7)
+  EncoderRectoMM(-30,9)
   GUnivEncMM(-20,20,97)
-  SL14PIDEnc(15,kp*1.5,ki,kd,10)
+  SL14PIDEnc(15,kp,ki,kd,9)
   GUnivEncMM(20,-20,96)
-  EncoderRectoMM(20,5)
+  EncoderRectoMM(20,6)
   Coger()
-  EncoderRectoMM(-30,6)
+  EncoderRectoMM(-30,7)
   'Dejamos los rojos
   GUnivEncMM(-20,20,93)
   SL14PIDEncF(20,kp,ki,kd,5)
@@ -263,6 +347,7 @@ Sub CasoPSOE
   Soltar()
   EncoderRectoMM(Velocidad*-0.3,6)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
+  
   'Atacamos amarillos
   SL31PIDEncF(Velocidad*0.2,kp*1.25,ki,kd,5)
   SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,4)
@@ -270,10 +355,11 @@ Sub CasoPSOE
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
   EncoderRectoMM(Velocidad*0.3,7)
   Coger()
+  
   EncoderRectoMM(-30,6.5)
   GUnivEncMM(30,-30,95)
   SL14PIDEnc(15,kp,ki,kd,11)
-  GUnivEncMM(-30,30,93)
+  GUnivEncMM(-30,30,96)
   EncoderRectoMM(30,5.5)
   Coger()
   EncoderRectoMM(-30,6)
@@ -295,65 +381,115 @@ Sub CasoPSOE
   EncoderRectoMM(30,4.5)
   Coger()
   'Ataca al 4º amarillo
-  EncoderRectoMM(-30,7)
-  GUnivEncMM(-20,20,92)
+  EncoderRectoMM(-30,9)
+  GUnivEncMM(-20,20,94)
   SL14PIDEnc(30,kp,ki,kd,9)
-  GUnivEncMM(20,-20,91)
+  GUnivEncMM(20,-20,96)
   EncoderRectoMM(30,5)
   Coger()
   EncoderRectoMM(-30,9)
   GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,93)
   SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
   EncoderRectoMM(Velocidad*0.3,3)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,94)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,102)
   SL14PIDEnc(Velocidad*0.3,kp,ki,kd,10)
   Soltar()
-  
-
-  
-  '1BlancoRectoMM(-30,1)
-  'GUnivEncMM(30,-30,94)
-  'EncoderRectoMM(30,5)
-  ''Ataca al 1º amarillo
-  'SL14PID(30,kp,ki,kd)
-  'EncoderRectoMM(30,11)
-  'Program.Delay(500)
-  ''Ataca al 2º amarillo
-  'EncoderRectoMM(30,11)
-  'GUnivEncMM(30,-30,93)
-  'SL14PIDEnc(30,kp,ki,kd,11)
-  'GUnivEncMM(-30,30,93)
-  'EncoderRectoMM(30,6)
-  'Program.Delay(500)
- 
-  
-  
-  
   
 EndSub
 
 Sub CasoVOX
   
   'Ataca al 3º rojo
-  EncoderRectoMM(Velocidad*0.25,8)
+  EncoderRectoMM(Velocidad*0.3,8.5)
   Coger()
   'Ataca al 4º rojo
-  EncoderRectoMM(-30,7.5)
-  GUnivEncMM(20,-20,96)
-  SL14PIDEnc(15,kp,ki,kd,10)
-  GUnivEncMM(-20,20,96)
-  EncoderRectoMM(20,5)
+  EncoderRectoMM(-30,8)
+  GUnivEncMM(30,-30,98)
+  SL14PIDEnc(25,kp,ki,kd,7.5)
+  GUnivEncMM(-20,20,100)
+  EncoderRectoMM(20,6.5)
   Coger()
-  EncoderRectoMM(-30,36)
+  
+  GUnivEncMM(30,-30,98)
+  EncoderRectoMM(30,9)
   
   
-  GUnivEncMM(20,-20,94)
+  GUnivEncMM(20,-20,105)
+  EncoderRectoMM(30,14)
+  1BlancoRectoMM(30,1)
   EncoderRectoMM(-30,4)
   Soltar()
-  EncoderRectoMM(-30,2)
   GUnivEncMM(20,-20,94)
+  1BlancoRectoMMF(20,1)
+  1NegroRectoMM(30,1)
+  EncoderRectoMM(30,2.5)
   
-  SL14PID(25,kp*0.5,ki,kd)
+  GUnivEncMM(-20,20,93)
+  EncoderRectoMM(30,20)
+  
+  SL14PID(25,kp,ki*1.5,kd)
+  
+  'Ataca al primer amarillo
+  EncoderRectoMM(Velocidad*0.3,9)
+  Coger()
+  EncoderRectoMM(Velocidad*-0.3,8)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
+  SL14PIDEnc(20,kp,ki,kd,9)
+  Program.Delay(400)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
+  
+  'Ataca al segundo amarillo
+  EncoderRectoMM(Velocidad*0.3,5)
+  Coger()
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
+  EncoderRectoMM(Velocidad*-0.4,15)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
+  TiempoRectoMM(Velocidad*-0.4,1000) 
+  EncoderRectoMM(Velocidad*0.8,55)
+  1BlancoRectoMM(Velocidad*0.3,1)
+  1NegroRectoMM(Velocidad*0.2,1)
+  'EncoderRectoMM(Velocidad*0.4,2)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,105)
+  
+  SL31PIDEnc(Velocidad*0.3,kp,ki,kd,10)
+  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,100)
+  EncoderRectoMM(Velocidad*0.2,1)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,100)
+  
+  SL14PIDEnc(30,kp*0.5,ki,kd,8)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,100)
+  
+  'Ataca al tercer amarillo
+  EncoderRectoMM(Velocidad*0.3,4)
+  Coger()
+  
+  EncoderRectoMM(Velocidad*-0.3,8)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
+  EncoderRectoMM(Velocidad*0.3,8)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,102)
+  
+  'Ataca al cuarto amarillo
+  EncoderRectoMM(Velocidad*0.3,5)
+  Coger()
+  EncoderRectoMM(Velocidad*-0.3,9)
+  Program.Delay(500)
+  
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,100)
+  SL31PIDEnc(Velocidad*0.3,kp,ki,kd,8)
+  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
+  
+  EncoderRectoMM(Velocidad*0.3,3)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,96)
+  
+  SL14PIDEnc(Velocidad*0.3,kp,ki,kd,11)
+  
+  Soltar()
+  
+  'Cohete
+  
+  FinPrueba()
 EndSub
 
 
@@ -371,11 +507,14 @@ Function Coger()
   'Suelta bloques anteriores y Coge el bloque nuevo
   
   Program.Delay(150)
-  BMoveA(60,20)
+  BMoveA(60,50)
+
   BMoveD(40,0)
   
   @num_bloques += 1
-  BMoveA(60,360)
+  BMoveA(70,360)
+  MotorAD.OffAndBrake()
+  Program.Delay(200)
   BMoveDTimer(-60,500)
   BMoveA(60,-80)
   
@@ -391,7 +530,7 @@ Function Soltar()
   @num_bloques = Math.Max(0, @num_bloques - 4)
   
   BMoveA(60,-660)
-  EncoderRectoMM(-30,9.25)
+  EncoderRectoMM(-30,10)
   
   BMoveA(60,0)
   

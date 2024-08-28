@@ -212,7 +212,7 @@ Function 1BlancoRectoMM(in number Velocidad, in number sens)
   Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
-  While Sensor.ReadPercent(sens) < 70
+  While Sensor.ReadPercent(sens) < 50
     
     encoder_B = Motor.GetCount ("B")*-1 - Start_B
     encoder_C = Motor.GetCount ("C") - Start_C
@@ -233,7 +233,7 @@ Function 1BlancoRectoMMF(in number Velocidad, in number sens)
   Start_B = Motor.GetCount ("B") *-1 + @Correccion
   Start_C = Motor.GetCount ("C")
 
-  While Sensor.ReadPercent(sens) < 70
+  While Sensor.ReadPercent(sens) < 50
     
     encoder_B = Motor.GetCount ("B")*-1 - Start_B
     encoder_C = Motor.GetCount ("C") - Start_C
