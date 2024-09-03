@@ -23,7 +23,7 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
-  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+  While Sensor.ReadPercent(1) > 5 Or Sensor.ReadPercent(4) > 5
     error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4))*sentido*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
@@ -51,7 +51,7 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
-  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
+  While Sensor.ReadPercent(1) > 5 Or Sensor.ReadPercent(4) > 5
     error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4))*sentido*@Sentido_Motores
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
