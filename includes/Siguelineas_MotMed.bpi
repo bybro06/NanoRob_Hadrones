@@ -19,7 +19,7 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
   D = "C"
   
   diametro = 5.6
-  distancia = 5 * 360 / (diametro * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
   
   error = 0
   olderror = 0
@@ -38,9 +38,9 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
     Else
       kp = start_kp
       ki = start_ki
@@ -88,9 +88,10 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -134,9 +135,10 @@ Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -178,9 +180,10 @@ Function SL14PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -206,7 +209,7 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   D = "C"
   
   diametro = 5.6
-  distancia = 5 * 360 / (diametro * Math.Pi)
+  distancia = Math.min(Encoder * 0.5, 7) * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -229,9 +232,10 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -255,7 +259,7 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   D = "C"
   
   diametro = 5.6
-  distancia = 5 * 360 / (diametro * Math.Pi)
+  distancia = Math.min(Encoder * 0.5, 7) * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -278,9 +282,10 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -358,9 +363,10 @@ Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -402,9 +408,10 @@ Function SL31PIDF(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -448,9 +455,10 @@ Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -492,9 +500,10 @@ Function SL31PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -520,7 +529,7 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   D = "C"
   
   diametro = 5.6
-  distancia = 5 * 360 / (diametro * Math.Pi)
+  distancia = Math.min(Encoder * 0.5, 7) * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -543,9 +552,10 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki
@@ -569,7 +579,7 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   D = "C"
   
   diametro = 5.6
-  distancia = 5 * 360 / (diametro * Math.Pi)
+  distancia = Math.min(Encoder * 0.5, 7) * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -592,9 +602,10 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      kp = start_kp * 1
-      ki = start_ki * 1
-      kd = start_kd * 1
+      kp = start_kp * 2.5
+      ki = start_ki * 3
+      kd = start_kd * 2
+
     Else
       kp = start_kp
       ki = start_ki

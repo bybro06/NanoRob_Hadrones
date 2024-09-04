@@ -115,7 +115,7 @@ Function linDecelMM(in number V0, in number VMin, in number distancia1,in number
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
     pendiente = (VMin - V0) / grados1
-    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    Vel = Math.Max(VMin, pendiente * MotorC.GetTacho() + V0)    
     #Correción PID para mantener el robot recto
     
     error = (-1*MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores
@@ -156,7 +156,7 @@ Function linDecelMMF(in number V0, in number VMin, in number distancia1,in numbe
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
     pendiente = (VMin - V0) / grados1
-    Vel = Math.Min(VMin, pendiente * MotorC.GetTacho() + V0)    
+    Vel = Math.Max(VMin, pendiente * MotorC.GetTacho() + V0)    
     #Correción PID para mantener el robot recto
     
     error = (-1*MotorB.GetTacho() - MotorC.GetTacho())*@Sentido_Motores

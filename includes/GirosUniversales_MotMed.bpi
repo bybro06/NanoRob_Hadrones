@@ -1,7 +1,10 @@
 'Giros Universales
 
 'Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-G1 = 124/36
+G1 = 112/36
+
+'G1 = 116/36 para la bateria de TENORIO
+'G1 = 124/36 para la bateria de PEPE
 
 Function GUnivEncMM(in number V1, in number V2, in number Angle)
   I = "B"
@@ -14,13 +17,15 @@ Function GUnivEncMM(in number V1, in number V2, in number Angle)
   
   Encodr = Angle * @G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
+  Program.Delay(100)
+  
   Motor.MoveSync(I + D, -V1, V2, Encodr, "True")
   
   V1 = 0
   V2 = 0
   Angle = 0
   
-  Program.Delay(200)
+  Program.Delay(100)
 EndFunction
 
 Function GUnivEncMMF(in number V1, in number V2, in number Angle)
@@ -34,11 +39,15 @@ Function GUnivEncMMF(in number V1, in number V2, in number Angle)
   
   Encodr = Angle * @G1 * (-2 / (Signo * Vmin / Vmax - 1))
   
+  Program.Delay(100)
+  
   Motor.MoveSync(I + D, -V1, V2, Encodr, "False")
   
   V1 = 0
   V2 = 0
   Angle = 0
+  
+  Program.Delay(100)
 EndFunction
 
 
