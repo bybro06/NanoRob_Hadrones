@@ -1,7 +1,7 @@
 'Giros Universales
 
 'Constante que relaciona los grados de encoder necesarios para girar 1 grado en spin
-G1 = 112/36
+G1 = 124/36
 
 'G1 = 116/36 para la bateria de TENORIO
 'G1 = 124/36 para la bateria de PEPE

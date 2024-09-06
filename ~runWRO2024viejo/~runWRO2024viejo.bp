@@ -113,7 +113,7 @@ gv_sentido_motores = 1
 gv_correccion = 0
 gv_sentido_motores = 1
 gv_sentido_motores = 1
-gv_g1 = 124 / 36
+gv_g1 = 114 / 36
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
@@ -146,7 +146,7 @@ Sub f_colocara_0
 Motor.Move ( "A" , - 50 , 400 , "True" )
 EndSub
 Sub f_colocard_0
-Motor.Move ( "D" , 90 , 600 , "True" )
+Motor.Move ( "D" , 90 , 550 , "True" )
 EndSub
 Sub f_display_0
 gv_old_b = 0
@@ -357,7 +357,7 @@ lv_encoder_81 = 13
 f_sl14pidenc_5 ()
 lv_v1_41 = 20
 lv_v2_41 = - 20
-lv_angle_41 = 95
+lv_angle_41 = 93
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
 lv_distancia_1 = 6.5
@@ -402,7 +402,7 @@ lv_distancia_1 = 95
 f_encoderrectomm_2 ()
 Program.Delay ( 250 )
 lv_v_114 = 50
-lv_aenc_114 = 230
+lv_aenc_114 = 200
 f_bmovea_2 ()
 Program.Delay ( 250 )
 lv_v1_41 = gv_velocidad * 0.3
@@ -429,7 +429,7 @@ lv_aenc_114 = - 500
 f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 170
+lv_angle_41 = 180
 f_gunivencmm_3 ()
 lv_v_114 = 50
 lv_aenc_114 = 0
@@ -439,7 +439,7 @@ lv_distancia_1 = 55
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 80
+lv_angle_41 = 91
 f_gunivencmm_3 ()
 lv_velocidad_7 = 30
 lv_sens_7 = 1
@@ -545,7 +545,7 @@ lv_distancia_2 = 10
 f_encoderrectommf_2 ()
 lv_v1_41 = gv_velocidad * - 0.2
 lv_v2_41 = gv_velocidad * 0.2
-lv_angle_41 = 64
+lv_angle_41 = 62
 f_gunivencmm_3 ()
 lv_v_114 = 50
 lv_aenc_114 = 230
@@ -563,34 +563,13 @@ lv_v1_41 = gv_velocidad * 0.1
 lv_v2_41 = gv_velocidad * - 0.05
 lv_angle_41 = 20
 f_gunivencmm_3 ()
-lv_v_114 = 80
-lv_aenc_114 = 0
-f_bmovea_2 ()
 lv_velocidad_1 = gv_velocidad * - 0.9
 lv_distancia_1 = 30
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 72
+lv_angle_41 = 90
 f_gunivencmm_3 ()
-lv_velocidad_2 = gv_velocidad * 0.8
-lv_distancia_2 = 73
-f_encoderrectommf_2 ()
-lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 10
-f_encoderrectomm_2 ()
-f_coger_0 ()
-lv_v1_41 = gv_velocidad * 0.3
-lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 98
-f_gunivencmm_3 ()
-lv_velocidad_1 = gv_velocidad * 0.8
-lv_distancia_1 = 61.5
-f_encoderrectomm_2 ()
-f_soltar_0 ()
-lv_velocidad_1 = gv_velocidad * - 0.8
-lv_distancia_1 = 10
-f_encoderrectomm_2 ()
 lv_v_114 = 80
 lv_aenc_114 = - 900
 f_bmovea_2 ()
@@ -625,7 +604,7 @@ lv_v1_41 = - 20
 lv_v2_41 = 20
 lv_angle_41 = 92
 f_gunivencmm_3 ()
-lv_velocidad_81 = 20
+lv_velocidad_81 = 15
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
@@ -730,11 +709,11 @@ lv_distancia_1 = 9.75
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = - 30
-lv_distancia_1 = 7.5
+lv_distancia_1 = 6.5
 f_encoderrectomm_2 ()
 lv_v1_41 = 30
 lv_v2_41 = - 30
-lv_angle_41 = 94
+lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_81 = 20
 lv_kp_81 = gv_kp
@@ -744,7 +723,7 @@ lv_encoder_81 = 8
 f_sl14pidenc_5 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
-lv_angle_41 = 95
+lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
 lv_distancia_1 = 6.5
@@ -819,7 +798,7 @@ f_sl14pidenc_5 ()
 Program.Delay ( 400 )
 lv_v1_41 = gv_velocidad * - 0.3
 lv_v2_41 = gv_velocidad * 0.3
-lv_angle_41 = 95
+lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.3
 lv_distancia_1 = 4.5
@@ -1696,7 +1675,7 @@ EndSub
 Sub f_coger_0
 Program.Delay ( 150 )
 lv_v_114 = 60
-lv_aenc_114 = 90
+lv_aenc_114 = 50
 f_bmovea_2 ()
 lv_v_123 = 40
 lv_aenc_123 = 0
@@ -1707,9 +1686,6 @@ lv_aenc_114 = 360
 f_bmovea_2 ()
 MotorAD.OffAndBrake ()
 Program.Delay ( 100 )
-lv_v_123 = 60
-lv_aenc_123 = - 50
-f_bmoved_2 ()
 lv_v_122 = - 60
 lv_t_122 = 500
 f_bmovedtimer_2 ()

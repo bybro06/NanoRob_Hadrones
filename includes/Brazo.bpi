@@ -4,23 +4,23 @@
 
 'Brazo por encoder
 
-Function BMoveA(in number V, in number aenc)
+'Function BMoveA(in number V, in number aenc)
   
-  encDiff = aenc - Motor.GetCount("A")
+  'encDiff = aenc - Motor.GetCount("A")
   
-  signo = encDiff / Math.Abs(encDiff)
+  'signo = encDiff / Math.Abs(encDiff)
   
-  If encDiff <> 0 Then
+  'If encDiff <> 0 Then
     
-    While Math.Abs(Motor.GetCount("A") - aenc) > 15
-      ' Puedes ajustar el valor (10) para controlar la precisión
-      MotorA.StartSpeed(signo * V)
-    EndWhile
+    'While Math.Abs(Motor.GetCount("A") - aenc) > 15
+      '' Puedes ajustar el valor (10) para controlar la precisión
+      'MotorA.StartSpeed(signo * V)
+    'EndWhile
     
-    Motor.Stop("A", "True")
-  EndIf
+    'Motor.Stop("A", "True")
+  'EndIf
   
-EndFunction
+'EndFunction
 
 'Brazo hasta posición inicial aproximada
 
@@ -74,7 +74,7 @@ Function BMoveATimer(in number V, in number T)
   Motor.Stop("A", "True")
 EndFunction
 
-Function BMoveASafe(in number V, in number aenc)
+Function BMoveA(in number V, in number aenc)
   
   encDiff = aenc - Motor.GetCount("A")
   
@@ -86,7 +86,7 @@ Function BMoveASafe(in number V, in number aenc)
   
   If encDiff <> 0 Then
     
-    While Math.Abs(Motor.GetCount("A") - aenc) > 5 and Time.Get3() < 2000
+    While Math.Abs(Motor.GetCount("A") - aenc) > 25 and Time.Get3() < 2000
       ' Puedes ajustar el valor (5) para controlar la precisión
       MotorA.StartSpeed(signo * V)
     EndWhile
@@ -259,23 +259,23 @@ EndFunction
 
 'Brazo por encoder
 
-Function BMoveD(in number V, in number aenc)
+'Function BMoveD(in number V, in number aenc)
   
-  encDiff = aenc - Motor.GetCount("D")
+  'encDiff = aenc - Motor.GetCount("D")
   
-  signo = encDiff / Math.Abs(encDiff)
+  'signo = encDiff / Math.Abs(encDiff)
   
-  If encDiff <> 0 Then
-    MotorD.StartSpeed(signo * V)
+  'If encDiff <> 0 Then
+    'MotorD.StartSpeed(signo * V)
     
-    While Math.Abs(Motor.GetCount("D") - aenc) >10
-      ' Puedes ajustar el valor (5) para controlar la precisión
-    EndWhile
+    'While Math.Abs(Motor.GetCount("D") - aenc) >10
+      '' Puedes ajustar el valor (5) para controlar la precisión
+    'EndWhile
     
-    Motor.Stop("D", "True")
-  EndIf
+    'Motor.Stop("D", "True")
+  'EndIf
   
-EndFunction
+'EndFunction
 
 'Brazo hasta posición inicial aproximada
 
@@ -337,7 +337,7 @@ Function BMoveDTimer(in number V, in number T)
   MotorD.OffAndBrake()
 EndFunction
 
-Function BMoveDSafe(in number V, in number aenc)
+Function BMoveD(in number V, in number aenc)
   
   encDiff = aenc - Motor.GetCount("D")
   

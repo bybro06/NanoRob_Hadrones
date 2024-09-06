@@ -67,15 +67,16 @@ Function GPerfDMMF(in number Vel, in number avance, in number ginicio, in number
   Motor.Move("BC", -Vel, ajuste, "False")
 EndFunction
 
-Function GPerfIDEFINITIVOMM(in number Vel)
+
+Function GPerfI14DEFINITIVOMM()
   
-  avance=100
+  avance=0
   
   ginicio=200
   
-  ajuste=70
+  ajuste=50
   
-  Vel = Math.Min(40,Vel)
+  Vel = 40  
   Vel *= 0.75 
   Vel *= @Sentido_Motores
   
@@ -90,15 +91,15 @@ Function GPerfIDEFINITIVOMM(in number Vel)
   Motor.Move("BC", Vel, ajuste, "True")
 EndFunction
 
-Function GPerfIDEFINITIVOMMF(in number Vel)
+Function GPerfI14DEFINITIVOMMF()
   
-  avance=100
+  avance=0
   
   ginicio=200
   
-  ajuste=70
+  ajuste=50
   
-  Vel = Math.Min(40,Vel)
+  Vel = 40 
   Vel *= 0.75 
   Vel *= @Sentido_Motores
   
@@ -113,15 +114,15 @@ Function GPerfIDEFINITIVOMMF(in number Vel)
   Motor.Move("BC", Vel, ajuste, "False")
 EndFunction
 
-Function GPerfDDEFINITIVOMM(in number Vel)
+Function GPerfD14DEFINITIVOMM()
   
-  avance=100
+  avance=0
   
   ginicio=200
   
-  ajuste=70
+  ajuste=50
   
-  Vel = Math.Min(40,Vel)
+  Vel = 40 
   Vel *= 0.75 
   Vel *= @Sentido_Motores
   
@@ -136,15 +137,15 @@ Function GPerfDDEFINITIVOMM(in number Vel)
   Motor.Move("BC", -Vel, ajuste, "True")
 EndFunction
 
-Function GPerfDDEFINITIVOMMF(in number Vel)
+Function GPerfD14DEFINITIVOMMF()
   
-  avance=100
+  avance=0
   
   ginicio=200
   
-  ajuste=70
+ ajuste=50
   
-  Vel = Math.Min(40,Vel)
+  Vel = 40 
   Vel *= 0.75 
   Vel *= @Sentido_Motores
   
@@ -158,3 +159,97 @@ Function GPerfDDEFINITIVOMMF(in number Vel)
   Motor.Stop("BC", "False")
   Motor.Move("BC", -Vel, ajuste, "False")
 EndFunction
+
+
+Function GPerfI31DEFINITIVOMM()
+  
+  avance=0
+  
+  ginicio=200
+  
+  ajuste=50
+  
+  Vel = 40 
+  Vel *= 0.75 
+  Vel *= @Sentido_Motores
+  
+  Motor.MoveSync("BC", -Vel, Vel, avance, "True")
+  Motor.Move("BC", Vel, ginicio, "False")
+  
+  While Sensor.ReadPercent(3) > 10
+    Motor.StartSync("BC", Vel, Vel)
+  EndWhile
+  
+  Motor.Stop("BC", "False")
+  Motor.Move("BC", Vel, ajuste, "True")
+EndFunction
+
+Function GPerfI31DEFINITIVOMMF()
+  
+  avance=0
+  
+  ginicio=200
+  
+  ajuste=50
+  
+  Vel = 40 
+  Vel *= 0.75 
+  Vel *= @Sentido_Motores
+  
+  Motor.MoveSync("BC", -Vel, Vel, avance, "True")
+  Motor.Move("BC", Vel, ginicio, "False")
+  
+  While Sensor.ReadPercent(3) > 10
+    Motor.StartSync("BC", Vel, Vel)
+  EndWhile
+  
+  Motor.Stop("BC", "False")
+  Motor.Move("BC", Vel, ajuste, "False")
+EndFunction
+
+Function GPerfD31DEFINITIVOMM()
+  
+  avance=0
+  
+  ginicio=200
+  
+  ajuste=50
+  
+  Vel = 40  
+  Vel *= 0.75 
+  Vel *= @Sentido_Motores
+  
+  Motor.MoveSync("BC", -Vel, Vel, avance, "True")
+  Motor.Move("BC", -Vel, ginicio, "False")
+  
+  While Sensor.ReadPercent(1) > 10
+    Motor.StartSync("BC", -Vel, -Vel)
+  EndWhile
+  
+  Motor.Stop("BC", "False")
+  Motor.Move("BC", -Vel, ajuste, "True")
+EndFunction
+
+Function GPerfD31DEFINITIVOMMF()
+  
+  avance=0
+  
+  ginicio=200
+  
+ ajuste=50
+  
+  Vel = 40 
+  Vel *= 0.75 
+  Vel *= @Sentido_Motores
+  
+  Motor.MoveSync("BC", -Vel, Vel, avance, "True")
+  Motor.Move("BC", -Vel, ginicio, "False")
+  
+  While Sensor.ReadPercent(1) > 10
+    Motor.StartSync("BC", -Vel, -Vel)
+  EndWhile
+  
+  Motor.Stop("BC", "False")
+  Motor.Move("BC", -Vel, ajuste, "False")
+EndFunction
+
