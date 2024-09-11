@@ -29,6 +29,7 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -39,10 +40,12 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -79,6 +82,7 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -89,10 +93,12 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -125,6 +131,7 @@ Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -135,10 +142,12 @@ Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -169,6 +178,7 @@ Function SL14PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -179,10 +189,12 @@ Function SL14PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -215,6 +227,7 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -230,10 +243,12 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -264,6 +279,7 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -279,15 +295,16 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
-    EndIf
-    
+    EndIf    
     error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
@@ -346,6 +363,7 @@ Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -356,10 +374,12 @@ Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -390,6 +410,7 @@ Function SL31PIDF(in number Velocidad, in number kp, in number ki, in number kd)
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -400,10 +421,12 @@ Function SL31PIDF(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -436,6 +459,7 @@ Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -446,10 +470,12 @@ Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -480,6 +506,7 @@ Function SL31PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -490,10 +517,12 @@ Function SL31PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
@@ -526,6 +555,7 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -541,15 +571,16 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
-    EndIf
-    
+    EndIf    
     error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
@@ -575,6 +606,7 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
+  start_Velocidad = Velocidad
   start_kp = kp
   start_ki = ki
   start_kd = kd
@@ -590,15 +622,16 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
+      Velocidad = start_Velocidad * 0.65
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
     Else
+      Velocidad = start_Velocidad
       kp = start_kp
       ki = start_ki
       kd = start_kd
-    EndIf
-    
+    EndIf    
     error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
