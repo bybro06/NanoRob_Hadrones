@@ -173,52 +173,6 @@ Sub Main
   EndIf
   
   
-  EncoderRectoMM(-30,7.5)
-  
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
-  SL14PIDEncF(Velocidad*0.3,kp,ki,kd,3)
-  SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,3)
-  EncoderRectoMM(Velocidad*0.3,2.5)
-  
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
-  SL14PIDEncF(Velocidad*0.3,kp,ki,kd,20)
-  EncoderRectoMMF(Velocidad*0.3,15)
-  SL14PID(Velocidad*0.3,kp,ki,kd)
-  EncoderRectoMM(Velocidad*0.3,3)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,93)
-  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,41)
-  
-  'Ataca al verde 1
-  GUnivEncMM(30,-30,93)
-  EncoderRectoMM(20,6.25)
-  Coger()
-  
-  
-  
-  'Ataca al verde 2
-  EncoderRectoMM(-30,6.5)
-  GUnivEncMM(20,-20,94)
-  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
-  GUnivEncMM(-20,20,92)
-  EncoderRectoMM(20,6.5)
-  Coger()
-  
-  'Ataca al 4º amarillo
-  EncoderRectoMM(-30,6.5)
-  GUnivEncMM(20,-20,94)
-  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
-  GUnivEncMM(-20,20,94)
-  EncoderRectoMM(20,7.25)
-  Coger()
-  
-  EncoderRectoMM(-30,10)
-  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,92)
-  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
-  EncoderRectoMM(Velocidad*0.3,3.5)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
-  SL14PIDEnc(Velocidad*0.2,kp,ki,kd,12)
-  
-  Soltar()
 
   EncoderRectoMM(Velocidad*-0.15,6)
   'A POR LA MIERDA
@@ -315,7 +269,7 @@ Sub Main
   
   BMoveA(80,300)
   
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,98)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,102)
   EncoderRectoMM(Velocidad*0.75,60)
   Soltar()
   
@@ -391,7 +345,7 @@ EndSub
 Sub CasoPSOE
   EncoderRectoMM(Velocidad*0.3,2)
   GUnivEncMM(20,-20,94)
-  SL31PIDEnc(25,kp,ki,kd,29)
+  SL31PIDEnc(25,kp,ki,kd,27)
   'Ataca al 3º rojo
   GUnivEncMM(-20,20,92)
   EncoderRectoMM(30,6.5)
@@ -417,25 +371,58 @@ Sub CasoPSOE
   EncoderRectoMM(Velocidad*0.3,13.5)
   Soltar()
   EncoderRectoMM(Velocidad*-0.3,4)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,92)
   
-  'Atacamos amarillos
-  SL31PIDEncF(Velocidad*0.2,kp*1.25,ki,kd,5)
-  SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,4)
-  EncoderRectoMM(Velocidad*0.3,2.5)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
-  EncoderRectoMM(Velocidad*0.2,6.5)
-  Coger()
+  'Atacamos  1er blanco
   
-  'Coge 2º amarillo
-  EncoderRectoMM(-30,6.25)
-  GUnivEncMM(30,-30,92)
-  SL14PIDEnc(20,kp,ki,kd,10)
-  GUnivEncMM(-30,30,92)
-  EncoderRectoMM(30,5.5)
+  SL14PIDEnc(Velocidad*0.2,kp,ki,kd,5)
+  GUnivEncMM(30,-30,93)
+  EncoderRectoMM(20,6.25)
   Coger()
   
   
+  
+  'Ataca al verde 2
+  EncoderRectoMM(-30,6.5)
+  GUnivEncMM(20,-20,94)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
+  GUnivEncMM(-20,20,92)
+  EncoderRectoMM(20,6.5)
+  Coger()
+  
+  'Ataca al 2º amarillo
+  EncoderRectoMM(-30,6.5)
+  GUnivEncMM(20,-20,94)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
+  GUnivEncMM(-20,20,94)
+  EncoderRectoMM(20,7.25)
+  Coger()
+  
+  EncoderRectoMM(-30,10)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,184)
+  SL14PIDEncF(25,kp,ki*1.5,kd,10)
+  EncoderRectoMMF(30,10)
+  
+  SL14PID(35,kp*0.8,ki,kd)
+  
+  EncoderRectoMM(Velocidad*0.3,3)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,93)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,10)
+  
+  'Ataca al 3º amarillo
+  GUnivEncMM(30,-30,93)
+  EncoderRectoMM(20,6.25)
+  Coger()
+  'Ataca al 4º amarillo
+  EncoderRectoMM(-30,7.5)
+
+  GUnivEncMM(-20,20,92)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,12.5)
+  GUnivEncMM(20,-20,95)
+  EncoderRectoMM(20,7.5)
+  Coger()
+  
+  Soltar()
 EndSub
 
 Sub CasoVOX
@@ -485,6 +472,52 @@ Sub CasoVOX
   EncoderRectoMM(Velocidad*0.25,6)
   Coger()
   
+  EncoderRectoMM(-30,7.5)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,90)
+  SL14PIDEncF(Velocidad*0.3,kp,ki,kd,3)
+  SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,3)
+  EncoderRectoMM(Velocidad*0.3,2.5)
+  
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,94)
+  SL14PIDEncF(Velocidad*0.3,kp,ki,kd,20)
+  EncoderRectoMMF(Velocidad*0.3,15)
+  SL14PID(Velocidad*0.3,kp,ki,kd)
+  EncoderRectoMM(Velocidad*0.3,3)
+  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,93)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,41)
+  
+  'Ataca al verde 1
+  GUnivEncMM(30,-30,93)
+  EncoderRectoMM(20,6.25)
+  Coger()
+  
+  
+  
+  'Ataca al verde 2
+  EncoderRectoMM(-30,6.5)
+  GUnivEncMM(20,-20,94)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
+  GUnivEncMM(-20,20,92)
+  EncoderRectoMM(20,6.5)
+  Coger()
+  
+  'Ataca al 4º amarillo
+  EncoderRectoMM(-30,6.5)
+  GUnivEncMM(20,-20,94)
+  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,9)
+  GUnivEncMM(-20,20,94)
+  EncoderRectoMM(20,7.25)
+  Coger()
+  
+  EncoderRectoMM(-30,10)
+  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,92)
+  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
+  EncoderRectoMM(Velocidad*0.3,3.5)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
+  SL14PIDEnc(Velocidad*0.2,kp,ki,kd,12)
+  
+  Soltar()
 EndSub
 
 
