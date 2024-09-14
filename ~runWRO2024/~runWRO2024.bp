@@ -114,13 +114,13 @@ gv_correccion = 0
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_g1 = 124 / 36
-gv_g1 = 110 / 36
+gv_g1 = 120 / 36
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 gv_sentido_motores = 1
 f_setup_0 ()
-Thread.Run = f_display_0
+Thread.Run = f_cuentaatras_0
 Thread.Run = f_stop_0
 f_main_0 ()
 Sub f_setup_0
@@ -148,26 +148,6 @@ Motor.Move ( "A" , - 50 , 400 , "True" )
 EndSub
 Sub f_colocard_0
 Motor.Move ( "D" , 90 , 600 , "True" )
-EndSub
-Sub f_display_0
-gv_old_b = 0
-gv_old_c = 0
-While "True"
-LCD.StopUpdate ()
-LCD.Clear ()
-LCD.Write ( 5 , 15 , "Bloques: " + gv_num_bloques )
-LCD.Write ( 5 , 35 , "centro: " + gv_centro )
-LCD.Write ( 5 , 45 , "Velocidad de B:  " + MotorB.GetSpeed () * - 1 )
-LCD.Write ( 5 , 55 , "Velocidad de C:  " + MotorC.GetSpeed () )
-LCD.Write ( 5 , 65 , "rad/s de B:  " + Math.GetRadians ( MotorB.GetTacho () - gv_old_b ) / 0.05 * - 1 )
-LCD.Write ( 5 , 75 , "rad/s de C:  " + Math.GetRadians ( MotorC.GetTacho () - gv_old_c ) / 0.05 )
-LCD.Write ( 5 , 85 , "Encoder de B:  " + MotorB.GetTacho () * - 1 )
-LCD.Write ( 5 , 95 , "Encoder de C:  " + MotorC.GetTacho () )
-LCD.Update ()
-Program.Delay ( 50 )
-gv_old_b = MotorB.GetTacho ()
-gv_old_c = MotorC.GetTacho ()
-EndWhile
 EndSub
 Sub f_stop_0
 While "True"
@@ -398,7 +378,7 @@ lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
 lv_angle_41 = 66.5
 f_gunivencmm_3 ()
-lv_velocidad_1 = gv_velocidad * 0.85
+lv_velocidad_1 = gv_velocidad * 0.75
 lv_distancia_1 = 95
 f_encoderrectomm_2 ()
 Program.Delay ( 250 )
@@ -411,7 +391,7 @@ lv_v2_41 = gv_velocidad * - 0.3
 lv_angle_41 = 25
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.15
-lv_distancia_1 = 10.5
+lv_distancia_1 = 8.5
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
@@ -422,7 +402,7 @@ lv_v_114 = 50
 lv_aenc_114 = - 200
 f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.3
-lv_v2_41 = gv_velocidad * - 0.3
+lv_v2_41 = gv_velocidad * - 0.15
 lv_angle_41 = 15
 f_gunivencmm_3 ()
 lv_v_114 = 50
@@ -430,12 +410,12 @@ lv_aenc_114 = - 500
 f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 170
+lv_angle_41 = 167
 f_gunivencmm_3 ()
 lv_v_114 = 50
-lv_aenc_114 = 0
+lv_aenc_114 = 230
 f_bmovea_2 ()
-lv_velocidad_1 = gv_velocidad * 0.8
+lv_velocidad_1 = gv_velocidad * 0.75
 lv_distancia_1 = 55
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
@@ -503,9 +483,9 @@ lv_distancia_1 = 35
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 42
+lv_angle_41 = 38
 f_gunivencmm_3 ()
-lv_velocidad_1 = gv_velocidad * 0.8
+lv_velocidad_1 = gv_velocidad * 0.75
 lv_distancia_1 = 50
 f_encoderrectomm_2 ()
 lv_velocidad_1 = gv_velocidad * - 0.3
@@ -579,26 +559,25 @@ lv_aenc_114 = 0
 f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
-lv_angle_41 = 92
+lv_angle_41 = 89
 f_gunivencmm_3 ()
-lv_velocidad_2 = gv_velocidad * 0.8
-lv_distancia_2 = 63
+lv_velocidad_2 = gv_velocidad * 0.75
+lv_distancia_2 = 74
 f_encoderrectommf_2 ()
 lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 15
+lv_distancia_1 = 5
 f_encoderrectomm_2 ()
-f_coger_0 ()
+lv_v_114 = 80
+lv_aenc_114 = 300
+f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
 lv_angle_41 = 101
 f_gunivencmm_3 ()
-lv_velocidad_1 = gv_velocidad * 0.8
+lv_velocidad_1 = gv_velocidad * 0.75
 lv_distancia_1 = 60
 f_encoderrectomm_2 ()
 f_soltar_0 ()
-lv_velocidad_1 = gv_velocidad * - 0.8
-lv_distancia_1 = 10
-f_encoderrectomm_2 ()
 f_finprueba_0 ()
 EndSub
 Sub f_casopsoe_0
@@ -703,8 +682,8 @@ lv_v1_41 = gv_velocidad * - 0.3
 lv_v2_41 = gv_velocidad * 0.3
 lv_angle_41 = 92
 f_gunivencmm_3 ()
-lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 7
+lv_velocidad_1 = gv_velocidad * 0.2
+lv_distancia_1 = 6.5
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = - 30
@@ -804,8 +783,8 @@ lv_kp_77 = gv_kp * 0.8
 lv_ki_77 = gv_ki
 lv_kd_77 = gv_kd
 f_sl14pid_4 ()
-lv_velocidad_1 = gv_velocidad * 0.25
-lv_distancia_1 = 9
+lv_velocidad_1 = gv_velocidad * 0.2
+lv_distancia_1 = 8.5
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = gv_velocidad * - 0.3
@@ -835,6 +814,42 @@ Sub f_finprueba_0
 MotorBC.OffAndBrake ()
 MotorAD.OffAndBrake ()
 Program.End ()
+EndSub
+Sub f_cuentaatras_0
+Program.Delay ( 110000 )
+Speaker.Play ( 100 , "WRO2024/Media/Ten" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Nine" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Eight" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Seven" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Six" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Five" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Four" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Three" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Two" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/One" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
+Speaker.Play ( 100 , "WRO2024/Media/Power Down" )
+Program.Delay ( 1000 )
+Speaker.Stop ()
 EndSub
 Sub f_encoderrectomm_2
 lv_velocidad_1 = lv_velocidad_1 * gv_sentido_motores
@@ -1699,21 +1714,21 @@ f_leercolor_1 ()
 EndSub
 Sub f_leercolor_1
 If lv_color_136 = 0 Then
-Speaker.Play ( 100 , "WRO2023/Zero" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Zero" )
 ElseIf lv_color_136 = 1 Then
-Speaker.Play ( 100 , "WRO2023/Black" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Black" )
 ElseIf lv_color_136 = 2 Then
-Speaker.Play ( 100 , "WRO2023/Blue" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Blue" )
 ElseIf lv_color_136 = 3 Then
-Speaker.Play ( 100 , "WRO2023/Green" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Green" )
 ElseIf lv_color_136 = 4 Then
-Speaker.Play ( 100 , "WRO2023/Yellow" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Yellow" )
 ElseIf lv_color_136 = 5 Then
-Speaker.Play ( 100 , "WRO2023/Red" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Red" )
 ElseIf lv_color_136 = 6 Then
-Speaker.Play ( 100 , "WRO2023/White" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/White" )
 ElseIf lv_color_136 = 7 Then
-Speaker.Play ( 100 , "WRO2023/Brown" )
+Speaker.Play ( 100 , "WRO2024/Media/WRO2023/Brown" )
 EndIf
 EndSub
 Sub f_coger_0

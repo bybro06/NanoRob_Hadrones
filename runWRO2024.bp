@@ -1,3 +1,6 @@
+folder "prjs""WRO2024"
+
+
 Velocidad = 105
 
 kp = 0.07
@@ -19,7 +22,7 @@ include "includes\Giro_MotMed"
 include "includes\GirosPerfectos_MotMed"
 include "includes\GirosUniversales_MotMed"
 
-G1 = 110/36
+G1 = 120/36
 
 include "includes\Aceleracion_MotMed"
 include "includes\Deceleracion_MotMed"
@@ -33,7 +36,7 @@ include "includes\RGBRead"
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Setup()
-Thread.Run = Display
+Thread.Run = CuentaAtras
 Thread.Run = Stop
 'StartArm()
 'Program.End()
@@ -211,7 +214,7 @@ Sub Main
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,66.5)
   
   'Coge basura amarilla y gris
-  EncoderRectoMM(Velocidad*0.85,95)
+  EncoderRectoMM(Velocidad*0.75,95)
   Program.Delay(250)
   
   'Arregla tubería
@@ -220,17 +223,17 @@ Sub Main
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,25)
   
   
-  EncoderRectoMM(Velocidad*0.15,10.5)
+  EncoderRectoMM(Velocidad*0.15,8.5)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,9)
   Program.Delay(250)
   BMoveA(50,-200)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,15)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.15,15)
   BMoveA(50,-500)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,170)
-  BMoveA(50,0)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,167)
+  BMoveA(50,230)
   'Se reincorpora a linea y busca basura gris  
 
-  EncoderRectoMM(Velocidad*0.8,55)
+  EncoderRectoMM(Velocidad*0.75,55)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,87)
   
   1BlancoRectoMM(30,1)
@@ -261,9 +264,9 @@ Sub Main
   EncoderRectoMM(Velocidad*0.7,35)  
   
   
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,42)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,38)
   
-  EncoderRectoMM(Velocidad*0.8,50)
+  EncoderRectoMM(Velocidad*0.75,50)
   EncoderRectoMM(Velocidad*-0.3,15)
 
   
@@ -294,134 +297,51 @@ Sub Main
   GUnivEncMM(Velocidad*0.1,Velocidad*-0.04,40)
   EncoderRectoMM(Velocidad*-0.9,30)
   BMoveA(80,0)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,92)
+  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,89)
   
-  EncoderRectoMMF(Velocidad*0.8,63)
-  EncoderRectoMM(Velocidad*0.3,15)
+  EncoderRectoMMF(Velocidad*0.75,74)
+  EncoderRectoMM(Velocidad*0.3,5)
   
-  Coger()
+  BMoveA(80,300)
   
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,101)
-  EncoderRectoMM(Velocidad*0.8,60)
+  EncoderRectoMM(Velocidad*0.75,60)
   Soltar()
   
-  EncoderRectoMM(Velocidad*-0.8,10)
-  'COHETE
+  'PERRITO
+  
+  'Speaker.Play(100,"Elephant call")
+  'Speaker.Wait()
+  
+  'Speaker.Play(100,"Dog Bark 1")
+  'Speaker.Wait()
+  'Speaker.Play(100,"Dog Bark 2")
+  'Speaker.Wait()
+  'Speaker.Play(100,"Dog growl")
+  'Speaker.Wait()
+  'Speaker.Play(100,"Dog sniff")
+  'Speaker.Wait()
+  'Speaker.Play(100,"Dog whine")
+  'Speaker.Wait()
+  'Speaker.Play(100,"Dog whine")
+  'Speaker.Wait()
+  
   FinPrueba()
 EndSub
 
 Sub MainPrueba
   
-  StartArm()
-  
-  SL1SPIDCross(Velocidad*0.3,kp,ki,kd,4)
-  EncoderRectoMM(Velocidad*0.3,3.5)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,95)
-  SL14PIDEnc(Velocidad*0.25,kp,ki,kd,12)
-  
-  Soltar()
+  Speaker.Play(100,"Dog Bark 1")
+  Speaker.Wait()
+  Speaker.Play(100,"Dog Bark 2")
+  Speaker.Wait()
+  Speaker.Play(100,"Dog growl")
+  Speaker.Wait()
+  Speaker.Play(100,"Dog sniff")
+  Speaker.Wait()
+  Speaker.Play(100,"Dog whine")
+  Speaker.Wait()
 
-  EncoderRectoMM(Velocidad*-0.15,6)
-  'A POR LA MIERDA
-  
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,67)
-  
-  'Coge basura amarilla y gris
-  EncoderRectoMM(Velocidad*0.85,92)
-  Program.Delay(250)
-  'Arregla tubería
-  BMoveA(50,230)
-  Program.Delay(250)
-  
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,20)
-  
-  
-  EncoderRectoMM(Velocidad*0.15,7.5)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,9)
-  Program.Delay(250)
-  BMoveA(50,-200)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,15)
-  BMoveA(50,-500)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,170)
-  BMoveA(50,0)
-  'Se reincorpora a linea y busca basura gris  
-
-  EncoderRectoMM(Velocidad*0.8,55)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,87)
-  
-  1BlancoRectoMM(30,1)
-  1NegroRectoMM(20,1)
-  EncoderRectoMM(Velocidad*0.3,3)
-  
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,75)
-  Program.Delay(250)
-  
-  SL14PIDENCF(Velocidad*0.3,kp,ki,kd,10)
-  SL1SPIDCrossF(Velocidad*0.5,kp,ki,kd,3)
-  SL14PIDENC(Velocidad*0.7,kp,ki,kd,20)
-  
-  Program.Delay(250)
-  
-  'Coge basura gris
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,50)
-  BMoveA(50,0)
-  EncoderRectoMM(Velocidad*0.3,18)
-  
-  BMoveA(50,220)
-  
-  EncoderRectoMM(Velocidad*-0.3,7)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,125)
-  
-  'Coge basura amarilla
-  BMoveA(50,0)
-  EncoderRectoMM(Velocidad*0.7,35)  
-  
-  
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,42)
-  
-  EncoderRectoMM(Velocidad*0.8,50)
-  EncoderRectoMM(Velocidad*-0.3,15)
-
-  
-  
-  'Cuadra con pared
-  GUnivEncMM(Velocidad*-0.05,Velocidad*-0.6,140)
-  TiempoRectoMM(Velocidad*-0.6,1100)
-  EncoderRectoMM(Velocidad*0.2,12)
-  GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
-  
-  EncoderRectoMM(Velocidad*0.3,3)
-  1BlancoRectoMM(Velocidad*0.3,3)
-  EncoderRectoMM(Velocidad*-0.3,15)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,94)
-  
-  'Va a tuberia
-  EncoderRectoMMF(Velocidad*0.3,24)
-  GUnivEncMM(Velocidad*-0.2,Velocidad*0.2,107)
-  BMoveA(50,230)
-  
-  EncoderRectoMMF(Velocidad*0.3,21)
-  EncoderRectoMM(Velocidad*0.1,4)
-  GUnivEncMM(Velocidad*0.2,Velocidad*-0.2,5)
-  BMoveA(80,-500)
-  
-  GUnivEncMM(Velocidad*0.1,Velocidad*-0.04,40)
-  EncoderRectoMM(Velocidad*-0.9,30)
-  BMoveA(80,0)
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,89)
-  
-  EncoderRectoMMF(Velocidad*0.8,63)
-  EncoderRectoMM(Velocidad*0.3,15)
-  
-  Coger()
-  
-  GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,96)
-  EncoderRectoMM(Velocidad*0.8,61)
-  Soltar()
-  
-  EncoderRectoMM(Velocidad*-0.8,10)
-  'COHETE
-  FinPrueba()
 EndSub
 
 Sub MainControlBrazo
@@ -502,7 +422,7 @@ Sub CasoPSOE
   SL1SPIDCrossF(Velocidad*0.3,kp,ki,kd,4)
   EncoderRectoMM(Velocidad*0.3,2.5)
   GUnivEncMM(Velocidad*-0.3,Velocidad*0.3,92)
-  EncoderRectoMM(Velocidad*0.3,7)
+  EncoderRectoMM(Velocidad*0.2,6.5)
   Coger()
   
   'Coge 2º amarillo
@@ -551,7 +471,7 @@ Sub CasoVOX
   SL14PID(35,kp*0.8,ki,kd)
   
   'Ataca al primer amarillo
-  EncoderRectoMM(Velocidad*0.25,9)
+  EncoderRectoMM(Velocidad*0.2,8.5)
   Coger()
   EncoderRectoMM(Velocidad*-0.3,6)
   GUnivEncMM(Velocidad*0.3,Velocidad*-0.3,91)
@@ -580,12 +500,12 @@ Function Coger()
   'Suelta bloques anteriores y Coge el bloque nuevo
   
   Program.Delay(150)
-  BMoveA(60,90)'HABÍA 50 PERO SE PILLABA
+  BMoveA(60,90)
 
   BMoveD(40,0)
   
   @num_bloques += 1
-  BMoveA(80,360)'HABÍA 360 PERO SE PILLABA
+  BMoveA(80,360)
   MotorAD.OffAndBrake()
   Program.Delay(100)
   BMoveD(60,-50)
@@ -623,6 +543,54 @@ Function Giro90Bloques(in number Vel_B, in number Vel_C)
   
 EndFunction
 
+Sub CuentaAtras
+  Program.Delay(110000)
+  
+  Speaker.Play(100,"Ten")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Nine")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Eight")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Seven")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Six")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Five")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Four")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Three")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Two")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"One")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+  Speaker.Play(100,"Power Down")
+  Program.Delay(1000)
+  Speaker.Stop()
+  
+EndSub
 
 Function Lectura(out number read)
   BmoveA(15,-690)

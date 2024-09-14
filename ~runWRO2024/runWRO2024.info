@@ -1,0 +1,24 @@
+FOLDER_KEY PRJS
+FOLDER_NAME WRO2024
+IMAGE_LIST 0
+SOUND_LIST 19
+SOUND ; Ten.rsf ; WRO2024/Media/ ; WRO2024/Media/Ten.rsf
+SOUND ; Nine.rsf ; WRO2024/Media/ ; WRO2024/Media/Nine.rsf
+SOUND ; Eight.rsf ; WRO2024/Media/ ; WRO2024/Media/Eight.rsf
+SOUND ; Seven.rsf ; WRO2024/Media/ ; WRO2024/Media/Seven.rsf
+SOUND ; Six.rsf ; WRO2024/Media/ ; WRO2024/Media/Six.rsf
+SOUND ; Five.rsf ; WRO2024/Media/ ; WRO2024/Media/Five.rsf
+SOUND ; Four.rsf ; WRO2024/Media/ ; WRO2024/Media/Four.rsf
+SOUND ; Three.rsf ; WRO2024/Media/ ; WRO2024/Media/Three.rsf
+SOUND ; Two.rsf ; WRO2024/Media/ ; WRO2024/Media/Two.rsf
+SOUND ; One.rsf ; WRO2024/Media/ ; WRO2024/Media/One.rsf
+SOUND ; Power Down.rsf ; WRO2024/Media/ ; WRO2024/Media/Power Down.rsf
+SOUND ; WRO2023/Zero.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Zero.rsf
+SOUND ; WRO2023/Black.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Black.rsf
+SOUND ; WRO2023/Blue.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Blue.rsf
+SOUND ; WRO2023/Green.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Green.rsf
+SOUND ; WRO2023/Yellow.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Yellow.rsf
+SOUND ; WRO2023/Red.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Red.rsf
+SOUND ; WRO2023/White.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/White.rsf
+SOUND ; WRO2023/Brown.rsf ; WRO2024/Media/ ; WRO2024/Media/WRO2023/Brown.rsf
+FILE_LIST 0
