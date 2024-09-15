@@ -277,7 +277,7 @@ lv_v2_41 = gv_velocidad * - 0.3
 lv_angle_41 = 25
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.15
-lv_distancia_1 = 9.25
+lv_distancia_1 = 11.5
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.3
 lv_v2_41 = gv_velocidad * - 0.3
@@ -420,23 +420,26 @@ f_gunivencmm_3 ()
 lv_v_114 = 50
 lv_aenc_114 = 230
 f_bmovea_2 ()
-lv_velocidad_2 = gv_velocidad * 0.3
+lv_velocidad_2 = gv_velocidad * 0.6
 lv_distancia_2 = 23
 f_encoderrectommf_2 ()
 lv_velocidad_1 = gv_velocidad * 0.1
-lv_distancia_1 = 4
+lv_distancia_1 = 3.5
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.2
 lv_v2_41 = gv_velocidad * - 0.2
 lv_angle_41 = 10
 f_gunivencmm_3 ()
 lv_v_114 = 80
-lv_aenc_114 = - 500
+lv_aenc_114 = - 400
 f_bmovea_2 ()
 lv_v1_41 = gv_velocidad * 0.1
 lv_v2_41 = gv_velocidad * - 0.04
 lv_angle_41 = 40
 f_gunivencmm_3 ()
+lv_v_114 = 80
+lv_aenc_114 = - 500
+f_bmovea_2 ()
 lv_velocidad_1 = gv_velocidad * - 0.9
 lv_distancia_1 = 30
 f_encoderrectomm_2 ()
@@ -478,18 +481,18 @@ lv_velocidad_89 = 25
 lv_kp_89 = gv_kp
 lv_ki_89 = gv_ki
 lv_kd_89 = gv_kd
-lv_encoder_89 = 27
+lv_encoder_89 = 28.5
 f_sl31pidenc_5 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
 lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_1 = 30
-lv_distancia_1 = 6.5
+lv_distancia_1 = 7
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = - 30
-lv_distancia_1 = 6.4
+lv_distancia_1 = 6.9
 f_encoderrectomm_2 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
@@ -499,14 +502,14 @@ lv_velocidad_81 = 20
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
-lv_encoder_81 = 8.5
+lv_encoder_81 = 9.5
 f_sl14pidenc_5 ()
 lv_v1_41 = 20
 lv_v2_41 = - 20
 lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
-lv_distancia_1 = 6.5
+lv_distancia_1 = 7
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = - 30
@@ -553,7 +556,7 @@ lv_velocidad_81 = gv_velocidad * 0.2
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
-lv_encoder_81 = 5
+lv_encoder_81 = 4
 f_sl14pidenc_5 ()
 lv_v1_41 = 30
 lv_v2_41 = - 30
@@ -564,21 +567,21 @@ lv_distancia_1 = 6.25
 f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_velocidad_1 = - 30
-lv_distancia_1 = 6.5
+lv_distancia_1 = 6
 f_encoderrectomm_2 ()
 lv_v1_41 = 20
 lv_v2_41 = - 20
-lv_angle_41 = 94
+lv_angle_41 = 92
 f_gunivencmm_3 ()
 lv_velocidad_81 = gv_velocidad * 0.25
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
-lv_encoder_81 = 9
+lv_encoder_81 = 11
 f_sl14pidenc_5 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
-lv_angle_41 = 92
+lv_angle_41 = 93
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
 lv_distancia_1 = 6.5
@@ -595,11 +598,11 @@ lv_velocidad_81 = gv_velocidad * 0.25
 lv_kp_81 = gv_kp
 lv_ki_81 = gv_ki
 lv_kd_81 = gv_kd
-lv_encoder_81 = 9
+lv_encoder_81 = 10
 f_sl14pidenc_5 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
-lv_angle_41 = 94
+lv_angle_41 = 95.5
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
 lv_distancia_1 = 7.25
@@ -610,7 +613,7 @@ lv_distancia_1 = 10
 f_encoderrectomm_2 ()
 lv_v1_41 = gv_velocidad * 0.2
 lv_v2_41 = gv_velocidad * - 0.2
-lv_angle_41 = 184
+lv_angle_41 = 179
 f_gunivencmm_3 ()
 lv_velocidad_82 = 25
 lv_kp_82 = gv_kp
@@ -668,6 +671,32 @@ lv_velocidad_1 = 20
 lv_distancia_1 = 7.5
 f_encoderrectomm_2 ()
 f_coger_0 ()
+lv_velocidad_1 = - 30
+lv_distancia_1 = 10
+f_encoderrectomm_2 ()
+lv_v1_41 = gv_velocidad * 0.2
+lv_v2_41 = gv_velocidad * - 0.2
+lv_angle_41 = 92
+f_gunivencmm_3 ()
+lv_velocidad_95 = gv_velocidad * 0.3
+lv_kp_95 = gv_kp
+lv_ki_95 = gv_ki
+lv_kd_95 = gv_kd
+lv_reader_95 = 4
+f_sl1spidcross_5 ()
+lv_velocidad_1 = gv_velocidad * 0.3
+lv_distancia_1 = 3.5
+f_encoderrectomm_2 ()
+lv_v1_41 = gv_velocidad * 0.3
+lv_v2_41 = gv_velocidad * - 0.3
+lv_angle_41 = 95
+f_gunivencmm_3 ()
+lv_velocidad_81 = gv_velocidad * 0.2
+lv_kp_81 = gv_kp
+lv_ki_81 = gv_ki
+lv_kd_81 = gv_kd
+lv_encoder_81 = 12
+f_sl14pidenc_5 ()
 f_soltar_0 ()
 EndSub
 Sub f_casovox_0
@@ -698,20 +727,10 @@ f_encoderrectomm_2 ()
 f_coger_0 ()
 lv_v1_41 = 30
 lv_v2_41 = - 30
-lv_angle_41 = 172
+lv_angle_41 = 173
 f_gunivencmm_3 ()
 lv_velocidad_1 = gv_velocidad * 0.3
-lv_distancia_1 = 20
-f_encoderrectomm_2 ()
-lv_velocidad_8 = 20
-lv_sens_8 = 3
-f_1blancorectommf_2 ()
-lv_velocidad_5 = 30
-lv_sens_5 = 3
-f_1negrorectomm_2 ()
-Program.Delay ( 250 )
-lv_velocidad_1 = - 30
-lv_distancia_1 = 5
+lv_distancia_1 = 25
 f_encoderrectomm_2 ()
 f_soltar_0 ()
 lv_v1_41 = 30
@@ -847,7 +866,7 @@ lv_encoder_81 = 9
 f_sl14pidenc_5 ()
 lv_v1_41 = - 20
 lv_v2_41 = 20
-lv_angle_41 = 92
+lv_angle_41 = 94
 f_gunivencmm_3 ()
 lv_velocidad_1 = 20
 lv_distancia_1 = 6.5
