@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="T:Shift">
+      <summary>
+        Cambios rápidos de sensores por Nanorob Hadrones.
+        Asumiendo una disposición 3-1-4.
+        Cambia de seguir linea con 3-1 a 1-4 y viceversa.
+      </summary>
+    </member>
+	
+	<member name="M:Sh_14_31">
+      <summary>
+        Shift de linea de 1-4 a 3-1.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="ajuste">Distancia en grados para ajustar.</param>
+    </member>
+	
+	<member name="M:Sh_31_14">
+      <summary>
+        Shift de linea de 3-1 a 1-4.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="ajuste">Distancia en grados para ajustar.</param>
+    </member>
+
+  </members>
+</doc>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="W:Modules_NanorobHadrones">
+      <summary>
+		Version: 1.0, 21/09/2024
+    Diseñado para base motriz de dos motores medianos. Motor B invertido por defecto.
+    Para cambiar el sentido de los motores, cambiar "Sentido_Motores" de 1 a -1 en cada .bpm
+      </summary>
+    </member>
+	
+  </members>
+</doc>

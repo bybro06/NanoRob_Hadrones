@@ -1,0 +1,22 @@
+import "modules/Siguelineas"
+import "modules/Giro"
+import "modules/Recto"
+import "modules/Shift"
+import "modules/Brazo"
+import "modules/Smart"
+
+Thread.Run = Display
+Giro.Encoder(20,30,30)
+
+
+Sub Display
+  While "True"
+    LCD.StopUpdate()
+    LCD.Clear()
+    LCD.Write(5,5,"Encoder B: "+ MotorB.GetTacho()*-1)
+    LCD.Write(5,15,"Encoder C: "+ MotorC.GetTacho())
+    LCD.Write(5,30,"Diferencia: "+ (MotorB.GetTacho()*-1 -MotorC.GetTacho()))
+    LCD.Update()
+    Program.Delay(100)
+   EndWhile
+EndSub

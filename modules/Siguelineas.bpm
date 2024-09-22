@@ -1,13 +1,10 @@
 
 'Siguelíneas 1-4 con control Proporcional, integral y derivativo (PID)
 
-'Sentido de los motores
-Sentido_Motores = 1
-diametro = 5.6
 
 'Siguelíneas hasta cruce
 
-Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
+Function Cruce14(in number Velocidad, in number kp, in number ki, in number kd)
   'Siguelíneas 1-4 PID
   
   #Valores ideales:
@@ -15,12 +12,12 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
   #KI = 0.00015
   #KD = 7
   
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
@@ -51,7 +48,7 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4))*sentido*@Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4))*sentido*1
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
     Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
@@ -60,7 +57,7 @@ Function SL14PID(in number Velocidad, in number kp, in number ki, in number kd)
   Motor.Stop(I+D, "True")
 EndFunction
 
-Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
+Function Cruce14F(in number Velocidad, in number kp, in number ki, in number kd)
   'Siguelíneas 1-4 PID Sin Frenos
 
   #Valores ideales:
@@ -68,12 +65,12 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
   #KI = 0.00015
   #KD = 7
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
@@ -103,7 +100,7 @@ Function SL14PIDF(in number Velocidad, in number kp, in number ki, in number kd)
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -114,14 +111,14 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in number kd)
+Function Blanco14(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -151,7 +148,7 @@ Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -160,14 +157,14 @@ Function SL14PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
   Motor.Stop(I + D, "True")
 EndFunction
 
-Function SL14PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in number kd)
+Function Blanco14F(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -197,7 +194,7 @@ Function SL14PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -208,14 +205,14 @@ EndFunction
 
 'Siguelíneas por encoder
 
-Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
+Function Encoder14(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -228,7 +225,7 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   start_ki = ki
   start_kd = kd
   
-  Encoder = Encoder / (@diametro * Math.Pi) * 360
+  Encoder = Encoder / (6.24 * Math.Pi) * 360
   
   Start_C = Motor.GetCount("C")
   encoder_C = 0
@@ -250,7 +247,7 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -259,14 +256,14 @@ Function SL14PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   Motor.Stop(I + D, "True")
 EndFunction
 
-Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
+Function Encoder14F(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -279,7 +276,7 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   start_ki = ki
   start_kd = kd
   
-  Encoder = Encoder / (@diametro * Math.Pi) * 360
+  Encoder = Encoder / (6.24 * Math.Pi) * 360
   
   Start_C = Motor.GetCount("C")
   encoder_C = 0
@@ -300,7 +297,7 @@ Function SL14PIDEncF(in number Velocidad, in number kp, in number ki, in number 
       ki = start_ki
       kd = start_kd
     EndIf    
-    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(1) - Sensor.ReadPercent(4)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -311,7 +308,7 @@ EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function SL14PIDCruces(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces14(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
   
   SL14PIDF(Velocidad, kp, ki, kd)
   
@@ -326,7 +323,7 @@ Function SL14PIDCruces(in number Velocidad, in number kp, in number ki, in numbe
   MotorBC.OffAndBrake()
 EndFunction
 
-Function SL14PIDCrucesF(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces14F(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
   
   SL14PIDF(Velocidad, kp, ki, kd)
   
@@ -342,14 +339,14 @@ Function SL14PIDCrucesF(in number Velocidad, in number kp, in number ki, in numb
 EndFunction
 
 'SIGUELINEAS 31
-Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
+Function Cruce31(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -379,7 +376,7 @@ Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -388,14 +385,14 @@ Function SL31PID(in number Velocidad, in number kp, in number ki, in number kd)
   Motor.Stop(I + D, "True")
 EndFunction
 
-Function SL31PIDF(in number Velocidad, in number kp, in number ki, in number kd)
+Function Cruce31F(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -425,7 +422,7 @@ Function SL31PIDF(in number Velocidad, in number kp, in number ki, in number kd)
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -436,14 +433,14 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in number kd)
+Function Blanco31(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -473,7 +470,7 @@ Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -482,14 +479,14 @@ Function SL31PIDHastaBlanco(in number Velocidad, in number kp, in number ki, in 
   Motor.Stop(I + D, "True")
 EndFunction
 
-Function SL31PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in number kd)
+Function Blanco31F(in number Velocidad, in number kp, in number ki, in number kd)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -519,7 +516,7 @@ Function SL31PIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in
       kd = start_kd
     EndIf
     
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -530,14 +527,14 @@ EndFunction
 
 'Siguelíneas por encoder
 
-Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
+Function Encoder31(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -550,7 +547,7 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   start_ki = ki
   start_kd = kd
   
-  Encoder = Encoder / (@diametro * Math.Pi) * 360
+  Encoder = Encoder / (6.24 * Math.Pi) * 360
   
   Start_C = Motor.GetCount("C")
   encoder_C = 0
@@ -571,7 +568,7 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
       ki = start_ki
       kd = start_kd
     EndIf    
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -580,14 +577,14 @@ Function SL31PIDEnc(in number Velocidad, in number kp, in number ki, in number k
   Motor.Stop(I + D, "True")
 EndFunction
 
-Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
+Function Encoder31F(in number Velocidad, in number kp, in number ki, in number kd, in number Encoder)
 
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (@diametro * Math.Pi)
+  distancia = 5 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -600,7 +597,7 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
   start_ki = ki
   start_kd = kd
   
-  Encoder = Encoder / (@diametro * Math.Pi) * 360
+  Encoder = Encoder / (6.24 * Math.Pi) * 360
   
   Start_C = Motor.GetCount("C")
   encoder_C = 0
@@ -621,7 +618,7 @@ Function SL31PIDEncF(in number Velocidad, in number kp, in number ki, in number 
       ki = start_ki
       kd = start_kd
     EndIf    
-    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * @Sentido_Motores
+    error = (Sensor.ReadPercent(3) - Sensor.ReadPercent(1)) * sentido * 1
     errsum += error
     u = error * kp + (error - olderror) * kd + errsum * ki
     Motor.StartSync(I + D, -(Velocidad + u), Velocidad - u)
@@ -632,7 +629,7 @@ EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function SL31PIDCruces(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces31(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
   
   SL31PIDF(Velocidad,kp,ki,kd)
   
@@ -648,7 +645,7 @@ Function SL31PIDCruces(in number Velocidad, in number kp, in number ki, in numbe
   
 EndFunction
 
-Function SL31PIDCrucesF(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces31F(in number Velocidad, in number kp, in number ki, in number kd, in number Cruces)
   
   SL31PIDF(Velocidad,kp,ki,kd)
   
@@ -665,18 +662,11 @@ Function SL31PIDCrucesF(in number Velocidad, in number kp, in number ki, in numb
 EndFunction
 
 
-'Siguelíneas 1 sensor con control Proporcional, integral y derivativo (PID)
+'Siguelíneas hasta cruce unilateral
+Function Cruce_Externo(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
+  'Siguelíneas PID
 
-'Siguelíneas hasta cruce negro por ambos lados
-
-Function SL1SPID(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
+  Velocidad *= 1
   
   I = "B"
   D = "C"
@@ -686,61 +676,10 @@ Function SL1SPID(in number Velocidad, in number kp, in number ki, in number kd, 
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
   
-  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "True")
-EndFunction
-
-Function SL1SPIDF(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
-  'Siguelíneas 1-4 PID
+  'Asumiendo disposición de sensores 3-1-4
   
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
-  
-  While Sensor.ReadPercent(1) > 15 Or Sensor.ReadPercent(4) > 15
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "False")
-EndFunction
-
-'Siguelíneas hasta cruce negro por 1 lado
-
-Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
+  'Si el cruce es a la derecha, lee con 3-1 y detecta con 4
+  'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   If reader = 3 Then
     reader1 = 1
@@ -751,7 +690,7 @@ Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number
   EndIf
   
   While Sensor.ReadPercent(reader) > 10
-    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*@Sentido_Motores
+    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*1
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
     Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
@@ -760,14 +699,10 @@ Function SL1SPIDCross(in number Velocidad, in number kp, in number ki, in number
   Motor.Stop(I+D, "True")
 EndFunction
 
-Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
+Function Cruce_ExternoF(in number Velocidad, in number kp, in number ki, in number kd, in number reader)
+  'Siguelíneas PID
+
+  Velocidad *= 1
   
   I = "B"
   D = "C"
@@ -776,6 +711,11 @@ Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in numbe
   errsum = 0
   u = 0
   sentido = Velocidad / Math.Abs(Velocidad)
+  
+  'Asumiendo disposición de sensores 3-1-4
+  
+  'Si el cruce es a la derecha, lee con 3-1 y detecta con 4
+  'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   If reader = 3 Then
     reader1 = 1
@@ -786,155 +726,11 @@ Function SL1SPIDCrossF(in number Velocidad, in number kp, in number ki, in numbe
   EndIf
   
   While Sensor.ReadPercent(reader) > 10
-    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*@Sentido_Motores
+    error = (Sensor.ReadPercent(reader1) - Sensor.ReadPercent(reader2))*sentido*1
     errsum += error
     u = error*kp + (error-olderror)*kd + errsum*ki
     Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
     olderror = error
   EndWhile
   Motor.Stop(I+D, "False")
-EndFunction
-
-'Siguelíneas hasta ambos blancos
-
-Function SL1SPIDHastaBlanco(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
-  
-  While Sensor.ReadPercent(1) < 85 Or Sensor.ReadPercent(4) < 85
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "True")
-EndFunction
-
-Function SL1SPIDHastaBlancoF(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
-  
-  While Sensor.ReadPercent(1) < 85 Or Sensor.ReadPercent(4) < 85
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "False")
-EndFunction
-
-'Siguelíneas por encoder
-
-Function SL1SPIDEnc(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens, in number encoder)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
-  
-  Encoder = Encoder / (5.6 * Math.Pi) * 360
-  
-  Start_C = Motor.GetCount("C")
-  encoder_C = 0
-  
-  While Motor.GetCount("C") < encoder
-    
-    encoder_C = Motor.GetCount("C") - Start_C
-    
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "True")
-EndFunction
-
-Function SL1SPIDEncF(in number Velocidad, in number kp, in number ki, in number kd, in number lado, in number sens, in number encoder)
-  'Siguelíneas 1-4 PID
-  
-  '"sens" especifica el sensor de lectura
-  'lado = 1 --> borde izquierdo
-  'lado = -1 --> borde derecho
-  
-  Velocidad *= @Sentido_Motores
-  
-  I = "B"
-  D = "C"
-  error = 0
-  olderror = 0
-  errsum = 0
-  u = 0
-  sentido = Velocidad / Math.Abs(Velocidad)
-  
-  Encoder = Encoder / (5.6 * Math.Pi) * 360
-  
-  Start_C = Motor.GetCount("C")
-  encoder_C = 0
-  
-  While Motor.GetCount("C") < encoder
-    
-    encoder_C = Motor.GetCount("C") - Start_C
-    
-    error = (Sensor.ReadPercent(sens) - 50)*sentido*lado*@Sentido_Motores
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
-    Motor.StartSync(I+D, -(Velocidad+u), Velocidad-u)
-    olderror = error
-  EndWhile
-  Motor.Stop(I+D, "False")
-EndFunction
-
-Function Shift14_31(in number Velocidad)
-  
-  MotorBC.Off()
-  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
-  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
-  
-EndFunction
-
-Function Shift31_14(in number Velocidad)
-  
-  MotorBC.Off()
-  Motor.MoveSync("BC", Velocidad*-0.2,Velocidad,230,"False")
-  Motor.MoveSync("BC", Velocidad*-1,Velocidad*0.2,230,"False")
-  
 EndFunction

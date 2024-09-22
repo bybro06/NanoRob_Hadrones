@@ -1,0 +1,114 @@
+'Brazo por tiempo
+
+Function AEncoder(in number Velocidad, in number Encoder)
+  
+  encDiff = Encoder - Motor.GetCount("A")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(Velocidad/20)*650*2),400)
+  
+  Time.Reset3()
+  
+  If encDiff <> 0 Then
+    
+    While Math.Abs(Motor.GetCount("A") - Encoder) > 25 and Time.Get3() < 2000
+      ' Puedes ajustar el Valor (5) para controlar la precisión
+      MotorA.StartSpeed(signo * Velocidad)
+    EndWhile
+    
+    Motor.Stop("A", "True")
+  EndIf
+  
+EndFunction
+
+Function ATimer(in number Velocidad, in number Timer)
+  Time.Reset1()
+  While Time.Get1() < Timer
+    MotorA.StartSpeed(Velocidad)
+  EndWhile
+  Motor.Stop("A", "True")
+EndFunction
+
+'Ambos brazos - AD
+
+'Brazos por encoder
+
+Function ADEncoder(in number VelocidadA,in number VelocidadD, in number EncoderA, in number EncoderD)
+  
+   
+  encDiffA = EncoderA - Motor.GetCount("A")
+  encDiffD = EncoderD - Motor.GetCount("D")
+  
+  signoA = encDiffA / Math.Abs(encDiffA)
+  signoD = encDiffD / Math.Abs(encDiffD)
+  
+  SafetyTimer = Math.Max(((Math.abs(Math.Max(Math.Abs(encDiffA),Math.Abs(encDiffD)))/100)/(Math.Min(VelocidadA,VelocidadD)/20)*650*2)*2/3,400)
+  
+  Time.Reset3()
+  
+  While (MotorA.GetTacho() <> EncoderA Or MotorD.GetTacho() <> EncoderD) And Time.Get3() < SafetyTimer
+    
+    If MotorA.GetTacho() < EncoderA Then
+      MotorA.StartSpeed(Math.Min(VelocidadA, VelocidadA/2 + (EncoderA - MotorA.GetTacho()) / 10))
+    ElseIf MotorA.GetTacho() > EncoderA Then
+      MotorA.StartSpeed(-Math.Min(VelocidadA, VelocidadA/2 + (MotorA.GetTacho() - EncoderA) / 10))
+    Else
+      MotorA.OffAndBrake()
+    EndIf
+    
+    If MotorD.GetTacho() < EncoderD Then
+      MotorD.StartSpeed(Math.Min(VelocidadD, VelocidadD/2 + (EncoderD - MotorD.GetTacho()) / 10))
+    ElseIf MotorD.GetTacho() > EncoderD Then
+      MotorD.StartSpeed(-Math.Min(VelocidadD, VelocidadD/2 + (MotorD.GetTacho() - EncoderD) / 10))
+    Else
+      MotorD.OffAndBrake()
+    EndIf
+  EndWhile
+  MotorAD.OffAndBrake()
+EndFunction
+
+Function ADTimer(in number VelocidadA, in number VelocidadD, in number Timer)
+  Time.Reset1()
+  While Time.Get1() < Timer
+    MotorA.StartSpeed(VelocidadA)
+    MotorD.StartSpeed(VelocidadD)
+  EndWhile
+  Motor.Stop("AD", "True")
+EndFunction
+
+'Brazo Dch - D
+
+'Brazo por tiempo
+
+Function DEncoder(in number Velocidad, in number Encoder)
+  
+  encDiff = Encoder - Motor.GetCount("D")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(Velocidad/20)*650*2),400)
+  
+  Time.Reset3()
+  
+  If encDiff <> 0 Then
+    
+    While Math.Abs(Motor.GetCount("D") - Encoder) > 15 and Time.Get3() < SafetyTimer
+      ' Puedes ajustar el VelocidadAlor (5) para controlar la precisión
+      MotorD.StartSpeed(signo * Velocidad)
+      LCD.Clear()
+		  LCD.Write(5,30,"SafetyTimer: "+SafetyTimer)
+    EndWhile
+    
+    Motor.Stop("D", "True")
+  EndIf
+  
+EndFunction
+
+Function DTimer(in number Velocidad, in number Timer)
+  Time.Reset1()
+  While Time.Get1() < Timer
+    MotorD.StartSpeed(Velocidad)
+  EndWhile
+  MotorD.OffAndBrake()
+EndFunction

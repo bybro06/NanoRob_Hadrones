@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="T:Brazo">
+      <summary>
+        Movimientos de brazo por Nanorob Hadrones.
+        Asumiendo que los accesorios están conectados a los puertos A y D.
+      </summary>
+    </member>
+	
+	<member name="M:AEncoder">
+      <summary>
+        Movimiento de Brazo en el puerto A hasta una posición especificada.
+      </summary>
+      <param name="Velocidad">Velocidad del motor.</param>
+      <param name="Encoder">Posición en grados.</param>
+    </member>
+	
+	<member name="M:ATimer">
+      <summary>
+        Movimiento de Brazo en el puerto A por tiempo.
+      </summary>
+      <param name="Velocidad">Velocidad del motor.</param>
+      <param name="Timer">Tiempo en ms.</param>
+    </member>
+	
+	<member name="M:ADEncoder">
+      <summary>
+        Movimiento de Brazo en los puertos A y D hasta una posición especificada.
+      </summary>
+      <param name="VelocidadA">Velocidad del motor A.</param>
+      <param name="VelocidadD">Velocidad del motor D.</param>
+      <param name="EncoderA">Posición en grados del motor A.</param>
+      <param name="EncoderD">Posición en grados del motor D.</param>
+    </member>
+	
+	<member name="M:ADTimer">
+      <summary>
+        Movimiento de Brazo en los puertos A y D por tiempo.
+      </summary>
+      <param name="VelocidadA">Velocidad del motor A.</param>
+      <param name="VelocidadD">Velocidad del motor D.</param>
+      <param name="Timer">Tiempo en ms.</param>
+    </member>
+	
+	<member name="M:DEncoder">
+      <summary>
+        Movimiento de Brazo en el puerto D hasta una posición especificada.
+      </summary>
+      <param name="Velocidad">Velocidad del motor.</param>
+      <param name="Encoder">Posición en grados.</param>
+    </member>
+	
+	<member name="M:DTimer">
+      <summary>
+        Movimiento de Brazo en el puerto D por tiempo.
+      </summary>
+      <param name="Velocidad">Velocidad del motor.</param>
+      <param name="Timer">Tiempo en ms.</param>
+    </member>
+	
+  </members>
+</doc>

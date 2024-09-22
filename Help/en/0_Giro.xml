@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="T:Giro">
+      <summary>
+    Giros por Nanorob Hadrones.
+      </summary>
+    </member>
+	
+    <member name="M:Grados">
+      <summary>
+        Giro por grados.
+        Para ajustarlo, cambiar constante G1 en Giro.bpm.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Grados">Grados de giro.</param>
+    </member>
+	
+	  <member name="M:GradosF">
+      <summary>
+        Giro por grados.
+        Para ajustarlo, cambiar constante G1 en Giro.bpm.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Grados">Grados de giro.</param>
+    </member>
+
+	  <member name="M:Encoder">
+      <summary>
+        Giro hasta encoder con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Distancia">Distancia en cm.</param>
+    </member>
+	
+	  <member name="M:EncoderF">
+      <summary>
+        Giro hasta encoder sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Distancia">Distancia en cm.</param>
+    </member>
+
+	  <member name="M:Negro1">
+      <summary>
+        Giro hasta Negro con 1 sensor con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+	  <member name="M:Negro1F">
+      <summary>
+        Giro hasta Negro con 1 sensor sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+    <member name="M:Blanco1">
+      <summary>
+        Giro hasta Blanco con 1 sensor con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+    <member name="M:Blanco1F">
+      <summary>
+        Giro hasta Blanco con 1 sensor sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+	  <member name="M:Negros2">
+      <summary>
+        Giro hasta Negro con 2 sensores con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Negros2">
+      <summary>
+        Giro hasta Negro con 2 sensores sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Blancos2">
+      <summary>
+        Giro hasta Negro con 2 sensores con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Blancos2F">
+      <summary>
+        Giro hasta Blanco con 2 sensores sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Color1">
+      <summary>
+        Giro hasta un Color con 1 sensores con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="Color">ID de Color LEGO.</param>
+    </member>
+	
+	  <member name="M:Color1F">
+      <summary>
+        Giro hasta un Color con 1 sensores sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="Color">ID de Color LEGO.</param>
+    </member>
+
+	  <member name="M:Tiempo">
+      <summary>
+        Giro durante un tiempo con freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Tiempo">Tiempo en ms.</param>
+    </member>
+	
+	  <member name="M:TiempoF">
+      <summary>
+        Giro durante un tiempo sin freno.
+      </summary>
+      <param name="Velocidad1">Velocidad del motor B.</param>
+      <param name="Velocidad2">Velocidad del motor C.</param>
+      <param name="Tiempo">Tiempo en ms.</param>
+    </member>
+	
+  </members>
+</doc>

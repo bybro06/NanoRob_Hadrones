@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="T:Recto">
+      <summary>
+    Movimientos rectos corregidos con PID por Nanorob Hadrones.
+      </summary>
+    </member>
+	
+	  <member name="M:Encoder">
+      <summary>
+        Movimiento Recto hasta encoder con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Distancia">Distancia en cm.</param>
+    </member>
+	
+	  <member name="M:EncoderF">
+      <summary>
+        Movimiento Recto hasta encoder con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Distancia">Distancia en cm.</param>
+    </member>
+
+	  <member name="M:Negro1">
+      <summary>
+        Movimiento Recto hasta Negro con 1 sensor con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+	  <member name="M:Negro1F">
+      <summary>
+        Movimiento Recto hasta Negro con 1 sensor con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+    <member name="M:Blanco1">
+      <summary>
+        Movimiento Recto hasta Blanco con 1 sensor con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+    <member name="M:Blanco1F">
+      <summary>
+        Movimiento Recto hasta Blanco con 1 sensor con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+    </member>
+	
+	  <member name="M:Negros2">
+      <summary>
+        Movimiento Recto hasta Negro con 2 sensores con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Negros2">
+      <summary>
+        Movimiento Recto hasta Negro con 2 sensores con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Blancos2">
+      <summary>
+        Movimiento Recto hasta Negro con 2 sensores con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Blancos2F">
+      <summary>
+        Movimiento Recto hasta Blanco con 2 sensores con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens1">Sensor de lectura 1.</param>
+      <param name="sens2">Sensor de lectura 2.</param>
+    </member>
+	
+	  <member name="M:Color1">
+      <summary>
+        Movimiento Recto hasta un Color con 1 sensores con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="Color">ID de Color LEGO.</param>
+    </member>
+	
+	  <member name="M:Color1F">
+      <summary>
+        Movimiento Recto hasta un Color con 1 sensores con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="Color">ID de Color LEGO.</param>
+    </member>
+
+	  <member name="M:Tiempo">
+      <summary>
+        Movimiento Recto durante un tiempo con PID y freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Tiempo">Tiempo en ms.</param>
+    </member>
+	
+	  <member name="M:TiempoF">
+      <summary>
+        Movimiento Recto durante un tiempo con PID sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Tiempo">Tiempo en ms.</param>
+    </member>
+	
+	  <member name="M:AccelDecel">
+      <summary>
+        Acceleración y Deceleración lineal con PID y freno.
+      </summary>
+      <param name="V0">Velocidad inicial.</param>
+      <param name="VMax">Velocidad Máxima.</param>
+      <param name="distancia1">Distancia de aceleración en cm.</param>
+      <param name="distancia2">Distancia a velocidad máxima en cm.</param>
+      <param name="distancia3">Distancia de deceleración hasta V0 en cm.</param>
+    </member>
+	
+	  <member name="M:AccelDecelF">
+      <summary>
+        Acceleración y Deceleración lineal con PID sin freno.
+      </summary>
+      <param name="V0">Velocidad inicial.</param>
+      <param name="VMax">Velocidad Máxima.</param>
+      <param name="distancia1">Distancia de aceleración en cm.</param>
+      <param name="distancia2">Distancia a velocidad máxima en cm.</param>
+      <param name="distancia3">Distancia de deceleración hasta V0 en cm.</param>
+    </member>
+
+	  <member name="M:Decel">
+      <summary>
+        Deceleración lineal con PID y freno.
+      </summary>
+      <param name="V0">Velocidad inicial.</param>
+      <param name="VMin">Velocidad Mínima.</param>
+      <param name="distancia1">Distancia de deceleración en cm.</param>
+      <param name="distancia2">Distancia a velocidad mínima en cm.</param>
+    </member>
+
+	  <member name="M:DecelF">
+      <summary>
+        Deceleración lineal con PID sin freno.
+      </summary>
+      <param name="V0">Velocidad inicial.</param>
+      <param name="VMin">Velocidad Mínima.</param>
+      <param name="distancia1">Distancia de deceleración en cm.</param>
+      <param name="distancia2">Distancia a velocidad mínima en cm.</param>
+    </member>
+
+  </members>
+</doc>
