@@ -4,9 +4,14 @@ import "modules/Recto"
 import "modules/Shift"
 import "modules/Brazo"
 import "modules/Smart"
+import "modules/RGB"
 
-Thread.Run = Display
-Giro.Encoder(20,30,30)
+'Thread.Run = Display
+Brazo.ADEncoder(70,80,-300,400)
+Program.Delay(4000)
+Brazo.AEncoder(50,0)
+Brazo.DEncoder(80,0)
+Brazo.AEncoder(20,0)
 
 
 Sub Display

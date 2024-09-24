@@ -42,8 +42,6 @@ Function RGBDetect1(in number reps, out number Color)
     GNorma[j] = Math.Round(GRaw/GWhite*255)
     BNorma[j] = Math.Round(BRaw/BWhite*255)
     
-    Maxa[j] = Math.Max(Math.Max(RNorma[j],GNorma[j]), BNorma[j])
-    
     Program.Delay(5)
   EndFor
   
@@ -53,35 +51,35 @@ Function RGBDetect1(in number reps, out number Color)
     RNorm = RNorma[j] + RNorma[j+1]
     GNorm = GNorma[j] + GNorma[j+1]
     BNorm = BNorma[j] + BNorma[j+1]
-    Max = Maxa[j] + Maxa[j+1]
   EndFor
   
   RNorm /= reps
   GNorm /= reps
   BNorm /= reps
-  Max /= reps
+  
+  Max = Math.Max(Math.Max(RNorm,GNorm), BNorm)
   Min = Math.Min(Math.Min(RNorm,GNorm), BNorm)
   
   ' Calculamos el hue
   If Max = Min Then
-    hue = 0
+    hue = 0   'Escala de grises, no importa el hue
   ElseIf Max = RNorm Then
     If GNorm >= BNorm Then
-      hue = 60 * (GNorm - BNorm) / (Max - Min)
+      hue = 60 * (GNorm - BNorm) / (Max - Min) 'Rojo o amarillo
     Else
-      hue = 60 * (GNorm - BNorm) / (Max - Min) + 360
+      hue = 60 * (GNorm - BNorm) / (Max - Min) + 360 'Rojo o morado
     EndIf
   ElseIf Max = GNorm Then
-    hue = 60 * (BNorm - RNorm) / (Max - Min) + 120
+    hue = 60 * (BNorm - RNorm) / (Max - Min) + 120 'Verde o amarillo
   Else
-    hue = 60 * (RNorm - GNorm) / (Max - Min) + 240
+    hue = 60 * (RNorm - GNorm) / (Max - Min) + 240 'Azul o morado
   EndIf
   
   ' Calculamos la saturación
   If Max = 0 Then
     sat = 0
   Else
-    sat = 1 - Min / Max
+    sat = 1 - Min / Max   'A mayor diferencia, mayor saturación, diferencia entre escala de grises o color
   EndIf
   
   ' Calculamos el value y el Gris
@@ -90,15 +88,15 @@ Function RGBDetect1(in number reps, out number Color)
   
   ' Detectamos el color
   If RNorm + GNorm + BNorm <= 3 Then
-    Color = 0
+    Color = 0   'Si no hay lecturas, el color es 0 (nada)
   Else
     If sat < 0.4 Then
-      If value > RGBGrey Then
-        Color = 6
+      If value > RGBGrey Then   'está en la escala de grises por poca saturación
+        Color = 6    'Blanco si la luz es alta
       Else
-        Color = 1
+        Color = 1    'Negro si es baja
       EndIf
-    Else
+    Else       'Rueda de color
       If hue >= 0 And hue < Red Then
         Color = 5
       ElseIf hue >= Red And hue < Yellow Then
@@ -114,11 +112,15 @@ Function RGBDetect1(in number reps, out number Color)
   EndIf
   
   ' Mostramos los resultados en la pantalla
+  
+  LCD.StopUpdate()
+  LCD.Clear()
   LCD.Write(33, 20, "R: " + RRaw)
   LCD.Write(33, 35, "G: " + GRaw)
   LCD.Write(33, 50, "B: " + BRaw)
   LCD.Write(33, 70, "Color: " + Color)
   LCD.Write(33, 90, "Value: " + value)
+  LCD.Update()
   
   'Suena el color leído
   
