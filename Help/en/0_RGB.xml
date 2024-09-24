@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="T:RGB">
+      <summary>
+        Detección de colores avanzada mediante sensor RGB por Nanorob Hadrones.
+        Calibrar sensores antes de utilizar los modules.
+        Cada sensor puede tener una calibración única.
+      </summary>
+    </member>
+	
+	<member name="M:Detect">
+      <summary>
+        Lectura RGB to HSV por muestras.
+        Hace una media de las muestras leídas, habiendo 5 ms de diferencia entre cada muestra.
+      </summary>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="reps">Número de muestras de color tomadas.</param>
+      <param name="Color">ID del Color detectado.</param>
+    </member>
+	
+	<member name="M:Time">
+      <summary>
+        Lectura RGB to HSV por tiempo.
+        Hace una media de las muestras leídas, leyendo con un ciclo de alrededor de 900 Hz.
+      </summary>
+      <param name="sens">Sensor de lectura.</param>
+      <param name="time">Tiempo de lectura de muestras de color.</param>
+      <param name="Color">ID del Color detectado.</param>
+    </member>
+
+    <member name="M:Gritar">
+      <summary>
+        Suena por los altavoces el color según el ID de LEGO.
+      </summary>
+      <param name="Color">ID del Color que deseas que suene.</param>
+    </member>
+
+  </members>
+</doc>
