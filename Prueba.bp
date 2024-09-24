@@ -7,11 +7,12 @@ import "modules/Smart"
 import "modules/RGB"
 
 'Thread.Run = Display
-Brazo.ADEncoder(70,80,-300,400)
-Program.Delay(4000)
-Brazo.AEncoder(50,0)
-Brazo.DEncoder(80,0)
-Brazo.AEncoder(20,0)
+Smart.Encoder14(40,0.18,0.0004,5,80)
+Recto.Decel(40,10,15,0)
+Giro.Grados(30,-30,165)
+Smart.Encoder31(40,0.18,0.0004,5,80)
+Recto.Decel(40,10,15,0)
+Giro.Grados(30,-30,165)
 
 
 Sub Display

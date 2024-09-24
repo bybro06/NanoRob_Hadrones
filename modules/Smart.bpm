@@ -11,7 +11,7 @@ Function Cruce14(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
@@ -31,7 +31,7 @@ Function Cruce14(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      Velocidad = start_Velocidad * 0.65
+      Velocidad = 20
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
@@ -59,7 +59,7 @@ Function Cruce14F(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
@@ -79,7 +79,7 @@ Function Cruce14F(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      Velocidad = start_Velocidad * 0.65
+      Velocidad = 20
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
@@ -109,7 +109,7 @@ Function Blanco14(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -128,7 +128,7 @@ Function Blanco14(in number Velocidad, in number kp, in number ki, in number kd)
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
-      Velocidad = start_Velocidad * 0.65
+      Velocidad = 20
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
@@ -189,7 +189,7 @@ Function Encoder14(in number Velocidad, in number kp, in number ki, in number kd
   I = "B"
   D = "C"
 
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -213,7 +213,7 @@ Function Encoder14(in number Velocidad, in number kp, in number ki, in number kd
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      Velocidad = start_Velocidad * 0.65
+      Velocidad = 20
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
@@ -243,7 +243,7 @@ Function Encoder14F(in number Velocidad, in number kp, in number ki, in number k
   I = "B"
   D = "C"
 
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -267,7 +267,7 @@ Function Encoder14F(in number Velocidad, in number kp, in number ki, in number k
     
     'Corrección fuerte los primeros 5 cm
     If encoder_C < distancia Then
-      Velocidad = start_Velocidad * 0.65
+      Velocidad = 20
       kp = start_kp * 1
       ki = start_ki * 1
       kd = start_kd * 1
@@ -371,7 +371,7 @@ Function Cruce31(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -417,7 +417,7 @@ Function Cruce31F(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -465,7 +465,7 @@ Function Blanco31(in number Velocidad, in number kp, in number ki, in number kd)
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -511,7 +511,7 @@ Function Blanco31F(in number Velocidad, in number kp, in number ki, in number kd
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -559,7 +559,7 @@ Function Encoder31(in number Velocidad, in number kp, in number ki, in number kd
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
@@ -609,7 +609,7 @@ Function Encoder31F(in number Velocidad, in number kp, in number ki, in number k
   I = "B"
   D = "C"
   
-  distancia = 5 * 360 / (6.24 * Math.Pi)
+  distancia = 8 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
