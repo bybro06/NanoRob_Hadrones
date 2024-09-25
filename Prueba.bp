@@ -7,13 +7,28 @@ import "modules/Smart"
 import "modules/RGB"
 
 'Thread.Run = Display
-Smart.Encoder14(40,0.18,0.0004,5,80)
-Recto.Decel(40,10,15,0)
-Giro.Grados(30,-30,165)
-Smart.Encoder31(40,0.18,0.0004,5,80)
-Recto.Decel(40,10,15,0)
-Giro.Grados(30,-30,165)
+Main()
 
+Sub Main
+  StartArm()
+  Coger()
+  coger()
+  coger()
+  coger()
+  coger()
+  Program.Delay(5000)
+  Brazo.DEncoder(50,0)
+EndSub
+
+Sub StartArm
+  Brazo.ADTimer(40,0,800)
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  Brazo.AEncoder(30,-110)
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  Brazo.AEncoder(30,-130)
+EndSub
 
 Sub Display
   While "True"
@@ -25,4 +40,15 @@ Sub Display
     LCD.Update()
     Program.Delay(100)
    EndWhile
+EndSub
+
+Sub Coger
+  Brazo.AEncoder(50,-210)
+  Recto.Encoder(25,6)
+  Brazo.AEncoder(30,-60)
+  Program.Delay(200)
+  Brazo.DTimer(60,400)
+  Brazo.AEncoder(50,90)
+  Brazo.DEncoder(60,-80)
+  Brazo.AEncoder(50,-130)
 EndSub
