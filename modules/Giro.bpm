@@ -5,7 +5,7 @@ Function Grados(in number Velocidad1, in number Velocidad2, in number Grados)
   I = "B"
   D = "C"
   
-  G1 = 124/36 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 1035/360 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
 
   Signo = (Velocidad1 / Velocidad2) / Math.Abs(Velocidad1 / Velocidad2)
   

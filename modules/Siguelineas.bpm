@@ -15,13 +15,13 @@ Function Cruce14(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -84,13 +84,13 @@ Function Cruce14F(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -148,13 +148,13 @@ Function Blanco14(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -210,13 +210,13 @@ Function Blanco14F(in number Velocidad, in number kp, in number ki, in number kd
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -274,13 +274,13 @@ Function Encoder14(in number Velocidad, in number kp, in number ki, in number kd
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -341,13 +341,13 @@ Function Encoder14F(in number Velocidad, in number kp, in number ki, in number k
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -440,13 +440,13 @@ Function Cruce31(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -502,13 +502,13 @@ Function Cruce31F(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -566,13 +566,13 @@ Function Blanco31(in number Velocidad, in number kp, in number ki, in number kd)
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -628,13 +628,13 @@ Function Blanco31F(in number Velocidad, in number kp, in number ki, in number kd
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -692,13 +692,13 @@ Function Encoder31(in number Velocidad, in number kp, in number ki, in number kd
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -759,13 +759,13 @@ Function Encoder31F(in number Velocidad, in number kp, in number ki, in number k
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -863,13 +863,13 @@ Function Cruce_Externo(in number Velocidad, in number kp, in number ki, in numbe
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50
@@ -921,13 +921,13 @@ Function Cruce_ExternoF(in number Velocidad, in number kp, in number ki, in numb
   Velocidad *= 1
 
   negro1 = 0
-  blanco1 = 100
+  blanco1 = 99
 
-  negro4 = 0
-  blanco4 = 100
+  negro4 = 2
+  blanco4 = 114
 
   negro3 = 0
-  blanco3 = 100
+  blanco3 = 114
 
   lectura1 = 50
   lectura3 = 50

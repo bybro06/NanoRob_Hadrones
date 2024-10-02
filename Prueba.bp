@@ -10,14 +10,9 @@ import "modules/RGB"
 Main()
 
 Sub Main
-  StartArm()
-  Coger()
-  coger()
-  coger()
-  coger()
-  coger()
-  Program.Delay(5000)
-  Brazo.DEncoder(50,0)
+  setup()
+  
+  Giro.Grados(30,-30,270)
 EndSub
 
 Sub StartArm
@@ -51,4 +46,11 @@ Sub Coger
   Brazo.AEncoder(50,90)
   Brazo.DEncoder(60,-80)
   Brazo.AEncoder(50,-130)
+EndSub
+
+Sub Setup
+  Sensor.SetMode(1,0)
+  Sensor.SetMode(2,3)
+  Sensor.SetMode(3,0)
+  Sensor.SetMode(4,0)
 EndSub
