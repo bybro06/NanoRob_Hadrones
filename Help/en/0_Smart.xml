@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <doc>
   <members>
-    <member name="T:Siguelineas">
+    <member name="T:Smart">
       <summary>
-        Siguelíneas con control PID por Nanorob Hadrones.
+        Siguelíneas con comienzo ralentizado de 8 cm con control PID por Nanorob Hadrones.
         Normalización de lecturas añadida el 02/10/2024.
         Hacer lecturas y cambiar blancos y negros en los .bpm
       </summary>
@@ -11,7 +11,7 @@
 	
 	  <member name="M:Cruce14">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de negros usando sensores 1 y 4 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -21,7 +21,7 @@
 	
 	  <member name="M:Cruce14F">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de negros usando sensores 1 y 4 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -31,7 +31,7 @@
 
 	  <member name="M:Blanco14">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de blancos usando sensores 1 y 4 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -41,7 +41,7 @@
 	
 	  <member name="M:Blanco14F">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de blancos usando sensores 1 y 4 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -51,7 +51,7 @@
 	
     <member name="M:Encoder14">
       <summary>
-        Siguelineas por encoder usando sensores 1 y 4 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado por encoder usando sensores 1 y 4 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -62,7 +62,7 @@
 	
     <member name="M:Encoder14F">
       <summary>
-        Siguelineas por encoder usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado por encoder usando sensores 1 y 4 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -73,7 +73,7 @@
 	
 	<member name="M:Cruces14">
       <summary>
-        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta x cruces usando sensores 1 y 4 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -84,7 +84,7 @@
 	
 	<member name="M:Cruces14F">
       <summary>
-        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta x cruces usando sensores 1 y 4 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -95,7 +95,7 @@
 	
 	  <member name="M:Cruce31">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de negros usando sensores 3 y 1 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -105,7 +105,7 @@
 	
 	  <member name="M:Cruce31F">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de negros usando sensores 3 y 1 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -115,7 +115,7 @@
 
 	  <member name="M:Blanco31">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de blancos usando sensores 3 y 1 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -125,7 +125,7 @@
 	
 	  <member name="M:Blanco31F">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta cruce de blancos usando sensores 3 y 1 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -135,7 +135,7 @@
 	
     <member name="M:Encoder31">
       <summary>
-        Siguelineas por encoder usando sensores 3 y 1 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado por encoder usando sensores 3 y 1 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -146,7 +146,7 @@
 	
     <member name="M:Encoder31F">
       <summary>
-        Siguelineas por encoder usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado por encoder usando sensores 3 y 1 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -157,7 +157,7 @@
 	
 	<member name="M:Cruces31">
       <summary>
-        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta x cruces usando sensores 3 y 1 con corrección PID con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -168,7 +168,7 @@
 	
 	<member name="M:Cruces31F">
       <summary>
-        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta x cruces usando sensores 3 y 1 con corrección PID sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="kp">Constante proporcional.</param>
@@ -179,7 +179,7 @@
 	
     <member name="M:Cruce_Externo">
       <summary>
-        Siguelineas hasta cruce unilateral, con corrección PID con freno.
+        Siguelíneas con comienzo ralentizado hasta cruce unilateral, con corrección PID con freno.
         Asumiendo disposición de sensores 3-1-4
   
         Si el cruce es a la derecha, lee con 3-1 y detecta con 4
@@ -194,7 +194,7 @@
 
     <member name="M:Cruce_ExternoF">
       <summary>
-        Siguelineas hasta cruce unilateral, con corrección PID sin freno.
+        Siguelíneas con comienzo ralentizado hasta cruce unilateral, con corrección PID sin freno.
         Asumiendo disposición de sensores 3-1-4
   
         Si el cruce es a la derecha, lee con 3-1 y detecta con 4

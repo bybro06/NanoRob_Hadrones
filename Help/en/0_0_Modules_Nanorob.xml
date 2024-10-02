@@ -3,9 +3,9 @@
   <members>
     <member name="W:Modules_NanorobHadrones">
       <summary>
-		Version: 1.0, 21/09/2024
-    Diseñado para base motriz de dos motores medianos. Motor B invertido por defecto.
-    Para cambiar el sentido de los motores, cambiar "Sentido_Motores" de 1 a -1 en cada .bpm
+        Version: 1.1 , 02/10/2024
+        Diseñado para base motriz de dos motores medianos. Motor B invertido por defecto.
+        Creado por Nanorob Hadrones el 21/09/2024
       </summary>
     </member>
 	
