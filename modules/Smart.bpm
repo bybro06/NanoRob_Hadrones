@@ -892,8 +892,19 @@ Function Cruce_Externo(in number Velocidad, in number kp, in number ki, in numbe
   'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   lectura = 50
+
+  start_Velocidad = Velocidad
+
+  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   While lectura > 10
+
+    'Corrección fuerte los primeros 8 cm
+    If encoder_C < distancia Then
+      Velocidad = 20
+    Else
+      Velocidad = start_Velocidad
+    EndIf
     
     If reader = 3 Then
       lectura = lectura3
@@ -950,8 +961,19 @@ Function Cruce_ExternoF(in number Velocidad, in number kp, in number ki, in numb
   'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   lectura = 50
+
+  start_Velocidad = Velocidad
+
+  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   While lectura > 10
+
+    'Corrección fuerte los primeros 8 cm
+    If encoder_C < distancia Then
+      Velocidad = 20
+    Else
+      Velocidad = start_Velocidad
+    EndIf
     
     If reader = 3 Then
       lectura = lectura3
