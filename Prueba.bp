@@ -6,14 +6,36 @@ import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
 
-'Thread.Run = Display
+Thread.Run = Molino
 Main()
 
 Sub Main
   setup()
   
-  Giro.Grados(30,-30,270)
+  Giro.GradosF(30,6.5,90)
+  Siguelineas.Cruce_Externo(30,0.1,0.0002,3,3)
+
+  Giro.Grados(-20,30,85)
+  Recto.EncoderF(45,60)
+  
+  Giro.Grados(30,-30,92)
+  Recto.Encoder(30,45)
+  
+  Giro.Grados(30,-30,40)
+  Giro.Grados(-30,30,80)
+  
+  Giro.Grados(30,-30,120)
+  Giro.Grados(-30,30,80)
+  
+  Giro.Grados(30,-30,20)
+  Giro.Grados(-30,30,20)
+  
 EndSub
+
+Sub Molino
+  Brazo.ATimer(50,100000)
+EndSub
+
 
 Sub StartArm
   Brazo.ADTimer(40,0,800)

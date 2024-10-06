@@ -29,7 +29,7 @@ Function GradosF(in number Velocidad1, in number Velocidad2, in number Grados)
   I = "B"
   D = "C"
   
-  G1 = 124/36 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 1035/360 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
 
   Signo = (Velocidad1 / Velocidad2) / Math.Abs(Velocidad1 / Velocidad2)
   
@@ -65,11 +65,18 @@ Function Encoder(in number Velocidad1, in number Velocidad2, in number Encoder)
 
   distancia = Encoder / (6.24 * Math.Pi) * 360
   
-  encoder_inicio = (Math.abs(MotorB.GetTacho())+Math.abs(MotorC.GetTacho()))/2
-  
-  While (Math.abs(MotorB.GetTacho())+Math.abs(MotorC.GetTacho()))/2 - encoder_inicio < distancia
+  encoder_inicio_B = MotorB.GetTacho()*-1
+  encoder_inicio_C = MotorC.GetTacho()
 
-    error = ((MotorB.GetTacho()*-Velocidad1)-(MotorC.GetTacho()*Velocidad2))
+  encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
+  encoder_C = MotorC.GetTacho() - encoder_inicio_C
+  
+  While (Math.abs(encoder_B)+Math.abs(encoder_C))/2 < distancia
+
+    encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
+    encoder_C = MotorC.GetTacho() - encoder_inicio_C
+
+    error = (encoder_B*Velocidad1)-(encoder_C*Velocidad2)
     errsum += error
     correccion = error * kp + errsum * ki + (error - olderror) * kd
     
@@ -99,11 +106,18 @@ Function EncoderF(in number Velocidad1, in number Velocidad2, in number Encoder)
 
   distancia = Encoder / (6.24 * Math.Pi)* 360
   
-  encoder_inicio = (Math.abs(MotorB.GetTacho())+Math.abs(MotorC.GetTacho()))/2
-  
-  While (Math.abs(MotorB.GetTacho())+Math.abs(MotorC.GetTacho()))/2 - encoder_inicio < distancia
+  encoder_inicio_B = MotorB.GetTacho()*-1
+  encoder_inicio_C = MotorC.GetTacho()
 
-    error = ((MotorB.GetTacho()*-Velocidad1)-(MotorC.GetTacho()*Velocidad2))
+  encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
+  encoder_C = MotorC.GetTacho() - encoder_inicio_C
+  
+  While (Math.abs(encoder_B)+Math.abs(encoder_C))/2 < distancia
+
+    encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
+    encoder_C = MotorC.GetTacho() - encoder_inicio_C
+
+    error = (encoder_B*Velocidad1)-(encoder_C*Velocidad2)
     errsum += error
     correccion = error * kp + errsum * ki + (error - olderror) * kd
     

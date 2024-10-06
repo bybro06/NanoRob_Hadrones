@@ -46,7 +46,7 @@ Function Cruce14(in number Velocidad, in number kp, in number ki, in number kd)
   
   encoder_inicio = MotorC.GetTacho()
   
-  While lectura1 > 5 Or lectura4 > 5
+  While lectura1 > 10 Or lectura4 > 10
     
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoder_inicio < distancia Then
