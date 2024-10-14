@@ -6,21 +6,41 @@ import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
 
+encoderD = 0
+setup()
+Thread.Run = ControlBrazo
 Main()
 
+
+
 Sub Main
-  setup()
   
-  Recto.Encoder(90,200)
-  Recto.Encoder(-100,2)
-  Giro.Grados(80,-80,180)
-  Recto.Encoder(90,200)
-  Recto.Encoder(-100,2)
+  for i=0 to 20
+    Motor.MoveSync("BC",-100,100,100,"True")
+    Motor.MoveSync("BC",100,-100,360,"True")
+  EndFor
   
 EndSub
 
-Sub Molino
-  Brazo.ATimer(50,100000)
+Sub ControlBrazo
+  encoderA = 0
+  encoderD = 0
+  
+  errorA = 0
+  olderrorA = 0
+  
+  errorD = 0
+  olderrorD = 0
+  
+  While "True"
+    errorA = encoderA - MotorA.GetTacho()
+    errorD = encoderD - MotorD.GetTacho()
+    correccionA = errorA * 1 + (errorA - olderrorA) * 0.3
+    correccionD = errorD * 1 + (errorD - olderrorD) * 1
+    MotorA.StartSpeed(correccionA)
+    MotorD.StartSpeed(correccionD)
+  EndWhile
+  
 EndSub
 
 
@@ -63,3 +83,27 @@ Sub Setup
   Sensor.SetMode(3,0)
   Sensor.SetMode(4,0)
 EndSub
+
+Function DEncoder(in number Velocidad, in number Encoder)
+  
+  encDiff = Encoder - Motor.GetCount("D")
+  
+  signo = encDiff / Math.Abs(encDiff)
+  
+  SafetyTimer = Math.Max(((Math.abs(encDiff)/100)/(Velocidad/20)*650*2),400)
+  
+  Time.Reset3()
+  
+  If encDiff <> 0 Then
+    
+    While Math.Abs(Motor.GetCount("D") - Encoder) > 15 and Time.Get3() < SafetyTimer
+      ' Puedes ajustar el VelocidadAlor (5) para controlar la precisión
+      @encoderD = @encoderD * (Velocidad/500*signo)
+      LCD.Clear()
+		  LCD.Write(5,30,"SafetyTimer: "+SafetyTimer)
+    EndWhile
+    
+    Motor.Stop("D", "True")
+  EndIf
+  
+EndFunction
