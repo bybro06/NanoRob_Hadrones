@@ -11,11 +11,7 @@ Main()
 Sub Main
   setup()
   
-  Recto.Encoder(90,200)
-  Recto.Encoder(-100,2)
-  Giro.Grados(80,-80,180)
-  Recto.Encoder(90,200)
-  Recto.Encoder(-100,2)
+  Recto.Encoder(80,150)
   
 EndSub
 

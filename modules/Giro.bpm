@@ -3,7 +3,7 @@
 'Antiguos Giros Universales
 Function Grados(in number velocidad1, in number velocidad2, in number grados)
   
-  G1 = 1135/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 985/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
 
   signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
   
@@ -26,7 +26,7 @@ EndFunction
 
 Function GradosF(in number velocidad1, in number velocidad2, in number grados)
   
-  G1 = 1135/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 985/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
 
   signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
   
