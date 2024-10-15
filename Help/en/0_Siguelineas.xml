@@ -3,207 +3,154 @@
   <members>
     <member name="T:Siguelineas">
       <summary>
-        Siguelíneas con control PID por Nanorob Hadrones.
+        Siguelíneas con control PD dinámico por Nanorob Hadrones.
         Normalización de lecturas añadida el 02/10/2024.
+        kp y kd variables añadidos el 15/10/2024
         Hacer lecturas y cambiar blancos y negros en los .bpm
       </summary>
     </member>
 	
 	  <member name="M:Cruce14">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PID con freno.
+        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
 	  <member name="M:Cruce14F">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 
 	  <member name="M:Blanco14">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PID con freno.
+        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
 	  <member name="M:Blanco14F">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelineas hasta cruce de blancos usando sensores 1 y 4 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
     <member name="M:Encoder14">
       <summary>
-        Siguelineas por encoder usando sensores 1 y 4 con corrección PID con freno.
+        Siguelineas por encoder usando sensores 1 y 4 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Encoder">Distancia en cm.</param>
     </member>
 	
     <member name="M:Encoder14F">
       <summary>
-        Siguelineas por encoder usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelineas por encoder usando sensores 1 y 4 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Encoder">Distancia en cm.</param>
     </member>
 	
 	<member name="M:Cruces14">
       <summary>
-        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PID con freno.
+        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Cruces">Número de cruces.</param>
     </member>
 	
 	<member name="M:Cruces14F">
       <summary>
-        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PID sin freno.
+        Siguelineas hasta x cruces usando sensores 1 y 4 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Cruces">Número de cruces.</param>
     </member>
 	
 	  <member name="M:Cruce31">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PID con freno.
+        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
 	  <member name="M:Cruce31F">
       <summary>
-        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelineas hasta cruce de negros usando sensores 3 y 1 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 
 	  <member name="M:Blanco31">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PID con freno.
+        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
 	  <member name="M:Blanco31F">
       <summary>
-        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
     </member>
 	
     <member name="M:Encoder31">
       <summary>
-        Siguelineas por encoder usando sensores 3 y 1 con corrección PID con freno.
+        Siguelineas por encoder usando sensores 3 y 1 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Encoder">Distancia en cm.</param>
     </member>
 	
     <member name="M:Encoder31F">
       <summary>
-        Siguelineas por encoder usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelineas por encoder usando sensores 3 y 1 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Encoder">Distancia en cm.</param>
     </member>
 	
 	<member name="M:Cruces31">
       <summary>
-        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PID con freno.
+        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PD dinámica con freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Cruces">Número de cruces.</param>
     </member>
 	
 	<member name="M:Cruces31F">
       <summary>
-        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PID sin freno.
+        Siguelineas hasta x cruces usando sensores 3 y 1 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="Cruces">Número de cruces.</param>
     </member>
 	
     <member name="M:Cruce_Externo">
       <summary>
-        Siguelineas hasta cruce unilateral, con corrección PID con freno.
+        Siguelineas hasta cruce unilateral, con corrección PD dinámica con freno.
         Asumiendo disposición de sensores 3-1-4
   
         Si el cruce es a la derecha, lee con 3-1 y detecta con 4
         Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="reader">Sensor de lectura de cruce unilateral.</param>
     </member>
 
     <member name="M:Cruce_ExternoF">
       <summary>
-        Siguelineas hasta cruce unilateral, con corrección PID sin freno.
+        Siguelineas hasta cruce unilateral, con corrección PD dinámica sin freno.
         Asumiendo disposición de sensores 3-1-4
   
         Si el cruce es a la derecha, lee con 3-1 y detecta con 4
         Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
-      <param name="kp">Constante proporcional.</param>
-      <param name="ki">Constante integral.</param>
-      <param name="kd">Constante derivativa.</param>
       <param name="reader">Sensor de lectura de cruce unilateral.</param>
     </member>
   </members>
