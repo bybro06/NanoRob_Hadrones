@@ -7,6 +7,7 @@ Function Encoder(in number velocidad, in number distancia)
   correccion = 0
   enc = distancia*360 / Math.Pi / 6.24
   MotorBC.Off()
+  Program.Delay(500)
   Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"True")
 
 EndFunction
@@ -183,65 +184,66 @@ Function TiempoF(in number velocidad, in number tiempo)
 EndFunction
 
 'Con Aceleración y deceleración
-Function AccelDecel(in number v0, in number vMax, in number distancia1, in number distancia2, in number distancia3)
-
-  ' Configuración inicial
+Function AccelDecel(in number v0, in number vMax, in number distancia1,in number distancia2, in number distancia3)
+  
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
   
-  signo = Math.Sign(v0)
-  
-  ' Limitamos potencias y ajustamos signo
-  v0 = Math.Max(8, Math.Abs(v0)) * signo
-  vMax = Math.Min(90, Math.Abs(vMax)) * signo
-  
-  ' Inicialización de variables
-  vel = 0
-  kp = 0.4
-  kd = 0.5
-  error = 0
-  olderror = 0
   encoderB = 0
   encoderC = 0
 
-  ' Conversión de distancias a grados
-  grados1 = distancia1 * 360 / (5.6 * Math.Pi)
-  grados2 = distancia2 * 360 / (5.6 * Math.Pi)
-  grados3 = distancia3 * 360 / (5.6 * Math.Pi)
-  totalGrados = grados1 + grados2 + grados3
+  signo = v0/Math.Abs(v0)
+  
+  v0 = Math.Max(8,Math.Abs(v0))*signo
+  vMax = Math.Min(90,Math.Abs(vMax))*signo 'Limitamos las potencias
+  
+  vel = 0
+  kp = 0.4
+  kd = 0.5
+  
+  error = 0
+  olderror = 0
 
-  ' Bucle principal: Aceleración, velocidad constante y desaceleración
-  While Math.Abs(encoderC) < totalGrados
+  grados1 = distancia1*360/(6.24*math.pi)
+  grados2 = distancia2*360/(6.24*math.pi)
+  grados3 = distancia3*360/(6.24*math.pi)
+  
+  While Math.Abs(encoderC) < grados1 + grados2 + grados3
     
-    ' Cálculo de encoders
     encoderB = Motor.GetCount("B") - startB
     encoderC = Motor.GetCount("C") - startC
-
-    ' Aceleración y velocidad constante
+    
+    #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
     If Math.Abs(encoderC) < grados1 + grados2 Then
-      pendiente = (vMax - v0) / grados1
-      vel = Math.Min(vMax, pendiente * encoderC + v0) * signo
+      ' Aceleración y velocidad Cte
+      pendiente = (vMax - v0) / grados1 * signo
+      If signo > 0 Then
+        vel = Math.Min(vMax, pendiente * encoderC + v0)
+      Else
+        vel = Math.Max(vMax, pendiente * encoderC + v0)
+      EndIf
     Else
-      ' Desaceleración
-      pendiente = (v0 - vMax) / grados3
-      vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax) * signo
+      ' Deceleración
+      pendiente = (v0 - vMax) / grados3 * signo
+      If signo > 0 Then
+        vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax)
+      Else
+        vel = Math.Min(v0, pendiente * (encoderC + grados1 + grados2) + vMax)
+      EndIf
     EndIf
     
-    ' Corrección PID para mantener recto
-    error = -1 * (encoderB + encoderC)
-    correccion = error * kp + (error - olderror) * kd
-
-    ' Aplicar potencia corregida a los motores
-    Motor.StartSync("BC", -(vel - correccion), vel + correccion)
+    #Correción PID para mantener el robot recto
+    
+    error = (-1*encoderB - encoderC)*1
+    correccion = error*kp + (error-olderror)*kd
+    
+    Motor.StartSync("BC",-(vel-correccion),(vel+correccion))
     olderror = error
-
   EndWhile
   
-  ' Detener motores con frenado
   MotorBC.OffAndBrake()
-
+  
 EndFunction
-
 
 Function AccelDecelF(in number v0, in number vMax, in number distancia1,in number distancia2, in number distancia3)
   
@@ -250,9 +252,11 @@ Function AccelDecelF(in number v0, in number vMax, in number distancia1,in numbe
   
   encoderB = 0
   encoderC = 0
+
+  signo = v0/Math.Abs(v0)
   
-  v0 = Math.Max(8,v0)*1
-  vMax = Math.Min(90,vMax)*1 'Limitamos las potencias
+  v0 = Math.Max(8,Math.Abs(v0))*signo
+  vMax = Math.Min(90,Math.Abs(vMax))*signo 'Limitamos las potencias
   
   vel = 0
   kp = 0.4
@@ -260,48 +264,57 @@ Function AccelDecelF(in number v0, in number vMax, in number distancia1,in numbe
   
   error = 0
   olderror = 0
+
+  grados1 = distancia1*360/(6.24*math.pi)
+  grados2 = distancia2*360/(6.24*math.pi)
+  grados3 = distancia3*360/(6.24*math.pi)
   
-  grados1 = distancia1*360/(5.6*math.pi)
-  grados2 = distancia2*360/(5.6*math.pi)
-  grados3 = distancia3*360/(5.6*math.pi)
-  
-  While encoderC < grados1 + grados2 + grados3
+  While Math.Abs(encoderC) < grados1 + grados2 + grados3
     
     encoderB = Motor.GetCount("B") - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    If encoderC < grados1 + grados2 Then
+    If Math.Abs(encoderC) < grados1 + grados2 Then
       ' Aceleración y velocidad Cte
-      pendiente = (vMax - v0) / grados1
-      vel = Math.Min(vMax, pendiente * encoderC + v0)
+      pendiente = (vMax - v0) / grados1 * signo
+      If signo > 0 Then
+        vel = Math.Min(vMax, pendiente * encoderC + v0)
+      Else
+        vel = Math.Max(vMax, pendiente * encoderC + v0)
+      EndIf
     Else
       ' Deceleración
-      pendiente = (v0 - vMax) / grados3
-      vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax)
+      pendiente = (v0 - vMax) / grados3 * signo
+      If signo > 0 Then
+        vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax)
+      Else
+        vel = Math.Min(v0, pendiente * (encoderC + grados1 + grados2) + vMax)
+      EndIf
     EndIf
     
     #Correción PID para mantener el robot recto
     
     error = (-1*encoderB - encoderC)*1
     correccion = error*kp + (error-olderror)*kd
-    olderror = error
-    Motor.StartSync("BC",-(vel-correccion),(vel+correccion))
     
+    Motor.StartSync("BC",-(vel-correccion),(vel+correccion))
+    olderror = error
   EndWhile
   
   MotorBC.Off()
   
 EndFunction
 
-
 Function Decel(in number v0, in number vMin, in number distancia1,in number distancia2)
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
+
+  signo = v0/Math.Abs(v0)
   
-  v0 = Math.Min(90,v0)
-  vMin = Math.Max(8,vMin) 'Limitamos las potencias
+  v0 = Math.Min(90,Math.Abs(v0))*signo
+  vMin = Math.Max(8,Math.Abs(vMin))*signo 'Limitamos las potencias
   
   vel = 0
   kp = 0.4
@@ -310,20 +323,24 @@ Function Decel(in number v0, in number vMin, in number distancia1,in number dist
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(5.6*math.pi)
-  grados2 = distancia2*360/(5.6*math.pi)
+  grados1 = distancia1*360/(6.24*math.pi)
+  grados2 = distancia2*360/(6.24*math.pi)
   
   encoderB = 0
   encoderC = 0
   
-  While encoderC < grados1 + grados2
+  While Math.Abs(encoderC) < grados1 + grados2
     
     encoderB = Motor.GetCount("B") - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / grados1
-    vel = Math.Max(vMin, pendiente * encoderC + v0)    
+    pendiente = (vMin - v0) / grados1 * signo
+      If signo > 0 Then
+        vel = Math.Max(vMin, pendiente * encoderC + v0)
+      Else
+        vel = Math.Min(vMin, pendiente * encoderC + v0)
+      EndIf
     #Correción PID para mantener el robot recto
     
     error = (-1*encoderB - encoderC)*1
@@ -341,9 +358,11 @@ Function DecelF(in number v0, in number vMin, in number distancia1,in number dis
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
+
+  signo = v0/Math.Abs(v0)
   
-  v0 = Math.Min(90,v0)
-  vMin = Math.Max(8,vMin) 'Limitamos las potencias
+  v0 = Math.Min(90,Math.Abs(v0))*signo
+  vMin = Math.Max(8,Math.Abs(vMin))*signo 'Limitamos las potencias
   
   vel = 0
   kp = 0.4
@@ -352,20 +371,24 @@ Function DecelF(in number v0, in number vMin, in number distancia1,in number dis
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(5.6*math.pi)
-  grados2 = distancia2*360/(5.6*math.pi)
+  grados1 = distancia1*360/(6.24*math.pi)
+  grados2 = distancia2*360/(6.24*math.pi)
   
   encoderB = 0
   encoderC = 0
   
-  While encoderC < grados1 + grados2
+  While Math.Abs(encoderC) < grados1 + grados2
     
     encoderB = Motor.GetCount("B") - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / grados1
-    vel = Math.Max(vMin, pendiente * encoderC + v0)    
+    pendiente = (vMin - v0) / grados1 * signo
+      If signo > 0 Then
+        vel = Math.Max(vMin, pendiente * encoderC + v0)
+      Else
+        vel = Math.Min(vMin, pendiente * encoderC + v0)
+      EndIf
     #Correción PID para mantener el robot recto
     
     error = (-1*encoderB - encoderC)*1

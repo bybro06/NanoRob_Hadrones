@@ -14,20 +14,22 @@ Function Cruce14(in number velocidad, in number kp, in number kd)
   
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
   
   
+  kp = velocidad/200
+  kd = kp * 28
   
   distancia = 5 * 360 / (6.24 * Math.Pi)
   
@@ -64,7 +66,7 @@ Function Cruce14(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
 Function Cruce14F(in number velocidad, in number kp, in number kd)
@@ -77,14 +79,14 @@ Function Cruce14F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -126,7 +128,7 @@ Function Cruce14F(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta ambos blancos
@@ -135,14 +137,14 @@ Function Blanco14(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -184,21 +186,21 @@ Function Blanco14(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
 Function Blanco14F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -249,14 +251,14 @@ Function Encoder14(in number velocidad, in number kp, in number kd, in number en
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -310,14 +312,14 @@ Function Encoder14F(in number velocidad, in number kp, in number kd, in number e
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -403,14 +405,14 @@ Function Cruce31(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -459,14 +461,14 @@ Function Cruce31F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -517,14 +519,14 @@ Function Blanco31(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -573,14 +575,14 @@ Function Blanco31F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -631,14 +633,14 @@ Function Encoder31(in number velocidad, in number kp, in number kd, in number en
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -692,14 +694,14 @@ Function Encoder31F(in number velocidad, in number kp, in number kd, in number e
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -790,14 +792,14 @@ Function Cruce_Externo(in number velocidad, in number kp, in number kd, in numbe
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -845,14 +847,14 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in numb
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50

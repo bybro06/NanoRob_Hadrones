@@ -4,7 +4,7 @@
 
 'Siguelíneas hasta cruce
 
-Function Cruce14(in number velocidad, in number kp, in number ki, in number kd)
+Function Cruce14(in number velocidad, in number kp, in number kd)
   'Siguelíneas 1-4 PID
   
   #Valores ideales:
@@ -14,48 +14,47 @@ Function Cruce14(in number velocidad, in number kp, in number ki, in number kd)
   
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  kp = velocidad/200
+  kd = kp * 28
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
-  errsum = 0
   
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
   
-  While lectura1 > 1 Or lectura4 > 1
+  While lectura1 > 10 Or lectura4 > 10
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -63,18 +62,14 @@ Function Cruce14(in number velocidad, in number kp, in number ki, in number kd)
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
 
     error = (lectura1 - lectura4)*sentido*1
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
+    u = error*kp + (error-olderror)*kd
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
-  LCD.Clear()
-  LCD.Write(5,10,"Lectura 1: "+lectura1)
-  LCD.Write(5,20,"Lectura 4: "+lectura4)
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce14F(in number velocidad, in number kp, in number ki, in number kd)
+Function Cruce14F(in number velocidad, in number kp, in number kd)
   'Siguelíneas 1-4 PID Sin Frenos
 
   #Valores ideales:
@@ -84,47 +79,44 @@ Function Cruce14F(in number velocidad, in number kp, in number ki, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
   
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
 
   While lectura1 > 5 Or lectura4 > 5
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -132,61 +124,57 @@ Function Cruce14F(in number velocidad, in number kp, in number ki, in number kd)
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
 
     error = (lectura1 - lectura4) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco14(in number velocidad, in number kp, in number ki, in number kd)
+Function Blanco14(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
 
   encoderInicio = MotorC.GetTacho()
 
   While lectura1 < 90 Or lectura4 < 90
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -194,59 +182,55 @@ Function Blanco14(in number velocidad, in number kp, in number ki, in number kd)
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
 
     error = (lectura1 - lectura4) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco14F(in number velocidad, in number kp, in number ki, in number kd)
+Function Blanco14F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
 
   encoderInicio = MotorC.GetTacho()
 
   While lectura1 < 90 Or lectura4 < 90
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -254,8 +238,7 @@ Function Blanco14F(in number velocidad, in number kp, in number ki, in number kd
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
 
     error = (lectura1 - lectura4) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
@@ -264,56 +247,53 @@ EndFunction
 
 'Siguelíneas por encoder
 
-Function Encoder14(in number velocidad, in number kp, in number ki, in number kd, in number encoder)
+Function Encoder14(in number velocidad, in number kp, in number kd, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoder = encoder / (6.24 * Math.Pi) * 360
   
-  StartC = Motor.GetCount("C")
+  startC = Motor.GetCount("C")
   encoderC = 0
 
   While Math.Abs(encoderC) < encoder
     
-    encoderC = Motor.GetCount("C") - StartC
+    encoderC = Motor.GetCount("C") - startC
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -321,72 +301,67 @@ Function Encoder14(in number velocidad, in number kp, in number ki, in number kd
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
 
     error = (lectura1 - lectura4) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
   Motor.Stop("BC", "True")
 EndFunction
 
-Function Encoder14F(in number velocidad, in number kp, in number ki, in number kd, in number encoder)
+Function Encoder14F(in number velocidad, in number kp, in number kd, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoder = encoder / (6.24 * Math.Pi) * 360
   
-  StartC = Motor.GetCount("C")
+  startC = Motor.GetCount("C")
   encoderC = 0
 
   While Math.Abs(encoderC) < encoder
     
-    encoderC = Motor.GetCount("C") - StartC
+    encoderC = Motor.GetCount("C") - startC
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     
     lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
     EndIf    
     error = (lectura1 - lectura4) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
@@ -395,7 +370,7 @@ EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function Cruces14(in number velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces14(in number velocidad, in number kp, in number kd, in number Cruces)
   
   Cruce14F(velocidad, kp, ki, kd)
   
@@ -410,7 +385,7 @@ Function Cruces14(in number velocidad, in number kp, in number ki, in number kd,
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruces14F(in number velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces14F(in number velocidad, in number kp, in number kd, in number Cruces)
   
   Cruce14F(velocidad, kp, ki, kd)
   
@@ -426,51 +401,48 @@ Function Cruces14F(in number velocidad, in number kp, in number ki, in number kd
 EndFunction
 
 'SIGUELINEAS 31
-Function Cruce31(in number velocidad, in number kp, in number ki, in number kd)
+Function Cruce31(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
 
   While lectura3 > 15 Or lectura1 > 15
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -478,59 +450,55 @@ Function Cruce31(in number velocidad, in number kp, in number ki, in number kd)
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
 
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
   Motor.Stop("BC", "True")
 EndFunction
 
-Function Cruce31F(in number velocidad, in number kp, in number ki, in number kd)
+Function Cruce31F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
 
   While lectura3 > 15 Or lectura1 > 15
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -538,8 +506,7 @@ Function Cruce31F(in number velocidad, in number kp, in number ki, in number kd)
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
 
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
@@ -548,51 +515,48 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco31(in number velocidad, in number kp, in number ki, in number kd)
+Function Blanco31(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
 
   While lectura3 < 90 Or lectura1 < 90
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -600,59 +564,55 @@ Function Blanco31(in number velocidad, in number kp, in number ki, in number kd)
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
 
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
   Motor.Stop("BC", "True")
 EndFunction
 
-Function Blanco31F(in number velocidad, in number kp, in number ki, in number kd)
+Function Blanco31F(in number velocidad, in number kp, in number kd)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoderInicio = MotorC.GetTacho()
 
   While lectura3 < 90 Or lectura1 < 90
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
     
@@ -660,8 +620,7 @@ Function Blanco31F(in number velocidad, in number kp, in number ki, in number kd
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
 
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
@@ -670,56 +629,53 @@ EndFunction
 
 'Siguelíneas por encoder
 
-Function Encoder31(in number velocidad, in number kp, in number ki, in number kd, in number encoder)
+Function Encoder31(in number velocidad, in number kp, in number kd, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoder = encoder / (6.24 * Math.Pi) * 360
   
-  StartC = Motor.GetCount("C")
+  startC = Motor.GetCount("C")
   encoderC = 0
 
   While Math.Abs(encoderC) < encoder
     
-    encoderC = Motor.GetCount("C") - StartC
+    encoderC = Motor.GetCount("C") - startC
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
 
@@ -727,64 +683,60 @@ Function Encoder31(in number velocidad, in number kp, in number ki, in number kd
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
 
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
   Motor.Stop("BC", "True")
 EndFunction
 
-Function Encoder31F(in number velocidad, in number kp, in number ki, in number kd, in number encoder)
+Function Encoder31F(in number velocidad, in number kp, in number kd, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
   
-  distancia = 8 * 360 / (6.24 * Math.Pi)
+  
+  
+  distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
   startVelocidad = velocidad
   startKp = kp
-  startKi = ki
   startKd = kd
   
   encoder = encoder / (6.24 * Math.Pi) * 360
   
-  StartC = Motor.GetCount("C")
+  startC = Motor.GetCount("C")
   encoderC = 0
 
   While Math.Abs(encoderC) < encoder
     
-    encoderC = Motor.GetCount("C") - StartC
+    encoderC = Motor.GetCount("C") - startC
     
-    'Corrección fuerte los primeros 8 cm
+    'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
       kp = startKp * 1
-      ki = startKi * 1
       kd = startKd * 1
     Else
       velocidad = startVelocidad
       kp = startKp
-      ki = startKi
       kd = startKd
     EndIf
 
@@ -792,8 +744,7 @@ Function Encoder31F(in number velocidad, in number kp, in number ki, in number k
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
        
     error = (lectura3 - lectura1) * sentido * 1
-    errsum += error
-    u = error * kp + (error - olderror) * kd + errsum * ki
+    u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
@@ -802,7 +753,7 @@ EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function Cruces31(in number velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces31(in number velocidad, in number kp, in number kd, in number Cruces)
   
   Cruce31F(velocidad,kp,ki,kd)
   
@@ -818,7 +769,7 @@ Function Cruces31(in number velocidad, in number kp, in number ki, in number kd,
   
 EndFunction
 
-Function Cruces31F(in number velocidad, in number kp, in number ki, in number kd, in number Cruces)
+Function Cruces31F(in number velocidad, in number kp, in number kd, in number Cruces)
   
   Cruce31F(velocidad,kp,ki,kd)
   
@@ -836,27 +787,27 @@ EndFunction
 
 
 'Siguelíneas hasta cruce unilateral
-Function Cruce_Externo(in number velocidad, in number kp, in number ki, in number kd, in number reader)
+Function Cruce_Externo(in number velocidad, in number kp, in number kd, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
+  
+  
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
@@ -866,19 +817,8 @@ Function Cruce_Externo(in number velocidad, in number kp, in number ki, in numbe
   'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   lectura = 50
-
-  startVelocidad = velocidad
-
-  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   While lectura > 10
-
-    'Corrección fuerte los primeros 8 cm
-    If encoderC < distancia Then
-      velocidad = 20
-    Else
-      velocidad = startVelocidad
-    EndIf
     
     If reader = 3 Then
       lectura = lectura3
@@ -895,35 +835,34 @@ Function Cruce_Externo(in number velocidad, in number kp, in number ki, in numbe
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
     
     error = (lecturaIzq - lecturaDch)*sentido*1
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
+    u = error*kp + (error-olderror)*kd
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
   Motor.Stop("BC", "True")
 EndFunction
 
-Function Cruce_ExternoF(in number velocidad, in number kp, in number ki, in number kd, in number reader)
+Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
 
-  negro1 = 0
-  blanco1 = 99
+  negro1 = 10
+  blanco1 = 83
 
-  negro4 = 2
-  blanco4 = 114
+  negro4 = 7
+  blanco4 = 59
 
-  negro3 = 0
-  blanco3 = 114
+  negro3 = 10
+  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
-
+  
+  
   error = 0
   olderror = 0
-  errsum = 0
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
@@ -933,19 +872,8 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number ki, in numb
   'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
   lectura = 50
-
-  startVelocidad = velocidad
-
-  distancia = 8 * 360 / (6.24 * Math.Pi)
   
   While lectura > 10
-
-    'Corrección fuerte los primeros 8 cm
-    If encoderC < distancia Then
-      velocidad = 20
-    Else
-      velocidad = startVelocidad
-    EndIf
     
     If reader = 3 Then
       lectura = lectura3
@@ -962,8 +890,7 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number ki, in numb
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
     
     error = (lecturaIzq - lecturaDch)*sentido*1
-    errsum += error
-    u = error*kp + (error-olderror)*kd + errsum*ki
+    u = error*kp + (error-olderror)*kd
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
