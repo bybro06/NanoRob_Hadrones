@@ -4,7 +4,7 @@
 
 'Siguelíneas hasta cruce
 
-Function Cruce14(in number velocidad,  in number kd)
+Function Cruce14(in number velocidad)
   'Siguelíneas 1-4 PID
   
   #Valores ideales:
@@ -70,7 +70,7 @@ Function Cruce14(in number velocidad,  in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce14F(in number velocidad,  in number kd)
+Function Cruce14F(in number velocidad)
   'Siguelíneas 1-4 PID Sin Frenos
 
   #Valores ideales:
@@ -136,7 +136,7 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco14(in number velocidad,  in number kd)
+Function Blanco14(in number velocidad)
 
   velocidad *= 1
 
@@ -194,7 +194,7 @@ Function Blanco14(in number velocidad,  in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco14F(in number velocidad,  in number kd)
+Function Blanco14F(in number velocidad)
 
   velocidad *= 1
 
@@ -412,7 +412,7 @@ Function Cruces14F(in number velocidad, in number Cruces)
 EndFunction
 
 'SIGUELINEAS 31
-Function Cruce31(in number velocidad,  in number kd)
+Function Cruce31(in number velocidad)
 
   velocidad *= 1
 
@@ -470,7 +470,7 @@ Function Cruce31(in number velocidad,  in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce31F(in number velocidad,  in number kd)
+Function Cruce31F(in number velocidad)
 
   velocidad *= 1
 
@@ -530,7 +530,7 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco31(in number velocidad,  in number kd)
+Function Blanco31(in number velocidad)
 
   velocidad *= 1
 
@@ -588,7 +588,7 @@ Function Blanco31(in number velocidad,  in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco31F(in number velocidad,  in number kd)
+Function Blanco31F(in number velocidad)
 
   velocidad *= 1
 
