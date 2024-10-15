@@ -4,7 +4,7 @@
 
 'Siguelíneas hasta cruce
 
-Function Cruce14(in number velocidad, in number kp, in number kd)
+Function Cruce14(in number velocidad,  in number kd)
   'Siguelíneas 1-4 PID
   
   #Valores ideales:
@@ -28,9 +28,10 @@ Function Cruce14(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
+  
   kp = velocidad/200
   kd = kp * 28
-  
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
   
   error = 0
@@ -50,8 +51,8 @@ Function Cruce14(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -69,7 +70,7 @@ Function Cruce14(in number velocidad, in number kp, in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce14F(in number velocidad, in number kp, in number kd)
+Function Cruce14F(in number velocidad,  in number kd)
   'Siguelíneas 1-4 PID Sin Frenos
 
   #Valores ideales:
@@ -93,7 +94,9 @@ Function Cruce14F(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
   
   error = 0
@@ -112,8 +115,8 @@ Function Cruce14F(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -133,7 +136,7 @@ EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco14(in number velocidad, in number kp, in number kd)
+Function Blanco14(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -151,7 +154,9 @@ Function Blanco14(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -170,8 +175,8 @@ Function Blanco14(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -189,7 +194,7 @@ Function Blanco14(in number velocidad, in number kp, in number kd)
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco14F(in number velocidad, in number kp, in number kd)
+Function Blanco14F(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -207,7 +212,9 @@ Function Blanco14F(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -226,8 +233,8 @@ Function Blanco14F(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -242,12 +249,12 @@ Function Blanco14F(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas por encoder
 
-Function Encoder14(in number velocidad, in number kp, in number kd, in number encoder)
+Function Encoder14(in number velocidad, in number encoder)
 
   velocidad *= 1
 
@@ -265,7 +272,9 @@ Function Encoder14(in number velocidad, in number kp, in number kd, in number en
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -289,8 +298,8 @@ Function Encoder14(in number velocidad, in number kp, in number kd, in number en
     'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -305,10 +314,10 @@ Function Encoder14(in number velocidad, in number kp, in number kd, in number en
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Encoder14F(in number velocidad, in number kp, in number kd, in number encoder)
+Function Encoder14F(in number velocidad, in number encoder)
 
   velocidad *= 1
 
@@ -326,7 +335,9 @@ Function Encoder14F(in number velocidad, in number kp, in number kd, in number e
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -350,8 +361,8 @@ Function Encoder14F(in number velocidad, in number kp, in number kd, in number e
     'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -365,12 +376,12 @@ Function Encoder14F(in number velocidad, in number kp, in number kd, in number e
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function Cruces14(in number velocidad, in number kp, in number kd, in number Cruces)
+Function Cruces14(in number velocidad, in number Cruces)
   
   Cruce14F(velocidad, kp, ki, kd)
   
@@ -385,7 +396,7 @@ Function Cruces14(in number velocidad, in number kp, in number kd, in number Cru
   MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruces14F(in number velocidad, in number kp, in number kd, in number Cruces)
+Function Cruces14F(in number velocidad, in number Cruces)
   
   Cruce14F(velocidad, kp, ki, kd)
   
@@ -401,7 +412,7 @@ Function Cruces14F(in number velocidad, in number kp, in number kd, in number Cr
 EndFunction
 
 'SIGUELINEAS 31
-Function Cruce31(in number velocidad, in number kp, in number kd)
+Function Cruce31(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -419,7 +430,9 @@ Function Cruce31(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -438,8 +451,8 @@ Function Cruce31(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -454,10 +467,10 @@ Function Cruce31(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce31F(in number velocidad, in number kp, in number kd)
+Function Cruce31F(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -475,7 +488,9 @@ Function Cruce31F(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -494,8 +509,8 @@ Function Cruce31F(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -510,12 +525,12 @@ Function Cruce31F(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta ambos blancos
 
-Function Blanco31(in number velocidad, in number kp, in number kd)
+Function Blanco31(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -533,7 +548,9 @@ Function Blanco31(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -552,8 +569,8 @@ Function Blanco31(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -568,10 +585,10 @@ Function Blanco31(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco31F(in number velocidad, in number kp, in number kd)
+Function Blanco31F(in number velocidad,  in number kd)
 
   velocidad *= 1
 
@@ -589,7 +606,9 @@ Function Blanco31F(in number velocidad, in number kp, in number kd)
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -608,8 +627,8 @@ Function Blanco31F(in number velocidad, in number kp, in number kd)
     'Corrección fuerte los primeros 5 cm
     If MotorC.GetTacho() - encoderInicio < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -624,12 +643,12 @@ Function Blanco31F(in number velocidad, in number kp, in number kd)
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas por encoder
 
-Function Encoder31(in number velocidad, in number kp, in number kd, in number encoder)
+Function Encoder31(in number velocidad, in number encoder)
 
   velocidad *= 1
 
@@ -647,7 +666,9 @@ Function Encoder31(in number velocidad, in number kp, in number kd, in number en
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -671,8 +692,8 @@ Function Encoder31(in number velocidad, in number kp, in number kd, in number en
     'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -687,10 +708,10 @@ Function Encoder31(in number velocidad, in number kp, in number kd, in number en
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Encoder31F(in number velocidad, in number kp, in number kd, in number encoder)
+Function Encoder31F(in number velocidad, in number encoder)
 
   velocidad *= 1
 
@@ -708,7 +729,9 @@ Function Encoder31F(in number velocidad, in number kp, in number kd, in number e
   lectura4 = 50
   
   
-  
+  kp = velocidad/200
+  kd = kp * 28
+
   distancia = 7 * 360 / (6.24 * Math.Pi)
 
   error = 0
@@ -732,8 +755,8 @@ Function Encoder31F(in number velocidad, in number kp, in number kd, in number e
     'Corrección fuerte los primeros 5 cm
     If encoderC < distancia Then
       velocidad = 20
-      kp = startKp * 1
-      kd = startKd * 1
+      kp = 20/200
+      kd = kp * 28
     Else
       velocidad = startVelocidad
       kp = startKp
@@ -748,12 +771,12 @@ Function Encoder31F(in number velocidad, in number kp, in number kd, in number e
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta x cruces
 
-Function Cruces31(in number velocidad, in number kp, in number kd, in number Cruces)
+Function Cruces31(in number velocidad, in number Cruces)
   
   Cruce31F(velocidad,kp,ki,kd)
   
@@ -769,7 +792,7 @@ Function Cruces31(in number velocidad, in number kp, in number kd, in number Cru
   
 EndFunction
 
-Function Cruces31F(in number velocidad, in number kp, in number kd, in number Cruces)
+Function Cruces31F(in number velocidad, in number Cruces)
   
   Cruce31F(velocidad,kp,ki,kd)
   
@@ -787,7 +810,7 @@ EndFunction
 
 
 'Siguelíneas hasta cruce unilateral
-Function Cruce_Externo(in number velocidad, in number kp, in number kd, in number reader)
+Function Cruce_Externo(in number velocidad, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
@@ -805,7 +828,15 @@ Function Cruce_Externo(in number velocidad, in number kp, in number kd, in numbe
   lectura3 = 50
   lectura4 = 50
   
+  kp = velocidad/200
+  kd = kp * 28
   
+  distancia = 7 * 360 / (6.24 * Math.Pi)
+  
+  startVelocidad = velocidad
+  startKp = kp
+  startKd = kd
+
   error = 0
   olderror = 0
   u = 0
@@ -820,6 +851,16 @@ Function Cruce_Externo(in number velocidad, in number kp, in number kd, in numbe
   
   While lectura > 10
     
+    If encoderC < distancia Then
+      velocidad = 20
+      kp = 20/200
+      kd = kp * 28
+    Else
+      velocidad = startVelocidad
+      kp = startKp
+      kd = startKd
+    EndIf
+
     If reader = 3 Then
       lectura = lectura3
       lecturaIzq = lectura1
@@ -839,10 +880,10 @@ Function Cruce_Externo(in number velocidad, in number kp, in number kd, in numbe
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "True")
+  MotorBC.OffAndBrake()
 EndFunction
 
-Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in number reader)
+Function Cruce_ExternoF(in number velocidad, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
@@ -860,7 +901,15 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in numb
   lectura3 = 50
   lectura4 = 50
   
+  kp = velocidad/200
+  kd = kp * 28
   
+  distancia = 7 * 360 / (6.24 * Math.Pi)
+  
+  startVelocidad = velocidad
+  startKp = kp
+  startKd = kd
+
   error = 0
   olderror = 0
   u = 0
@@ -875,6 +924,16 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in numb
   
   While lectura > 10
     
+    If encoderC < distancia Then
+      velocidad = 20
+      kp = 20/200
+      kd = kp * 28
+    Else
+      velocidad = startVelocidad
+      kp = startKp
+      kd = startKd
+    EndIf
+
     If reader = 3 Then
       lectura = lectura3
       lecturaIzq = lectura1
@@ -894,5 +953,5 @@ Function Cruce_ExternoF(in number velocidad, in number kp, in number kd, in numb
     Motor.StartSync("BC", -(velocidad+u), velocidad-u)
     olderror = error
   EndWhile
-  Motor.Stop("BC", "False")
+  MotorBC.Off()
 EndFunction
