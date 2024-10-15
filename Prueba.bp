@@ -6,28 +6,61 @@ import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
 
+encoderA = 0
+encoderD = 0
+  
+errorA = 0
+olderrorA = 0
+  
+errorD = 0
+olderrorD = 0
+
+setup()
+Thread.Run = ControlBrazo
 Main()
 
+
+
 Sub Main
-  setup()
   
-  Recto.Encoder(80,150)
+  StartArm()
+  DEncoder(50,1000)
+  Program.Delay(5000)
+  
+  DEncoder(50,-400)
+  AEncoder(50,-200)
+  DEncoder(50,1000)
+  AEncoder(50,0)
+  DEncoder(50,0)
   
 EndSub
 
-Sub Molino
-  Brazo.ATimer(50,100000)
+Sub ControlBrazo
+  
+  While "True"
+    errorA = encoderA - MotorA.GetTacho()
+    errorD = encoderD - MotorD.GetTacho()
+    correccionA = errorA * 1 + (errorA - olderrorA) * 0.6
+    correccionD = errorD * 1 + (errorD - olderrorD) * 0.3
+    MotorA.StartSpeed(correccionA)
+    MotorD.StartSpeed(correccionD)
+  EndWhile
+  
 EndSub
 
 
 Sub StartArm
-  Brazo.ADTimer(40,0,800)
+  DEncoder(20,-300)
+  AEncoder(20,-700)
+  encoderA = 0
+  encoderD = 0
   MotorA.ResetCount()
   MotorD.ResetCount()
-  Brazo.AEncoder(30,-110)
+  AEncoder(20,600)
   MotorA.ResetCount()
   MotorD.ResetCount()
-  Brazo.AEncoder(30,-130)
+  encoderA = 0
+  encoderD = 0
 EndSub
 
 Sub Display
@@ -59,3 +92,72 @@ Sub Setup
   Sensor.SetMode(3,0)
   Sensor.SetMode(4,0)
 EndSub
+
+Function AEncoder(in number Velocidad, in number Encoder)
+  
+  encDiff = Encoder - MotorA.GetTacho()
+  
+  signo = Math.Abs(encDiff)/encDiff
+  
+  safetyTimer = 1200
+  Time.Reset3()
+  
+  ' Solo ejecuta el movimiento si hay diferencia en el encoder
+  If encDiff <> 0 Then
+    
+    While Math.Abs(MotorA.GetTacho() - Encoder) > 15 And Time.Get3() < safetyTimer
+      
+      ' Ajuste del encoder actual con control de velocidad
+      @encoderA += Velocidad / 15.5 * signo
+      
+      ' Límite para evitar sobrepasar el encoder objetivo
+      If signo > 0 Then
+        @encoderA = Math.Min(@encoderA, Encoder)
+      Else
+        @encoderA = Math.Max(@encoderA, Encoder)
+      EndIf
+      
+    EndWhile
+    
+    ' Asegura que el valor final del encoder sea el exacto
+    @encoderA = Encoder
+    MotorA.OffAndBrake()
+    
+  EndIf
+  
+EndFunction
+
+
+Function DEncoder(in number Velocidad, in number Encoder)
+  
+  encDiff = Encoder - MotorD.GetTacho()
+  
+  signo = Math.Abs(encDiff)/encDiff
+  
+  safetyTimer = 1200
+  Time.Reset4()
+  
+  ' Solo ejecuta el movimiento si hay diferencia en el encoder
+  If encDiff <> 0 Then
+    
+    While Math.Abs(MotorD.GetTacho() - Encoder) > 15 And Time.Get3() < safetyTimer
+      
+      ' Ajuste del encoder actual con control de velocidad
+      @encoderD += Velocidad / 15.5 * signo
+      
+      ' Límite para evitar sobrepasar el encoder objetivo
+      If signo > 0 Then
+        @encoderD = Math.Min(@encoderD, Encoder)
+      Else
+        @encoderD = Math.Max(@encoderD, Encoder)
+      EndIf
+      
+    EndWhile
+    
+    ' Asegura que el valor final del encoder sea el exacto
+    @encoderD = Encoder
+    MotorD.OffAndBrake()
+    
+  EndIf
+  
+EndFunction
