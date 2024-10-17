@@ -1,303 +1,170 @@
 'Giro con Motores Medianos
 
 'Antiguos Giros Universales
-Function Grados(in number Velocidad1, in number Velocidad2, in number Grados)
-  I = "B"
-  D = "C"
+Function Grados(in number velocidad1, in number velocidad2, in number grados)
   
-  G1 = 1135/360 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 985/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
 
-  Signo = (Velocidad1 / Velocidad2) / Math.Abs(Velocidad1 / Velocidad2)
+  signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
   
-  Vmin = Math.Min(Math.Abs(Velocidad1), Math.Abs(Velocidad2))
-  Vmax = Math.Max(Math.Abs(Velocidad1), Math.Abs(Velocidad2))
+  vMin = Math.Min(Math.Abs(velocidad1), Math.Abs(velocidad2))
+  vMax = Math.Max(Math.Abs(velocidad1), Math.Abs(velocidad2))
   
-  Encoder = Grados * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  encoder = grados * G1 * (-2 / (signo * vMin / vMax - 1))
   
+  MotorBC.Off()
   Program.Delay(100)
   
-  Motor.MoveSync(I + D, -Velocidad1, Velocidad2, Encoder, "True")
+  Motor.MoveSync("BC", -velocidad1, velocidad2, encoder, "True")
   
-  Velocidad1 = 0
-  Velocidad2 = 0
-  Grados = 0
+  velocidad1 = 0
+  velocidad2 = 0
+  grados = 0
   
   Program.Delay(100)
 EndFunction
 
-Function GradosF(in number Velocidad1, in number Velocidad2, in number Grados)
-  I = "B"
-  D = "C"
+Function GradosF(in number velocidad1, in number velocidad2, in number grados)
   
-  G1 = 1135/360 'Constante de giro. Grados de encoder que equivalen a 1 grado de giro de spin
+  G1 = 985/360 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
 
-  Signo = (Velocidad1 / Velocidad2) / Math.Abs(Velocidad1 / Velocidad2)
+  signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
   
-  Vmin = Math.Min(Math.Abs(Velocidad1), Math.Abs(Velocidad2))
-  Vmax = Math.Max(Math.Abs(Velocidad1), Math.Abs(Velocidad2))
+  vMin = Math.Min(Math.Abs(velocidad1), Math.Abs(velocidad2))
+  vMax = Math.Max(Math.Abs(velocidad1), Math.Abs(velocidad2))
   
-  Encoder = Grados * G1 * (-2 / (Signo * Vmin / Vmax - 1))
+  encoder = grados * G1 * (-2 / (signo * vMin / vMax - 1))
   
+  MotorBC.Off()
   Program.Delay(100)
   
-  Motor.MoveSync(I + D, -Velocidad1, Velocidad2, Encoder, "False")
+  Motor.MoveSync("BC", -velocidad1, velocidad2, encoder, "False")
   
-  Velocidad1 = 0
-  Velocidad2 = 0
-  Grados = 0
+  velocidad1 = 0
+  velocidad2 = 0
+  grados = 0
   
   Program.Delay(100)
 EndFunction
 
 'Por encoder
-Function Encoder(in number Velocidad1, in number Velocidad2, in number Encoder)
+Function encoder(in number velocidad1, in number velocidad2, in number distancia)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
+  encoder = distancia / (6.24 * Math.Pi)* 360
 
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  errsum = 0
-  olderror = 0
+  MotorBC.Off()
+  Motor.MoveSync("BC",-velocidad1,velocidad2,encoder,"True")
 
-  distancia = Encoder / (6.24 * Math.Pi) * 360
-  
-  encoder_inicio_B = MotorB.GetTacho()*-1
-  encoder_inicio_C = MotorC.GetTacho()
-
-  encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
-  encoder_C = MotorC.GetTacho() - encoder_inicio_C
-  
-  While (Math.abs(encoder_B)+Math.abs(encoder_C))/2 < distancia
-
-    encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
-    encoder_C = MotorC.GetTacho() - encoder_inicio_C
-
-    error = (encoder_B*Velocidad1)-(encoder_C*Velocidad2)
-    errsum += error
-    correccion = error * kp + errsum * ki + (error - olderror) * kd
-    
-    potencia1 = Velocidad2 - (Math.Abs(Velocidad1 + 1) - Math.Abs(Velocidad1)) * correccion
-    potencia2 = Velocidad1*-1 + (Math.Abs(Velocidad2 + 1) - Math.Abs(Velocidad2)) * correccion
-    
-    MotorB.StartSpeed(-potencia1)
-    MotorC.StartSpeed(potencia2)
-  
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
 EndFunction
 
-Function EncoderF(in number Velocidad1, in number Velocidad2, in number Encoder)
+Function encoderF(in number velocidad1, in number velocidad2, in number distancia)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
+  encoder = distancia / (6.24 * Math.Pi)* 360
 
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  errsum = 0
-  olderror = 0
+  MotorBC.Off()
+  Motor.MoveSync("BC",-velocidad1,velocidad2,encoder,"False")
 
-  distancia = Encoder / (6.24 * Math.Pi)* 360
-  
-  encoder_inicio_B = MotorB.GetTacho()*-1
-  encoder_inicio_C = MotorC.GetTacho()
-
-  encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
-  encoder_C = MotorC.GetTacho() - encoder_inicio_C
-  
-  While (Math.abs(encoder_B)+Math.abs(encoder_C))/2 < distancia
-
-    encoder_B = MotorB.GetTacho()*-1 - encoder_inicio_B
-    encoder_C = MotorC.GetTacho() - encoder_inicio_C
-
-    error = (encoder_B*Velocidad1)-(encoder_C*Velocidad2)
-    errsum += error
-    correccion = error * kp + errsum * ki + (error - olderror) * kd
-    
-    MotorB.StartSpeed(-(Velocidad1-correccion))
-    MotorC.StartSpeed(Velocidad2+correccion)
-  
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
 EndFunction
 
 'Hasta Negro en 1 sensor
-Function Negro1(in number Velocidad1, in number Velocidad2, in number sens)
-  
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
+Function Negro1(in number velocidad1, in number velocidad2, in number sens)
   
   While Sensor.ReadPercent(sens) > 15
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
+
 EndFunction
 
-Function Negro1F(in number Velocidad1, in number Velocidad2, in number sens)
-  
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
+Function Negro1F(in number velocidad1, in number velocidad2, in number sens)
   
   While Sensor.ReadPercent(sens) > 15
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
+
 EndFunction
 
 'Hasta Negro en 2 sensores
-Function Negros2(in number Velocidad1, in number Velocidad2, in number sens1, in number sens2)
+Function Negros2(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadPercent(sens1) > 5 Or Sensor.ReadPercent(sens2) > 5
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
+
 EndFunction
 
-Function Negros2F(in number Velocidad1, in number Velocidad2, in number sens1, in number sens2)
+Function Negros2F(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadPercent(sens1) > 2 Or Sensor.ReadPercent(sens2) > 2
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadPercent(sens1) > 5 Or Sensor.ReadPercent(sens2) > 5
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
+
 EndFunction
 
 'Hasta Blanco en 1 sensor
-Function Blanco1(in number Velocidad1, in number Velocidad2, in number sens)
-  
-  Velocidad1 *= 1
-  Velocidad2 *= 1
+Function Blanco1(in number velocidad1, in number velocidad2, in number sens)
 
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadPercent(sens) < 40
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadPercent(sens) < 60
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
+
 EndFunction
 
-Function Blanco1F(in number Velocidad1, in number Velocidad2, in number sens)
+Function Blanco1F(in number velocidad1, in number velocidad2, in number sens)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadPercent(sens) < 40
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadPercent(sens) < 60
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
+
 EndFunction
 
 'Hasta un color (0-7) en 1 sensor
-Function Color1(in number Velocidad, in number Velocidad2, in number sens, in number Color)
+Function Color1(in number velocidad, in number velocidad2, in number sens, in number color)
   mode = Sensor.GetMode(sens)
   Sensor.SetMode(sens,2)
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadRawValue(sens,0) <> Color
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadRawValue(sens,0) <> color
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
   Sensor.SetMode(sens,mode)
+
 EndFunction
 
-Function Color1F(in number Velocidad1, in number Velocidad2, in number sens, in number Color)
+Function Color1F(in number velocidad1, in number velocidad2, in number sens, in number color)
   mode = Sensor.GetMode(sens)
   Sensor.SetMode(sens,2)
-  
-  Velocidad1 *= 1
-  Velocidad2 *= 1
 
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Sensor.ReadRawValue(sens,0) <> Color
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Sensor.ReadRawValue(sens,0) <> color
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
   Sensor.SetMode(sens,mode)
+
 EndFunction
 
 'Por tiempo
-Function Tiempo(in number Velocidad1, in number Velocidad2, in number Tiempo)
+Function Tiempo(in number velocidad1, in number velocidad2, in number tiempo)
   Time.Reset3()
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Time.Get3() < Tiempo
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Time.Get3() < tiempo
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
+
 EndFunction
 
-Function TiempoF(in number Velocidad1, in number Velocidad2, in number Tiempo)
+Function TiempoF(in number velocidad1, in number velocidad2, in number tiempo)
   Time.Reset3()
   
-  Velocidad1 *= 1
-  Velocidad2 *= 1
-
-  'Sincronización PID
-  kp = 0.1
-  ki = 0.0001
-  kd = 0.1
-  
-  While Time.Get3() < Tiempo
-    Motor.StartSync("BC", -Velocidad1, Velocidad2)
+  While Time.Get3() < tiempo
+    Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
+
 EndFunction

@@ -1,47 +1,47 @@
 
-Function Detect(in number sens, in number reps, out number Color)
+Function Detect(in number sens, in number reps, out number color)
   
   sens_mode = Sensor.GetMode(sens)
   
-  ' Ponemos el sensor en modo RGB
+  ' Ponemos el sensor en modo rgb
   Sensor.SetMode(sens, 4)
   
   ' Definimos las constantes de colores
-  Red = 15
-  Yellow = 60
-  Green = 170
-  Blue = 330
-  ValueNegro = 10
-  ValueBlanco = 100
-  RWhite = 147
-  GWhite = 143
-  BWhite = 160
+  RED = 15
+  YELLOW = 60
+  GREEN = 170
+  BLUE = 330
+  VALUENEGRO = 10
+  VALUEBLANCO = 100
+  RWHITE = 147
+  GWHITE = 143
+  BWHITE = 160
   
   ' Inicializamos variables
   hue = 0
   sat = 0
   value = 0
-  Color = 0
+  color = 0
   
   ' Arreglos para almacenar los valores normalizados
-  RNorma[0] = 0
-  GNorma[0] = 0
-  BNorma[0] = 0
+  rNormArray[0] = 0
+  gNormArray[0] = 0
+  bNormArray[0] = 0
   
   LCD.Clear()
   
   ' Tomamos muestras de color
   For j = 1 To reps Step 1
     
-    RGB = Sensor.ReadRaw(sens, 3)
+    rgb = Sensor.ReadRaw(sens, 3)
     
-    RRaw = RGB[0]
-    GRaw = RGB[1]
-    BRaw = RGB[2]
+    rRaw = rgb[0]
+    gRaw = rgb[1]
+    bRaw = rgb[2]
     
-    RNorma[j] = Math.Round(RRaw/RWhite*255)
-    GNorma[j] = Math.Round(GRaw/GWhite*255)
-    BNorma[j] = Math.Round(BRaw/BWhite*255)
+    rNormArray[j] = Math.Round(rRaw/RWHITE*255)
+    gNormArray[j] = Math.Round(gRaw/GWHITE*255)
+    bNormArray[j] = Math.Round(bRaw/BWHITE*255)
     
     Program.Delay(5)
   EndFor
@@ -49,65 +49,65 @@ Function Detect(in number sens, in number reps, out number Color)
   'Realizamos la media de las muestras
   
   For j = 1 To reps Step 2
-    RNorm = RNorma[j] + RNorma[j+1]
-    GNorm = GNorma[j] + GNorma[j+1]
-    BNorm = BNorma[j] + BNorma[j+1]
+    rNorm = rNormArray[j] + rNormArray[j+1]
+    gNorm = gNormArray[j] + gNormArray[j+1]
+    bNorm = bNormArray[j] + bNormArray[j+1]
   EndFor
   
-  RNorm /= reps
-  GNorm /= reps
-  BNorm /= reps
+  rNorm /= reps
+  gNorm /= reps
+  bNorm /= reps
   
-  Max = Math.Max(Math.Max(RNorm,GNorm), BNorm)
-  Min = Math.Min(Math.Min(RNorm,GNorm), BNorm)
+  max = Math.Max(Math.Max(rNorm,gNorm), bNorm)
+  min = Math.Min(Math.Min(rNorm,gNorm), bNorm)
   
   ' Calculamos el hue
-  If Max = Min Then
+  If max = min Then
     hue = 0   'Escala de grises, no importa el hue
-  ElseIf Max = RNorm Then
-    If GNorm >= BNorm Then
-      hue = 60 * (GNorm - BNorm) / (Max - Min) 'Rojo o amarillo
+  ElseIf max = rNorm Then
+    If gNorm >= bNorm Then
+      hue = 60 * (gNorm - bNorm) / (max - min) 'Rojo o amarillo
     Else
-      hue = 60 * (GNorm - BNorm) / (Max - Min) + 360 'Rojo o morado
+      hue = 60 * (gNorm - bNorm) / (max - min) + 360 'Rojo o morado
     EndIf
-  ElseIf Max = GNorm Then
-    hue = 60 * (BNorm - RNorm) / (Max - Min) + 120 'Verde o amarillo
+  ElseIf max = gNorm Then
+    hue = 60 * (bNorm - rNorm) / (max - min) + 120 'Verde o amarillo
   Else
-    hue = 60 * (RNorm - GNorm) / (Max - Min) + 240 'Azul o morado
+    hue = 60 * (rNorm - gNorm) / (max - min) + 240 'Azul o morado
   EndIf
   
   ' Calculamos la saturación
-  If Max = 0 Then
+  If max = 0 Then
     sat = 0
   Else
-    sat = 1 - Min / Max   'A mayor diferencia, mayor saturación, diferencia entre escala de grises o color
+    sat = 1 - min / max   'A mayor diferencia, mayor saturación, diferencia entre escala de grises o color
   EndIf
   
   ' Calculamos el value y el Gris
-  value = Max
-  RGBGrey = (ValueBlanco + ValueNegro) / 2
+  value = max
+  rgbGrey = (VALUEBLANCO + VALUENEGRO) / 2
   
   ' Detectamos el color
-  If RNorm + GNorm + BNorm <= 3 Then
-    Color = 0   'Si no hay lecturas, el color es 0 (nada)
+  If rNorm + gNorm + bNorm <= 3 Then
+    color = 0   'Si no hay lecturas, el color es 0 (nada)
   Else
     If sat < 0.4 Then
-      If value > RGBGrey Then   'está en la escala de grises por poca saturación
-        Color = 6    'Blanco si la luz es alta
+      If value > rgbGrey Then   'está en la escala de grises por poca saturación
+        color = 6    'Blanco si la luz es alta
       Else
-        Color = 1    'Negro si es baja
+        color = 1    'Negro si es baja
       EndIf
     Else       'Rueda de color
-      If hue >= 0 And hue < Red Then
-        Color = 5
-      ElseIf hue >= Red And hue < Yellow Then
-        Color = 4
-      ElseIf hue >= Yellow And hue < Green Then
-        Color = 3
-      ElseIf hue >= Green And hue < Blue Then
-        Color = 2
+      If hue >= 0 And hue < RED Then
+        color = 5
+      ElseIf hue >= RED And hue < YELLOW Then
+        color = 4
+      ElseIf hue >= YELLOW And hue < GREEN Then
+        color = 3
+      ElseIf hue >= GREEN And hue < BLUE Then
+        color = 2
       Else
-        Color = 5
+        color = 5
       EndIf
     EndIf
   EndIf
@@ -116,10 +116,10 @@ Function Detect(in number sens, in number reps, out number Color)
   
   LCD.StopUpdate()
   LCD.Clear()
-  LCD.Write(33, 20, "R: " + RRaw)
-  LCD.Write(33, 35, "G: " + GRaw)
-  LCD.Write(33, 50, "B: " + BRaw)
-  LCD.Write(33, 70, "Color: " + Color)
+  LCD.Write(33, 20, "R: " + rRaw)
+  LCD.Write(33, 35, "G: " + gRaw)
+  LCD.Write(33, 50, "B: " + bRaw)
+  LCD.Write(33, 70, "color: " + color)
   LCD.Write(33, 90, "Value: " + value)
   LCD.Update()
   
@@ -128,32 +128,32 @@ Function Detect(in number sens, in number reps, out number Color)
   
 EndFunction
 
-Function Time(in number sens, in number time, out number Color)
-  'Lectura RGB
+Function Time(in number sens, in number time, out number color)
+  'Lectura rgb
   
-  'Ponemos el sensor en modo RGB
+  'Ponemos el sensor en modo rgb
   sens_ode = Sensor.GetMode(sens)
   Sensor.SetMode(sens,4)
   
   'Definimos las variables
   
-  Red = 15
-  Yellow = 60
-  Green = 170
-  Blue = 330
-  ValueNegro = 10
-  ValueBlanco = 100 'estaba en 50
-  RWhite = 147 '235
-  GWhite = 143 '232
-  BWhite = 200 '234
+  RED = 15
+  YELLOW = 60
+  GREEN = 170
+  BLUE = 330
+  VALUENEGRO = 10
+  VALUEBLANCO = 100 'estaba en 50
+  RWHITE = 147 '235
+  GWHITE = 143 '232
+  BWHITE = 200 '234
   
   hue = 0
   sat = 0
   value = 0
-  Color = 0
-  RNorma[0] = 0
-  GNorma[0] = 0
-  BNorma[0] = 0
+  color = 0
+  rNormArray[0] = 0
+  gNormArray[0] = 0
+  bNormArray[0] = 0
   
   LCD.Clear()
   Time.Reset8()
@@ -162,15 +162,15 @@ Function Time(in number sens, in number time, out number Color)
   k = 1
   While Time.Get8() < time
     
-    RGB = Sensor.ReadRaw(sens, 3)
+    rgb = Sensor.ReadRaw(sens, 3)
     
-    RRaw = RGB[0]
-    GRaw = RGB[1]
-    BRaw = RGB[2]
+    rRaw = rgb[0]
+    gRaw = rgb[1]
+    bRaw = rgb[2]
     
-    RNorma[k] = Math.Round(RRaw/RWhite*255)
-    GNorma[k] = Math.Round(GRaw/GWhite*255)
-    BNorma[k] = Math.Round(BRaw/BWhite*255)
+    rNormArray[k] = Math.Round(rRaw/RWHITE*255)
+    gNormArray[k] = Math.Round(gRaw/GWHITE*255)
+    bNormArray[k] = Math.Round(bRaw/BWHITE*255)
     
     k ++
   EndWhile
@@ -178,72 +178,72 @@ Function Time(in number sens, in number time, out number Color)
   'Realizamos la media de las muestras
   
   For j = 1 To k Step 2
-    RNorm = RNorma[j] + RNorma[j+1]
-    GNorm = GNorma[j] + GNorma[j+1]
-    BNorm = BNorma[j] + BNorma[j+1]
+    rNorm = rNormArray[j] + rNormArray[j+1]
+    gNorm = gNormArray[j] + gNormArray[j+1]
+    bNorm = bNormArray[j] + bNormArray[j+1]
   EndFor
   
-  RNorm /= k
-  GNorm /= k
-  BNorm /= k
-  Max = Math.Max(Math.Max(RNorm,GNorm), BNorm)
-  Min = Math.Min(Math.Min(RNorm,GNorm), BNorm)
+  rNorm /= k
+  gNorm /= k
+  bNorm /= k
+  max = Math.Max(Math.Max(rNorm,gNorm), bNorm)
+  min = Math.Min(Math.Min(rNorm,gNorm), bNorm)
   
   'Empezamos con los algoritmos para calcular el hue
   
-  If Max = Min Then
+  If max = min Then
     hue = 0
-  ElseIf Max = RNorm Then
-    If GNorm >= BNorm Then
-      hue = 60*(GNorm-BNorm)/(Max-Min)
+  ElseIf max = rNorm Then
+    If gNorm >= bNorm Then
+      hue = 60*(gNorm-bNorm)/(max-min)
     Else
-      hue = 60*(GNorm-BNorm)/(Max-Min)+360
+      hue = 60*(gNorm-bNorm)/(max-min)+360
     EndIf
-  ElseIf Max = GNorm Then
-    hue = 60*(BNorm-RNorm)/(Max-Min)+120
+  ElseIf max = gNorm Then
+    hue = 60*(bNorm-rNorm)/(max-min)+120
   Else
-    hue = 60*(RNorm-Gnorm)/(Max-Min)+240
+    hue = 60*(rNorm-gNorm)/(max-min)+240
   EndIf
   
   'Sacamos la saturación
-  If Max = 0 Then
+  If max = 0 Then
     sat = 0
   Else
-    sat = 1-Min/Max
+    sat = 1-min/max
   EndIf
   
   'Sacamos el value y el Gris
-  value = Max
-  RGBGrey = (ValueBlanco+ValueNegro)/2
+  value = max
+  rgbGrey = (VALUEBLANCO+VALUENEGRO)/2
   
   'Detectamos el color
-  If RNorm+GNorm+BNorm <= 3 Then
-    Color = 0
+  If rNorm+gNorm+bNorm <= 3 Then
+    color = 0
   Else
     If sat < 0.4 Then
-      If value > RGBGrey Then
-        Color = 6
+      If value > rgbGrey Then
+        color = 6
       Else
-        Color = 1
+        color = 1
       EndIf
     Else
-      If hue >= 0 And hue < Red Then
-        Color = 5
-      ElseIf hue >= Red And hue < Yellow Then
-        Color = 4
-      ElseIf hue >= Yellow And hue < Green Then
-        Color = 3
-      ElseIf hue >= Green And hue < Blue Then
-        Color = 2
+      If hue >= 0 And hue < RED Then
+        color = 5
+      ElseIf hue >= RED And hue < YELLOW Then
+        color = 4
+      ElseIf hue >= YELLOW And hue < GREEN Then
+        color = 3
+      ElseIf hue >= GREEN And hue < BLUE Then
+        color = 2
       Else
-        Color = 5
+        color = 5
       EndIf
     EndIf
   EndIf
-  LCD.Write(33, 20, "R: "+RRaw)
-  LCD.Write(33, 35, "G: "+GRaw)
-  LCD.Write(33, 50, "B: "+BRaw)
-  LCD.Write(33, 70, "Color: "+Color)
+  LCD.Write(33, 20, "R: "+rRaw)
+  LCD.Write(33, 35, "G: "+gRaw)
+  LCD.Write(33, 50, "B: "+bRaw)
+  LCD.Write(33, 70, "color: "+color)
   LCD.Write(33, 90, "Value: "+value)
   
   'Devolver sensor a modo anterior
@@ -252,23 +252,23 @@ Function Time(in number sens, in number time, out number Color)
   
 EndFunction
 
-Function Gritar(in number Color)
+Function Gritar(in number color)
   
-  If Color = 0 Then
+  If color = 0 Then
     Speaker.Play(100,"Zero")
-  ElseIf Color = 1 Then
+  ElseIf color = 1 Then
     Speaker.Play(100,"Black")
-  ElseIf Color = 2 Then
-    Speaker.Play(100,"Blue")
-  ElseIf Color = 3 Then
-    Speaker.Play(100,"Green")
-  ElseIf Color = 4 Then
-    Speaker.Play(100,"Yellow")
-  ElseIf Color = 5 Then
-    Speaker.Play(100,"Red")
-  ElseIf Color = 6 Then
+  ElseIf color = 2 Then
+    Speaker.Play(100,"BLUE")
+  ElseIf color = 3 Then
+    Speaker.Play(100,"GREEN")
+  ElseIf color = 4 Then
+    Speaker.Play(100,"YELLOW")
+  ElseIf color = 5 Then
+    Speaker.Play(100,"RED")
+  ElseIf color = 6 Then
     Speaker.Play(100,"White")
-  ElseIf Color = 7 Then
+  ElseIf color = 7 Then
     Speaker.Play(100,"Brown")
   EndIf
 EndFunction

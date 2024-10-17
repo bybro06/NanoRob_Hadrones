@@ -3,13 +3,13 @@
   <members>
     <member name="T:Recto">
       <summary>
-    Movimientos rectos corregidos con PID por Nanorob Hadrones.
+    Movimientos rectos sincronizados por Nanorob Hadrones.
       </summary>
     </member>
 	
 	  <member name="M:Encoder">
       <summary>
-        Movimiento Recto hasta encoder con PID y freno.
+        Movimiento Recto hasta encoder con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="Distancia">Distancia en cm.</param>
@@ -17,7 +17,7 @@
 	
 	  <member name="M:EncoderF">
       <summary>
-        Movimiento Recto hasta encoder con PID sin freno.
+        Movimiento Recto hasta encoder con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="Distancia">Distancia en cm.</param>
@@ -25,7 +25,7 @@
 
 	  <member name="M:Negro1">
       <summary>
-        Movimiento Recto hasta Negro con 1 sensor con PID y freno.
+        Movimiento Recto hasta Negro con 1 sensor con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -33,7 +33,7 @@
 	
 	  <member name="M:Negro1F">
       <summary>
-        Movimiento Recto hasta Negro con 1 sensor con PID sin freno.
+        Movimiento Recto hasta Negro con 1 sensor con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -41,7 +41,7 @@
 	
     <member name="M:Blanco1">
       <summary>
-        Movimiento Recto hasta Blanco con 1 sensor con PID y freno.
+        Movimiento Recto hasta Blanco con 1 sensor con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -49,7 +49,7 @@
 	
     <member name="M:Blanco1F">
       <summary>
-        Movimiento Recto hasta Blanco con 1 sensor con PID sin freno.
+        Movimiento Recto hasta Blanco con 1 sensor con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -57,7 +57,7 @@
 	
 	  <member name="M:Negros2">
       <summary>
-        Movimiento Recto hasta Negro con 2 sensores con PID y freno.
+        Movimiento Recto hasta Negro con 2 sensores con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens1">Sensor de lectura 1.</param>
@@ -66,7 +66,7 @@
 	
 	  <member name="M:Negros2">
       <summary>
-        Movimiento Recto hasta Negro con 2 sensores con PID sin freno.
+        Movimiento Recto hasta Negro con 2 sensores con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens1">Sensor de lectura 1.</param>
@@ -75,7 +75,7 @@
 	
 	  <member name="M:Blancos2">
       <summary>
-        Movimiento Recto hasta Negro con 2 sensores con PID y freno.
+        Movimiento Recto hasta Negro con 2 sensores con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens1">Sensor de lectura 1.</param>
@@ -84,7 +84,7 @@
 	
 	  <member name="M:Blancos2F">
       <summary>
-        Movimiento Recto hasta Blanco con 2 sensores con PID sin freno.
+        Movimiento Recto hasta Blanco con 2 sensores con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens1">Sensor de lectura 1.</param>
@@ -93,7 +93,7 @@
 	
 	  <member name="M:Color1">
       <summary>
-        Movimiento Recto hasta un Color con 1 sensores con PID y freno.
+        Movimiento Recto hasta un Color con 1 sensores con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -102,7 +102,7 @@
 	
 	  <member name="M:Color1F">
       <summary>
-        Movimiento Recto hasta un Color con 1 sensores con PID sin freno.
+        Movimiento Recto hasta un Color con 1 sensores con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
@@ -111,7 +111,7 @@
 
 	  <member name="M:Tiempo">
       <summary>
-        Movimiento Recto durante un tiempo con PID y freno.
+        Movimiento Recto durante un tiempo con sincronización y freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="Tiempo">Tiempo en ms.</param>
@@ -119,7 +119,7 @@
 	
 	  <member name="M:TiempoF">
       <summary>
-        Movimiento Recto durante un tiempo con PID sin freno.
+        Movimiento Recto durante un tiempo con sincronización sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="Tiempo">Tiempo en ms.</param>
@@ -127,7 +127,7 @@
 	
 	  <member name="M:AccelDecel">
       <summary>
-        Acceleración y Deceleración lineal con PID y freno.
+        Acceleración y Deceleración lineal con sincronización y freno.
       </summary>
       <param name="V0">Velocidad inicial.</param>
       <param name="VMax">Velocidad Máxima.</param>
@@ -138,7 +138,7 @@
 	
 	  <member name="M:AccelDecelF">
       <summary>
-        Acceleración y Deceleración lineal con PID sin freno.
+        Acceleración y Deceleración lineal con sincronización sin freno.
       </summary>
       <param name="V0">Velocidad inicial.</param>
       <param name="VMax">Velocidad Máxima.</param>
@@ -149,7 +149,7 @@
 
 	  <member name="M:Decel">
       <summary>
-        Deceleración lineal con PID y freno.
+        Deceleración lineal con sincronización y freno.
       </summary>
       <param name="V0">Velocidad inicial.</param>
       <param name="VMin">Velocidad Mínima.</param>
@@ -159,7 +159,7 @@
 
 	  <member name="M:DecelF">
       <summary>
-        Deceleración lineal con PID sin freno.
+        Deceleración lineal con sincronización sin freno.
       </summary>
       <param name="V0">Velocidad inicial.</param>
       <param name="VMin">Velocidad Mínima.</param>
