@@ -1,11 +1,15 @@
 'Movimiento Recto con Motores Medianos
 
+number diametro   'Diámetro de la rueda
+
+number negro
+number blanco
 
 'Por encoder
 Function Encoder(in number velocidad, in number distancia)
   
   correccion = 0
-  enc = distancia*360 / Math.Pi / 6.24
+  enc = distancia*360 / Math.Pi / diametro
   MotorBC.Off()
   Program.Delay(500)
   Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"True")
@@ -15,7 +19,7 @@ EndFunction
 Function EncoderF(in number velocidad, in number distancia)
   
   correccion = 0
-  enc = distancia*360 / Math.Pi / 6.24
+  enc = distancia*360 / Math.Pi / diametro
   MotorBC.Off()
   Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"False")
 
@@ -26,7 +30,9 @@ Function Negro1(in number velocidad, in number sensor)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor) > 10
+  lectura = 50
+  While lectura > 15
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -38,8 +44,9 @@ Function Negro1F(in number velocidad, in number sensor)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor) > 10
-
+  lectura = 50
+  While lectura > 15
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
   EndWhile
@@ -51,7 +58,9 @@ Function Blanco1(in number velocidad, in number sensor)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor) < 60
+  lectura = 50
+  While lectura > 60
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -63,7 +72,9 @@ Function Blanco1F(in number velocidad, in number sensor)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor) < 60
+  lectura = 50
+  While lectura > 60
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -76,7 +87,11 @@ Function Negros2(in number velocidad, in number sensor1, in number sensor2)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor1) > 5 Or Sensor.ReadPercent(sensor2) > 5
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 > 5 Or lectura2 > 5
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -88,7 +103,11 @@ Function Negros2F(in number velocidad, in number sensor1, in number sensor2)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor1) > 5 Or Sensor.ReadPercent(sensor2) > 5
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 > 5 Or lectura2 > 5
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -101,7 +120,11 @@ Function Blancos2(in number velocidad, in number sensor1, in number sensor2)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor1) < 70 Or Sensor.ReadPercent(sensor2) < 70
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 < 60 Or lectura2 < 60
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -113,7 +136,11 @@ Function Blancos2F(in number velocidad, in number sensor1, in number sensor2)
   
   correccion = 0
   MotorBC.Off()
-  While Sensor.ReadPercent(sensor1) < 70 Or Sensor.ReadPercent(sensor2) < 70
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 < 60 Or lectura2 < 60
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
 
@@ -204,9 +231,9 @@ Function AccelDecel(in number v0, in number vMax, in number distanciaAccel,in nu
   error = 0
   olderror = 0
 
-  gradosAccel = distanciaAccel*360/(6.24*math.pi)
-  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
-  gradosDecel = distanciaDecel*360/(6.24*math.pi)
+  gradosAccel = distanciaAccel*360/(diametro*math.pi)
+  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
+  gradosDecel = distanciaDecel*360/(diametro*math.pi)
   
   While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
     
@@ -265,9 +292,9 @@ Function AccelDecelF(in number v0, in number vMax, in number distanciaAccel,in n
   error = 0
   olderror = 0
 
-  gradosAccel = distanciaAccel*360/(6.24*math.pi)
-  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
-  gradosDecel = distanciaDecel*360/(6.24*math.pi)
+  gradosAccel = distanciaAccel*360/(diametro*math.pi)
+  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
+  gradosDecel = distanciaDecel*360/(diametro*math.pi)
   
   While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
     
@@ -323,8 +350,8 @@ Function Decel(in number v0, in number vMin, in number distanciaDecel,in number 
   error = 0
   olderror = 0
 
-  gradosDecel = distanciaDecel*360/(6.24*math.pi)
-  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(diametro*math.pi)
+  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
   
   encoderB = 0
   encoderC = 0
@@ -371,8 +398,8 @@ Function DecelF(in number v0, in number vMin, in number distanciaDecel,in number
   error = 0
   olderror = 0
 
-  gradosDecel = distanciaDecel*360/(6.24*math.pi)
-  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(diametro*math.pi)
+  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
   
   encoderB = 0
   encoderC = 0

@@ -1,6 +1,8 @@
 
 'Siguelíneas 1-4 con control Proporcional y derivativo (PD)
 
+number diametro
+
 number negro1
 number negro3
 number negro4
@@ -30,7 +32,7 @@ Function Cruce14(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
   
   error = 0
   olderror = 0
@@ -86,7 +88,7 @@ Function Cruce14F(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
   
   error = 0
   olderror = 0
@@ -137,7 +139,7 @@ Function Blanco14(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -186,7 +188,7 @@ Function Blanco14F(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -237,7 +239,7 @@ Function Encoder14(in number velocidad, in number encoder)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -248,7 +250,7 @@ Function Encoder14(in number velocidad, in number encoder)
   startKp = kp
   startKd = kd
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = Motor.GetCount("C")
   encoderC = 0
@@ -291,7 +293,7 @@ Function Encoder14F(in number velocidad, in number encoder)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -302,7 +304,7 @@ Function Encoder14F(in number velocidad, in number encoder)
   startKp = kp
   startKd = kd
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = Motor.GetCount("C")
   encoderC = 0
@@ -346,7 +348,7 @@ Function Cruce31(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -395,7 +397,7 @@ Function Cruce31F(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -446,7 +448,7 @@ Function Blanco31(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -495,7 +497,7 @@ Function Blanco31F(in number velocidad)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -546,7 +548,7 @@ Function Encoder31(in number velocidad, in number encoder)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -557,7 +559,7 @@ Function Encoder31(in number velocidad, in number encoder)
   startKp = kp
   startKd = kd
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = Motor.GetCount("C")
   encoderC = 0
@@ -600,7 +602,7 @@ Function Encoder31F(in number velocidad, in number encoder)
   kp = velocidad/200
   kd = kp * 28
 
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
 
   error = 0
   olderror = 0
@@ -611,7 +613,7 @@ Function Encoder31F(in number velocidad, in number encoder)
   startKp = kp
   startKd = kd
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = Motor.GetCount("C")
   encoderC = 0
@@ -656,7 +658,7 @@ Function Cruce_Externo(in number velocidad, in number reader)
   kp = velocidad/200
   kd = kp * 28
   
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
   
   startVelocidad = velocidad
   startKp = kp
@@ -725,7 +727,7 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
   kp = velocidad/200
   kd = kp * 28
   
-  distancia = 7 * 360 / (6.24 * Math.Pi)
+  distancia = 7 * 360 / (diametro * Math.Pi)
   
   startVelocidad = velocidad
   startKp = kp

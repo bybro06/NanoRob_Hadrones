@@ -1,6 +1,10 @@
 'Giro con Motores Medianos
 
+number diametro   'Diámetro de la rueda
 number G1   'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
+
+number negro
+number blanco
 
 'Antiguos Giros Universales
 Function Grados(in number velocidad1, in number velocidad2, in number grados)
@@ -46,18 +50,18 @@ Function GradosF(in number velocidad1, in number velocidad2, in number grados)
 EndFunction
 
 'Por encoder
-Function encoder(in number velocidad1, in number velocidad2, in number distancia)
+Function Encoder(in number velocidad1, in number velocidad2, in number distancia)
   
-  encoder = distancia / (6.24 * Math.Pi)* 360
+  encoder = distancia / (diametro * Math.Pi)* 360
 
   MotorBC.Off()
   Motor.MoveSync("BC",-velocidad1,velocidad2,encoder,"True")
 
 EndFunction
 
-Function encoderF(in number velocidad1, in number velocidad2, in number distancia)
+Function EncoderF(in number velocidad1, in number velocidad2, in number distancia)
   
-  encoder = distancia / (6.24 * Math.Pi)* 360
+  encoder = distancia / (diametro * Math.Pi)* 360
 
   MotorBC.Off()
   Motor.MoveSync("BC",-velocidad1,velocidad2,encoder,"False")
@@ -67,7 +71,9 @@ EndFunction
 'Hasta Negro en 1 sensor
 Function Negro1(in number velocidad1, in number velocidad2, in number sens)
   
-  While Sensor.ReadPercent(sens) > 15
+  lectura = 50
+  While lectura > 15
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
@@ -76,7 +82,9 @@ EndFunction
 
 Function Negro1F(in number velocidad1, in number velocidad2, in number sens)
   
-  While Sensor.ReadPercent(sens) > 15
+  lectura = 50
+  While lectura > 15
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
@@ -86,7 +94,11 @@ EndFunction
 'Hasta Negro en 2 sensores
 Function Negros2(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
   
-  While Sensor.ReadPercent(sens1) > 5 Or Sensor.ReadPercent(sens2) > 5
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 > 5 Or lectura2 > 5
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
@@ -95,7 +107,11 @@ EndFunction
 
 Function Negros2F(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
   
-  While Sensor.ReadPercent(sens1) > 5 Or Sensor.ReadPercent(sens2) > 5
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 > 5 Or lectura2 > 5
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")
@@ -105,7 +121,9 @@ EndFunction
 'Hasta Blanco en 1 sensor
 Function Blanco1(in number velocidad1, in number velocidad2, in number sens)
 
-  While Sensor.ReadPercent(sens) < 60
+  lectura = 50
+  While lectura < 60
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "True")
@@ -114,7 +132,36 @@ EndFunction
 
 Function Blanco1F(in number velocidad1, in number velocidad2, in number sens)
   
-  While Sensor.ReadPercent(sens) < 60
+  lectura = 50
+  While lectura < 60
+    lectura = (Sensor.ReadPercent(sens) - negro)/blanco * (100 - negro) 'Normalización
+    Motor.StartSync("BC", -velocidad1, velocidad2)
+  EndWhile
+  Motor.Stop("BC", "False")
+
+EndFunction
+
+'Hasta Blanco en 2 sensores
+Function Blancos2(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
+  
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 < 60 Or lectura2 < 60
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
+    Motor.StartSync("BC", -velocidad1, velocidad2)
+  EndWhile
+  Motor.Stop("BC", "True")
+
+EndFunction
+
+Function Blancos2F(in number velocidad1, in number velocidad2, in number sens1, in number sens2)
+  
+  lectura1 = 50
+  lectura2 = 50
+  While lectura1 < 60 Or lectura2 < 60
+    lectura1 = (Sensor.ReadPercent(sens1) - negro)/blanco * (100 - negro) 'Normalización
+    lectura2 = (Sensor.ReadPercent(sens2) - negro)/blanco * (100 - negro) 'Normalización
     Motor.StartSync("BC", -velocidad1, velocidad2)
   EndWhile
   Motor.Stop("BC", "False")

@@ -1,4 +1,7 @@
 
+number VALUENEGRO
+number VALUEBLANCO
+
 Function Detect(in number sens, in number reps, out number color)
   
   sens_mode = Sensor.GetMode(sens)
@@ -11,8 +14,6 @@ Function Detect(in number sens, in number reps, out number color)
   YELLOW = 60
   GREEN = 170
   BLUE = 330
-  VALUENEGRO = 10
-  VALUEBLANCO = 100
   RWHITE = 147
   GWHITE = 143
   BWHITE = 160
@@ -141,8 +142,6 @@ Function Time(in number sens, in number time, out number color)
   YELLOW = 60
   GREEN = 170
   BLUE = 330
-  VALUENEGRO = 10
-  VALUEBLANCO = 100 'estaba en 50
   RWHITE = 147 '235
   GWHITE = 143 '232
   BWHITE = 200 '234

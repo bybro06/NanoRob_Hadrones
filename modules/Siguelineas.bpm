@@ -1,6 +1,8 @@
 
 'Siguelíneas 1-4 con control Proporcional y derivativo (PD)
 
+number diametro
+
 number negro1
 number negro3
 number negro4
@@ -161,7 +163,7 @@ Function Encoder14(in number velocidad, in number encoder)
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = MotorC.GetTacho()
   encoderC = 0
@@ -198,7 +200,7 @@ Function Encoder14F(in number velocidad, in number encoder)
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = MotorC.GetTacho()
   encoderC = 0
@@ -384,7 +386,7 @@ Function Encoder31(in number velocidad, in number encoder)
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = MotorC.GetTacho()
   encoderC = 0
@@ -421,7 +423,7 @@ Function Encoder31F(in number velocidad, in number encoder)
   u = 0
   sentido = velocidad / Math.Abs(velocidad)
   
-  encoder = encoder / (6.24 * Math.Pi) * 360
+  encoder = encoder / (diametro * Math.Pi) * 360
   
   startC = MotorC.GetTacho()
   encoderC = 0
