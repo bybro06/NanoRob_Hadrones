@@ -6,11 +6,23 @@
     Giros por Nanorob Hadrones.
       </summary>
     </member>
-	
+
+    <member name="P:diametro">
+      <summary>
+        Diametro de la rueda.
+      </summary>
+    </member>
+
+    <member name="P:G1">
+      <summary>
+        Constate de giro. Nº de grados de encoder que equivalen a 1 grado de Spin.
+      </summary>
+    </member>
+
     <member name="M:Grados">
       <summary>
         Giro por grados.
-        Para ajustarlo, cambiar constante G1 en Giro.bpm.
+        Para ajustarlo, cambiar propiedad G1.
       </summary>
       <param name="Velocidad1">Velocidad del motor B.</param>
       <param name="Velocidad2">Velocidad del motor C.</param>
@@ -20,7 +32,7 @@
 	  <member name="M:GradosF">
       <summary>
         Giro por grados.
-        Para ajustarlo, cambiar constante G1 en Giro.bpm.
+        Para ajustarlo, cambiar propiedad G1.
       </summary>
       <param name="Velocidad1">Velocidad del motor B.</param>
       <param name="Velocidad2">Velocidad del motor C.</param>
@@ -62,7 +74,13 @@
       <param name="Velocidad2">Velocidad del motor C.</param>
       <param name="sens">Sensor de lectura.</param>
     </member>
-	
+      
+    <member name="P:negro">
+      <summary>
+        Lectura del sensor en negro.
+      </summary>
+    </member>
+
     <member name="M:Blanco1">
       <summary>
         Giro hasta Blanco con 1 sensor con freno.
@@ -80,7 +98,13 @@
       <param name="Velocidad2">Velocidad del motor C.</param>
       <param name="sens">Sensor de lectura.</param>
     </member>
-	
+
+    <member name="P:blanco">
+      <summary>
+        Lectura del sensor en blanco.
+      </summary>
+    </member>
+
 	  <member name="M:Negros2">
       <summary>
         Giro hasta Negro con 2 sensores con freno.

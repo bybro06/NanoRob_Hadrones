@@ -9,6 +9,20 @@
       </summary>
     </member>
 	
+        
+    <member name="P:VALUENEGRO">
+      <summary>
+        Lectura del sensor de color en negro.
+      </summary>
+    </member>
+
+    <member name="P:VALUEBLANCO">
+      <summary>
+        Lectura del sensor color en blanco.
+      </summary>
+    </member>
+
+
 	<member name="M:Detect">
       <summary>
         Lectura RGB to HSV por muestras.

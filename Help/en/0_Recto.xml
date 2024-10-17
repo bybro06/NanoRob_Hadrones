@@ -6,7 +6,13 @@
     Movimientos rectos sincronizados por Nanorob Hadrones.
       </summary>
     </member>
-	
+
+    <member name="P:diametro">
+      <summary>
+        Diametro de la rueda.
+      </summary>
+    </member>
+
 	  <member name="M:Encoder">
       <summary>
         Movimiento Recto hasta encoder con sincronización y freno.
@@ -38,7 +44,13 @@
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
     </member>
-	
+      
+    <member name="P:negro">
+      <summary>
+        Lectura del sensor en negro.
+      </summary>
+    </member>
+
     <member name="M:Blanco1">
       <summary>
         Movimiento Recto hasta Blanco con 1 sensor con sincronización y freno.
@@ -54,7 +66,13 @@
       <param name="Velocidad">Velocidad de los motores.</param>
       <param name="sens">Sensor de lectura.</param>
     </member>
-	
+    
+    <member name="P:blanco">
+      <summary>
+        Lectura del sensor en blanco.
+      </summary>
+    </member>
+
 	  <member name="M:Negros2">
       <summary>
         Movimiento Recto hasta Negro con 2 sensores con sincronización y freno.
