@@ -18,7 +18,49 @@ olderrorA = 0
 errorD = 0
 olderrorD = 0
 
-setup()
+Sub Setup
+  Sensor.SetMode(1,0)
+  Sensor.SetMode(2,3)
+  Sensor.SetMode(3,0)
+  Sensor.SetMode(4,0)
+
+  Giro.G1 = 985/360
+
+  Siguelineas.negro1 = 10
+  Siguelineas.negro3 = 10
+  Siguelineas.negro4 = 7
+
+  Siguelineas.blanco1 = 83
+  Siguelineas.blanco3 = 80
+  Siguelineas.blanco4 = 59
+
+  Smart.negro1 = 10
+  Smart.negro3 = 10
+  Smart.negro4 = 7
+
+  Smart.blanco1 = 83
+  Smart.blanco3 = 80
+  Smart.blanco4 = 59
+EndSub
+
+Sub StartArm
+  Brazo.DTimer(-50,800)
+  AEncoder(50,-800)
+  encoderA = 0
+  'encoderD = 0
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  AEncoder(50,650)
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  encoderA = 0
+  'encoderD = 0
+  Brazo.DEncoder(50,130)
+
+EndSub
+
+
+Setup()
 Thread.Run = ControlBrazo
 Main()
 
@@ -115,21 +157,6 @@ Sub ControlBrazo
 EndSub
 
 
-Sub StartArm
-  Brazo.DTimer(-50,800)
-  AEncoder(50,-800)
-  encoderA = 0
-  'encoderD = 0
-  MotorA.ResetCount()
-  MotorD.ResetCount()
-  AEncoder(50,650)
-  MotorA.ResetCount()
-  MotorD.ResetCount()
-  encoderA = 0
-  'encoderD = 0
-  Brazo.DEncoder(50,130)
-
-EndSub
 
 Sub Display
   While "True"
@@ -143,12 +170,6 @@ Sub Display
    EndWhile
 EndSub
 
-Sub Setup
-  Sensor.SetMode(1,0)
-  Sensor.SetMode(2,3)
-  Sensor.SetMode(3,0)
-  Sensor.SetMode(4,0)
-EndSub
 
 Function Coger()
   Brazo.DEncoder(50,330)
@@ -178,6 +199,8 @@ Function Soltar(in number bloques, in number altura)
   
   Brazo.DEncoder(50,50)
 EndFunction
+
+
 
 Function AEncoder(in number Velocidad, in number Encoder)
   
@@ -212,7 +235,6 @@ Function AEncoder(in number Velocidad, in number Encoder)
   EndIf
   
 EndFunction
-
 
 Function DEncoder(in number Velocidad, in number Encoder)
   

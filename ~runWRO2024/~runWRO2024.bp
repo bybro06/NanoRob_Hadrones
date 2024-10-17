@@ -1,36 +1,49 @@
+pr_siguelineas_negro1 = 0
+pr_siguelineas_negro3 = 0
+pr_siguelineas_negro4 = 0
+pr_siguelineas_blanco1 = 0
+pr_siguelineas_blanco3 = 0
+pr_siguelineas_blanco4 = 0
+pr_giro_g1 = 0
+pr_smart_negro1 = 0
+pr_smart_negro3 = 0
+pr_smart_negro4 = 0
+pr_smart_blanco1 = 0
+pr_smart_blanco3 = 0
+pr_smart_blanco4 = 0
 lv_velocidad_5 = 0
-lv_tiempo_5 = 0
-lv_velocidad1_11 = 0
-lv_velocidad2_11 = 0
-lv_grados_11 = 0
-lv_velocidad_12 = 0
-lv_encoder_12 = 0
-lv_v0_6 = 0
-lv_vmax_6 = 0
-lv_distancia1_6 = 0
-lv_distancia2_6 = 0
-lv_distancia3_6 = 0
+lv_timer_5 = 0
 lv_velocidad_3 = 0
 lv_encoder_3 = 0
+lv_velocidad_6 = 0
+lv_encoder_6 = 0
 lv_velocidad_7 = 0
-lv_distancia_7 = 0
+lv_tiempo_7 = 0
+lv_velocidad1_13 = 0
+lv_velocidad2_13 = 0
+lv_grados_13 = 0
 lv_v0_8 = 0
 lv_vmax_8 = 0
-lv_distancia1_8 = 0
-lv_distancia2_8 = 0
-lv_distancia3_8 = 0
+lv_distanciaaccel_8 = 0
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 0
 lv_velocidad_9 = 0
 lv_distancia_9 = 0
-lv_velocidad_10 = 0
-lv_sensor_10 = 0
+lv_v0_10 = 0
+lv_vmax_10 = 0
+lv_distanciaaccel_10 = 0
+lv_distanciacrucero_10 = 0
+lv_distanciadecel_10 = 0
+lv_velocidad_11 = 0
+lv_distancia_11 = 0
+lv_velocidad_12 = 0
+lv_sensor_12 = 0
 lv_velocidad_14 = 0
 lv_reader_14 = 0
 lv_velocidad_15 = 0
 lv_encoder_15 = 0
 lv_bloques_2 = 0
 lv_altura_2 = 0
-lv_velocidad_13 = 0
-lv_timer_13 = 0
 gv_encodera = 0
 gv_encoderd = 0
 gv_errora = 0
@@ -47,174 +60,28 @@ gv_olderrord = 0
 f_setup_0 ()
 Thread.Run = f_controlbrazo_0
 f_main_0 ()
-Sub f_main_0
-f_startarm_0 ()
-lv_velocidad_5 = - 80
-lv_tiempo_5 = 800
-m_recto_tiempo_2 ()
-lv_velocidad1_11 = 60
-lv_velocidad2_11 = - 7
-lv_grados_11 = 93
-m_giro_grados_3 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 320
-m_brazo_dencoder_2 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 4
-lv_distancia2_6 = 0
-lv_distancia3_6 = 3
-m_recto_acceldecel_5 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = - 20
-m_brazo_dencoder_2 ()
-lv_velocidad_3 = 50
-lv_encoder_3 = - 200
-f_aencoder_2 ()
-For gv_i = 0 To 2
-f_coger_0 ()
-EndFor
-lv_velocidad_7 = - 20
-lv_distancia_7 = 3
-m_recto_encoder_2 ()
-lv_velocidad_12 = 60
-lv_encoder_12 = 200
-m_brazo_dencoder_2 ()
-lv_velocidad1_11 = - 80
-lv_velocidad2_11 = 0
-lv_grados_11 = 110
-m_giro_grados_3 ()
-lv_velocidad_5 = - 80
-lv_tiempo_5 = 500
-m_recto_tiempo_2 ()
-lv_v0_8 = 15
-lv_vmax_8 = 89
-lv_distancia1_8 = 10
-lv_distancia2_8 = 0
-lv_distancia3_8 = 0
-m_recto_acceldecelf_5 ()
-lv_velocidad_9 = 89
-lv_distancia_9 = 42
-m_recto_encoderf_2 ()
-lv_velocidad_10 = 50
-lv_sensor_10 = 3
-m_recto_blanco1f_2 ()
-lv_velocidad1_11 = 60
-lv_velocidad2_11 = - 55
-lv_grados_11 = 105
-m_giro_grados_3 ()
-lv_velocidad_14 = 40
-lv_reader_14 = 4
-m_smart_cruce_externof_2 ()
-lv_velocidad_15 = 40
-lv_encoder_15 = 20
-m_siguelineas_encoder31f_2 ()
-lv_velocidad_9 = 40
-lv_distancia_9 = 25
-m_recto_encoderf_2 ()
-lv_velocidad1_11 = 60
-lv_velocidad2_11 = - 65
-lv_grados_11 = 130
-m_giro_grados_3 ()
-lv_velocidad_5 = - 80
-lv_tiempo_5 = 1200
-m_recto_tiempo_2 ()
-lv_velocidad1_11 = 60
-lv_velocidad2_11 = - 5
-lv_grados_11 = 110
-m_giro_grados_3 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 320
-m_brazo_dencoder_2 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 3
-lv_distancia2_6 = 0
-lv_distancia3_6 = 4
-m_recto_acceldecel_5 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = - 20
-m_brazo_dencoder_2 ()
-lv_velocidad_3 = 50
-lv_encoder_3 = - 200
-f_aencoder_2 ()
-For gv_i = 0 To 2
-f_coger_0 ()
-EndFor
-lv_velocidad1_11 = - 80
-lv_velocidad2_11 = 0
-lv_grados_11 = 120
-m_giro_grados_3 ()
-lv_velocidad_5 = - 80
-lv_tiempo_5 = 400
-m_recto_tiempo_2 ()
-lv_v0_6 = 15
-lv_vmax_6 = 80
-lv_distancia1_6 = 8
-lv_distancia2_6 = 21
-lv_distancia3_6 = 8
-m_recto_acceldecel_5 ()
-lv_velocidad1_11 = - 80
-lv_velocidad2_11 = - 40
-lv_grados_11 = 20
-m_giro_grados_3 ()
-lv_bloques_2 = 2
-lv_altura_2 = 0
-f_soltar_2 ()
-lv_velocidad1_11 = 80
-lv_velocidad2_11 = 40
-lv_grados_11 = 40
-m_giro_grados_3 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 5
-lv_distancia2_6 = 0
-lv_distancia3_6 = 5
-m_recto_acceldecel_5 ()
-lv_bloques_2 = 2
-lv_altura_2 = 0
-f_soltar_2 ()
-lv_velocidad1_11 = 40
-lv_velocidad2_11 = 80
-lv_grados_11 = 40
-m_giro_grados_3 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 5
-lv_distancia2_6 = 0
-lv_distancia3_6 = 5
-m_recto_acceldecel_5 ()
-lv_bloques_2 = 2
-lv_altura_2 = 2
-f_soltar_2 ()
-lv_velocidad1_11 = 80
-lv_velocidad2_11 = 40
-lv_grados_11 = 40
-m_giro_grados_3 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 5
-lv_distancia2_6 = 0
-lv_distancia3_6 = 5
-m_recto_acceldecel_5 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 640
-m_brazo_dencoder_2 ()
-lv_velocidad_3 = 50
-lv_encoder_3 = - 50
-f_aencoder_2 ()
-f_coger_0 ()
-EndSub
-Sub f_controlbrazo_0
-While "True"
-gv_errora = gv_encodera - MotorA.GetTacho ()
-gv_correcciona = gv_errora * 1 + ( gv_errora - gv_olderrora ) * 0.6
-MotorA.StartSpeed ( gv_correcciona )
-EndWhile
+Sub f_setup_0
+Sensor.SetMode ( 1 , 0 )
+Sensor.SetMode ( 2 , 3 )
+Sensor.SetMode ( 3 , 0 )
+Sensor.SetMode ( 4 , 0 )
+pr_giro_g1 = 985 / 360
+pr_siguelineas_negro1 = 10
+pr_siguelineas_negro3 = 10
+pr_siguelineas_negro4 = 7
+pr_siguelineas_blanco1 = 83
+pr_siguelineas_blanco3 = 80
+pr_siguelineas_blanco4 = 59
+pr_smart_negro1 = 10
+pr_smart_negro3 = 10
+pr_smart_negro4 = 7
+pr_smart_blanco1 = 83
+pr_smart_blanco3 = 80
+pr_smart_blanco4 = 59
 EndSub
 Sub f_startarm_0
-lv_velocidad_13 = - 50
-lv_timer_13 = 800
+lv_velocidad_5 = - 50
+lv_timer_5 = 800
 m_brazo_dtimer_2 ()
 lv_velocidad_3 = 50
 lv_encoder_3 = - 800
@@ -228,64 +95,223 @@ f_aencoder_2 ()
 MotorA.ResetCount ()
 MotorD.ResetCount ()
 gv_encodera = 0
-lv_velocidad_12 = 50
-lv_encoder_12 = 130
+lv_velocidad_6 = 50
+lv_encoder_6 = 130
 m_brazo_dencoder_2 ()
 EndSub
-Sub f_setup_0
-Sensor.SetMode ( 1 , 0 )
-Sensor.SetMode ( 2 , 3 )
-Sensor.SetMode ( 3 , 0 )
-Sensor.SetMode ( 4 , 0 )
-EndSub
-Sub f_coger_0
-lv_velocidad_12 = 50
-lv_encoder_12 = 330
+Sub f_main_0
+f_startarm_0 ()
+lv_velocidad_7 = - 80
+lv_tiempo_7 = 800
+m_recto_tiempo_2 ()
+lv_velocidad1_13 = 60
+lv_velocidad2_13 = - 7
+lv_grados_13 = 93
+m_giro_grados_3 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 320
 m_brazo_dencoder_2 ()
-lv_v0_6 = 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 5
-lv_distancia2_6 = 0
-lv_distancia3_6 = 5
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 4
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 3
 m_recto_acceldecel_5 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 300
-m_brazo_dencoder_2 ()
-lv_velocidad_3 = 50
-lv_encoder_3 = 50
-f_aencoder_2 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = - 20
+lv_velocidad_6 = 50
+lv_encoder_6 = - 20
 m_brazo_dencoder_2 ()
 lv_velocidad_3 = 50
 lv_encoder_3 = - 200
 f_aencoder_2 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 100
+For gv_i = 0 To 2
+f_coger_0 ()
+EndFor
+lv_velocidad_9 = - 20
+lv_distancia_9 = 3
+m_recto_encoder_2 ()
+lv_velocidad_6 = 60
+lv_encoder_6 = 200
 m_brazo_dencoder_2 ()
-EndSub
-Sub f_soltar_2
+lv_velocidad1_13 = - 80
+lv_velocidad2_13 = 0
+lv_grados_13 = 110
+m_giro_grados_3 ()
+lv_velocidad_7 = - 80
+lv_tiempo_7 = 500
+m_recto_tiempo_2 ()
+lv_v0_10 = 15
+lv_vmax_10 = 89
+lv_distanciaaccel_10 = 10
+lv_distanciacrucero_10 = 0
+lv_distanciadecel_10 = 0
+m_recto_acceldecelf_5 ()
+lv_velocidad_11 = 89
+lv_distancia_11 = 42
+m_recto_encoderf_2 ()
 lv_velocidad_12 = 50
-lv_encoder_12 = 340 * lv_altura_2
+lv_sensor_12 = 3
+m_recto_blanco1f_2 ()
+lv_velocidad1_13 = 60
+lv_velocidad2_13 = - 55
+lv_grados_13 = 105
+m_giro_grados_3 ()
+lv_velocidad_14 = 40
+lv_reader_14 = 4
+m_smart_cruce_externof_2 ()
+lv_velocidad_15 = 40
+lv_encoder_15 = 20
+m_siguelineas_encoder31f_2 ()
+lv_velocidad_11 = 40
+lv_distancia_11 = 25
+m_recto_encoderf_2 ()
+lv_velocidad1_13 = 60
+lv_velocidad2_13 = - 65
+lv_grados_13 = 130
+m_giro_grados_3 ()
+lv_velocidad_7 = - 80
+lv_tiempo_7 = 1200
+m_recto_tiempo_2 ()
+lv_velocidad1_13 = 60
+lv_velocidad2_13 = - 5
+lv_grados_13 = 110
+m_giro_grados_3 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 320
+m_brazo_dencoder_2 ()
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 3
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 4
+m_recto_acceldecel_5 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = - 20
+m_brazo_dencoder_2 ()
+lv_velocidad_3 = 50
+lv_encoder_3 = - 200
+f_aencoder_2 ()
+For gv_i = 0 To 2
+f_coger_0 ()
+EndFor
+lv_velocidad1_13 = - 80
+lv_velocidad2_13 = 0
+lv_grados_13 = 120
+m_giro_grados_3 ()
+lv_velocidad_7 = - 80
+lv_tiempo_7 = 400
+m_recto_tiempo_2 ()
+lv_v0_8 = 15
+lv_vmax_8 = 80
+lv_distanciaaccel_8 = 8
+lv_distanciacrucero_8 = 21
+lv_distanciadecel_8 = 8
+m_recto_acceldecel_5 ()
+lv_velocidad1_13 = - 80
+lv_velocidad2_13 = - 40
+lv_grados_13 = 20
+m_giro_grados_3 ()
+lv_bloques_2 = 2
+lv_altura_2 = 0
+f_soltar_2 ()
+lv_velocidad1_13 = 80
+lv_velocidad2_13 = 40
+lv_grados_13 = 40
+m_giro_grados_3 ()
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 5
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 5
+m_recto_acceldecel_5 ()
+lv_bloques_2 = 2
+lv_altura_2 = 0
+f_soltar_2 ()
+lv_velocidad1_13 = 40
+lv_velocidad2_13 = 80
+lv_grados_13 = 40
+m_giro_grados_3 ()
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 5
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 5
+m_recto_acceldecel_5 ()
+lv_bloques_2 = 2
+lv_altura_2 = 2
+f_soltar_2 ()
+lv_velocidad1_13 = 80
+lv_velocidad2_13 = 40
+lv_grados_13 = 40
+m_giro_grados_3 ()
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 5
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 5
+m_recto_acceldecel_5 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 640
 m_brazo_dencoder_2 ()
 lv_velocidad_3 = 50
 lv_encoder_3 = - 50
 f_aencoder_2 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 340 * ( lv_bloques_2 + lv_altura_2 )
+f_coger_0 ()
+EndSub
+Sub f_controlbrazo_0
+While "True"
+gv_errora = gv_encodera - MotorA.GetTacho ()
+gv_correcciona = gv_errora * 1 + ( gv_errora - gv_olderrora ) * 0.6
+MotorA.StartSpeed ( gv_correcciona )
+EndWhile
+EndSub
+Sub f_coger_0
+lv_velocidad_6 = 50
+lv_encoder_6 = 330
+m_brazo_dencoder_2 ()
+lv_v0_8 = 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 5
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 5
+m_recto_acceldecel_5 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 300
+m_brazo_dencoder_2 ()
+lv_velocidad_3 = 50
+lv_encoder_3 = 50
+f_aencoder_2 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = - 20
+m_brazo_dencoder_2 ()
+lv_velocidad_3 = 50
+lv_encoder_3 = - 200
+f_aencoder_2 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 100
+m_brazo_dencoder_2 ()
+EndSub
+Sub f_soltar_2
+lv_velocidad_6 = 50
+lv_encoder_6 = 340 * lv_altura_2
+m_brazo_dencoder_2 ()
+lv_velocidad_3 = 50
+lv_encoder_3 = - 50
+f_aencoder_2 ()
+lv_velocidad_6 = 50
+lv_encoder_6 = 340 * ( lv_bloques_2 + lv_altura_2 )
 m_brazo_dencoder_2 ()
 lv_velocidad_3 = 50
 lv_encoder_3 = 400
 f_aencoder_2 ()
 Program.Delay ( 500 )
-lv_v0_6 = - 15
-lv_vmax_6 = 30
-lv_distancia1_6 = 5
-lv_distancia2_6 = 0
-lv_distancia3_6 = 5
+lv_v0_8 = - 15
+lv_vmax_8 = 30
+lv_distanciaaccel_8 = 5
+lv_distanciacrucero_8 = 0
+lv_distanciadecel_8 = 5
 m_recto_acceldecel_5 ()
-lv_velocidad_12 = 50
-lv_encoder_12 = 50
+lv_velocidad_6 = 50
+lv_encoder_6 = 50
 m_brazo_dencoder_2 ()
 EndSub
 Sub f_aencoder_2
@@ -306,64 +332,37 @@ gv_encodera = lv_encoder_3
 MotorA.OffAndBrake ()
 EndIf
 EndSub
+Sub m_brazo_dtimer_2
+Time.Reset1 ()
+While Time.Get1 () < lv_timer_5
+MotorD.StartSpeed ( lv_velocidad_5 )
+EndWhile
+MotorD.OffAndBrake ()
+EndSub
+Sub m_brazo_dencoder_2
+lv_encdiff_6 = lv_encoder_6 - Motor.GetCount ( "D" )
+lv_signo_6 = lv_encdiff_6 / Math.Abs ( lv_encdiff_6 )
+lv_safetytimer_6 = Math.Max ( ( ( Math.abs ( lv_encdiff_6 ) / 100 ) / ( lv_velocidad_6 / 20 ) * 650 * 2 ) , 400 )
+Time.Reset3 ()
+If lv_encdiff_6 <> 0 Then
+While Math.Abs ( Motor.GetCount ( "D" ) - lv_encoder_6 ) > 15 and Time.Get3 () < lv_safetytimer_6
+MotorD.StartSpeed ( lv_signo_6 * lv_velocidad_6 )
+LCD.Clear ()
+LCD.Write ( 5 , 30 , "safetyTimer: " + lv_safetytimer_6 )
+EndWhile
+Motor.Stop ( "D" , "True" )
+EndIf
+EndSub
 Sub m_recto_tiempo_2
-lv_correccion_5 = 0
+lv_correccion_7 = 0
 Time.Reset3 ()
 MotorBC.Off ()
-While Time.Get3 () < lv_tiempo_5
-Motor.StartSync ( "BC" , - lv_velocidad_5 + lv_correccion_5 , lv_velocidad_5 + lv_correccion_5 )
+While Time.Get3 () < lv_tiempo_7
+Motor.StartSync ( "BC" , - lv_velocidad_7 + lv_correccion_7 , lv_velocidad_7 + lv_correccion_7 )
 EndWhile
 MotorBC.OffAndBrake ()
 EndSub
 Sub m_recto_acceldecel_5
-lv_startb_6 = Motor.GetCount ( "B" )
-lv_startc_6 = Motor.GetCount ( "C" )
-lv_encoderb_6 = 0
-lv_encoderc_6 = 0
-lv_signo_6 = lv_v0_6 / Math.Abs ( lv_v0_6 )
-lv_v0_6 = Math.Max ( 8 , Math.Abs ( lv_v0_6 ) ) * lv_signo_6
-lv_vmax_6 = Math.Min ( 90 , Math.Abs ( lv_vmax_6 ) ) * lv_signo_6
-lv_vel_6 = 0
-lv_kp_6 = 0.4
-lv_kd_6 = 0.5
-lv_error_6 = 0
-lv_olderror_6 = 0
-lv_grados1_6 = lv_distancia1_6 * 360 / ( 6.24 * math.pi )
-lv_grados2_6 = lv_distancia2_6 * 360 / ( 6.24 * math.pi )
-lv_grados3_6 = lv_distancia3_6 * 360 / ( 6.24 * math.pi )
-While Math.Abs ( lv_encoderc_6 ) < lv_grados1_6 + lv_grados2_6 + lv_grados3_6
-lv_encoderb_6 = Motor.GetCount ( "B" ) * 1 - lv_startb_6
-lv_encoderc_6 = Motor.GetCount ( "C" ) - lv_startc_6
-If Math.Abs ( lv_encoderc_6 ) < lv_grados1_6 + lv_grados2_6 Then
-lv_pendiente_6 = ( lv_vmax_6 - lv_v0_6 ) / lv_grados1_6 * lv_signo_6
-If lv_signo_6 > 0 Then
-lv_vel_6 = Math.Min ( lv_vmax_6 , lv_pendiente_6 * lv_encoderc_6 + lv_v0_6 )
-Else
-lv_vel_6 = Math.Max ( lv_vmax_6 , lv_pendiente_6 * lv_encoderc_6 + lv_v0_6 )
-EndIf
-Else
-lv_pendiente_6 = ( lv_v0_6 - lv_vmax_6 ) / lv_grados3_6 * lv_signo_6
-If lv_signo_6 > 0 Then
-lv_vel_6 = Math.Max ( lv_v0_6 , lv_pendiente_6 * ( lv_encoderc_6 - lv_grados1_6 - lv_grados2_6 ) + lv_vmax_6 )
-Else
-lv_vel_6 = Math.Min ( lv_v0_6 , lv_pendiente_6 * ( lv_encoderc_6 + lv_grados1_6 + lv_grados2_6 ) + lv_vmax_6 )
-EndIf
-EndIf
-lv_error_6 = ( - 1 * lv_encoderb_6 - lv_encoderc_6 ) * 1
-lv_correccion_6 = lv_error_6 * lv_kp_6 + ( lv_error_6 - lv_olderror_6 ) * lv_kd_6
-Motor.StartSync ( "BC" , - ( lv_vel_6 - lv_correccion_6 ) , ( lv_vel_6 + lv_correccion_6 ) )
-lv_olderror_6 = lv_error_6
-EndWhile
-MotorBC.OffAndBrake ()
-EndSub
-Sub m_recto_encoder_2
-lv_correccion_7 = 0
-lv_enc_7 = lv_distancia_7 * 360 / Math.Pi / 6.24
-MotorBC.Off ()
-Program.Delay ( 500 )
-Motor.MoveSync ( "BC" , - lv_velocidad_7 + lv_correccion_7 , lv_velocidad_7 + lv_correccion_7 , lv_enc_7 , "True" )
-EndSub
-Sub m_recto_acceldecelf_5
 lv_startb_8 = Motor.GetCount ( "B" )
 lv_startc_8 = Motor.GetCount ( "C" )
 lv_encoderb_8 = 0
@@ -376,25 +375,25 @@ lv_kp_8 = 0.4
 lv_kd_8 = 0.5
 lv_error_8 = 0
 lv_olderror_8 = 0
-lv_grados1_8 = lv_distancia1_8 * 360 / ( 6.24 * math.pi )
-lv_grados2_8 = lv_distancia2_8 * 360 / ( 6.24 * math.pi )
-lv_grados3_8 = lv_distancia3_8 * 360 / ( 6.24 * math.pi )
-While Math.Abs ( lv_encoderc_8 ) < lv_grados1_8 + lv_grados2_8 + lv_grados3_8
+lv_gradosaccel_8 = lv_distanciaaccel_8 * 360 / ( 6.24 * math.pi )
+lv_gradoscrucero_8 = lv_distanciacrucero_8 * 360 / ( 6.24 * math.pi )
+lv_gradosdecel_8 = lv_distanciadecel_8 * 360 / ( 6.24 * math.pi )
+While Math.Abs ( lv_encoderc_8 ) < lv_gradosaccel_8 + lv_gradoscrucero_8 + lv_gradosdecel_8
 lv_encoderb_8 = Motor.GetCount ( "B" ) * 1 - lv_startb_8
 lv_encoderc_8 = Motor.GetCount ( "C" ) - lv_startc_8
-If Math.Abs ( lv_encoderc_8 ) < lv_grados1_8 + lv_grados2_8 Then
-lv_pendiente_8 = ( lv_vmax_8 - lv_v0_8 ) / lv_grados1_8 * lv_signo_8
+If Math.Abs ( lv_encoderc_8 ) < lv_gradosaccel_8 + lv_gradoscrucero_8 Then
+lv_pendiente_8 = ( lv_vmax_8 - lv_v0_8 ) / lv_gradosaccel_8 * lv_signo_8
 If lv_signo_8 > 0 Then
 lv_vel_8 = Math.Min ( lv_vmax_8 , lv_pendiente_8 * lv_encoderc_8 + lv_v0_8 )
 Else
 lv_vel_8 = Math.Max ( lv_vmax_8 , lv_pendiente_8 * lv_encoderc_8 + lv_v0_8 )
 EndIf
 Else
-lv_pendiente_8 = ( lv_v0_8 - lv_vmax_8 ) / lv_grados3_8 * lv_signo_8
+lv_pendiente_8 = ( lv_v0_8 - lv_vmax_8 ) / lv_gradosdecel_8 * lv_signo_8
 If lv_signo_8 > 0 Then
-lv_vel_8 = Math.Max ( lv_v0_8 , lv_pendiente_8 * ( lv_encoderc_8 - lv_grados1_8 - lv_grados2_8 ) + lv_vmax_8 )
+lv_vel_8 = Math.Max ( lv_v0_8 , lv_pendiente_8 * ( lv_encoderc_8 - lv_gradosaccel_8 - lv_gradoscrucero_8 ) + lv_vmax_8 )
 Else
-lv_vel_8 = Math.Min ( lv_v0_8 , lv_pendiente_8 * ( lv_encoderc_8 + lv_grados1_8 + lv_grados2_8 ) + lv_vmax_8 )
+lv_vel_8 = Math.Min ( lv_v0_8 , lv_pendiente_8 * ( lv_encoderc_8 + lv_gradosaccel_8 + lv_gradoscrucero_8 ) + lv_vmax_8 )
 EndIf
 EndIf
 lv_error_8 = ( - 1 * lv_encoderb_8 - lv_encoderc_8 ) * 1
@@ -402,65 +401,85 @@ lv_correccion_8 = lv_error_8 * lv_kp_8 + ( lv_error_8 - lv_olderror_8 ) * lv_kd_
 Motor.StartSync ( "BC" , - ( lv_vel_8 - lv_correccion_8 ) , ( lv_vel_8 + lv_correccion_8 ) )
 lv_olderror_8 = lv_error_8
 EndWhile
-MotorBC.Off ()
+MotorBC.OffAndBrake ()
 EndSub
-Sub m_recto_encoderf_2
+Sub m_recto_encoder_2
 lv_correccion_9 = 0
 lv_enc_9 = lv_distancia_9 * 360 / Math.Pi / 6.24
 MotorBC.Off ()
-Motor.MoveSync ( "BC" , - lv_velocidad_9 + lv_correccion_9 , lv_velocidad_9 + lv_correccion_9 , lv_enc_9 , "False" )
+Program.Delay ( 500 )
+Motor.MoveSync ( "BC" , - lv_velocidad_9 + lv_correccion_9 , lv_velocidad_9 + lv_correccion_9 , lv_enc_9 , "True" )
+EndSub
+Sub m_recto_acceldecelf_5
+lv_startb_10 = Motor.GetCount ( "B" )
+lv_startc_10 = Motor.GetCount ( "C" )
+lv_encoderb_10 = 0
+lv_encoderc_10 = 0
+lv_signo_10 = lv_v0_10 / Math.Abs ( lv_v0_10 )
+lv_v0_10 = Math.Max ( 8 , Math.Abs ( lv_v0_10 ) ) * lv_signo_10
+lv_vmax_10 = Math.Min ( 90 , Math.Abs ( lv_vmax_10 ) ) * lv_signo_10
+lv_vel_10 = 0
+lv_kp_10 = 0.4
+lv_kd_10 = 0.5
+lv_error_10 = 0
+lv_olderror_10 = 0
+lv_gradosaccel_10 = lv_distanciaaccel_10 * 360 / ( 6.24 * math.pi )
+lv_gradoscrucero_10 = lv_distanciacrucero_10 * 360 / ( 6.24 * math.pi )
+lv_gradosdecel_10 = lv_distanciadecel_10 * 360 / ( 6.24 * math.pi )
+While Math.Abs ( lv_encoderc_10 ) < lv_gradosaccel_10 + lv_gradoscrucero_10 + lv_gradosdecel_10
+lv_encoderb_10 = Motor.GetCount ( "B" ) * 1 - lv_startb_10
+lv_encoderc_10 = Motor.GetCount ( "C" ) - lv_startc_10
+If Math.Abs ( lv_encoderc_10 ) < lv_gradosaccel_10 + lv_gradoscrucero_10 Then
+lv_pendiente_10 = ( lv_vmax_10 - lv_v0_10 ) / lv_gradosaccel_10 * lv_signo_10
+If lv_signo_10 > 0 Then
+lv_vel_10 = Math.Min ( lv_vmax_10 , lv_pendiente_10 * lv_encoderc_10 + lv_v0_10 )
+Else
+lv_vel_10 = Math.Max ( lv_vmax_10 , lv_pendiente_10 * lv_encoderc_10 + lv_v0_10 )
+EndIf
+Else
+lv_pendiente_10 = ( lv_v0_10 - lv_vmax_10 ) / lv_gradosdecel_10 * lv_signo_10
+If lv_signo_10 > 0 Then
+lv_vel_10 = Math.Max ( lv_v0_10 , lv_pendiente_10 * ( lv_encoderc_10 - lv_gradosaccel_10 - lv_gradoscrucero_10 ) + lv_vmax_10 )
+Else
+lv_vel_10 = Math.Min ( lv_v0_10 , lv_pendiente_10 * ( lv_encoderc_10 + lv_gradosaccel_10 + lv_gradoscrucero_10 ) + lv_vmax_10 )
+EndIf
+EndIf
+lv_error_10 = ( - 1 * lv_encoderb_10 - lv_encoderc_10 ) * 1
+lv_correccion_10 = lv_error_10 * lv_kp_10 + ( lv_error_10 - lv_olderror_10 ) * lv_kd_10
+Motor.StartSync ( "BC" , - ( lv_vel_10 - lv_correccion_10 ) , ( lv_vel_10 + lv_correccion_10 ) )
+lv_olderror_10 = lv_error_10
+EndWhile
+MotorBC.Off ()
+EndSub
+Sub m_recto_encoderf_2
+lv_correccion_11 = 0
+lv_enc_11 = lv_distancia_11 * 360 / Math.Pi / 6.24
+MotorBC.Off ()
+Motor.MoveSync ( "BC" , - lv_velocidad_11 + lv_correccion_11 , lv_velocidad_11 + lv_correccion_11 , lv_enc_11 , "False" )
 EndSub
 Sub m_recto_blanco1f_2
-lv_correccion_10 = 0
+lv_correccion_12 = 0
 MotorBC.Off ()
-While Sensor.ReadPercent ( lv_sensor_10 ) < 60
-Motor.StartSync ( "BC" , - lv_velocidad_10 + lv_correccion_10 , lv_velocidad_10 + lv_correccion_10 )
+While Sensor.ReadPercent ( lv_sensor_12 ) < 60
+Motor.StartSync ( "BC" , - lv_velocidad_12 + lv_correccion_12 , lv_velocidad_12 + lv_correccion_12 )
 EndWhile
 MotorBC.Off ()
 EndSub
 Sub m_giro_grados_3
-lv_g1_11 = 985 / 360
-lv_signo_11 = ( lv_velocidad1_11 / lv_velocidad2_11 ) / Math.Abs ( lv_velocidad1_11 / lv_velocidad2_11 )
-lv_vmin_11 = Math.Min ( Math.Abs ( lv_velocidad1_11 ) , Math.Abs ( lv_velocidad2_11 ) )
-lv_vmax_11 = Math.Max ( Math.Abs ( lv_velocidad1_11 ) , Math.Abs ( lv_velocidad2_11 ) )
-lv_encoder_11 = lv_grados_11 * lv_g1_11 * ( - 2 / ( lv_signo_11 * lv_vmin_11 / lv_vmax_11 - 1 ) )
+lv_signo_13 = ( lv_velocidad1_13 / lv_velocidad2_13 ) / Math.Abs ( lv_velocidad1_13 / lv_velocidad2_13 )
+lv_vmin_13 = Math.Min ( Math.Abs ( lv_velocidad1_13 ) , Math.Abs ( lv_velocidad2_13 ) )
+lv_vmax_13 = Math.Max ( Math.Abs ( lv_velocidad1_13 ) , Math.Abs ( lv_velocidad2_13 ) )
+lv_encoder_13 = lv_grados_13 * pr_giro_g1 * ( - 2 / ( lv_signo_13 * lv_vmin_13 / lv_vmax_13 - 1 ) )
 MotorBC.Off ()
 Program.Delay ( 100 )
-Motor.MoveSync ( "BC" , - lv_velocidad1_11 , lv_velocidad2_11 , lv_encoder_11 , "True" )
-lv_velocidad1_11 = 0
-lv_velocidad2_11 = 0
-lv_grados_11 = 0
+Motor.MoveSync ( "BC" , - lv_velocidad1_13 , lv_velocidad2_13 , lv_encoder_13 , "True" )
+lv_velocidad1_13 = 0
+lv_velocidad2_13 = 0
+lv_grados_13 = 0
 Program.Delay ( 100 )
-EndSub
-Sub m_brazo_dencoder_2
-lv_encdiff_12 = lv_encoder_12 - Motor.GetCount ( "D" )
-lv_signo_12 = lv_encdiff_12 / Math.Abs ( lv_encdiff_12 )
-lv_safetytimer_12 = Math.Max ( ( ( Math.abs ( lv_encdiff_12 ) / 100 ) / ( lv_velocidad_12 / 20 ) * 650 * 2 ) , 400 )
-Time.Reset3 ()
-If lv_encdiff_12 <> 0 Then
-While Math.Abs ( Motor.GetCount ( "D" ) - lv_encoder_12 ) > 15 and Time.Get3 () < lv_safetytimer_12
-MotorD.StartSpeed ( lv_signo_12 * lv_velocidad_12 )
-LCD.Clear ()
-LCD.Write ( 5 , 30 , "safetyTimer: " + lv_safetytimer_12 )
-EndWhile
-Motor.Stop ( "D" , "True" )
-EndIf
-EndSub
-Sub m_brazo_dtimer_2
-Time.Reset1 ()
-While Time.Get1 () < lv_timer_13
-MotorD.StartSpeed ( lv_velocidad_13 )
-EndWhile
-MotorD.OffAndBrake ()
 EndSub
 Sub m_smart_cruce_externof_2
 lv_velocidad_14 = lv_velocidad_14 * 1
-lv_negro1_14 = 10
-lv_blanco1_14 = 83
-lv_negro4_14 = 7
-lv_blanco4_14 = 59
-lv_negro3_14 = 10
-lv_blanco3_14 = 80
 lv_lectura1_14 = 50
 lv_lectura3_14 = 50
 lv_lectura4_14 = 50
@@ -487,9 +506,9 @@ lv_velocidad_14 = lv_startvelocidad_14
 lv_kp_14 = lv_startkp_14
 lv_kd_14 = lv_startkd_14
 EndIf
-lv_lectura1_14 = ( Sensor.ReadPercent ( 1 ) - lv_negro1_14 ) / lv_blanco1_14 * ( 100 - lv_negro1_14 )
-lv_lectura3_14 = ( Sensor.ReadPercent ( 3 ) - lv_negro3_14 ) / lv_blanco3_14 * ( 100 - lv_negro3_14 )
-lv_lectura4_14 = ( Sensor.ReadPercent ( 4 ) - lv_negro4_14 ) / lv_blanco4_14 * ( 100 - lv_negro4_14 )
+lv_lectura1_14 = ( Sensor.ReadPercent ( 1 ) - pr_smart_negro1 ) / pr_smart_blanco1 * ( 100 - pr_smart_negro1 )
+lv_lectura3_14 = ( Sensor.ReadPercent ( 3 ) - pr_smart_negro3 ) / pr_smart_blanco3 * ( 100 - pr_smart_negro3 )
+lv_lectura4_14 = ( Sensor.ReadPercent ( 4 ) - pr_smart_negro4 ) / pr_smart_blanco4 * ( 100 - pr_smart_negro4 )
 If lv_reader_14 = 3 Then
 lv_lectura_14 = lv_lectura3_14
 lv_lecturaizq_14 = lv_lectura1_14
@@ -508,12 +527,6 @@ MotorBC.Off ()
 EndSub
 Sub m_siguelineas_encoder31f_2
 lv_velocidad_15 = lv_velocidad_15 * 1
-lv_negro1_15 = 10
-lv_blanco1_15 = 83
-lv_negro4_15 = 7
-lv_blanco4_15 = 59
-lv_negro3_15 = 10
-lv_blanco3_15 = 80
 lv_lectura1_15 = 50
 lv_lectura3_15 = 50
 lv_lectura4_15 = 50
@@ -528,8 +541,8 @@ lv_startc_15 = MotorC.GetTacho ()
 lv_encoderc_15 = 0
 While Math.Abs ( lv_encoderc_15 ) < lv_encoder_15
 lv_encoderc_15 = MotorC.GetTacho () - lv_startc_15
-lv_lectura1_15 = ( Sensor.ReadPercent ( 1 ) - lv_negro1_15 ) / lv_blanco1_15 * ( 100 - lv_negro1_15 )
-lv_lectura3_15 = ( Sensor.ReadPercent ( 3 ) - lv_negro3_15 ) / lv_blanco3_15 * ( 100 - lv_negro3_15 )
+lv_lectura1_15 = ( Sensor.ReadPercent ( 1 ) - pr_siguelineas_negro1 ) / pr_siguelineas_blanco1 * ( 100 - pr_siguelineas_negro1 )
+lv_lectura3_15 = ( Sensor.ReadPercent ( 3 ) - pr_siguelineas_negro3 ) / pr_siguelineas_blanco3 * ( 100 - pr_siguelineas_negro3 )
 lv_error_15 = ( lv_lectura3_15 - lv_lectura1_15 ) * lv_sentido_15 * 1
 lv_u_15 = lv_error_15 * lv_kp_15 + ( lv_error_15 - lv_olderror_15 ) * lv_kd_15
 Motor.StartSync ( "BC" , - ( lv_velocidad_15 + lv_u_15 ) , lv_velocidad_15 - lv_u_15 )
