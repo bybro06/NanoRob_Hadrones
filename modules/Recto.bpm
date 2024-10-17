@@ -184,7 +184,7 @@ Function TiempoF(in number velocidad, in number tiempo)
 EndFunction
 
 'Con Aceleración y deceleración
-Function AccelDecel(in number v0, in number vMax, in number distancia1,in number distancia2, in number distancia3)
+Function AccelDecel(in number v0, in number vMax, in number distanciaAccel,in number distanciaCrucero, in number distanciaDecel)
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
@@ -204,19 +204,19 @@ Function AccelDecel(in number v0, in number vMax, in number distancia1,in number
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(6.24*math.pi)
-  grados2 = distancia2*360/(6.24*math.pi)
-  grados3 = distancia3*360/(6.24*math.pi)
+  gradosAccel = distanciaAccel*360/(6.24*math.pi)
+  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(6.24*math.pi)
   
-  While Math.Abs(encoderC) < grados1 + grados2 + grados3
+  While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
     
     encoderB = Motor.GetCount("B")*1 - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    If Math.Abs(encoderC) < grados1 + grados2 Then
+    If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
       ' Aceleración y velocidad Cte
-      pendiente = (vMax - v0) / grados1 * signo
+      pendiente = (vMax - v0) / gradosAccel * signo
       If signo > 0 Then
         vel = Math.Min(vMax, pendiente * encoderC + v0)
       Else
@@ -224,11 +224,11 @@ Function AccelDecel(in number v0, in number vMax, in number distancia1,in number
       EndIf
     Else
       ' Deceleración
-      pendiente = (v0 - vMax) / grados3 * signo
+      pendiente = (v0 - vMax) / gradosDecel * signo
       If signo > 0 Then
-        vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax)
+        vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
       Else
-        vel = Math.Min(v0, pendiente * (encoderC + grados1 + grados2) + vMax)
+        vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
       EndIf
     EndIf
     
@@ -245,7 +245,7 @@ Function AccelDecel(in number v0, in number vMax, in number distancia1,in number
   
 EndFunction
 
-Function AccelDecelF(in number v0, in number vMax, in number distancia1,in number distancia2, in number distancia3)
+Function AccelDecelF(in number v0, in number vMax, in number distanciaAccel,in number distanciaCrucero, in number distanciaDecel)
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
@@ -265,19 +265,19 @@ Function AccelDecelF(in number v0, in number vMax, in number distancia1,in numbe
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(6.24*math.pi)
-  grados2 = distancia2*360/(6.24*math.pi)
-  grados3 = distancia3*360/(6.24*math.pi)
+  gradosAccel = distanciaAccel*360/(6.24*math.pi)
+  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(6.24*math.pi)
   
-  While Math.Abs(encoderC) < grados1 + grados2 + grados3
+  While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
     
     encoderB = Motor.GetCount("B")*1 - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    If Math.Abs(encoderC) < grados1 + grados2 Then
+    If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
       ' Aceleración y velocidad Cte
-      pendiente = (vMax - v0) / grados1 * signo
+      pendiente = (vMax - v0) / gradosAccel * signo
       If signo > 0 Then
         vel = Math.Min(vMax, pendiente * encoderC + v0)
       Else
@@ -285,11 +285,11 @@ Function AccelDecelF(in number v0, in number vMax, in number distancia1,in numbe
       EndIf
     Else
       ' Deceleración
-      pendiente = (v0 - vMax) / grados3 * signo
+      pendiente = (v0 - vMax) / gradosDecel * signo
       If signo > 0 Then
-        vel = Math.Max(v0, pendiente * (encoderC - grados1 - grados2) + vMax)
+        vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
       Else
-        vel = Math.Min(v0, pendiente * (encoderC + grados1 + grados2) + vMax)
+        vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
       EndIf
     EndIf
     
@@ -306,7 +306,7 @@ Function AccelDecelF(in number v0, in number vMax, in number distancia1,in numbe
   
 EndFunction
 
-Function Decel(in number v0, in number vMin, in number distancia1,in number distancia2)
+Function Decel(in number v0, in number vMin, in number distanciaDecel,in number distanciaCrucero)
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
@@ -323,19 +323,19 @@ Function Decel(in number v0, in number vMin, in number distancia1,in number dist
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(6.24*math.pi)
-  grados2 = distancia2*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(6.24*math.pi)
+  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
   
   encoderB = 0
   encoderC = 0
   
-  While Math.Abs(encoderC) < grados1 + grados2
+  While Math.Abs(encoderC) < gradosDecel + gradosCrucero
     
     encoderB = Motor.GetCount("B")*1 - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / grados1 * signo
+    pendiente = (vMin - v0) / gradosDecel * signo
       If signo > 0 Then
         vel = Math.Max(vMin, pendiente * encoderC + v0)
       Else
@@ -354,7 +354,7 @@ Function Decel(in number v0, in number vMin, in number distancia1,in number dist
   
 EndFunction
 
-Function DecelF(in number v0, in number vMin, in number distancia1,in number distancia2)
+Function DecelF(in number v0, in number vMin, in number distanciaDecel,in number distanciaCrucero)
   
   startB = Motor.GetCount("B")
   startC = Motor.GetCount("C")
@@ -371,19 +371,19 @@ Function DecelF(in number v0, in number vMin, in number distancia1,in number dis
   error = 0
   olderror = 0
 
-  grados1 = distancia1*360/(6.24*math.pi)
-  grados2 = distancia2*360/(6.24*math.pi)
+  gradosDecel = distanciaDecel*360/(6.24*math.pi)
+  gradosCrucero = distanciaCrucero*360/(6.24*math.pi)
   
   encoderB = 0
   encoderC = 0
   
-  While Math.Abs(encoderC) < grados1 + grados2
+  While Math.Abs(encoderC) < gradosDecel + gradosCrucero
     
     encoderB = Motor.GetCount("B")*1 - startB
     encoderC = Motor.GetCount("C") - startC
     
     #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / grados1 * signo
+    pendiente = (vMin - v0) / gradosDecel * signo
       If signo > 0 Then
         vel = Math.Max(vMin, pendiente * encoderC + v0)
       Else
