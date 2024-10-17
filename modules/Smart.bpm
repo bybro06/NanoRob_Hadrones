@@ -1,5 +1,13 @@
 
-'Siguelíneas 1-4 con control Proporcional, integral y derivativo (PID)
+'Siguelíneas 1-4 con control Proporcional y derivativo (PD)
+
+number negro1
+number negro3
+number negro4
+
+number blanco1
+number blanco3
+number blanco4
 
 'Siguelíneas hasta cruce
 
@@ -12,15 +20,6 @@ Function Cruce14(in number velocidad)
   #KD = 7
   
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -79,15 +78,6 @@ Function Cruce14F(in number velocidad)
 
   velocidad *= 1
 
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
-
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
@@ -139,15 +129,6 @@ Function Blanco14(in number velocidad)
 
   velocidad *= 1
 
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
-
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
@@ -196,15 +177,6 @@ EndFunction
 Function Blanco14F(in number velocidad)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -256,15 +228,6 @@ EndFunction
 Function Encoder14(in number velocidad, in number encoder)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -320,15 +283,6 @@ Function Encoder14F(in number velocidad, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
-
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
@@ -378,51 +332,11 @@ Function Encoder14F(in number velocidad, in number encoder)
   MotorBC.Off()
 EndFunction
 
-'Siguelíneas hasta x cruces
-
-Function Cruces14(in number velocidad, in number Cruces)
-  
-  Cruce14F(velocidad, kp, ki, kd)
-  
-  i = 1
-  
-  While i < Cruces
-    encoder14F(velocidad, kp, ki, kd, 4)
-    Cruce14F(velocidad, kp, ki, kd)
-    i++
-  EndWhile
-  
-  MotorBC.OffAndBrake()
-EndFunction
-
-Function Cruces14F(in number velocidad, in number Cruces)
-  
-  Cruce14F(velocidad, kp, ki, kd)
-  
-  i = 1
-  
-  While i < Cruces
-    encoder14F(velocidad, kp, ki, kd, 4)
-    Cruce14F(velocidad, kp, ki, kd)
-    i++
-  EndWhile
-  
-  MotorBC.Off()
-EndFunction
 
 'SIGUELINEAS 31
 Function Cruce31(in number velocidad)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -472,15 +386,6 @@ EndFunction
 Function Cruce31F(in number velocidad)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -533,15 +438,6 @@ Function Blanco31(in number velocidad)
 
   velocidad *= 1
 
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
-
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
@@ -590,15 +486,6 @@ EndFunction
 Function Blanco31F(in number velocidad)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -650,15 +537,6 @@ EndFunction
 Function Encoder31(in number velocidad, in number encoder)
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -714,15 +592,6 @@ Function Encoder31F(in number velocidad, in number encoder)
 
   velocidad *= 1
 
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
-
   lectura1 = 50
   lectura3 = 50
   lectura4 = 50
@@ -773,55 +642,12 @@ Function Encoder31F(in number velocidad, in number encoder)
   MotorBC.Off()
 EndFunction
 
-'Siguelíneas hasta x cruces
-
-Function Cruces31(in number velocidad, in number Cruces)
-  
-  Cruce31F(velocidad,kp,ki,kd)
-  
-  i=1
-  
-  While i < Cruces
-    encoder31F(velocidad,kp,ki,kd,4)
-    Cruce31F(velocidad,kp,ki,kd)
-    i ++
-  EndWhile
-  
-  MotorBC.OffAndBrake()
-  
-EndFunction
-
-Function Cruces31F(in number velocidad, in number Cruces)
-  
-  Cruce31F(velocidad,kp,ki,kd)
-  
-  i=1
-  
-  While i < Cruces
-    encoder31F(velocidad,kp,ki,kd,4)
-    Cruce31F(velocidad,kp,ki,kd)
-    i ++
-  EndWhile
-  
-  MotorBC.Off()
-  
-EndFunction
-
 
 'Siguelíneas hasta cruce unilateral
 Function Cruce_Externo(in number velocidad, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
@@ -889,15 +715,6 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
   'Siguelíneas PID
 
   velocidad *= 1
-
-  negro1 = 10
-  blanco1 = 83
-
-  negro4 = 7
-  blanco4 = 59
-
-  negro3 = 10
-  blanco3 = 80
 
   lectura1 = 50
   lectura3 = 50
