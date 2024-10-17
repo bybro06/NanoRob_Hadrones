@@ -256,7 +256,7 @@ Function Encoder14F(in number velocidad, in number encoder)
     
     lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
     lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
-    EndIf    
+       
     error = (lectura1 - lectura4) * sentido * 1
     u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)
@@ -539,7 +539,7 @@ Function Encoder31F(in number velocidad, in number encoder)
 
     lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
     lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
-       
+    
     error = (lectura3 - lectura1) * sentido * 1
     u = error * kp + (error - olderror) * kd
     Motor.StartSync("BC", -(velocidad + u), velocidad - u)

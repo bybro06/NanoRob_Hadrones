@@ -1,7 +1,6 @@
 
 'Siguelíneas 1-4 con control Proporcional, integral y derivativo (PID)
 
-
 'Siguelíneas hasta cruce
 
 Function Cruce14(in number velocidad)
@@ -849,8 +848,11 @@ Function Cruce_Externo(in number velocidad, in number reader)
   
   lectura = 50
   
+  encoderInicio = MotorC.GetTacho()
+  
   While lectura > 10
     
+    encoderC = MotorC.GetTacho() - encoderInicio
     If encoderC < distancia Then
       velocidad = 20
       kp = 20/200
@@ -901,6 +903,8 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
   lectura3 = 50
   lectura4 = 50
   
+  lectura = 50
+  
   kp = velocidad/200
   kd = kp * 28
   
@@ -920,10 +924,11 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
   'Si el cruce es a la derecha, lee con 3-1 y detecta con 4
   'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
   
-  lectura = 50
+  encoderInicio = MotorC.GetTacho()
   
   While lectura > 10
     
+    encoderC = MotorC.GetTacho() - encoderInicio
     If encoderC < distancia Then
       velocidad = 20
       kp = 20/200
@@ -933,7 +938,11 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
       kp = startKp
       kd = startKd
     EndIf
-
+    
+    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
+    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    
     If reader = 3 Then
       lectura = lectura3
       lecturaIzq = lectura1
@@ -944,9 +953,6 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
       lecturaDch = lectura1
     EndIf
 
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
     
     error = (lecturaIzq - lecturaDch)*sentido*1
     u = error*kp + (error-olderror)*kd
