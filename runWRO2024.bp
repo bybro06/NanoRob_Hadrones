@@ -19,28 +19,55 @@ errorD = 0
 olderrorD = 0
 
 Sub Setup
+
   Sensor.SetMode(1,0)
   Sensor.SetMode(2,3)
   Sensor.SetMode(3,0)
   Sensor.SetMode(4,0)
 
+  diametro = 6.24
+
   Giro.G1 = 985/360
 
-  Siguelineas.negro1 = 10
-  Siguelineas.negro3 = 10
-  Siguelineas.negro4 = 7
+  negro1 = 10
+  negro3 = 10
+  negro4 = 7
 
-  Siguelineas.blanco1 = 83
-  Siguelineas.blanco3 = 80
-  Siguelineas.blanco4 = 59
+  blanco1 = 83
+  blanco3 = 80
+  blanco4 = 59
 
-  Smart.negro1 = 10
-  Smart.negro3 = 10
-  Smart.negro4 = 7
+  RGB.VALUENEGRO = 10
+  RGB.VALUEBLANCO = 100
+  
+  'Auto definición de propiedades
 
-  Smart.blanco1 = 83
-  Smart.blanco3 = 80
-  Smart.blanco4 = 59
+  Recto.diametro = diametro
+  Giro.diametro = diametro
+  Siguelineas.diametro = diametro
+  Smart.diametro = diametro
+
+  Siguelineas.negro1 = negro1
+  Siguelineas.negro3 = negro3
+  Siguelineas.negro4 = negro4
+
+  Siguelineas.blanco1 = blanco1
+  Siguelineas.blanco3 = blanco3
+  Siguelineas.blanco4 = blanco4
+
+  Smart.negro1 = negro1
+  Smart.negro3 = negro3
+  Smart.negro4 = negro4
+
+  Smart.blanco1 = blanco1
+  Smart.blanco3 = blanco3
+  Smart.blanco4 = blanco4
+
+  Recto.negro = (negro1+negro3+negro4)/3
+  Recto.blanco = (blanco1+blanco3+blanco4)/3
+
+  Giro.negro = (negro1+negro3+negro4)/3
+  Giro.blanco = (blanco1+blanco3+blanco4)/3
 EndSub
 
 Sub StartArm
