@@ -6,10 +6,52 @@
         Siguelíneas con control PD dinámico por Nanorob Hadrones.
         Normalización de lecturas añadida el 02/10/2024.
         kp y kd variables añadidos el 15/10/2024
-        Hacer lecturas y cambiar blancos y negros en los .bpm
+        Hacer lecturas y cambiar blancos y negros en las propiedades
       </summary>
     </member>
-	
+
+    <member name="P:diametro">
+      <summary>
+        Diametro de la rueda.
+      </summary>
+    </member>
+
+    <member name="P:negro1">
+      <summary>
+        Lectura del sensor 1 en negro.
+      </summary>
+    </member>
+
+    <member name="P:negro3">
+      <summary>
+        Lectura del sensor 3 en negro.
+      </summary>
+    </member>
+
+    <member name="P:negro4">
+      <summary>
+        Lectura del sensor 4 en negro.
+      </summary>
+    </member>
+    
+    <member name="P:blanco1">
+      <summary>
+        Lectura del sensor 1 en blanco.
+      </summary>
+    </member>
+
+    <member name="P:blanco3">
+      <summary>
+        Lectura del sensor 3 en blanco.
+      </summary>
+    </member>
+
+    <member name="P:blanco4">
+      <summary>
+        Lectura del sensor 4 en blanco.
+      </summary>
+    </member>
+
 	  <member name="M:Cruce14">
       <summary>
         Siguelineas hasta cruce de negros usando sensores 1 y 4 con corrección PD dinámica con freno.

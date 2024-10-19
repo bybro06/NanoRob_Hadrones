@@ -18,7 +18,76 @@ olderrorA = 0
 errorD = 0
 olderrorD = 0
 
-setup()
+Sub Setup
+
+  Sensor.SetMode(1,0)
+  Sensor.SetMode(2,3)
+  Sensor.SetMode(3,0)
+  Sensor.SetMode(4,0)
+
+  diametro = 6.24
+
+  Giro.G1 = 985/360
+
+  negro1 = 10
+  negro3 = 10
+  negro4 = 7
+
+  blanco1 = 83
+  blanco3 = 80
+  blanco4 = 59
+
+  RGB.VALUENEGRO = 10
+  RGB.VALUEBLANCO = 100
+  
+  'Auto definición de propiedades
+
+  Recto.diametro = diametro
+  Giro.diametro = diametro
+  Siguelineas.diametro = diametro
+  Smart.diametro = diametro
+
+  Siguelineas.negro1 = negro1
+  Siguelineas.negro3 = negro3
+  Siguelineas.negro4 = negro4
+
+  Siguelineas.blanco1 = blanco1
+  Siguelineas.blanco3 = blanco3
+  Siguelineas.blanco4 = blanco4
+
+  Smart.negro1 = negro1
+  Smart.negro3 = negro3
+  Smart.negro4 = negro4
+
+  Smart.blanco1 = blanco1
+  Smart.blanco3 = blanco3
+  Smart.blanco4 = blanco4
+
+  Recto.negro = (negro1+negro3+negro4)/3
+  Recto.blanco = (blanco1+blanco3+blanco4)/3
+
+  Giro.negro = (negro1+negro3+negro4)/3
+  Giro.blanco = (blanco1+blanco3+blanco4)/3
+EndSub
+
+Sub StartArm
+  Brazo.DTimer(-50,800)
+  AEncoder(50,-800)
+  encoderA = 0
+  'encoderD = 0
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  AEncoder(50,650)
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  encoderA = 0
+  'encoderD = 0
+  Brazo.DEncoder(50,130)
+
+EndSub
+
+
+Setup()
 Thread.Run = ControlBrazo
 Main()
 
@@ -115,21 +184,6 @@ Sub ControlBrazo
 EndSub
 
 
-Sub StartArm
-  Brazo.DTimer(-50,800)
-  AEncoder(50,-800)
-  encoderA = 0
-  'encoderD = 0
-  MotorA.ResetCount()
-  MotorD.ResetCount()
-  AEncoder(50,650)
-  MotorA.ResetCount()
-  MotorD.ResetCount()
-  encoderA = 0
-  'encoderD = 0
-  Brazo.DEncoder(50,130)
-
-EndSub
 
 Sub Display
   While "True"
@@ -143,12 +197,6 @@ Sub Display
    EndWhile
 EndSub
 
-Sub Setup
-  Sensor.SetMode(1,0)
-  Sensor.SetMode(2,3)
-  Sensor.SetMode(3,0)
-  Sensor.SetMode(4,0)
-EndSub
 
 Function Coger()
   Brazo.DEncoder(50,330)
@@ -178,6 +226,8 @@ Function Soltar(in number bloques, in number altura)
   
   Brazo.DEncoder(50,50)
 EndFunction
+
+
 
 Function AEncoder(in number Velocidad, in number Encoder)
   
@@ -212,7 +262,6 @@ Function AEncoder(in number Velocidad, in number Encoder)
   EndIf
   
 EndFunction
-
 
 Function DEncoder(in number Velocidad, in number Encoder)
   
