@@ -1,6 +1,5 @@
 folder "prjs""WRO2024"
 
-
 import "modules/Siguelineas"
 import "modules/Giro"
 import "modules/Recto"
@@ -27,15 +26,15 @@ Sub Setup
 
   diametro = 6.24
 
-  Giro.G1 = 985/360
+  Giro.G1 = 965/360
 
   negro1 = 10
-  negro3 = 10
-  negro4 = 7
+  negro3 = 8
+  negro4 = 6
 
-  blanco1 = 83
-  blanco3 = 80
-  blanco4 = 59
+  blanco1 = 60
+  blanco3 = 58
+  blanco4 = 46
 
   RGB.VALUENEGRO = 10
   RGB.VALUEBLANCO = 100
@@ -46,7 +45,8 @@ Sub Setup
   Giro.diametro = diametro
   Siguelineas.diametro = diametro
   Smart.diametro = diametro
-
+  
+  
   Siguelineas.negro1 = negro1
   Siguelineas.negro3 = negro3
   Siguelineas.negro4 = negro4
@@ -54,7 +54,8 @@ Sub Setup
   Siguelineas.blanco1 = blanco1
   Siguelineas.blanco3 = blanco3
   Siguelineas.blanco4 = blanco4
-
+  
+  
   Smart.negro1 = negro1
   Smart.negro3 = negro3
   Smart.negro4 = negro4
@@ -62,12 +63,15 @@ Sub Setup
   Smart.blanco1 = blanco1
   Smart.blanco3 = blanco3
   Smart.blanco4 = blanco4
-
+  
+  
   Recto.negro = (negro1+negro3+negro4)/3
   Recto.blanco = (blanco1+blanco3+blanco4)/3
-
+  
+  
   Giro.negro = (negro1+negro3+negro4)/3
   Giro.blanco = (blanco1+blanco3+blanco4)/3
+  
 EndSub
 
 Sub StartArm
@@ -82,7 +86,7 @@ Sub StartArm
   MotorD.ResetCount()
   encoderA = 0
   'encoderD = 0
-  Brazo.DEncoder(50,130)
+  Brazo.DEncoder(50,80)
 
 EndSub
 
@@ -94,15 +98,14 @@ Main()
 
 
 Sub Main
-
+  
   StartArm()
   Recto.Tiempo(-80,800)
-  Giro.Grados(60,-7,93)
-  
-  'Recto.AccelDecel(15,80,10,0,10)
+  Recto.Encoder(20,2.5)
   Brazo.DEncoder(50,320)
+  Giro.Grados(60,-14,88)
   
-  Recto.AccelDecel(15,30,4,0,3)
+  Recto.AccelDecel(15,30,3.5,0,3)
   
   Brazo.DEncoder(50,-20)
   AEncoder(50,-200)
@@ -118,55 +121,42 @@ Sub Main
   Recto.Tiempo(-80,500)
   
   Recto.AccelDecelF(15,89,10,0,0)
-  Recto.EncoderF(89,42)
+  Recto.EncoderF(89,52)
   Recto.Blanco1F(50,3)
   
-  Giro.Grados(60,-55,105)
+  Giro.Grados(45,-35,90)
   Smart.Cruce_ExternoF(40,4)
   Siguelineas.Encoder31F(40,20)
   
-  Recto.EncoderF(40,25)
-  Giro.Grados(60,-65,130)
+  Recto.EncoderF(40,15)
+  Giro.Grados(60,-55,105)
   
-  Recto.Tiempo(-80,1200)
+  Recto.AccelDecel(-10,-80,3,20,3)
+  Recto.Tiempo(-20,800)
+  Recto.Encoder(20,2.5)
   
-  Giro.Grados(60,-5,110)
+  Brazo.DEncoder(50,350)
   
-  Brazo.DEncoder(50,320)
+  Giro.Grados(60,-14,90)
+  Recto.Color1(20,1,5)
 
-  Recto.AccelDecel(15,30,3,0,4)
+  Recto.AccelDecel(15,30,1,0,1)
   
-  Brazo.DEncoder(50,-20)
-  AEncoder(50,-200)
+  AEncoder(50,0)
+  Brazo.DEncoder(50,0)
+  AEncoder(50,-150)
   
   For i = 0 To 2
     Coger()
   EndFor
   
-  Giro.Grados(-80,0,120)
-  Recto.Tiempo(-80,400)
+  Giro.Grados(-50,50,90)
+  Recto.Blanco1(40,4)
+  Recto.Encoder(80,3)
+  Giro.Grados(-50,50,100)
+  Smart.Cruce_Externo(70,3)
   
-  Recto.AccelDecel(15,80,8,21,8)
-  Giro.Grados(-80,-40,20)
   
-  Soltar(2,0)
-  Giro.Grados(80,40,40)
-  
-  Recto.AccelDecel(15,30,5,0,5)
-  Soltar(2,0)
-  
-  Giro.Grados(40,80,40)
-  
-  Recto.AccelDecel(15,30,5,0,5)
-  Soltar(2,2)
-
-  Giro.Grados(80,40,40)
-  
-  Recto.AccelDecel(15,30,5,0,5)
-  
-  Brazo.DEncoder(50,640)
-  AEncoder(50,-50)
-  Coger()
 
 EndSub
 
@@ -201,14 +191,13 @@ EndSub
 Function Coger()
   Brazo.DEncoder(50,330)
   
-  
   Recto.AccelDecel(15,30,5,0,5)
-  Brazo.DEncoder(50,300)
-  AEncoder(50,50)
+  Brazo.DEncoder(50,280)
+  AEncoder(50,0)
   
-  Brazo.DEncoder(50,-20)
+  Brazo.DEncoder(50,-10)
   
-  AEncoder(50,-200)
+  AEncoder(50,-150)
   
   Brazo.DEncoder(50,100)
   
@@ -219,7 +208,7 @@ Function Soltar(in number bloques, in number altura)
   Brazo.DEncoder(50,340*altura)
   AEncoder(50,-50)
   Brazo.DEncoder(50,340*(bloques+altura))
-  AEncoder(50,400)
+  AEncoder(50,250)
   Program.Delay(500)
   
   Recto.AccelDecel(-15,30,5,0,5)

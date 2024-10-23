@@ -11,7 +11,7 @@ Function Encoder(in number velocidad, in number distancia)
   correccion = 0
   enc = distancia*360 / Math.Pi / diametro
   MotorBC.Off()
-  Program.Delay(500)
+  Program.Delay(100)
   Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"True")
 
 EndFunction
@@ -59,7 +59,7 @@ Function Blanco1(in number velocidad, in number sensor)
   correccion = 0
   MotorBC.Off()
   lectura = 50
-  While lectura > 60
+  While lectura < 60
     lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
@@ -73,7 +73,7 @@ Function Blanco1F(in number velocidad, in number sensor)
   correccion = 0
   MotorBC.Off()
   lectura = 50
-  While lectura > 60
+  While lectura < 60
     lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
 
     Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
