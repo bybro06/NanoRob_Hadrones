@@ -120,16 +120,20 @@ Sub Main
   
   Recto.Tiempo(-80,500)
   
+  'Cuadra con pared para irse a por la segunda fila
+  
   Recto.AccelDecelF(15,89,10,0,0)
   Recto.EncoderF(89,52)
   Recto.Blanco1F(50,3)
   
-  Giro.Grados(45,-35,90)
-  Smart.Cruce_ExternoF(40,4)
-  Siguelineas.Encoder31F(40,20)
+  'llega a línea
   
-  Recto.EncoderF(40,15)
-  Giro.Grados(60,-55,105)
+  Giro.Grados(-35,45,90)
+  Smart.Cruce(80)
+  
+  Giro.Grados(-55,60,105)
+  
+  'Cuadra con pared
   
   Recto.AccelDecel(-10,-80,3,20,3)
   Recto.Tiempo(-20,800)
@@ -137,10 +141,10 @@ Sub Main
   
   Brazo.DEncoder(50,350)
   
-  Giro.Grados(60,-14,90)
-  Recto.Color1(20,1,5)
+  Giro.Grados(-14,60,90)
+  Recto.Color1(20,4,4)
 
-  Recto.AccelDecel(15,30,1,0,1)
+  Recto.AccelDecel(15,30,4,0,4)
   
   AEncoder(50,0)
   Brazo.DEncoder(50,0)
@@ -150,14 +154,40 @@ Sub Main
     Coger()
   EndFor
   
-  Giro.Grados(-50,50,90)
+  'Avanza a línea 
+  
+  Giro.Grados(50,0,105)
   Recto.Blanco1(40,4)
-  Recto.Encoder(80,3)
-  Giro.Grados(-50,50,100)
-  Smart.Cruce_Externo(70,3)
   
+  Giro.Grados(50,-40,100)
+  Time.Reset1()
+  Smart.Cruce_Externo(70,1)
   
-
+  tiempoHastaCruce = Time.Get1()
+  
+  Giro.Grados(50,0,105)
+  Smart.Encoder14(50,20)
+  
+  If tiempoHastaCruce < 700 Then 'Calcular tiempo en ambos cruces
+    'Caso PSOE
+    
+    'Gira Izquierda
+    'Deja Rojos
+    'Gira Derecha
+    'Deja Amarillos
+    'Vuelve a rojos
+    'Deja rojos
+  Else
+    'Caso VOX
+    
+    'Gira Derecha
+    'Deja Rojos
+    'Gira Izquierda
+    'Deja Amarillos
+    'Vuelve a rojos
+    'Deja rojos
+  EndIf
+  
 EndSub
 
 Sub ControlBrazo
