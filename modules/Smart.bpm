@@ -29,7 +29,7 @@ Function Cruce14(in number velocidad)
   
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -85,7 +85,7 @@ Function Cruce14F(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -136,7 +136,7 @@ Function Blanco14(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -185,7 +185,7 @@ Function Blanco14F(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -236,7 +236,7 @@ Function Encoder14(in number velocidad, in number encoder)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -290,7 +290,7 @@ Function Encoder14F(in number velocidad, in number encoder)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -345,7 +345,7 @@ Function Cruce31(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -394,7 +394,7 @@ Function Cruce31F(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -445,7 +445,7 @@ Function Blanco31(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -494,7 +494,7 @@ Function Blanco31F(in number velocidad)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -545,7 +545,7 @@ Function Encoder31(in number velocidad, in number encoder)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -599,7 +599,7 @@ Function Encoder31F(in number velocidad, in number encoder)
   lectura4 = 50
   
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
 
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -655,7 +655,7 @@ Function Cruce_Externo(in number velocidad, in number reader)
   lectura3 = 50
   lectura4 = 50
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
   
   distancia = 7 * 360 / (diametro * Math.Pi)
@@ -724,7 +724,7 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
   
   lectura = 50
   
-  kp = velocidad/200
+  kp = velocidad/220
   kd = kp * 28
   
   distancia = 7 * 360 / (diametro * Math.Pi)

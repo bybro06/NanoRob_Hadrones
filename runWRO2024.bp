@@ -10,64 +10,60 @@ import "modules/RGB"
 
 encoderA = 0
 encoderD = 0
-  
+
 errorA = 0
 olderrorA = 0
-  
+
 errorD = 0
 olderrorD = 0
 
 Sub Setup
-
+  
   Sensor.SetMode(1,0)
   Sensor.SetMode(2,3)
   Sensor.SetMode(3,0)
   Sensor.SetMode(4,0)
-
+  
   diametro = 6.24
-
+  
   Giro.G1 = 965/360
-
+  
   negro1 = 10
   negro3 = 8
   negro4 = 6
-
+  
   blanco1 = 60
   blanco3 = 58
   blanco4 = 46
-
+  
   RGB.VALUENEGRO = 10
   RGB.VALUEBLANCO = 100
   
   'Auto definición de propiedades
-
+  
   Recto.diametro = diametro
   Giro.diametro = diametro
   Siguelineas.diametro = diametro
   Smart.diametro = diametro
   
-  
   Siguelineas.negro1 = negro1
   Siguelineas.negro3 = negro3
   Siguelineas.negro4 = negro4
-
+  
   Siguelineas.blanco1 = blanco1
   Siguelineas.blanco3 = blanco3
   Siguelineas.blanco4 = blanco4
   
-  
   Smart.negro1 = negro1
   Smart.negro3 = negro3
   Smart.negro4 = negro4
-
+  
   Smart.blanco1 = blanco1
   Smart.blanco3 = blanco3
   Smart.blanco4 = blanco4
   
-  
   Recto.negro = (negro1+negro3+negro4)/3
   Recto.blanco = (blanco1+blanco3+blanco4)/3
-  
   
   Giro.negro = (negro1+negro3+negro4)/3
   Giro.blanco = (blanco1+blanco3+blanco4)/3
@@ -87,15 +83,12 @@ Sub StartArm
   encoderA = 0
   'encoderD = 0
   Brazo.DEncoder(50,80)
-
+  
 EndSub
-
 
 Setup()
 Thread.Run = ControlBrazo
-Main()
-
-
+MainPrueba()
 
 Sub Main
   
@@ -103,7 +96,7 @@ Sub Main
   Recto.Tiempo(-80,800)
   Recto.Encoder(20,2.5)
   Brazo.DEncoder(50,320)
-  Giro.Grados(60,-14,88)
+  Giro.Grados(60,-14,90)
   
   Recto.AccelDecel(15,30,3.5,0,3)
   
@@ -128,8 +121,8 @@ Sub Main
   
   'llega a línea
   
-  Giro.Grados(-35,45,90)
-  Smart.Cruce(80)
+  Giro.Grados(-40,45,105)
+  Smart.Cruce14(80)
   
   Giro.Grados(-55,60,105)
   
@@ -143,7 +136,7 @@ Sub Main
   
   Giro.Grados(-14,60,90)
   Recto.Color1(20,4,4)
-
+  
   Recto.AccelDecel(15,30,4,0,4)
   
   AEncoder(50,0)
@@ -154,7 +147,7 @@ Sub Main
     Coger()
   EndFor
   
-  'Avanza a línea 
+  'Avanza a línea
   
   Giro.Grados(50,0,105)
   Recto.Blanco1(40,4)
@@ -190,6 +183,114 @@ Sub Main
   
 EndSub
 
+Sub MainPrueba
+  
+  StartArm()
+  Recto.Tiempo(-80,800)
+  Recto.Encoder(20,2.5)
+  Brazo.DEncoder(50,320)
+  Giro.Grados(60,-14,90)
+  
+  Recto.AccelDecel(15,30,3.5,0,3)
+  
+  Brazo.DEncoder(50,-20)
+  AEncoder(50,-200)
+  
+  Coger()
+  
+  Recto.Encoder(-20,3)
+  Brazo.DEncoder(60,200)
+  Giro.Grados(-80,0,110)
+  
+  Recto.Tiempo(-80,500)
+  
+  'Cuadra con pared para irse a por la segunda fila
+  
+  Recto.AccelDecelF(15,89,10,0,0)
+  Recto.EncoderF(89,52)
+  Recto.Blanco1F(50,3)
+  
+  'llega a línea
+  
+  Giro.Grados(45,-26,95)
+  
+  Time.Reset1()
+  
+  Smart.Cruce_ExternoF(80,3)
+  
+  tiempoHastaCruce = Time.Get1()
+  
+  If tiempoHastaCruce > 700 Then 'Calcular tiempo en ambos cruces
+    'Caso PSOE
+    
+    Siguelineas.Encoder14F(80,20)
+    
+    Recto.EncoderF(60,15)
+    Giro.Grados(60,-55,98)
+    
+    Recto.AccelDecel(-10,-80,3,20,3)
+    Recto.Tiempo(-20,800)
+    Recto.Encoder(20,2.5)
+    
+    Brazo.DEncoder(50,350)
+    
+    Giro.Grados(60,-14,90)
+    Recto.Color1(20,1,5)
+    
+    Recto.AccelDecel(15,30,1,0,1)
+    
+    AEncoder(50,0)
+    Brazo.DEncoder(50,0)
+    AEncoder(50,-150)
+    
+    For i = 0 To 2
+      Coger()
+    EndFor
+    
+    Giro.Grados(40,80,120)
+    
+    Recto.AccelDecelF(15,89,8,0,0)
+    Recto.Encoder(89,50)
+    
+    Giro.Grados(-50,50,200)
+    
+    Recto.AccelDecelF(-15,89,8,5,0)
+    
+    Recto.Tiempo(-89,1000)
+    
+    Giro.Grados(60,-14,110)
+    
+    Brazo.DEncoder(50,400)
+    Program.Delay(2000)
+    Recto.Color1(30,3,5)
+    Program.Delay(2000)
+    Recto.AccelDecel(15,30,3,0,0)
+    
+    Brazo.DEncoder(50,-20)
+    AEncoder(50,-200)
+    
+    Coger()
+    
+    Giro.Grados(10,50,120)
+    
+    Recto.Encoder(60,45)
+    
+    Soltar(4,0)
+    
+  Else
+    'Caso VOX
+    
+    'Gira Derecha
+    'Deja Rojos
+    'Gira Izquierda
+    'Deja Amarillos
+    'Vuelve a rojos
+    'Deja rojos
+  EndIf
+  
+  
+EndSub
+
 Sub ControlBrazo
   
   While "True"
@@ -203,8 +304,6 @@ Sub ControlBrazo
   
 EndSub
 
-
-
 Sub Display
   While "True"
     LCD.StopUpdate()
@@ -214,15 +313,14 @@ Sub Display
     LCD.Write(5,30,"Diferencia: "+ (MotorB.GetTacho()*-1 -MotorC.GetTacho()))
     LCD.Update()
     Program.Delay(100)
-   EndWhile
+  EndWhile
 EndSub
-
 
 Function Coger()
   Brazo.DEncoder(50,330)
   
   Recto.AccelDecel(15,30,5,0,5)
-  Brazo.DEncoder(50,280)
+  Brazo.DEncoder(50,240)
   AEncoder(50,0)
   
   Brazo.DEncoder(50,-10)
@@ -239,14 +337,12 @@ Function Soltar(in number bloques, in number altura)
   AEncoder(50,-50)
   Brazo.DEncoder(50,340*(bloques+altura))
   AEncoder(50,250)
-  Program.Delay(500)
+  Program.Delay(5000)
   
   Recto.AccelDecel(-15,30,5,0,5)
   
   Brazo.DEncoder(50,50)
 EndFunction
-
-
 
 Function AEncoder(in number Velocidad, in number Encoder)
   
