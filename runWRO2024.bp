@@ -221,7 +221,7 @@ Sub MainPrueba
   tiempoHastaCruce = Time.Get1()
   
   If tiempoHastaCruce > 700 Then 'Calcular tiempo en ambos cruces
-    'Caso PSOE
+    'Caso VOX
     
     Siguelineas.Encoder14F(80,20)
     
@@ -234,7 +234,7 @@ Sub MainPrueba
     
     Brazo.DEncoder(50,350)
     
-    Giro.Grados(60,-14,90)
+    Giro.Grados(60,-14,94)
     Recto.Color1(20,1,5)
     
     Recto.AccelDecel(15,30,1,0,1)
@@ -247,23 +247,27 @@ Sub MainPrueba
       Coger()
     EndFor
     
-    Giro.Grados(40,80,120)
+    'Giro abierto y lanzamiento a por los dos ultimos amarillos
+    
+    Giro.Grados(40,65,102)
     
     Recto.AccelDecelF(15,89,8,0,0)
-    Recto.Encoder(89,50)
+    Recto.Encoder(89,35)
     
-    Giro.Grados(-50,50,200)
+    Giro.Grados(-50,50,190)
     
-    Recto.AccelDecelF(-15,89,8,5,0)
+    Recto.AccelDecelF(-15,65,8,5,0)
     
-    Recto.Tiempo(-89,1000)
+    Recto.Tiempo(-65,1000)
     
-    Giro.Grados(60,-14,110)
+    Program.Delay(5000)
+    
+    'Sale de pared
+    
+    Giro.Grados(50,-14,110)
     
     Brazo.DEncoder(50,400)
-    Program.Delay(2000)
     Recto.Color1(30,3,5)
-    Program.Delay(2000)
     Recto.AccelDecel(15,30,3,0,0)
     
     Brazo.DEncoder(50,-20)
@@ -278,7 +282,7 @@ Sub MainPrueba
     Soltar(4,0)
     
   Else
-    'Caso VOX
+    'Caso PSOE
     
     'Gira Derecha
     'Deja Rojos
