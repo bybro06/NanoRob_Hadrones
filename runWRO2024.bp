@@ -29,12 +29,12 @@ Sub Setup
   Giro.G1 = 965/360
   
   negro1 = 10
-  negro3 = 8
-  negro4 = 6
+  negro3 = 10
+  negro4 = 8
   
-  blanco1 = 60
-  blanco3 = 58
-  blanco4 = 46
+  blanco1 = 76
+  blanco3 = 76
+  blanco4 = 61
   
   RGB.VALUENEGRO = 10
   RGB.VALUEBLANCO = 100
@@ -96,100 +96,7 @@ Sub Main
   Recto.Tiempo(-80,800)
   Recto.Encoder(20,2.5)
   Brazo.DEncoder(50,320)
-  Giro.Grados(60,-14,90)
-  
-  Recto.AccelDecel(15,30,3.5,0,3)
-  
-  Brazo.DEncoder(50,-20)
-  AEncoder(50,-200)
-  
-  For i = 0 To 2
-    Coger()
-  EndFor
-  
-  Recto.Encoder(-20,3)
-  Brazo.DEncoder(60,200)
-  Giro.Grados(-80,0,110)
-  
-  Recto.Tiempo(-80,500)
-  
-  'Cuadra con pared para irse a por la segunda fila
-  
-  Recto.AccelDecelF(15,89,10,0,0)
-  Recto.EncoderF(89,52)
-  Recto.Blanco1F(50,3)
-  
-  'llega a línea
-  
-  Giro.Grados(-40,45,105)
-  Smart.Cruce14(80)
-  
-  Giro.Grados(-55,60,105)
-  
-  'Cuadra con pared
-  
-  Recto.AccelDecel(-10,-80,3,20,3)
-  Recto.Tiempo(-20,800)
-  Recto.Encoder(20,2.5)
-  
-  Brazo.DEncoder(50,350)
-  
-  Giro.Grados(-14,60,90)
-  Recto.Color1(20,4,4)
-  
-  Recto.AccelDecel(15,30,4,0,4)
-  
-  AEncoder(50,0)
-  Brazo.DEncoder(50,0)
-  AEncoder(50,-150)
-  
-  For i = 0 To 2
-    Coger()
-  EndFor
-  
-  'Avanza a línea
-  
-  Giro.Grados(50,0,105)
-  Recto.Blanco1(40,4)
-  
-  Giro.Grados(50,-40,100)
-  Time.Reset1()
-  Smart.Cruce_Externo(70,1)
-  
-  tiempoHastaCruce = Time.Get1()
-  
-  Giro.Grados(50,0,105)
-  Smart.Encoder14(50,20)
-  
-  If tiempoHastaCruce < 700 Then 'Calcular tiempo en ambos cruces
-    'Caso PSOE
-    
-    'Gira Izquierda
-    'Deja Rojos
-    'Gira Derecha
-    'Deja Amarillos
-    'Vuelve a rojos
-    'Deja rojos
-  Else
-    'Caso VOX
-    
-    'Gira Derecha
-    'Deja Rojos
-    'Gira Izquierda
-    'Deja Amarillos
-    'Vuelve a rojos
-    'Deja rojos
-  EndIf
-  
-EndSub
-
-Sub MainPrueba
-  
-  StartArm()
-  Recto.Tiempo(-80,800)
-  Recto.Encoder(20,2.5)
-  Brazo.DEncoder(50,320)
-  Giro.Grados(60,-14,90)
+  Giro.Grados(60,-14,88)
   
   Recto.AccelDecel(15,30,3.5,0,3)
   
@@ -198,11 +105,11 @@ Sub MainPrueba
   
   Coger()
   
-  Recto.Encoder(-20,3)
+  Recto.Encoder(-20,9.5)
   Brazo.DEncoder(60,200)
-  Giro.Grados(-80,0,110)
+  Giro.Grados(-80,0,100)
   
-  Recto.Tiempo(-80,500)
+  Recto.Tiempo(-80,300)
   
   'Cuadra con pared para irse a por la segunda fila
   
@@ -212,32 +119,36 @@ Sub MainPrueba
   
   'llega a línea
   
-  Giro.Grados(45,-26,95)
+  Giro.Grados(45,-12,95)
   
   Time.Reset1()
   
-  Smart.Cruce_ExternoF(80,3)
+  Smart.Encoder31F(80,8)
+  Siguelineas.Cruce_ExternoF(80,4)
   
   tiempoHastaCruce = Time.Get1()
   
-  If tiempoHastaCruce > 700 Then 'Calcular tiempo en ambos cruces
+  If tiempoHastaCruce > 600 Then 'Calcular tiempo en ambos cruces
     'Caso VOX
     
-    Siguelineas.Encoder14F(80,20)
+    Siguelineas.Encoder31F(80,16)
     
-    Recto.EncoderF(60,15)
-    Giro.Grados(60,-55,98)
+    Recto.EncoderF(80,15)
+    Recto.Decel(80,15,7,0)
+    
+    Giro.Grados(60,-55,90)
     
     Recto.AccelDecel(-10,-80,3,20,3)
     Recto.Tiempo(-20,800)
     Recto.Encoder(20,2.5)
     
+    Brazo.DEncoder(50,100)
+    
+    Giro.Grados(60,-24,87)
     Brazo.DEncoder(50,350)
+    Recto.Color1(20,4,5)
     
-    Giro.Grados(60,-14,94)
-    Recto.Color1(20,1,5)
-    
-    Recto.AccelDecel(15,30,1,0,1)
+    Recto.Encoder(25,3)
     
     AEncoder(50,0)
     Brazo.DEncoder(50,0)
@@ -249,25 +160,28 @@ Sub MainPrueba
     
     'Giro abierto y lanzamiento a por los dos ultimos amarillos
     
-    Giro.Grados(40,65,102)
+    Giro.Grados(40,65,98)
     
     Recto.AccelDecelF(15,89,8,0,0)
-    Recto.Encoder(89,35)
+    Recto.Encoder(89,30)
     
     Giro.Grados(-50,50,190)
     
     Recto.AccelDecelF(-15,65,8,5,0)
     
-    Recto.Tiempo(-65,1000)
-    
-    Program.Delay(5000)
+    Recto.Tiempo(-45,600)
     
     'Sale de pared
     
-    Giro.Grados(50,-14,110)
+    Giro.Grados(50,-8,100)
     
     Brazo.DEncoder(50,400)
-    Recto.Color1(30,3,5)
+    
+    Recto.EncoderF(40,4)
+    Recto.Color1(30,4,5)
+    Speaker.Play(100,"Connect")
+    Speaker.Wait()
+    Program.Delay(1000)
     Recto.AccelDecel(15,30,3,0,0)
     
     Brazo.DEncoder(50,-20)
@@ -292,6 +206,17 @@ Sub MainPrueba
     'Deja rojos
   EndIf
   
+EndSub
+
+Sub MainPrueba
+  
+  AEncoder(40,-100)
+  Brazo.DEncoder(70,100)
+    Giro.Grados(8,50,100)
+    
+    Siguelineas.Encoder14(30,15)
+    
+    'Soltar(4,0)
   
 EndSub
 
@@ -321,7 +246,7 @@ Sub Display
 EndSub
 
 Function Coger()
-  Brazo.DEncoder(50,330)
+  Brazo.DEncoder(50,350)
   
   Recto.AccelDecel(15,30,5,0,5)
   Brazo.DEncoder(50,240)
@@ -329,7 +254,7 @@ Function Coger()
   
   Brazo.DEncoder(50,-10)
   
-  AEncoder(50,-150)
+  AEncoder(50,-180)
   
   Brazo.DEncoder(50,100)
   
@@ -337,12 +262,17 @@ EndFunction
 
 Function Soltar(in number bloques, in number altura)
   
-  Brazo.DEncoder(50,340*altura)
-  AEncoder(50,-50)
-  Brazo.DEncoder(50,340*(bloques+altura))
-  AEncoder(50,250)
-  Program.Delay(5000)
+  altura --
+  bloques --
   
+  Brazo.DEncoder(50,Math.Max(320*(altura),0))
+  Program.Delay(1000)
+  AEncoder(50,0)
+  Brazo.DEncoder(50,320*(bloques+altura-1))
+  Program.Delay(1000)
+  AEncoder(50,-250)
+  
+  Brazo.DEncoder(50,MotorD.GetTacho()+200)
   Recto.AccelDecel(-15,30,5,0,5)
   
   Brazo.DEncoder(50,50)
