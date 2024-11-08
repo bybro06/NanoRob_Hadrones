@@ -1,5 +1,14 @@
 FOLDER_KEY PRJS
 FOLDER_NAME WRO2024
 IMAGE_LIST 0
-SOUND_LIST 0
+SOUND_LIST 9
+SOUND ; Connect.rsf ; WRO2024/Media/ ; WRO2024/Media/Connect.rsf
+SOUND ; Zero.rsf ; WRO2024/Media/ ; WRO2024/Media/Zero.rsf
+SOUND ; Black.rsf ; WRO2024/Media/ ; WRO2024/Media/Black.rsf
+SOUND ; BLUE.rsf ; WRO2024/Media/ ; WRO2024/Media/BLUE.rsf
+SOUND ; GREEN.rsf ; WRO2024/Media/ ; WRO2024/Media/GREEN.rsf
+SOUND ; YELLOW.rsf ; WRO2024/Media/ ; WRO2024/Media/YELLOW.rsf
+SOUND ; RED.rsf ; WRO2024/Media/ ; WRO2024/Media/RED.rsf
+SOUND ; White.rsf ; WRO2024/Media/ ; WRO2024/Media/White.rsf
+SOUND ; Brown.rsf ; WRO2024/Media/ ; WRO2024/Media/Brown.rsf
 FILE_LIST 0
