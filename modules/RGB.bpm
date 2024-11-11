@@ -10,13 +10,13 @@ Function Detect(in number sens, in number reps, out number color)
   Sensor.SetMode(sens, 4)
   
   ' Definimos las constantes de colores
-  RED = 15
+  RED = 30
   YELLOW = 60
   GREEN = 170
   BLUE = 330
-  RWHITE = 147
-  GWHITE = 143
-  BWHITE = 160
+  RWHITE = 40
+  GWHITE = 52
+  BWHITE = 41
   
   ' Inicializamos variables
   hue = 0
@@ -92,7 +92,7 @@ Function Detect(in number sens, in number reps, out number color)
   If rNorm + gNorm + bNorm <= 3 Then
     color = 0   'Si no hay lecturas, el color es 0 (nada)
   Else
-    If sat < 0.4 Then
+    If sat < 0.2 Then
       If value > rgbGrey Then   'está en la escala de grises por poca saturación
         color = 6    'Blanco si la luz es alta
       Else
@@ -270,4 +270,5 @@ Function Gritar(in number color)
   ElseIf color = 7 Then
     Speaker.Play(100,"Brown")
   EndIf
+  Speaker.Wait()
 EndFunction

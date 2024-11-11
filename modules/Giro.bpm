@@ -217,15 +217,15 @@ EndFunction
 Function Diagonal(in number velocidad, in number distanciaX, in number distanciaY, in number anguloFinal)
   
   ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
-  distanciaObjetivo = Math.Sqrt(distanciaX^2 + distanciaY^2) 
-  anguloTrayectoria = Math.Atan2(distanciaY, distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
+  distanciaObjetivo = Math.SquareRoot(Math.Power(distanciaX,2) + Math.Power(distanciaY,2)) 
+  anguloTrayectoria = Math.ArcTan(distanciaY / distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
   
   sentidoGiroTrayectoria = anguloTrayectoria/Math.Abs(anguloTrayectoria)
 
   ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
 
   Grados(velocidad*-0.75*sentidoGiroTrayectoria,velocidad*0.75*sentidoGiroTrayectoria,Math.Abs(anguloTrayectoria))
-  Recto(velocidad, distanciaObjetivo)
+  Encoder(velocidad,velocidad, distanciaObjetivo)
   
   
   ' Al finalizar el desplazamiento, ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
@@ -244,15 +244,15 @@ EndFunction
 Function DiagonalF(in number velocidad, in number distanciaX, in number distanciaY, in number anguloFinal)
   
   ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
-  distanciaObjetivo = Math.Sqrt(distanciaX^2 + distanciaY^2) 
-  anguloTrayectoria = Math.Atan2(distanciaY, distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
+  distanciaObjetivo = Math.Math.SquareRoot(Math.Power(distanciaX,2) + Math.Power(distanciaY,2)) 
+  anguloTrayectoria = Math.ArcTan(distanciaY / distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
   
   sentidoGiroTrayectoria = anguloTrayectoria/Math.Abs(anguloTrayectoria)
 
   ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
 
   Grados(velocidad*-0.75*sentidoGiroTrayectoria,velocidad*0.75*sentidoGiroTrayectoria,Math.Abs(anguloTrayectoria))
-  Recto(velocidad, distanciaObjetivo)
+  Encoder(velocidad,velocidad, distanciaObjetivo)
   
   
   ' Al finalizar el desplazamiento, ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
