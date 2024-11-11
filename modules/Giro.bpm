@@ -213,3 +213,57 @@ Function TiempoF(in number velocidad1, in number velocidad2, in number tiempo)
   Motor.Stop("BC", "False")
 
 EndFunction
+
+Function Diagonal(in number velocidad, in number distanciaX, in number distanciaY, in number anguloFinal)
+  
+  ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
+  distanciaObjetivo = Math.Sqrt(distanciaX^2 + distanciaY^2) 
+  anguloTrayectoria = Math.Atan2(distanciaY, distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
+  
+  sentidoGiroTrayectoria = anguloTrayectoria/Math.Abs(anguloTrayectoria)
+
+  ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
+
+  Grados(velocidad*-0.75*sentidoGiroTrayectoria,velocidad*0.75*sentidoGiroTrayectoria,Math.Abs(anguloTrayectoria))
+  Recto(velocidad, distanciaObjetivo)
+  
+  
+  ' Al finalizar el desplazamiento, ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
+  ' Calcular el ángulo de corrección para pasar del ángulo de trayectoria al ángulo deseado
+  anguloCorreccion = anguloFinal*-1 - anguloTrayectoria
+
+  sentidoGiroCorreccion = anguloCorreccion/Math.Abs(anguloCorreccion)
+
+  Grados(velocidad*-0.75*sentidoGiroCorreccion,velocidad*0.75*sentidoGiroCorreccion,Math.Abs(anguloCorreccion))
+  
+  ' Detener los motores
+  MotorBC.OffAndBrake()
+
+EndFunction
+
+Function DiagonalF(in number velocidad, in number distanciaX, in number distanciaY, in number anguloFinal)
+  
+  ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
+  distanciaObjetivo = Math.Sqrt(distanciaX^2 + distanciaY^2) 
+  anguloTrayectoria = Math.Atan2(distanciaY, distanciaX) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados
+  
+  sentidoGiroTrayectoria = anguloTrayectoria/Math.Abs(anguloTrayectoria)
+
+  ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
+
+  Grados(velocidad*-0.75*sentidoGiroTrayectoria,velocidad*0.75*sentidoGiroTrayectoria,Math.Abs(anguloTrayectoria))
+  Recto(velocidad, distanciaObjetivo)
+  
+  
+  ' Al finalizar el desplazamiento, ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
+  ' Calcular el ángulo de corrección para pasar del ángulo de trayectoria al ángulo deseado
+  anguloCorreccion = anguloFinal*-1 - anguloTrayectoria
+
+  sentidoGiroCorreccion = anguloCorreccion/Math.Abs(anguloCorreccion)
+
+  GradosF(velocidad*-0.75*sentidoGiroCorreccion,velocidad*0.75*sentidoGiroCorreccion,Math.Abs(anguloCorreccion))
+  
+  ' Detener los motores
+  MotorBC.Off()
+
+EndFunction
