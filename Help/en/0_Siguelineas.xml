@@ -79,6 +79,22 @@
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
     </member>
+
+    <member name="M:Color14">
+      <summary>
+        Siguelineas hasta color usando sensores 1 y 4 con corrección PD dinámica con freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Velocidad">Color de lectura en código LEGO.</param>
+    </member>
+
+    <member name="M:Color14F">
+      <summary>
+        Siguelineas hasta color usando sensores 1 y 4 con corrección PD dinámica sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Velocidad">Color de lectura en código LEGO.</param>
+    </member>
 	
     <member name="M:Encoder14">
       <summary>
@@ -138,6 +154,22 @@
         Siguelineas hasta cruce de blancos usando sensores 3 y 1 con corrección PD dinámica sin freno.
       </summary>
       <param name="Velocidad">Velocidad de los motores.</param>
+    </member>
+
+    <member name="M:Color31">
+      <summary>
+        Siguelineas hasta color usando sensores 3 y 1 con corrección PD dinámica con freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Velocidad">Color de lectura en código LEGO.</param>
+    </member>
+
+    <member name="M:Color31F">
+      <summary>
+        Siguelineas hasta color usando sensores 3 y 1 con corrección PD dinámica sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="Velocidad">Color de lectura en código LEGO.</param>
     </member>
 	
     <member name="M:Encoder31">

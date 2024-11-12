@@ -182,6 +182,28 @@
       <param name="Velocidad2">Velocidad del motor C.</param>
       <param name="Tiempo">Tiempo en ms.</param>
     </member>
+
+    <member name="M:Diagonal">
+      <summary>
+        Avance diagonal en coordenadas X,Y.
+        Realiza un primer giro, avanza en diagonal, y gira hasta colocarse en el ángulo especificado con freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="distanciaX">Distancia en el eje X en cm, siendo hacia la derecha la distancia positiva.</param>
+      <param name="distanciaY">Distancia en el eje Y en cm, siendo hacia adelante la distancia positiva.</param>
+      <param name="anguloFinal">Ángulo en el que termina el robot una vez realizado el avance con respecto a la posición de salida.</param>
+    </member>
+
+    <member name="M:Diagonal">
+      <summary>
+        Avance diagonal en coordenadas X,Y.
+        Realiza un primer giro, avanza en diagonal, y gira hasta colocarse en el ángulo especificado sin freno.
+      </summary>
+      <param name="Velocidad">Velocidad de los motores.</param>
+      <param name="distanciaX">Distancia en el eje X en cm, siendo hacia la derecha la distancia positiva.</param>
+      <param name="distanciaY">Distancia en el eje Y en cm, siendo hacia adelante la distancia positiva.</param>
+      <param name="anguloFinal">Ángulo en el que termina el robot una vez realizado el avance con respecto a la posición de salida.</param>
+    </member>
 	
   </members>
 </doc>

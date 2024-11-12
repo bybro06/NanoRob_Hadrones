@@ -9,7 +9,25 @@
       </summary>
     </member>
 	
-        
+
+    <member name="P:RWHITE">
+      <summary>
+        Valor de lectura de rojo del sensor de color en blanco.
+      </summary>
+    </member>
+
+    <member name="P:GWHITE">
+      <summary>
+        Valor de lectura de verde del sensor de color en blanco.
+      </summary>
+    </member>
+
+    <member name="P:BWHITE">
+      <summary>
+        Valor de lectura de azul del sensor de color en blanco.
+      </summary>
+    </member>
+
     <member name="P:VALUENEGRO">
       <summary>
         Lectura del sensor de color en negro.
