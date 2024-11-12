@@ -36,6 +36,10 @@ Sub Setup
   blanco3 = 76
   blanco4 = 61
   
+  RGB.RWHITE = 40
+  RGB.GWHITE = 52
+  RGB.BWHITE = 41
+  
   RGB.VALUENEGRO = 10
   RGB.VALUEBLANCO = 100
   
