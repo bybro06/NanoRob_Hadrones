@@ -1,3 +1,6 @@
+number RWHITE
+number GWHITE
+number BWHITE
 
 number VALUENEGRO
 number VALUEBLANCO
@@ -10,13 +13,10 @@ Function Detect(in number sens, in number reps, out number color)
   Sensor.SetMode(sens, 4)
   
   ' Definimos las constantes de colores
-  RED = 30
+  RED = 15
   YELLOW = 60
   GREEN = 170
   BLUE = 330
-  RWHITE = 40
-  GWHITE = 52
-  BWHITE = 41
   
   ' Inicializamos variables
   hue = 0
@@ -24,7 +24,7 @@ Function Detect(in number sens, in number reps, out number color)
   value = 0
   color = 0
   
-  ' Arreglos para almacenar los valores normalizados
+  ' Arrays para almacenar los valores normalizados
   rNormArray[0] = 0
   gNormArray[0] = 0
   bNormArray[0] = 0
@@ -142,14 +142,14 @@ Function Time(in number sens, in number time, out number color)
   YELLOW = 60
   GREEN = 170
   BLUE = 330
-  RWHITE = 147 '235
-  GWHITE = 143 '232
-  BWHITE = 200 '234
   
   hue = 0
   sat = 0
   value = 0
   color = 0
+  
+  ' Arrays para almacenar los valores normalizados
+
   rNormArray[0] = 0
   gNormArray[0] = 0
   bNormArray[0] = 0
