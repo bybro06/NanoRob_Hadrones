@@ -169,7 +169,7 @@ Function Blancos2F(in number velocidad1, in number velocidad2, in number sens1, 
 EndFunction
 
 'Hasta un color (0-7) en 1 sensor
-Function Color1(in number velocidad, in number velocidad2, in number sens, in number color)
+Function Color1(in number velocidad1, in number velocidad2, in number sens, in number color)
   mode = Sensor.GetMode(sens)
   Sensor.SetMode(sens,2)
   
@@ -245,10 +245,9 @@ Function Diagonal(in number velocidad, in number distanciaX, in number distancia
 EndFunction
 
 Function DiagonalF(in number velocidad, in number distanciaX, in number distanciaY, in number anguloFinal)
-  
   ' Normalización, la distancia positiva implica un avance hacia la derecha
   distanciaX *= -1
-
+  
   ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
   distanciaObjetivo = Math.Math.SquareRoot(Math.Power(distanciaX,2) + Math.Power(distanciaY,2)) 
   anguloTrayectoria = Math.ArcTan(distanciaX / distanciaY) * (180 / Math.Pi)  ' Ángulo de trayectoria en grados

@@ -147,9 +147,6 @@ Function Time(in number sens, in number time, out number color)
   sat = 0
   value = 0
   color = 0
-  
-  ' Arrays para almacenar los valores normalizados
-
   rNormArray[0] = 0
   gNormArray[0] = 0
   bNormArray[0] = 0
