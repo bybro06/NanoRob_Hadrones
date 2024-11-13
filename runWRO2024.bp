@@ -129,8 +129,12 @@ Sub Main
   
   tiempoHastaCruce = Time.Get1()
   
-  If tiempoHastaCruce > 1800 Then 'Calcular tiempo en ambos cruces
+  If tiempoHastaCruce > 1500 Then 'Calcular tiempo en ambos cruces
     'Caso VOX
+    Speaker.Play(100,"Yes")
+    Speaker.Wait()
+    Speaker.Play(100,"Elephant call")
+    Speaker.Wait()
     
     Siguelineas.Encoder31F(80,5) 'llegar hasta salida opuesta
     
@@ -138,7 +142,7 @@ Sub Main
     Giro.Grados(30,-27,90)
     
     Recto.EncoderF(50,16)
-    Giro.EncoderF(45,50,20)
+    Giro.EncoderF(42,50,20)
     Giro.Encoder(50,43,38)
     
     Giro.EncoderF(-86,-75,56)
@@ -216,9 +220,10 @@ Sub Main
     Recto.Encoder (-60,12)
     'Gira a línea
     
-    Giro.Grados(14,50,98)
+    Giro.Grados(14,50,94)
     
-    Recto.Encoder(60,13.5)
+    Siguelineas.Encoder14F(40,10)
+    Giro.Encoder(37,40,3)
     
     Soltar(4)
     
@@ -232,15 +237,52 @@ Sub Main
     
     Soltar(4)
     
-    Giro.Grados(-60,10,98)
+    Giro.Grados(-60,20,105)
     
+    Siguelineas.Color31(70,5)
+  
+  Giro.Grados(8,20,44)
+  
+  Giro.Grados(20,8,45.5)
+  Brazo.Dencoder(50,600)
+    Recto.Encoder(30,7)
+    
+    Recto.Encoder(20,2)
+  Brazo.DEncoder(50,400)
+  RGB.Detect(2,5,bloque[0])
+  RGB.Gritar(bloque[0])
+  
+  CogerAlto()
+  
+  Giro.Grados(40,-40,90)
+  Recto.EncoderF(-60,15)
+  Recto.Tiempo(-40,500)
+  
+  Recto.Encoder(40,35)
+  Giro.Grados(-20,40,95)
+  
+  Recto.Encoder(40,15)
+  Giro.Grados(0,15,14)
+  
+  Brazo.DEncoder(50,320)
+  
+  Recto.Encoder(10,8)
+
+  Brazo.DEncoder(50,800)
+  
+  Giro.Grados(30,-40,50)
+  
   Else
     'Caso PSOE
     
+    Speaker.Play(100,"No")
+    Speaker.Wait()
+    Speaker.Play(100,"Dog growl")
+    Speaker.Wait()
     Siguelineas.Encoder31F(85,30)
     Recto.Encoder(50,17)
     
-    Giro.Grados(50,-10,110)
+    Giro.Grados(50,-10,100)
     
     Recto.Encoder(80,25)
     
@@ -314,7 +356,7 @@ Sub Main
     Coger()
     
     Brazo.DEncoder(50,10)
-    Giro.Encoder(-30,-35,20.5)
+    Giro.Encoder(-30,-35,22.5)
     
     'Gira hacia amarillo
     Giro.Grados(-10,40,105)
@@ -333,59 +375,79 @@ Sub Main
     Recto.Encoder(-40,7.5)
     
     'Gira hacia grúa
-    Giro.Grados(-30,30,45)
+    Giro.Grados(-30,30,48)
     
-    Recto.Encoder(-60,24)
+    Recto.Encoder(-30,22)
   
     Siguelineas.Encoder31F(20,5)
     Siguelineas.Color31F(70,5)
     Thread.Run = Detecta
-    Recto.Encoder(60,57)
+    Recto.Encoder(60,54)
   
     Giro.Grados(-10,10,10)
-    Recto.Encoder(20,2)
-    Giro.Grados(10,-10,15)
+    Recto.Encoder(20,7)
+    Giro.Tiempo(10,-10,500)
     
     'Levanta grúa
-    Brazo.DEncoder(50,500)
-    Giro.Grados(20,-20,90)
+    Brazo.DEncoder(50,700)
+    Giro.Grados(20,-3,25)
+    
+    Giro.Grados(20,-40,65)
+  Recto.Encoder(-20,6)
+  
+  Giro.Grados(50,0,120)
+  Recto.EncoderF(50,60)
+  Recto.Color1(30,3,4)
+  
+  Brazo.DEncoder(50,300)
+  AEncoder(20,-50)
+  Recto.Encoder(30,22.5)
+    RGB.Detect(2,5,bloque[0])
+  RGB.Gritar(bloque[0])
+  Program.Delay(2000)
     
   EndIf
   
 EndSub
 
 Sub MainPrueba
-  
-    Recto.Tiempo(-40,800)
-    Giro.Encoder(59,60,39)
-    
-    Soltar(4)
-    
-    Giro.Encoder(-40,-5,7)
-    Giro.Grados(-35,35,37)
-    
-    Recto.Encoder(50,9.5)
-    Soltar(4)
-  
-    Brazo.DEncoder(50,10)
+    StartArm()
+   Brazo.DEncoder(50,10)
     Recto.Encoder(-40,7.5)
     
     'Gira hacia grúa
-    Giro.Grados(-30,30,56)
+    Giro.Grados(-30,30,48)
     
-    Recto.Encoder(-60,24)
+    Recto.Encoder(-30,22)
   
     Siguelineas.Encoder31F(20,5)
     Siguelineas.Color31F(70,5)
     Thread.Run = Detecta
-    Recto.Encoder(60,59)
+    Recto.Encoder(60,54)
   
     Giro.Grados(-10,10,10)
-    Recto.Encoder(20,2)
-    Giro.Grados(10,-10,5)
+    Recto.Encoder(20,7)
+    Giro.Tiempo(10,-10,500)
+    
     'Levanta grúa
-    Brazo.DEncoder(50,500)
-    Giro.Grados(20,-20,90)
+    Brazo.DEncoder(50,700)
+    Giro.Grados(20,-3,25)
+    
+    Giro.Grados(20,-40,65)
+  Recto.Encoder(-20,6)
+  
+  Giro.Grados(50,0,120)
+  Recto.EncoderF(50,60)
+  Recto.Color1(30,3,4)
+  
+  Brazo.DEncoder(50,300)
+  AEncoder(20,-50)
+  Recto.Encoder(30,22.5)
+    RGB.Detect(2,5,bloque[0])
+  RGB.Gritar(bloque[0])
+  Program.Delay(2000)
+  
+
 EndSub
 
 Sub PruebaSensor
@@ -435,6 +497,24 @@ Function Coger()
   
   Brazo.DEncoder(50,100)
   
+EndFunction
+
+Function CogerAlto()
+  
+  
+  Recto.Encoder(20,6)
+  
+  Brazo.DEncoder(50,400)
+  AEncoder(50,0)
+  
+  Brazo.DEncoder(50,140)
+  
+  AEncoder(50,-175)
+  
+  Brazo.DEncoder(50,500)
+  
+  Recto.Encoder(-40,20)
+  Brazo.DEncoder(50,100)
 EndFunction
 
 Function Soltar(in number altura)
