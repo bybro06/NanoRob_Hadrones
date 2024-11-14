@@ -8,20 +8,23 @@ number blanco
 'Por encoder
 Function Encoder(in number velocidad, in number distancia)
   
-  correccion = 0
-  enc = distancia*360 / Math.Pi / diametro
+  correccion = (velocidad - 20) * 0.05  // Ajuste de corrección lineal en función de la velocidad
+  
+  enc = (distancia - correccion) * 360 / Math.Pi / diametro  // Ajuste de distancia con corrección
   MotorBC.Off()
   Program.Delay(100)
-  Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"True")
+  Motor.MoveSync("BC", -velocidad, velocidad, enc, "True")
 
 EndFunction
 
 Function EncoderF(in number velocidad, in number distancia)
   
-  correccion = 0
-  enc = distancia*360 / Math.Pi / diametro
+  correccion = (velocidad - 20) * 0.05  // Ajuste de corrección lineal en función de la velocidad
+  
+  enc = (distancia - correccion) * 360 / Math.Pi / diametro  // Ajuste de distancia con corrección
   MotorBC.Off()
-  Motor.MoveSync("BC", -velocidad+correccion, velocidad+correccion,enc,"False")
+  Program.Delay(100)
+  Motor.MoveSync("BC", -velocidad, velocidad, enc, "False")
 
 EndFunction
 
