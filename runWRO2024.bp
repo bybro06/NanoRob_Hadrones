@@ -106,7 +106,7 @@ Sub Main
   
   Coger()
   
-  Recto.Encoder(-20,14.5)
+  Recto.Encoder(-60,14.5)
   Brazo.DEncoder(60,200)
   Giro.Grados(-80,40,105)
   
@@ -275,16 +275,16 @@ Sub Main
   Else
     'Caso PSOE
     
-    Speaker.Play(100,"No")
-    Speaker.Wait()
-    Speaker.Play(100,"Dog growl")
-    Speaker.Wait()
+    'Speaker.Play(100,"No")
+    'Speaker.Wait()
+    'Speaker.Play(100,"Dog growl")
+    'Speaker.Wait()
     Siguelineas.Encoder31F(85,30)
-    Recto.Encoder(50,17)
+    Recto.Encoder(50,15)
     
-    Giro.Grados(50,-10,100)
+    Giro.Grados(50,-10,95)
     
-    Recto.Encoder(80,25)
+    Recto.Encoder(80,23)
     
     Giro.TiempoF(-82,-80,1200)
     Recto.Tiempo(-35,400)
@@ -316,7 +316,7 @@ Sub Main
     
     'Sube brazo y gira dejando basuras
     Brazo.DEncoder(50,700)
-    Giro.Grados(-20,-60,130)
+    Giro.Grados(-25,-60,130)
     
     'Cuadra con pared
     Brazo.DEncoder(50,50)
@@ -328,7 +328,7 @@ Sub Main
     
     Recto.Encoder(50,4)
     Brazo.DEncoder(50,350)
-    Giro.Tiempo(50,-15,1200)
+    Giro.Tiempo(50,-15,1100)
     
     'Anda hasta primer cuadrado rojo
     
@@ -372,10 +372,10 @@ Sub Main
     Soltar(4)
   
     Brazo.DEncoder(50,10)
-    Recto.Encoder(-40,7.5)
+    Recto.Encoder(-40,8.5)
     
     'Gira hacia grúa
-    Giro.Grados(-30,30,48)
+    Giro.Grados(-30,30,45)
     
     Recto.Encoder(-30,22)
   
@@ -395,15 +395,22 @@ Sub Main
     Giro.Grados(20,-40,65)
   Recto.Encoder(-20,6)
   
-  Giro.Grados(50,0,120)
-  Recto.EncoderF(50,60)
+  Giro.Grados(50,0,110)
+  Recto.EncoderF(60,2)
+  Giro.EncoderF(55,60,60)
   Recto.Color1(30,3,4)
   
-  Brazo.DEncoder(50,300)
+  Brazo.DEncoder(50,100)
   AEncoder(20,-50)
-  Recto.Encoder(30,22.5)
+  Recto.Encoder(30,21.5)
     RGB.Detect(2,5,bloque[0])
   RGB.Gritar(bloque[0])
+  CogerColor()
+  Recto.Encoder(30,4)
+    RGB.Detect(2,5,bloque[0])
+  RGB.Gritar(bloque[0])
+  CogerColor()
+  
   Program.Delay(2000)
     
   EndIf
@@ -411,14 +418,6 @@ Sub Main
 EndSub
 
 Sub MainPrueba
-    StartArm()
-   Brazo.DEncoder(50,10)
-    Recto.Encoder(-40,7.5)
-    
-    'Gira hacia grúa
-    Giro.Grados(-30,30,48)
-    
-    Recto.Encoder(-30,22)
   
     Siguelineas.Encoder31F(20,5)
     Siguelineas.Color31F(70,5)
@@ -436,17 +435,24 @@ Sub MainPrueba
     Giro.Grados(20,-40,65)
   Recto.Encoder(-20,6)
   
-  Giro.Grados(50,0,120)
-  Recto.EncoderF(50,60)
+  Giro.Grados(50,0,110)
+  Recto.EncoderF(60,2)
+  Giro.EncoderF(55,60,60)
   Recto.Color1(30,3,4)
   
-  Brazo.DEncoder(50,300)
+  Brazo.DEncoder(50,100)
   AEncoder(20,-50)
-  Recto.Encoder(30,22.5)
+  Recto.Encoder(30,21.5)
     RGB.Detect(2,5,bloque[0])
   RGB.Gritar(bloque[0])
-  Program.Delay(2000)
+  CogerColor()
+  Recto.Encoder(30,4)
+    RGB.Detect(2,5,bloque[0])
+  RGB.Gritar(bloque[0])
+  CogerColor()
   
+  
+  Program.Delay(2000)
 
 EndSub
 
@@ -498,6 +504,7 @@ Function Coger()
   Brazo.DEncoder(50,100)
   
 EndFunction
+
 
 Function CogerAlto()
   
@@ -603,3 +610,18 @@ EndFunction
 Sub Detecta
   Speaker.Play(100,"Connect")
 EndSub
+
+Function CogerColor()
+  Brazo.DEncoder(50,350)
+  
+  Recto.AccelDecel(15,30,5,0,0)
+  Brazo.DEncoder(50,250)
+  AEncoder(50,0)
+  
+  Brazo.DEncoder(50,-20)
+  
+  AEncoder(50,-175)
+  
+  Brazo.DEncoder(50,100)
+  
+EndFunction
