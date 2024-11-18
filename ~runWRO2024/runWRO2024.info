@@ -1,8 +1,21 @@
 FOLDER_KEY PRJS
 FOLDER_NAME WRO2024
 IMAGE_LIST 0
-SOUND_LIST 9
+SOUND_LIST 22
+SOUND ; Yes.rsf ; WRO2024/Media/ ; WRO2024/Media/Yes.rsf
+SOUND ; Elephant call.rsf ; WRO2024/Media/ ; WRO2024/Media/Elephant call.rsf
 SOUND ; Connect.rsf ; WRO2024/Media/ ; WRO2024/Media/Connect.rsf
+SOUND ; ZERO.rsf ; WRO2024/Media/ ; WRO2024/Media/ZERO.rsf
+SOUND ; One.rsf ; WRO2024/Media/ ; WRO2024/Media/One.rsf
+SOUND ; Two.rsf ; WRO2024/Media/ ; WRO2024/Media/Two.rsf
+SOUND ; Three.rsf ; WRO2024/Media/ ; WRO2024/Media/Three.rsf
+SOUND ; Four.rsf ; WRO2024/Media/ ; WRO2024/Media/Four.rsf
+SOUND ; Five.rsf ; WRO2024/Media/ ; WRO2024/Media/Five.rsf
+SOUND ; Six.rsf ; WRO2024/Media/ ; WRO2024/Media/Six.rsf
+SOUND ; Seven.rsf ; WRO2024/Media/ ; WRO2024/Media/Seven.rsf
+SOUND ; Eight.rsf ; WRO2024/Media/ ; WRO2024/Media/Eight.rsf
+SOUND ; Nine.rsf ; WRO2024/Media/ ; WRO2024/Media/Nine.rsf
+SOUND ; Ten.rsf ; WRO2024/Media/ ; WRO2024/Media/Ten.rsf
 SOUND ; Zero.rsf ; WRO2024/Media/ ; WRO2024/Media/Zero.rsf
 SOUND ; Black.rsf ; WRO2024/Media/ ; WRO2024/Media/Black.rsf
 SOUND ; BLUE.rsf ; WRO2024/Media/ ; WRO2024/Media/BLUE.rsf
