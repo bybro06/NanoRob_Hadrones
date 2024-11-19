@@ -1,9 +1,7 @@
 FOLDER_KEY PRJS
 FOLDER_NAME WRO2024
 IMAGE_LIST 0
-SOUND_LIST 22
-SOUND ; Yes.rsf ; WRO2024/Media/ ; WRO2024/Media/Yes.rsf
-SOUND ; Elephant call.rsf ; WRO2024/Media/ ; WRO2024/Media/Elephant call.rsf
+SOUND_LIST 20
 SOUND ; Connect.rsf ; WRO2024/Media/ ; WRO2024/Media/Connect.rsf
 SOUND ; ZERO.rsf ; WRO2024/Media/ ; WRO2024/Media/ZERO.rsf
 SOUND ; One.rsf ; WRO2024/Media/ ; WRO2024/Media/One.rsf
