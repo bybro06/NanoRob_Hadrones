@@ -20,22 +20,22 @@ olderrorD = 0
 Sub Setup
   
   Sensor.SetMode(1,0)
-  Sensor.SetMode(2,2)
+  Sensor.SetMode(2,4)
   Sensor.SetMode(3,0)
   Sensor.SetMode(4,0)
   
   diametro = 6.24
   
   '965
-  Giro.G1 = 965/360
+  Giro.G1 = 1025/360
   
-  negro1 = 10
-  negro3 = 10
-  negro4 = 8
+  negro1 = 8
+  negro3 = 9
+  negro4 = 6
   
-  blanco1 = 76
-  blanco3 = 76
-  blanco4 = 61
+  blanco1 = 53
+  blanco3 = 60
+  blanco4 = 49
   
   RGB.VALUENEGRO = 4
   RGB.VALUEBLANCO = 52
@@ -96,9 +96,10 @@ Sub Main
   GritarVoltaje()
   StartArm()
   Recto.Tiempo(-80,600)
-  Recto.Encoder(55,4)
+  Recto.Encoder(55,4.5)
   Brazo.DEncoder(50,320)
-  Giro.Grados(70*0.9,-21*0.9,102)
+  Giro.GradosF(70,-21,90)
+  Giro.TiempoF(70*0.3,-21*0.3,250)
   
   Recto.AccelDecel(15,30,3.5,0,3.5)
   
@@ -116,12 +117,12 @@ Sub Main
   'Cuadra con pared para irse a por la segunda fila
   
   Recto.AccelDecelF(15,89,10,0,0)
-  Recto.EncoderF(89,52)
+  Recto.EncoderF(89,54)
   Recto.Blanco1F(50,3)
   
   'llega a línea
   
-  Giro.Grados(45,-18,95)
+  Giro.Grados(45,-22,92)
   
   Time.Reset1()
   
@@ -129,13 +130,13 @@ Sub Main
   Siguelineas.Cruce_ExternoF(80,4)
   
   tiempoHastaCruce = Time.Get1()
-  
+
   If tiempoHastaCruce > 1400 Then 'Calcular tiempo en ambos cruces
     'Caso VOX
     Siguelineas.Encoder31F(80,5) 'llegar hasta salida opuesta
     
     Recto.Encoder(80,23)
-    Giro.Grados(30,-27,86)
+    Giro.Grados(30,-27,89)
     
     Recto.EncoderF(50,20)
     
@@ -147,14 +148,14 @@ Sub Main
     'Giro.EncoderF(-86,-77,56)
     
     Recto.Tiempo(-50,1500)
-    Recto.Encoder(50,6)
+    Recto.Encoder(50,5)
     
-    Giro.Grados(-60,60,105)
-    Recto.EncoderF(70,40)
+    Giro.Grados(-60,60,115)
+    Giro.EncoderF(65,70,35)
     
     Brazo.DEncoder(50,750)
     Recto.Encoder(-60,10)
-    Giro.GradosF(50,-20,205)
+    Giro.GradosF(50,-20,215)
     Recto.Encoder(55,15)
     Recto.Color1(30,3,5)
     Recto.Encoder(30,2)
@@ -172,7 +173,7 @@ Sub Main
     
     'Giro abierto y lanzamiento a por los dos ultimos amarillos
     
-    Giro.Grados(52.75,81.25,90)
+    Giro.Grados(56,81.25,90)
     
     Recto.AccelDecelF(15,89,8,0,0)
     Recto.Encoder(89,28)
@@ -185,14 +186,16 @@ Sub Main
     
     'Sale de pared
     
-    Recto.Encoder(20,3)
+    Recto.Encoder(20,4.5)
     
-    Giro.Grados(50,-18,115)
+    Giro.Grados(50*0.6,-18*0.6,135)
     
     Brazo.DEncoder(50,400)
     
     'Anda hasta primer cuadrado rojo
     
+    Giro.EncoderF(30,25,8)
+    Giro.Color1F(30,25,4,5)
     Giro.EncoderF(30,25,8)
     Giro.Color1(23,20,4,5)
     Thread.Run = Detecta
@@ -222,14 +225,14 @@ Sub Main
     
     Giro.Grados(-50,20,40)
     Recto.Encoder(30,3)
-    Giro.Grados(-50,20,85)
+    Giro.Grados(-50,20,105)
     
     Giro.Tiempo(-40,-20,800)
     
-    Giro.Grados(50,20,30)
-    Giro.Grados(20,50,30)
-    Siguelineas.Encoder14(20,13)
-    Giro.Encoder(13,40,6)
+    Giro.Grados(50,20,34)
+    Giro.Grados(20,50,34)
+    Siguelineas.Encoder14(20,12)
+    Giro.Encoder(16,40,5)
     
     Soltar(4)
     
@@ -239,7 +242,7 @@ Sub Main
     
     Giro.Grados(-30,30,102)
     
-    Recto.Encoder(50,14)
+    Recto.Encoder(50,9)
     
     Soltar(4)
     
@@ -292,23 +295,24 @@ Sub Main
     
     'Pilla basura amarilla
     
-    Giro.Grados(50,-10,92)
+    Giro.Grados(50,-10,94)
     
     Recto.Encoder(40,12)
     Giro.Encoder(-45,-80,21)
-    Giro.Encoder(-80,-45,21)
+    Giro.Encoder(-80,-54,18)
     
-    Recto.Tiempo(-40,400)
+    Recto.Tiempo(-40,700)
     
     'Sale de pared
-    Recto.Encoder(20,2)
-    
-    Giro.Grados(50,-18,100)
+    Recto.Encoder(20,3.5)
     
     Brazo.DEncoder(50,400)
+    
+    Giro.Grados(50,-18,110)
+    
     'Anda hasta primer cuadrado rojo
     
-    Recto.Color1F(20,4,5)
+    Recto.Color1F(20,3,5)
     Recto.Encoder(20,2)
     Brazo.DEncoder(50,260)
     AEncoder(50,0)
@@ -322,16 +326,17 @@ Sub Main
     EndFor
     
     'Apunta a basura
-    Giro.Grados(0,60,38)
+    Giro.Grados(0,60,40)
     Recto.Encoder(80,111)
-    Giro.Grados(30,20,20)
+    Recto.Encoder(-60,2)
+    Giro.Grados(60,40,15)
     
     'Sube brazo y gira dejando basuras
-    Brazo.DEncoder(50,700)
+    Brazo.DEncoder(80,700)
     Giro.Grados(-25,-60,130)
     
     'Cuadra con pared
-    Brazo.DEncoder(50,50)
+    Brazo.DEncoder(70,50)
     
     Recto.Tiempo(-70,500)
     
@@ -365,29 +370,39 @@ Sub Main
     
     'Coge 4º amarillo
     
-    Coger()
+    Brazo.DEncoder(70,350)
+  
+  Giro.Encoder(30,25,9.75)
+  Brazo.DEncoder(70,250)
+  AEncoder(50,0)
+  
+  Brazo.DEncoder(70,-10)
+  
+  AEncoder(50,-175)
+  
+  Brazo.DEncoder(70,100)
     
     Brazo.DEncoder(50,10)
-    Giro.Encoder(-30,-35,22.5)
+    Giro.Encoder(-30,-39,23)
     
     'Gira hacia amarillo
     Giro.Grados(-10,40,105)
     Recto.Tiempo(-30,800)
-    Giro.Encoder(49,50,39)
+    Giro.Encoder(49,50,37)
     
     Soltar(4)
     
     Giro.Encoder(-40,-5,7)
-    Giro.Grados(-35,35,42.5)
+    Giro.Grados(-35,35,40.5)
     
     Recto.Encoder(50,12.5)
     Soltar(4)
     
     Brazo.DEncoder(50,10)
-    Recto.Encoder(-40,8.5)
+    Recto.Encoder(-40,5)
     
     'Gira hacia grúa
-    Giro.Grados(-30,30,42)
+    Giro.Grados(-30,30,48)
     
     Recto.Encoder(-30,22)
     
@@ -412,15 +427,9 @@ Sub Main
   Recto.Color1(30,4,4)
   
   Brazo.DEncoder(50,300)
-  AEncoder(20,-50)
-  Recto.Encoder(30,6)
-  RGB.Detect(2,5,bloque[0])
-  RGB.Gritar(bloque[0])
-  CogerColor()
-  Recto.Encoder(30,4)
-  RGB.Detect(2,5,bloque[0])
-  RGB.Gritar(bloque[0])
-  CogerColor()
+  Recto.EncoderF(30,10)
+  Coger()
+  Coger()
   
   Giro.Grados(41.5,80,90)
  
@@ -447,7 +456,7 @@ Sub Main
   RGB.Detect(2,5,bloque[0])
   RGB.Gritar(bloque[0])
   CogerColor()
-    
+  
   EndIf
   
 EndSub
@@ -502,7 +511,7 @@ Function Coger()
   
   Brazo.DEncoder(70,-10)
   
-  AEncoder(50,-175)
+  AEncoder(50,-200)
   
   Brazo.DEncoder(70,100)
   
@@ -529,13 +538,13 @@ Function Soltar(in number altura)
   
   'Numero de bloques que suelta
   altura*=0.75
-  Brazo.DEncoder(50,50)
+  Brazo.DEncoder(70,50)
   AEncoder(50,50)
-  Brazo.DEncoder(50,Math.Min(245*(altura),2000))
-  AEncoder(50,-250)
+  Brazo.DEncoder(70,Math.Min(245*(altura),2000))
+  AEncoder(50,-200)
   
   Brazo.DEncoder(50,MotorD.GetTacho()+200)
-  Program.Delay(500)
+  Program.Delay(200)
   Recto.Encoder(-10,10)
   
   Brazo.DEncoder(50,350)
@@ -658,6 +667,6 @@ Function GritarVoltaje()
   voltaje = EV3.BatteryVoltage
   GritarNumero(Math.Floor(voltaje))
   GritarNumero(Math.Floor(voltaje*10)-Math.Floor(voltaje)*10)
-  GritarNumero(Math.Floor(voltaje*100)-Math.Floor(voltaje)*100)
+  GritarNumero(Math.Floor(voltaje*100)-Math.Floor(voltaje*10)*10)
   
 EndFunction
