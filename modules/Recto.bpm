@@ -8,7 +8,7 @@ number blanco
 'Por encoder
 Function Encoder(in number velocidad, in number distancia)
   
-  correccion = (velocidad - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
+  correccion = (Math.abs(velocidad) - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
   
   enc = (distancia - correccion) * 360 / Math.Pi / diametro  ' Ajuste de distancia con corrección
   MotorBC.Off()
@@ -19,7 +19,7 @@ EndFunction
 
 Function EncoderF(in number velocidad, in number distancia)
   
-  correccion = (velocidad - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
+  correccion = (Math.abs(velocidad) - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
   
   enc = (distancia - correccion) * 360 / Math.Pi / diametro  ' Ajuste de distancia con corrección
   MotorBC.Off()
