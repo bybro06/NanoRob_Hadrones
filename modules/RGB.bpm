@@ -89,10 +89,10 @@ Function Detect(in number sens, in number reps, out number color)
   rgbGrey = (VALUEBLANCO + VALUENEGRO) / 2
   
   ' Detectamos el color
-  If rNorm + gNorm + bNorm <= 3 Then
+  If rRaw + gRaw + bRaw <= 3 Then
     color = 0   'Si no hay lecturas, el color es 0 (nada)
   Else
-    If sat < 0.2 Then
+    If sat < 0.3 Then
       If value > rgbGrey Then   'está en la escala de grises por poca saturación
         color = 6    'Blanco si la luz es alta
       Else
@@ -147,6 +147,7 @@ Function Time(in number sens, in number time, out number color)
   sat = 0
   value = 0
   color = 0
+  
   rNormArray[0] = 0
   gNormArray[0] = 0
   bNormArray[0] = 0
