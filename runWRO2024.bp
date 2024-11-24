@@ -425,7 +425,7 @@ Sub Main
     
     'Pilla basura amarilla
     
-    Giro.Grados(50,-10,94)
+    Giro.Grados(50,-10,95)
     
     Recto.Encoder(40,18)
     Giro.Encoder(-45,-80,21)
@@ -513,7 +513,7 @@ Sub Main
   Brazo.DEncoder(70,100)
     
     Brazo.DEncoder(50,10)
-    Giro.Encoder(-30,-39,23)
+    Giro.Encoder(-30,-39,20.5)
     
     'Gira hacia amarillo
     Giro.Grados(-10,40,105)
@@ -523,9 +523,9 @@ Sub Main
     Soltar(4)
     
     Giro.Encoder(-40,-5,7)
-    Giro.Grados(-35,35,40.5)
+    Giro.Grados(-35,35,40)
     
-    Recto.Encoder(50,15)
+    Recto.Encoder(50,14)
     Soltar(4)
     
     Brazo.DEncoder(50,10)
@@ -536,8 +536,8 @@ Sub Main
     
     Recto.Encoder(-30,22)
     
-    Siguelineas.Encoder31F(20,5)
-  Siguelineas.Color31F(50,5)
+    Siguelineas.Encoder31(50,5)
+  Siguelineas.Color31(50,5)
   Thread.Run = Detecta
   Recto.Encoder(60,54)
     
@@ -548,50 +548,221 @@ Sub Main
   
   'Levanta grúa
   Brazo.DEncoder(50,700)
-  Giro.Grados(20,-3,25)
+  Giro.Grados(20,-3,26)
   
   Giro.Grados(20,-40,10)
   Recto.Encoder(-70,20)
     Giro.Grados(70,-70,160)
     
     'Anda hasta amarillo
-    Giro.EncoderF(60,58,50)
+    Giro.EncoderF(60,58,55)
     Giro.Blanco1(30,28,4.25)
     Thread.Run = Detecta
     'Coge verde y/o azul
     Brazo.DEncoder(80,300)
     Coger()
     Coger()
-  
+    
+    'Levanta tubería
+  Recto.Encoder(30,1)
   Giro.Grados(41.5,80,90)
-    Recto.Encoder(60,9.5)
-  Giro.Grados(80,41.5,90)
+    Recto.Encoder(60,8.5)
+  Giro.Grados(82,41.5,88)
   
-   Brazo.DEncoder(80,280)
-  Recto.Encoder(20,13)
+   Brazo.DEncoder(80,260)
+    Recto.Encoder(20,14)
     Brazo.DEncoder(80,800)
     Giro.Grados(20,-20,10)
     Giro.Grados(-20,20,10)
-  Brazo.DEncoder(80,0)
+    Brazo.DEncoder(80,200)
+    
+    'Retrocede, cuadra en pared
   
-  Recto.Encoder(-70,30)
-  Giro.grados(40,-40,88)
+  Recto.Encoder(-70,32)
+  Brazo.DEncoder(70,50)
+  Giro.grados(40,-40,87)
   Recto.encoder(-50,45)
-  'cuadra con pared
-  Recto.Tiempo(-50,750)
-  Recto.Encoder(70,16)
-  Giro.Grados(-40,40,90)
+    Recto.Tiempo(-50,750)
+    
+    'Coge seta
+    
+  Recto.Encoder(70,13.5)
+  Giro.Grados(-30,30,96)
   
-  Brazo.DEncoder(50,700)
-  Recto.Encoder(60,12)
-  
-  
+  Brazo.DEncoder(50,450)
+    
+    While base <> 2 And base <> 3
+      Motor.StartSync("BC",-20,20)
+      RGB.Detect(2,1,base)
+    EndWhile
+  MotorBC.OffAndBrake()
+    Brazo.AEncoder(70,800)
+    Recto.Encoder(30,3)
+    
+    RGB.Detect(2,5,base)
+    RGB.Gritar(Base)
+    
+    Recto.Encoder(30,4)
+    AEncoder(50,0)
+    
+    Brazo.DEncoder(50,120)
+    
+    AEncoder(50,-225)
+    
+    Brazo.DEncoder(80,400)
+    
+    Recto.Encoder(-40,20)
+    Brazo.DEncoder(80,100)
+    
+    'Retrocede y mueve basura gris
+    Recto.Encoder(-70,15)
+    
+    Giro.Grados(40,-40,200)
+    Giro.Encoder(60,58,84)
+    
+    'Cuadra con pared y enchufa con linea hasta cruce
+    
+    Recto.Encoder(-70,2)
+    Giro.Grados(-80,0,100)
+    Giro.Tiempo(-80,-70,300)
+    Recto.Encoder(70,16)
+    Giro.Grados(-5,70,97)
+    Siguelineas.Cruce_ExternoF(50,4)
+    
+    'Piensa bien donde dejarlo
+    
+    If base = 2 Then 'Base = 2 es el color azul
+      Giro.Grados(80,33,77)
+      
+      Brazo.DEncoder(70,50)
+      AEncoder(50,50)
+      Brazo.DEncoder(90,1000)
+    Else
+      Siguelineas.Encoder31(60,20)
+      Giro.Grados(80,35,75)
+      
+      Brazo.DEncoder(70,50)
+      AEncoder(50,50)
+      Brazo.DEncoder(90,1000)
+    EndIf
+    
   EndIf
   
 EndSub
 
 Sub MainPrueba
   
+  StartArm()
+  Siguelineas.Encoder31(50,5)
+  Siguelineas.Color31(50,5)
+  Thread.Run = Detecta
+  Recto.Encoder(60,54)
+    
+    'Avanza a grúa
+  Giro.Grados(-10,10,8)
+  Recto.Encoder(20,9)
+  Giro.Tiempo(10,-10,500)
+  
+  'Levanta grúa
+  Brazo.DEncoder(50,700)
+  Giro.Grados(20,-3,26)
+  
+  Giro.Grados(20,-40,10)
+  Recto.Encoder(-70,20)
+    Giro.Grados(70,-70,160)
+    
+    'Anda hasta amarillo
+    Giro.EncoderF(60,58,55)
+    Giro.Blanco1(30,28,4.25)
+    Thread.Run = Detecta
+    'Coge verde y/o azul
+    Brazo.DEncoder(80,300)
+    Coger()
+    Coger()
+    
+    'Levanta tubería
+  Recto.Encoder(30,1)
+  Giro.Grados(41.5,80,90)
+    Recto.Encoder(60,8.5)
+  Giro.Grados(82,41.5,88)
+  
+   Brazo.DEncoder(80,260)
+    Recto.Encoder(20,14)
+    Brazo.DEncoder(80,800)
+    Giro.Grados(20,-20,10)
+    Giro.Grados(-20,20,10)
+    Brazo.DEncoder(80,200)
+    
+    'Retrocede, cuadra en pared
+  
+  Recto.Encoder(-70,32)
+  Brazo.DEncoder(70,50)
+  Giro.grados(40,-40,87)
+  Recto.encoder(-50,45)
+    Recto.Tiempo(-50,750)
+    
+    'Coge seta
+    
+  Recto.Encoder(70,13.5)
+  Giro.Grados(-30,30,96)
+  
+  Brazo.DEncoder(50,450)
+    
+    While base <> 2 And base <> 3
+      Motor.StartSync("BC",-20,20)
+      RGB.Detect(2,1,base)
+    EndWhile
+  MotorBC.OffAndBrake()
+    Brazo.AEncoder(70,800)
+    Recto.Encoder(30,3)
+    
+    RGB.Detect(2,5,base)
+    RGB.Gritar(Base)
+    
+    Recto.Encoder(30,4)
+    AEncoder(50,0)
+    
+    Brazo.DEncoder(50,120)
+    
+    AEncoder(50,-225)
+    
+    Brazo.DEncoder(80,400)
+    
+    Recto.Encoder(-40,20)
+    Brazo.DEncoder(80,100)
+    
+    'Retrocede y mueve basura gris
+    Recto.Encoder(-70,15)
+    
+    Giro.Grados(40,-40,200)
+    Giro.Encoder(60,58,84)
+    
+    'Cuadra con pared y enchufa con linea hasta cruce
+    
+    Recto.Encoder(-70,2)
+    Giro.Grados(-80,0,100)
+    Giro.Tiempo(-80,-70,300)
+    Recto.Encoder(70,16)
+    Giro.Grados(-5,70,97)
+    Siguelineas.Cruce_ExternoF(50,4)
+    
+    'Piensa bien donde dejarlo
+    
+    If base = 2 Then 'Base = 2 es el color azul
+      Giro.Grados(80,33,77)
+      
+      Brazo.DEncoder(70,50)
+      AEncoder(50,50)
+      Brazo.DEncoder(90,1000)
+    Else
+      Siguelineas.Encoder31(60,20)
+      Giro.Grados(80,35,75)
+      
+      Brazo.DEncoder(70,50)
+      AEncoder(50,50)
+      Brazo.DEncoder(90,1000)
+    EndIf
+    
   
 EndSub
 
