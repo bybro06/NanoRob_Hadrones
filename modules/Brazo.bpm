@@ -93,7 +93,7 @@ Function DEncoder(in number velocidad, in number encoder)
   
   If encDiff <> 0 Then
     
-    While Math.Abs(Motor.GetCount("D") - encoder) > 15 and Time.Get3() < safetyTimer
+    While Math.Abs(Motor.GetCount("D") - encoder) > 25 and Time.Get3() < safetyTimer
       ' Puedes ajustar el velocidadAlor (5) para controlar la precisión
       MotorD.StartSpeed(signo * velocidad)
       LCD.Clear()
