@@ -1,5 +1,5 @@
 
-'Siguelíneas 1-4 con control Proporcional y derivativo (PD)
+'Siguelíneas 1 - 4 con control Proporcional y derivativo (PD)
 
 number diametro
 
@@ -14,693 +14,705 @@ number blanco4
 'Siguelíneas hasta cruce
 
 Function Cruce14(in number velocidad)
-  'Siguelíneas 1-4 PID
-  
-  #Valores ideales:
-  #KP = 0.18
-  #KI = 0.00015
-  #KD = 7
-  
-  velocidad *= 1
+    'Siguelíneas 1 - 4 PID
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    #Valores ideales:
+    #KP = 0.18
+    #KI = 0.00015
+    #KD = 7
 
-  error = 0
-  olderror = 0
-  
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  While lectura1 > 10 Or lectura4 > 10
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    velocidad *= 1
 
-    error = (lectura1 - lectura4)*sentido*1
-    u = error*kp + (error-olderror)*kd
-    Motor.StartSync("BC", -(velocidad+u), velocidad-u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
+
+    kp = velocidad / 220
+    kd = kp * 24
+
+    error = 0
+    olderror = 0
+
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While lectura1 > 10 Or lectura4 > 10
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Cruce14F(in number velocidad)
-  'Siguelíneas 1-4 PID Sin Frenos
+    'Siguelíneas 1 - 4 PID Sin Frenos
 
-  #Valores ideales:
-  #KP = 0.18
-  #KI = 0.00015
-  #KD = 7
+    #Valores ideales:
+    #KP = 0.18
+    #KI = 0.00015
+    #KD = 7
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While lectura1 > 5 Or lectura4 > 5
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    While lectura1 > 5 Or lectura4 > 5
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta ambos blancos
 
 Function Blanco14(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While lectura1 < 90 Or lectura4 < 90
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    While lectura1 < 90 Or lectura4 < 90
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Blanco14F(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While lectura1 < 90 Or lectura4 < 90
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    While lectura1 < 90 Or lectura4 < 90
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta color
 
 Function Color14(in number velocidad, in number color)
-  
-  mode = Sensor.GetMode(3)
-  Sensor.SetMode(3,2)
-  
-  velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    mode = Sensor.GetMode(3)
+    Sensor.SetMode(3, 2)
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    velocidad *= 1
 
-  While Sensor.ReadRawValue(3,0) <> color
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
-  Sensor.SetMode(3,mode)
+    kp = velocidad / 220
+    kd = kp * 24
+
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While Sensor.ReadRawValue(3, 0) < > color
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
+    Sensor.SetMode(3, mode)
 EndFunction
 
 Function Color14F(in number velocidad, in number color)
-  
-  mode = Sensor.GetMode(3)
-  Sensor.SetMode(3,2)
-  
-  velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    mode = Sensor.GetMode(3)
+    Sensor.SetMode(3, 2)
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    velocidad *= 1
 
-  While Sensor.ReadRawValue(3,0) <> color
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
-  Sensor.SetMode(3,mode)
+    kp = velocidad / 220
+    kd = kp * 24
+
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While Sensor.ReadRawValue(3, 0) < > color
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
+    Sensor.SetMode(3, mode)
 EndFunction
 
 'Siguelíneas por encoder
 
 Function Encoder14(in number velocidad, in number encoder)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  encoder = encoder / (diametro * Math.Pi) * 360
-  
-  startC = MotorC.GetTacho()
-  encoderC = 0
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While Math.Abs(encoderC) < encoder
-    
-    encoderC = MotorC.GetTacho() - startC
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    encoder = encoder / (diametro * Math.Pi) * 360
+
+    startC = MotorC.GetTacho()
+    encoderC = 0
+
+    While Math.Abs(encoderC) < encoder
+
+        encoderC = MotorC.GetTacho() - startC
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Encoder14F(in number velocidad, in number encoder)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  encoder = encoder / (diametro * Math.Pi) * 360
-  
-  startC = MotorC.GetTacho()
-  encoderC = 0
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While Math.Abs(encoderC) < encoder
-    
-    encoderC = MotorC.GetTacho() - startC
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
-       
-    error = (lectura1 - lectura4) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    encoder = encoder / (diametro * Math.Pi) * 360
+
+    startC = MotorC.GetTacho()
+    encoderC = 0
+
+    While Math.Abs(encoderC) < encoder
+
+        encoderC = MotorC.GetTacho() - startC
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura1 - lectura4) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta x cruces
 
 Function Cruces14(in number velocidad, in number cruces)
-  
-  Cruce14F(velocidad)
-  
-  For i = 1 To cruces - 1
-    Encoder14F(velocidad,4)
+
     Cruce14F(velocidad)
-  EndFor
-  
-  MotorBC.OffAndBrake()
+
+    For i = 1 To cruces - 1
+        Encoder14F(velocidad, 4)
+        Cruce14F(velocidad)
+    EndFor
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Cruces14F(in number velocidad, in number cruces)
-  
-  Cruce14F(velocidad)
-  
-  For i = 1 To cruces - 1
-    Encoder14F(velocidad,4)
+
     Cruce14F(velocidad)
-  EndFor
-  
-  MotorBC.Off()
+
+    For i = 1 To cruces - 1
+        Encoder14F(velocidad, 4)
+        Cruce14F(velocidad)
+    EndFor
+
+    MotorBC.Off()
 EndFunction
 
 'SIGUELINEAS 31
 Function Cruce31(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  While lectura3 > 15 Or lectura1 > 15
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    kp = velocidad / 220
+    kd = kp * 24
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While lectura3 > 15 Or lectura1 > 15
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Cruce31F(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  While lectura3 > 15 Or lectura1 > 15
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    kp = velocidad / 220
+    kd = kp * 24
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While lectura3 > 15 Or lectura1 > 15
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta ambos blancos
 
 Function Blanco31(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  While lectura3 < 90 Or lectura1 < 90
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    kp = velocidad / 220
+    kd = kp * 24
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While lectura3 < 90 Or lectura1 < 90
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Blanco31F(in number velocidad)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  While lectura3 < 90 Or lectura1 < 90
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    kp = velocidad / 220
+    kd = kp * 24
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While lectura3 < 90 Or lectura1 < 90
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta color
 
 Function Color31(in number velocidad, in number color)
-  
-  mode = Sensor.GetMode(4)
-  Sensor.SetMode(4,2)
-  
-  velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    mode = Sensor.GetMode(4)
+    Sensor.SetMode(4, 2)
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    velocidad *= 1
 
-  While Sensor.ReadRawValue(4,0) <> color
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
-  Sensor.SetMode(4,mode)
+    kp = velocidad / 220
+    kd = kp * 24
+
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While Sensor.ReadRawValue(4, 0) < > color
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
+    Sensor.SetMode(4, mode)
 EndFunction
 
 Function Color31F(in number velocidad, in number color)
-  
-  mode = Sensor.GetMode(4)
-  Sensor.SetMode(4,2)
-  
-  velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    mode = Sensor.GetMode(4)
+    Sensor.SetMode(4, 2)
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
+    velocidad *= 1
 
-  While Sensor.ReadRawValue(4,0) <> color
-    
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro4)/blanco4 * (100 - negro4) 'Normalización
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
-  Sensor.SetMode(4,mode)
+    kp = velocidad / 220
+    kd = kp * 24
+
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    While Sensor.ReadRawValue(4, 0) < > color
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
+    Sensor.SetMode(4, mode)
 EndFunction
 
 'Siguelíneas por encoder
 
 Function Encoder31(in number velocidad, in number encoder)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  encoder = encoder / (diametro * Math.Pi) * 360
-  
-  startC = MotorC.GetTacho()
-  encoderC = 0
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While Math.Abs(encoderC) < encoder
-    
-    encoderC = MotorC.GetTacho() - startC
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
+    encoder = encoder / (diametro * Math.Pi) * 360
 
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    startC = MotorC.GetTacho()
+    encoderC = 0
+
+    While Math.Abs(encoderC) < encoder
+
+        encoderC = MotorC.GetTacho() - startC
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Encoder31F(in number velocidad, in number encoder)
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  encoder = encoder / (diametro * Math.Pi) * 360
-  
-  startC = MotorC.GetTacho()
-  encoderC = 0
+    kp = velocidad / 220
+    kd = kp * 24
 
-  While Math.Abs(encoderC) < encoder
-    
-    encoderC = MotorC.GetTacho() - startC
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
-    
-    error = (lectura3 - lectura1) * sentido * 1
-    u = error * kp + (error - olderror) * kd
-    Motor.StartSync("BC", -(velocidad + u), velocidad - u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    encoder = encoder / (diametro * Math.Pi) * 360
+
+    startC = MotorC.GetTacho()
+    encoderC = 0
+
+    While Math.Abs(encoderC) < encoder
+
+        encoderC = MotorC.GetTacho() - startC
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+
+        error = (lectura3 - lectura1) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Siguelíneas hasta x cruces
 
 Function Cruces31(in number velocidad, in number cruces)
-  
-  Cruce31F(velocidad)
-  
-  For i = 1 To cruces - 1
-    Encoder31F(velocidad,4)
+
     Cruce31F(velocidad)
-  EndFor
-  
-  MotorBC.OffAndBrake()
-  
+
+    For i = 1 To cruces - 1
+        Encoder31F(velocidad, 4)
+        Cruce31F(velocidad)
+    EndFor
+
+    MotorBC.OffAndBrake()
+
 EndFunction
 
 Function Cruces31F(in number velocidad, in number cruces)
-  
-  Cruce31F(velocidad)
-  
-  For i = 1 To cruces - 1
-    Encoder31F(velocidad,4)
-    Cruce31F(velocidad)
-  EndFor
-  
-  MotorBC.Off()
-  
-EndFunction
 
+    Cruce31F(velocidad)
+
+    For i = 1 To cruces - 1
+        Encoder31F(velocidad, 4)
+        Cruce31F(velocidad)
+    EndFor
+
+    MotorBC.Off()
+
+EndFunction
 
 'Siguelíneas hasta cruce unilateral
 Function Cruce_Externo(in number velocidad, in number reader)
-  'Siguelíneas PID
+    'Siguelíneas PID
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  'Asumiendo disposición de sensores 3-1-4
-  
-  'Si el cruce es a la derecha, lee con 3-1 y detecta con 4
-  'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
-  
-  lectura = 50
-  
-  While lectura > 10
+    kp = velocidad / 220
+    kd = kp * 24
 
-    If reader = 3 Then
-      lectura = lectura3
-      lecturaIzq = lectura1
-      lecturaDch = lectura4
-    Else
-      lectura = lectura4
-      lecturaIzq = lectura3
-      lecturaDch = lectura1
-    EndIf
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
 
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
-    
-    error = (lecturaIzq - lecturaDch)*sentido*1
-    u = error*kp + (error-olderror)*kd
-    Motor.StartSync("BC", -(velocidad+u), velocidad-u)
-    olderror = error
-  EndWhile
-  MotorBC.OffAndBrake()
+    'Asumiendo disposición de sensores 3 - 1 - 4
+
+    'Si el cruce es a la derecha, lee con 3 - 1 y detecta con 4
+    'Si el cruce es a la izquierda, lee con 1 - 4 y detecta con 3
+
+    lectura = 50
+
+    While lectura > 10
+
+        If reader = 3 Then
+            lectura = lectura3
+            lecturaIzq = lectura1
+            lecturaDch = lectura4
+            Else
+            lectura = lectura4
+            lecturaIzq = lectura3
+            lecturaDch = lectura1
+        EndIf
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lecturaIzq - lecturaDch) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function Cruce_ExternoF(in number velocidad, in number reader)
-  'Siguelíneas PID
+    'Siguelíneas PID
 
-  velocidad *= 1
+    velocidad *= 1
 
-  lectura1 = 50
-  lectura3 = 50
-  lectura4 = 50
-  
-  kp = velocidad/220
-  kd = kp * 24
-    
-  error = 0
-  olderror = 0
-  u = 0
-  sentido = velocidad / Math.Abs(velocidad)
-  
-  'Asumiendo disposición de sensores 3-1-4
-  
-  'Si el cruce es a la derecha, lee con 3-1 y detecta con 4
-  'Si el cruce es a la izquierda, lee con 1-4 y detecta con 3
-  
-  lectura = 50
-  
-  While lectura > 10
+    lectura1 = 50
+    lectura3 = 50
+    lectura4 = 50
 
-    If reader = 3 Then
-      lectura = lectura3
-      lecturaIzq = lectura1
-      lecturaDch = lectura4
-    Else
-      lectura = lectura4
-      lecturaIzq = lectura3
-      lecturaDch = lectura1
-    EndIf
+    kp = velocidad / 220
+    kd = kp * 24
 
-    lectura1 = (Sensor.ReadPercent(1) - negro1)/blanco1 * (100 - negro1) 'Normalización
-    lectura3 = (Sensor.ReadPercent(3) - negro3)/blanco3 * (100 - negro3) 'Normalización
-    lectura4 = (Sensor.ReadPercent(4) - negro4)/blanco4 * (100 - negro4) 'Normalización
-    
-    error = (lecturaIzq - lecturaDch)*sentido*1
-    u = error*kp + (error-olderror)*kd
-    Motor.StartSync("BC", -(velocidad+u), velocidad-u)
-    olderror = error
-  EndWhile
-  MotorBC.Off()
+    error = 0
+    olderror = 0
+    u = 0
+    sentido = velocidad / Math.Abs(velocidad)
+
+    'Asumiendo disposición de sensores 3 - 1 - 4
+
+    'Si el cruce es a la derecha, lee con 3 - 1 y detecta con 4
+    'Si el cruce es a la izquierda, lee con 1 - 4 y detecta con 3
+
+    lectura = 50
+
+    While lectura > 10
+
+        If reader = 3 Then
+            lectura = lectura3
+            lecturaIzq = lectura1
+            lecturaDch = lectura4
+            Else
+            lectura = lectura4
+            lecturaIzq = lectura3
+            lecturaDch = lectura1
+        EndIf
+
+        lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
+        lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
+        lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
+
+        error = (lecturaIzq - lecturaDch) * sentido * 1
+        u = error * kp + (error - olderror) * kd
+        Motor.StartSync("BC", - (velocidad + u), velocidad - u)
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
+

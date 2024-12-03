@@ -1,433 +1,452 @@
 'Movimiento Recto con Motores Medianos
 
-number diametro   'Diámetro de la rueda
+number diametro 'Diámetro de la rueda
 
 number negro
 number blanco
 
 'Por encoder
 Function Encoder(in number velocidad, in number distancia)
-  
-  correccion = (Math.abs(velocidad) - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
-  
-  enc = (distancia - correccion) * 360 / Math.Pi / diametro  ' Ajuste de distancia con corrección
-  MotorBC.Off()
-  Program.Delay(100)
-  Motor.MoveSync("BC", -velocidad, velocidad, enc, "True")
+
+    correccion = (Math.abs(velocidad) - 20) * 0.05 ' Ajuste de corrección lineal en función de la velocidad
+
+    enc = (distancia - correccion) * 360 / Math.Pi / diametro ' Ajuste de distancia con corrección
+    MotorBC.Off()
+    Program.Delay(100)
+    Motor.MoveSync("BC", - velocidad, velocidad, enc, "True")
 
 EndFunction
 
 Function EncoderF(in number velocidad, in number distancia)
-  
-  correccion = (Math.abs(velocidad) - 20) * 0.05  ' Ajuste de corrección lineal en función de la velocidad
-  
-  enc = (distancia - correccion) * 360 / Math.Pi / diametro  ' Ajuste de distancia con corrección
-  MotorBC.Off()
-  Program.Delay(100)
-  Motor.MoveSync("BC", -velocidad, velocidad, enc, "False")
+
+    correccion = (Math.abs(velocidad) - 20) * 0.05 ' Ajuste de corrección lineal en función de la velocidad
+
+    enc = (distancia - correccion) * 360 / Math.Pi / diametro ' Ajuste de distancia con corrección
+    MotorBC.Off()
+    Program.Delay(100)
+    Motor.MoveSync("BC", - velocidad, velocidad, enc, "False")
 
 EndFunction
 
 'Hasta negro en 1 Sensor
 Function Negro1(in number velocidad, in number sensor)
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura = 50
-  While lectura > 15
-    lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura = 50
+    While lectura > 15
+        lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.OffAndBrake()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
-Function Negro1F(in number velocidad, in number sensor)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura = 50
-  While lectura > 15
-    lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+Function Negro1F(in number velocidad, in number sensor)
 
-  EndWhile
-  MotorBC.Off()
+    correccion = 0
+    MotorBC.Off()
+    lectura = 50
+    While lectura > 15
+        lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Hasta blanco en 1 Sensor
-Function Blanco1(in number velocidad, in number sensor)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura = 50
-  While lectura < 60
-    lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
+Function Blanco1(in number velocidad, in number sensor)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura = 50
+    While lectura < 60
+        lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.OffAndBrake()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
-Function Blanco1F(in number velocidad, in number sensor)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura = 50
-  While lectura < 60
-    lectura = (Sensor.ReadPercent(sensor) - negro)/blanco * (100 - negro) 'Normalización
+Function Blanco1F(in number velocidad, in number sensor)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura = 50
+    While lectura < 60
+        lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.Off()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Hasta negro en 2 Sensores
-Function Negros2(in number velocidad, in number sensor1, in number sensor2)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura1 = 50
-  lectura2 = 50
-  While lectura1 > 5 Or lectura2 > 5
-    lectura1 = (Sensor.ReadPercent(sensor1) - negro)/blanco * (100 - negro) 'Normalización
-    lectura2 = (Sensor.ReadPercent(sensor2) - negro)/blanco * (100 - negro) 'Normalización
+Function Negros2(in number velocidad, in number sensor1, in number sensor2)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 > 5 Or lectura2 > 5
+        lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.OffAndBrake()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
-Function Negros2F(in number velocidad, in number sensor1, in number sensor2)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura1 = 50
-  lectura2 = 50
-  While lectura1 > 5 Or lectura2 > 5
-    lectura1 = (Sensor.ReadPercent(sensor1) - negro)/blanco * (100 - negro) 'Normalización
-    lectura2 = (Sensor.ReadPercent(sensor2) - negro)/blanco * (100 - negro) 'Normalización
+Function Negros2F(in number velocidad, in number sensor1, in number sensor2)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 > 5 Or lectura2 > 5
+        lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.Off()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Hasta blanco en 2 Sensores
-Function Blancos2(in number velocidad, in number sensor1, in number sensor2)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura1 = 50
-  lectura2 = 50
-  While lectura1 < 60 Or lectura2 < 60
-    lectura1 = (Sensor.ReadPercent(sensor1) - negro)/blanco * (100 - negro) 'Normalización
-    lectura2 = (Sensor.ReadPercent(sensor2) - negro)/blanco * (100 - negro) 'Normalización
+Function Blancos2(in number velocidad, in number sensor1, in number sensor2)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 < 60 Or lectura2 < 60
+        lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.OffAndBrake()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
-Function Blancos2F(in number velocidad, in number sensor1, in number sensor2)  
-  
-  correccion = 0
-  MotorBC.Off()
-  lectura1 = 50
-  lectura2 = 50
-  While lectura1 < 60 Or lectura2 < 60
-    lectura1 = (Sensor.ReadPercent(sensor1) - negro)/blanco * (100 - negro) 'Normalización
-    lectura2 = (Sensor.ReadPercent(sensor2) - negro)/blanco * (100 - negro) 'Normalización
+Function Blancos2F(in number velocidad, in number sensor1, in number sensor2)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    MotorBC.Off()
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 < 60 Or lectura2 < 60
+        lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-  EndWhile
-  MotorBC.Off()
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Hasta color en 1 Sensor
-Function Color1(in number velocidad, in number sensor, in number color)  
-  
-  correccion = 0
-  mode = Sensor.GetMode(sensor)
-  Sensor.SetMode(sensor,2)
-  
-  MotorBC.Off()
-  While Sensor.ReadRawValue(sensor,0) <> color
+Function Color1(in number velocidad, in number sensor, in number color)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    mode = Sensor.GetMode(sensor)
+    Sensor.SetMode(sensor, 2)
 
-  EndWhile
-  MotorBC.OffAndBrake()
-  Sensor.SetMode(sensor,mode)
+    MotorBC.Off()
+    While Sensor.ReadRawValue(sensor, 0) < > color
+
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
+    Sensor.SetMode(sensor, mode)
 EndFunction
 
-Function Color1F(in number velocidad, in number sensor, in number color)  
-  
-  correccion = 0
-  mode = Sensor.GetMode(sensor)
-  Sensor.SetMode(sensor,2)
-  
-  MotorBC.Off()
-  While Sensor.ReadRawValue(sensor,0) <> color
+Function Color1F(in number velocidad, in number sensor, in number color)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    mode = Sensor.GetMode(sensor)
+    Sensor.SetMode(sensor, 2)
 
-  EndWhile
-  MotorBC.Off()
-  Sensor.SetMode(sensor,mode)
+    MotorBC.Off()
+    While Sensor.ReadRawValue(sensor, 0) < > color
+
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
+    Sensor.SetMode(sensor, mode)
 EndFunction
 
 'Por tiempo
-Function Tiempo(in number velocidad, in number tiempo)  
-  
-  correccion = 0
-  Time.Reset3()
-  
-  MotorBC.Off()
-  While Time.Get3() < tiempo
+Function Tiempo(in number velocidad, in number tiempo)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    Time.Reset3()
 
-  EndWhile
-  MotorBC.OffAndBrake()
+    MotorBC.Off()
+    While Time.Get3() < tiempo
+
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
 EndFunction
 
-Function TiempoF(in number velocidad, in number tiempo)  
-  
-  correccion = 0
-  Time.Reset3()
-  
-  MotorBC.Off()
-  While Time.Get3() < tiempo
+Function TiempoF(in number velocidad, in number tiempo)
 
-    Motor.StartSync("BC", -velocidad+correccion, velocidad+correccion)
+    correccion = 0
+    Time.Reset3()
 
-  EndWhile
-  MotorBC.Off()
+    MotorBC.Off()
+    While Time.Get3() < tiempo
+
+        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+
+    EndWhile
+
+    MotorBC.Off()
 EndFunction
 
 'Con Aceleración y deceleración
-Function AccelDecel(in number v0, in number vMax, in number distanciaAccel,in number distanciaCrucero, in number distanciaDecel)
-  
-  startB = Motor.GetCount("B")
-  startC = Motor.GetCount("C")
-  
-  encoderB = 0
-  encoderC = 0
+Function AccelDecel(in number v0, in number vMax, in number distanciaAccel, in number distanciaCrucero, in number distanciaDecel)
 
-  signo = v0/Math.Abs(v0)
-  
-  v0 = Math.Max(8,Math.Abs(v0))*signo
-  vMax = Math.Min(90,Math.Abs(vMax))*signo 'Limitamos las potencias
-  
-  vel = 0
-  kp = 0.4
-  kd = 0.5
-  
-  error = 0
-  olderror = 0
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
 
-  gradosAccel = distanciaAccel*360/(diametro*math.pi)
-  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
-  gradosDecel = distanciaDecel*360/(diametro*math.pi)
-  
-  While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
-    
-    encoderB = Motor.GetCount("B")*1 - startB
-    encoderC = Motor.GetCount("C") - startC
-    
-    #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
-      ' Aceleración y velocidad Cte
-      pendiente = (vMax - v0) / gradosAccel * signo
-      If signo > 0 Then
-        vel = Math.Min(vMax, pendiente * encoderC + v0)
-      Else
-        vel = Math.Max(vMax, pendiente * encoderC + v0)
-      EndIf
-    Else
-      ' Deceleración
-      pendiente = (v0 - vMax) / gradosDecel * signo
-      If signo > 0 Then
-        vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
-      Else
-        vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
-      EndIf
-    EndIf
-    
-    #Correción PID para mantener el robot recto
-    
-    error = (-1*encoderB - encoderC)*1
-    correccion = error*kp + (error-olderror)*kd
-    
-    Motor.StartSync("BC",-(vel-correccion),(vel+correccion))
-    olderror = error
-  EndWhile
-  
-  MotorBC.OffAndBrake()
-  
+    encoderB = 0
+    encoderC = 0
+
+    signo = v0 / Math.Abs(v0)
+
+    v0 = Math.Max(8, Math.Abs(v0)) * signo
+    vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    gradosAccel = distanciaAccel * 360 / (diametro * math.pi)
+    gradosCrucero = distanciaCrucero * 360 / (diametro * math.pi)
+    gradosDecel = distanciaDecel * 360 / (diametro * math.pi)
+
+    While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
+
+        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderC = Motor.GetCount("C") - startC
+
+        #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
+            ' Aceleración y velocidad Cte
+            pendiente = (vMax - v0) / gradosAccel * signo
+            If signo > 0 Then
+                vel = Math.Min(vMax, pendiente * encoderC + v0)
+                Else
+                vel = Math.Max(vMax, pendiente * encoderC + v0)
+            EndIf
+
+            Else
+            ' Deceleración
+            pendiente = (v0 - vMax) / gradosDecel * signo
+            If signo > 0 Then
+                vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
+                Else
+                vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
+            EndIf
+
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = ( - 1 * encoderB - encoderC) * 1
+        correccion = error * kp + (error - olderror) * kd
+
+        Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
+
 EndFunction
 
-Function AccelDecelF(in number v0, in number vMax, in number distanciaAccel,in number distanciaCrucero, in number distanciaDecel)
-  
-  startB = Motor.GetCount("B")
-  startC = Motor.GetCount("C")
-  
-  encoderB = 0
-  encoderC = 0
+Function AccelDecelF(in number v0, in number vMax, in number distanciaAccel, in number distanciaCrucero, in number distanciaDecel)
 
-  signo = v0/Math.Abs(v0)
-  
-  v0 = Math.Max(8,Math.Abs(v0))*signo
-  vMax = Math.Min(90,Math.Abs(vMax))*signo 'Limitamos las potencias
-  
-  vel = 0
-  kp = 0.4
-  kd = 0.5
-  
-  error = 0
-  olderror = 0
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
 
-  gradosAccel = distanciaAccel*360/(diametro*math.pi)
-  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
-  gradosDecel = distanciaDecel*360/(diametro*math.pi)
-  
-  While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
-    
-    encoderB = Motor.GetCount("B")*1 - startB
-    encoderC = Motor.GetCount("C") - startC
-    
-    #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
-      ' Aceleración y velocidad Cte
-      pendiente = (vMax - v0) / gradosAccel * signo
-      If signo > 0 Then
-        vel = Math.Min(vMax, pendiente * encoderC + v0)
-      Else
-        vel = Math.Max(vMax, pendiente * encoderC + v0)
-      EndIf
-    Else
-      ' Deceleración
-      pendiente = (v0 - vMax) / gradosDecel * signo
-      If signo > 0 Then
-        vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
-      Else
-        vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
-      EndIf
-    EndIf
-    
-    #Correción PID para mantener el robot recto
-    
-    error = (-1*encoderB - encoderC)*1
-    correccion = error*kp + (error-olderror)*kd
-    
-    Motor.StartSync("BC",-(vel-correccion),(vel+correccion))
-    olderror = error
-  EndWhile
-  
-  MotorBC.Off()
-  
+    encoderB = 0
+    encoderC = 0
+
+    signo = v0 / Math.Abs(v0)
+
+    v0 = Math.Max(8, Math.Abs(v0)) * signo
+    vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    gradosAccel = distanciaAccel * 360 / (diametro * math.pi)
+    gradosCrucero = distanciaCrucero * 360 / (diametro * math.pi)
+    gradosDecel = distanciaDecel * 360 / (diametro * math.pi)
+
+    While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
+
+        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderC = Motor.GetCount("C") - startC
+
+        #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        If Math.Abs(encoderC) < gradosAccel + gradosCrucero Then
+            ' Aceleración y velocidad Cte
+            pendiente = (vMax - v0) / gradosAccel * signo
+            If signo > 0 Then
+                vel = Math.Min(vMax, pendiente * encoderC + v0)
+                Else
+                vel = Math.Max(vMax, pendiente * encoderC + v0)
+            EndIf
+
+            Else
+            ' Deceleración
+            pendiente = (v0 - vMax) / gradosDecel * signo
+            If signo > 0 Then
+                vel = Math.Max(v0, pendiente * (encoderC - gradosAccel - gradosCrucero) + vMax)
+                Else
+                vel = Math.Min(v0, pendiente * (encoderC + gradosAccel + gradosCrucero) + vMax)
+            EndIf
+
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = ( - 1 * encoderB - encoderC) * 1
+        correccion = error * kp + (error - olderror) * kd
+
+        Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
+
 EndFunction
 
-Function Decel(in number v0, in number vMin, in number distanciaDecel,in number distanciaCrucero)
-  
-  startB = Motor.GetCount("B")
-  startC = Motor.GetCount("C")
+Function Decel(in number v0, in number vMin, in number distanciaDecel, in number distanciaCrucero)
 
-  signo = v0/Math.Abs(v0)
-  
-  v0 = Math.Min(90,Math.Abs(v0))*signo
-  vMin = Math.Max(8,Math.Abs(vMin))*signo 'Limitamos las potencias
-  
-  vel = 0
-  kp = 0.4
-  kd = 0.5
-  
-  error = 0
-  olderror = 0
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
 
-  gradosDecel = distanciaDecel*360/(diametro*math.pi)
-  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
-  
-  encoderB = 0
-  encoderC = 0
-  
-  While Math.Abs(encoderC) < gradosDecel + gradosCrucero
-    
-    encoderB = Motor.GetCount("B")*1 - startB
-    encoderC = Motor.GetCount("C") - startC
-    
-    #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / gradosDecel * signo
-      If signo > 0 Then
-        vel = Math.Max(vMin, pendiente * encoderC + v0)
-      Else
-        vel = Math.Min(vMin, pendiente * encoderC + v0)
-      EndIf
-    #Correción PID para mantener el robot recto
-    
-    error = (-1*encoderB - encoderC)*1
-    correccion = error*kp + (error-olderror)*kd
-    olderror = error
-    Motor.StartSync("BC",-(vel-correccion)*1,(vel+correccion)*1)
-    
-  EndWhile
-  
-  MotorBC.OffAndBrake()
-  
+    signo = v0 / Math.Abs(v0)
+
+    v0 = Math.Min(90, Math.Abs(v0)) * signo
+    vMin = Math.Max(8, Math.Abs(vMin)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    gradosDecel = distanciaDecel * 360 / (diametro * math.pi)
+    gradosCrucero = distanciaCrucero * 360 / (diametro * math.pi)
+
+    encoderB = 0
+    encoderC = 0
+
+    While Math.Abs(encoderC) < gradosDecel + gradosCrucero
+
+        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderC = Motor.GetCount("C") - startC
+
+        #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        pendiente = (vMin - v0) / gradosDecel * signo
+        If signo > 0 Then
+            vel = Math.Max(vMin, pendiente * encoderC + v0)
+            Else
+            vel = Math.Min(vMin, pendiente * encoderC + v0)
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = ( - 1 * encoderB - encoderC) * 1
+        correccion = error * kp + (error - olderror) * kd
+        olderror = error
+        Motor.StartSync("BC", - (vel - correccion) * 1, (vel + correccion) * 1)
+
+    EndWhile
+
+    MotorBC.OffAndBrake()
+
 EndFunction
 
-Function DecelF(in number v0, in number vMin, in number distanciaDecel,in number distanciaCrucero)
-  
-  startB = Motor.GetCount("B")
-  startC = Motor.GetCount("C")
+Function DecelF(in number v0, in number vMin, in number distanciaDecel, in number distanciaCrucero)
 
-  signo = v0/Math.Abs(v0)
-  
-  v0 = Math.Min(90,Math.Abs(v0))*signo
-  vMin = Math.Max(8,Math.Abs(vMin))*signo 'Limitamos las potencias
-  
-  vel = 0
-  kp = 0.4
-  kd = 0.5
-  
-  error = 0
-  olderror = 0
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
 
-  gradosDecel = distanciaDecel*360/(diametro*math.pi)
-  gradosCrucero = distanciaCrucero*360/(diametro*math.pi)
-  
-  encoderB = 0
-  encoderC = 0
-  
-  While Math.Abs(encoderC) < gradosDecel + gradosCrucero
-    
-    encoderB = Motor.GetCount("B")*1 - startB
-    encoderC = Motor.GetCount("C") - startC
-    
-    #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
-    pendiente = (vMin - v0) / gradosDecel * signo
-      If signo > 0 Then
-        vel = Math.Max(vMin, pendiente * encoderC + v0)
-      Else
-        vel = Math.Min(vMin, pendiente * encoderC + v0)
-      EndIf
-    #Correción PID para mantener el robot recto
-    
-    error = (-1*encoderB - encoderC)*1
-    correccion = error*kp + (error-olderror)*kd
-    olderror = error
-    Motor.StartSync("BC",-(vel-correccion)*1,(vel+correccion)*1)
-    
-  EndWhile
-  
-  MotorBC.Off()
-  
+    signo = v0 / Math.Abs(v0)
+
+    v0 = Math.Min(90, Math.Abs(v0)) * signo
+    vMin = Math.Max(8, Math.Abs(vMin)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    gradosDecel = distanciaDecel * 360 / (diametro * math.pi)
+    gradosCrucero = distanciaCrucero * 360 / (diametro * math.pi)
+
+    encoderB = 0
+    encoderC = 0
+
+    While Math.Abs(encoderC) < gradosDecel + gradosCrucero
+
+        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderC = Motor.GetCount("C") - startC
+
+        #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        pendiente = (vMin - v0) / gradosDecel * signo
+        If signo > 0 Then
+            vel = Math.Max(vMin, pendiente * encoderC + v0)
+            Else
+            vel = Math.Min(vMin, pendiente * encoderC + v0)
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = ( - 1 * encoderB - encoderC) * 1
+        correccion = error * kp + (error - olderror) * kd
+        olderror = error
+        Motor.StartSync("BC", - (vel - correccion) * 1, (vel + correccion) * 1)
+
+    EndWhile
+
+    MotorBC.Off()
+
 EndFunction
+

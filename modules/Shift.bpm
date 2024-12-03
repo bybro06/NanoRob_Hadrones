@@ -1,15 +1,16 @@
 Function Sh_14_31(in number velocidad, in number ajuste)
-  
-  MotorBC.Off()
-  Motor.MoveSync("BC", velocidad*-1,velocidad*0.2,ajuste,"False")
-  Motor.MoveSync("BC", velocidad*-0.2,velocidad,ajuste,"False")
-  
+
+    MotorBC.Off()
+    Motor.MoveSync("BC", velocidad *- 1, velocidad * 0.2, ajuste, "False")
+    Motor.MoveSync("BC", velocidad *- 0.2, velocidad, ajuste, "False")
+
 EndFunction
 
-Function Sh_31_14(in number velocidad,in number ajuste)
-  
-  MotorBC.Off()
-  Motor.MoveSync("BC", velocidad*-0.2,velocidad,ajuste,"False")
-  Motor.MoveSync("BC", velocidad*-1,velocidad*0.2,ajuste,"False")
-  
+Function Sh_31_14(in number velocidad, in number ajuste)
+
+    MotorBC.Off()
+    Motor.MoveSync("BC", velocidad *- 0.2, velocidad, ajuste, "False")
+    Motor.MoveSync("BC", velocidad *- 1, velocidad * 0.2, ajuste, "False")
+
 EndFunction
+
