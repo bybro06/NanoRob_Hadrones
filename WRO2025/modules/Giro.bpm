@@ -1,0 +1,284 @@
+'Giro con Motores Medianos
+
+number diametro 'Diámetro de la rueda
+number G1 'Constante de giro. grados de encoder que equivalen a 1 grado de giro de spin
+
+number negro
+number blanco
+
+'Antiguos Giros Universales
+Function Grados(in number velocidad1 , in number velocidad2 , in number grados)
+
+    signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
+
+    vMin = Math.Min(Math.Abs(velocidad1) , Math.Abs(velocidad2))
+    vMax = Math.Max(Math.Abs(velocidad1) , Math.Abs(velocidad2))
+
+    encoder = grados * G1 * ( - 2 / (signo * vMin / vMax - 1))
+
+    MotorBC.Off()
+    Program.Delay(100)
+    Motor.MoveSync("BC" , - velocidad1 , velocidad2 , encoder , "True")
+
+    velocidad1 = 0
+    velocidad2 = 0
+    grados = 0
+
+    Program.Delay(100)
+EndFunction
+
+Function GradosF(in number velocidad1 , in number velocidad2 , in number grados)
+
+    signo = (velocidad1 / velocidad2) / Math.Abs(velocidad1 / velocidad2)
+
+    vMin = Math.Min(Math.Abs(velocidad1) , Math.Abs(velocidad2))
+    vMax = Math.Max(Math.Abs(velocidad1) , Math.Abs(velocidad2))
+
+    encoder = grados * G1 * ( - 2 / (signo * vMin / vMax - 1))
+
+    MotorBC.Off()
+    Program.Delay(100)
+
+    Motor.MoveSync("BC" , - velocidad1 , velocidad2 , encoder , "False")
+
+    velocidad1 = 0
+    velocidad2 = 0
+    grados = 0
+
+    Program.Delay(100)
+EndFunction
+
+'Por encoder
+Function Encoder(in number velocidad1 , in number velocidad2 , in number distancia)
+
+    encoder = distancia / (diametro * Math.Pi) * 360
+
+    MotorBC.Off()
+    Motor.MoveSync("BC" , - velocidad1 , velocidad2 , encoder , "True")
+
+EndFunction
+
+Function EncoderF(in number velocidad1 , in number velocidad2 , in number distancia)
+
+    encoder = distancia / (diametro * Math.Pi) * 360
+
+    MotorBC.Off()
+    Motor.MoveSync("BC" , - velocidad1 , velocidad2 , encoder , "False")
+
+EndFunction
+
+'Hasta Negro en 1 sensor
+Function Negro1(in number velocidad1 , in number velocidad2 , in number sens)
+
+    lectura = 50
+    While lectura > 15
+        lectura = (Sensor.ReadPercent(sens) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+
+EndFunction
+
+Function Negro1F(in number velocidad1 , in number velocidad2 , in number sens)
+
+    lectura = 50
+    While lectura > 15
+        lectura = (Sensor.ReadPercent(sens) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+
+EndFunction
+
+'Hasta Negro en 2 sensores
+Function Negros2(in number velocidad1 , in number velocidad2 , in number sens1 , in number sens2)
+
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 > 5 Or lectura2 > 5
+        lectura1 = (Sensor.ReadPercent(sens1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sens2) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+
+EndFunction
+
+Function Negros2F(in number velocidad1 , in number velocidad2 , in number sens1 , in number sens2)
+
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 > 5 Or lectura2 > 5
+        lectura1 = (Sensor.ReadPercent(sens1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sens2) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+
+EndFunction
+
+'Hasta Blanco en 1 sensor
+Function Blanco1(in number velocidad1 , in number velocidad2 , in number sens)
+
+    lectura = 50
+    While lectura < 60
+        lectura = (Sensor.ReadPercent(sens) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+
+EndFunction
+
+Function Blanco1F(in number velocidad1 , in number velocidad2 , in number sens)
+
+    lectura = 50
+    While lectura < 60
+        lectura = (Sensor.ReadPercent(sens) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+
+EndFunction
+
+'Hasta Blanco en 2 sensores
+Function Blancos2(in number velocidad1 , in number velocidad2 , in number sens1 , in number sens2)
+
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 < 60 Or lectura2 < 60
+        lectura1 = (Sensor.ReadPercent(sens1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sens2) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+
+EndFunction
+
+Function Blancos2F(in number velocidad1 , in number velocidad2 , in number sens1 , in number sens2)
+
+    lectura1 = 50
+    lectura2 = 50
+    While lectura1 < 60 Or lectura2 < 60
+        lectura1 = (Sensor.ReadPercent(sens1) - negro) / blanco * (100 - negro) 'Normalización
+        lectura2 = (Sensor.ReadPercent(sens2) - negro) / blanco * (100 - negro) 'Normalización
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+
+EndFunction
+
+'Hasta un color (0 - 7) en 1 sensor
+Function Color1(in number velocidad1 , in number velocidad2 , in number sens , in number color)
+    mode = Sensor.GetMode(sens)
+    Sensor.SetMode(sens , 2)
+
+    While Sensor.ReadRawValue(sens , 0) < > color
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+    Sensor.SetMode(sens , mode)
+
+EndFunction
+
+Function Color1F(in number velocidad1 , in number velocidad2 , in number sens , in number color)
+    mode = Sensor.GetMode(sens)
+    Sensor.SetMode(sens , 2)
+
+    While Sensor.ReadRawValue(sens , 0) < > color
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+    Sensor.SetMode(sens , mode)
+
+EndFunction
+
+'Por tiempo
+Function Tiempo(in number velocidad1 , in number velocidad2 , in number tiempo)
+    Time.Reset3()
+
+    While Time.Get3() < tiempo
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "True")
+
+EndFunction
+
+Function TiempoF(in number velocidad1 , in number velocidad2 , in number tiempo)
+    Time.Reset3()
+
+    While Time.Get3() < tiempo
+        Motor.StartSync("BC" , - velocidad1 , velocidad2)
+    EndWhile
+
+    Motor.Stop("BC" , "False")
+
+EndFunction
+
+Function Diagonal(in number velocidad , in number distanciaX , in number distanciaY , in number anguloFinal)
+
+    ' Normalización , la distancia positiva implica un avance hacia la derecha
+    distanciaX *= - 1
+
+    ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
+    distanciaObjetivo = Math.SquareRoot(Math.Power(distanciaX , 2) + Math.Power(distanciaY , 2))
+    anguloTrayectoria = Math.ArcTan(distanciaY / distanciaX) * (180 / Math.Pi) ' Ángulo de trayectoria en grados
+
+    sentidoGiroTrayectoria = anguloTrayectoria / Math.Abs(anguloTrayectoria)
+
+    ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
+
+    Grados(velocidad *- 0.75 * sentidoGiroTrayectoria , velocidad * 0.75 * sentidoGiroTrayectoria , Math.Abs(anguloTrayectoria))
+    Encoder(velocidad , velocidad , distanciaObjetivo)
+
+    ' Al finalizar el desplazamiento , ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
+    ' Calcular el ángulo de corrección para pasar del ángulo de trayectoria al ángulo deseado
+    anguloCorreccion = anguloFinal *- 1 - anguloTrayectoria
+
+    sentidoGiroCorreccion = anguloCorreccion / Math.Abs(anguloCorreccion)
+
+    Grados(velocidad *- 0.75 * sentidoGiroCorreccion , velocidad * 0.75 * sentidoGiroCorreccion , Math.Abs(anguloCorreccion))
+
+    ' Detener los motores
+    MotorBC.OffAndBrake()
+
+EndFunction
+
+Function DiagonalF(in number velocidad , in number distanciaX , in number distanciaY , in number anguloFinal)
+    ' Normalización , la distancia positiva implica un avance hacia la derecha
+    distanciaX *= - 1
+
+    ' Calcular la distancia y el ángulo de desplazamiento en línea recta hacia la posición objetivo
+    distanciaObjetivo = Math.Math.SquareRoot(Math.Power(distanciaX , 2) + Math.Power(distanciaY , 2))
+    anguloTrayectoria = Math.ArcTan(distanciaX / distanciaY) * (180 / Math.Pi) ' Ángulo de trayectoria en grados
+
+    sentidoGiroTrayectoria = anguloTrayectoria / Math.Abs(anguloTrayectoria)
+
+    ' Realizar el movimiento en diagonal orientándose hacia el ángulo de trayectoria calculado
+
+    Grados(velocidad *- 0.75 * sentidoGiroTrayectoria , velocidad * 0.75 * sentidoGiroTrayectoria , Math.Abs(anguloTrayectoria))
+    Encoder(velocidad , velocidad , distanciaObjetivo)
+
+    ' Al finalizar el desplazamiento , ajustar la orientación para igualar el ángulo final (normalizando giro positivo en sentido horario)
+    ' Calcular el ángulo de corrección para pasar del ángulo de trayectoria al ángulo deseado
+    anguloCorreccion = anguloFinal *- 1 - anguloTrayectoria
+
+    sentidoGiroCorreccion = anguloCorreccion / Math.Abs(anguloCorreccion)
+
+    GradosF(velocidad *- 0.75 * sentidoGiroCorreccion , velocidad * 0.75 * sentidoGiroCorreccion , Math.Abs(anguloCorreccion))
+
+    ' Detener los motores
+    MotorBC.Off()
+
+EndFunction
+

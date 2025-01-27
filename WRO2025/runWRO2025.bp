@@ -1,0 +1,86 @@
+folder "prjs""WRO2025"
+
+import "modules/Siguelineas"
+import "modules/Giro"
+import "modules/Recto"
+import "modules/Shift"
+import "modules/Brazo"
+import "modules/Smart"
+import "modules/RGB"
+
+Sub Setup
+
+    Sensor.SetMode(1, 0)
+    Sensor.SetMode(2, 4)
+    Sensor.SetMode(3, 0)
+    Sensor.SetMode(4, 0)
+
+    diametro = 6.24
+
+    '965
+    Giro.G1 = 965 / 360
+
+    negro1 = 10
+    negro3 = 7
+    negro4 = 10
+
+    blanco1 = 77
+    blanco3 = 59
+    blanco4 = 77
+
+    RGB.VALUENEGRO = 4
+    RGB.VALUEBLANCO = 32
+    RGB.RWHITE = 57
+    RGB.GWHITE = 71
+    RGB.BWHITE = 73
+
+    'Auto definición de propiedades
+
+    Recto.diametro = diametro
+    Giro.diametro = diametro
+    Siguelineas.diametro = diametro
+    Smart.diametro = diametro
+
+    Siguelineas.negro1 = negro1
+    Siguelineas.negro3 = negro3
+    Siguelineas.negro4 = negro4
+
+    Siguelineas.blanco1 = blanco1
+    Siguelineas.blanco3 = blanco3
+    Siguelineas.blanco4 = blanco4
+
+    Smart.negro1 = negro1
+    Smart.negro3 = negro3
+    Smart.negro4 = negro4
+
+    Smart.blanco1 = blanco1
+    Smart.blanco3 = blanco3
+    Smart.blanco4 = blanco4
+
+    Recto.negro = (negro1 + negro3 + negro4) / 3
+    Recto.blanco = (blanco1 + blanco3 + blanco4) / 3
+
+    Giro.negro = (negro1 + negro3 + negro4) / 3
+    Giro.blanco = (blanco1 + blanco3 + blanco4) / 3
+
+EndSub
+
+Setup()
+Thread.Run=MostrarVel
+Main()
+
+Sub Main
+
+  Smart.Encoder14F(80,80)
+  Recto.Decel(80,20,15,0)
+
+EndSub
+Sub MostrarVel
+  While "true"
+    LCD.StopUpdate()
+    LCD.Clear()
+    LCD.Write(5,5,"Vel = "+MotorC.GetSpeed())
+    LCD.Update()
+    EndWhile
+EndSub
+
