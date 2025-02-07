@@ -8,8 +8,12 @@ import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
 
-Sub Setup
+'Motor A: Brazo
+'Motor D: Panel
 
+#region ProgramasInicio
+  Sub Setup
+  
     Sensor.SetMode(1, 0)
     Sensor.SetMode(2, 4)
     Sensor.SetMode(3, 0)
@@ -63,18 +67,91 @@ Sub Setup
     Giro.negro = (negro1 + negro3 + negro4) / 3
     Giro.blanco = (blanco1 + blanco3 + blanco4) / 3
 
-EndSub
+  EndSub
+
+  Sub StartArm
+    Brazo.ATimer(-10,300)
+    Brazo.DTimer(-100,1000)
+    MotorA.ResetCount()
+    MotorD.ResetCount()
+    Brazo.DEncoder(60,500)
+    Brazo.ATimer(100,1500)
+    MotorA.ResetCount()
+    MotorD.ResetCount()
+  EndSub
+
+#EndRegion
 
 Setup()
-Thread.Run=MostrarVel
-Main()
+StartArm()
+MainPrueba()
 
 Sub Main
-
-  Smart.Encoder14F(80,80)
-  Recto.Decel(80,20,15,0)
-
+  'Sale de casa
+  Recto.EncoderF(80,10)
+  Siguelineas.Encoder14(70,20)
+  
+  'Dos arcos para acercarse a puerta amarilla
+  Giro.Grados(10,40,60)
+  Giro.Grados(40,10,60)
+  s()
+  
+  'Anda hasta linea y abre puerta
+  Recto.Negro1(70,4)
+  
+  'Gira hacia cruce y toma referencia
+  Giro.Grados(40,-10,90)
+  Siguelineas.Cruce14(60)
+  
+  'Media vuelta
+  Giro.Grados(60,-60,180)
+  
+  'Anda por linea para acercarse a marking de bloque grande
+  Siguelineas.Encoder31(70,40)
+  s()
+  
+  'Se acerca a marking
+  Giro.Grados(-30,30,90)
+  Recto.Encoder(60,25)
+  
+  'Gira y lee
+  Giro.Grados(30,-30,90)
+  RGB.Detect(2,5,markingGrande)
+  RGB.Gritar(markingGrande)
+  
+  'Dos arcos para alejarse de pared
+  
+  Giro.Grados(40,10,60)
+  Giro.Grados(10,40,60)
+  
+  'Anda a markings y los lee
+  Recto.Encoder(10,10)
+  RGB.Detect(2,5,marking[0])
+  RGB.Gritar(marking[0])
+  s()
+  
+  Recto.Encoder(10,10)
+  RGB.Detect(2,5,marking[1])
+  RGB.Gritar(marking[1])
+  s()
+  
+  
 EndSub
+
+Sub MainPrueba
+  
+  Brazo.AEncoder(60,-400)
+  Program.Delay(300)
+  Brazo.AEncoder(40,-530)
+  Buttons.Wait()
+  Brazo.AEncoder(10,-350)
+  Program.End()
+  Brazo.AEncoder(15,-100)
+  Brazo.AEncoder(8,-40)
+  Program.Delay(300)
+  Brazo.AEncoder(10,-300)
+EndSub
+
 Sub MostrarVel
   While "true"
     LCD.StopUpdate()
@@ -84,3 +161,30 @@ Sub MostrarVel
     EndWhile
 EndSub
 
+Sub BrazoPosIzq
+  Brazo.DEncoder(100,-350)
+EndSub
+
+Sub BrazoPosDch
+  Brazo.DEncoder(100,430)
+EndSub
+
+Sub SoltarIzq
+  Brazo.DEncoder(100,430)
+  Brazo.DTimer(100,500)
+EndSub
+
+Function Coger()
+  Brazo.AEncoder(30,-400)
+  Program.Delay(300)
+  Brazo.AEncoder(20,-470)
+  Program.Delay(800)
+  Brazo.AEncoder(10,-100)
+  Brazo.AEncoder(8,10)
+  Program.Delay(300)
+  Brazo.AEncoder(10,-320)
+EndFunction
+
+Function s()
+  Buttons.Wait()
+EndFunction

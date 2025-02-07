@@ -228,8 +228,8 @@ Function Encoder14(in number velocidad, in number encoder)
     lectura3 = 50
     lectura4 = 50
 
-    kp = velocidad / 280
-    kd = kp * 32
+    kp = velocidad / 320
+    kd = kp * 28
 
     error = 0
     olderror = 0

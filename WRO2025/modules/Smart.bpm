@@ -302,6 +302,10 @@ Function Encoder14F(in number velocidad, in number encoder)
 
     encoder = encoder / (diametro * Math.Pi) * 360
 
+    kp = velocidad / 300
+    kd = kp * 2
+    pendiente = (velocidad - v0) / distancia
+
     startC = Motor.GetCount("C")
     encoderC = 0
 
@@ -310,10 +314,8 @@ Function Encoder14F(in number velocidad, in number encoder)
         encoderC = Motor.GetCount("C") - startC
 
         ' Aceleración y velocidad Cte
-        pendiente = (velocidad - v0) / distancia
+        
         vel = Math.Min(velocidad, pendiente * encoderC + v0)
-        kp = vel / 220
-        kd = kp * 2
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
