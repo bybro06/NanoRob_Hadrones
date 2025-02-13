@@ -642,7 +642,7 @@ Function Cruce_Externo(in number velocidad, in number reader)
 
     lectura = 50
 
-    While lectura > 10
+    While lectura > 7
 
         If reader = 3 Then
             lectura = lectura3
@@ -691,7 +691,7 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
 
     lectura = 50
 
-    While lectura > 10
+    While lectura > 7
 
         If reader = 3 Then
             lectura = lectura3

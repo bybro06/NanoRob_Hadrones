@@ -8,8 +8,8 @@ import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
 
-'Motor A: Brazo
-'Motor D: 
+'Motor A: Brazo Izq y araña (-)
+'Motor D: Brazo Dch (+)
 
 #region Entorno de Ejecución
 
@@ -33,12 +33,12 @@ Main()
     Giro.G1 = 1065 / 360
 
     negro1 = 10
-    negro3 = 8
-    negro4 = 10
+    negro3 = 9
+    negro4 = 8
 
     blanco1 = 65
-    blanco3 = 57
-    blanco4 = 71
+    blanco3 = 59
+    blanco4 = 55
 
     RGB.VALUENEGRO = 4
     RGB.VALUEBLANCO = 32
@@ -79,7 +79,7 @@ Main()
 
   Sub StartArm
   
-    Brazo.ADTimer(-50,50,250)
+    Brazo.ADTimer(50,-50,250)
   MotorA.ResetCount()
   MotorD.ResetCount()
   Speaker.Play(100,"Connect")
@@ -95,8 +95,7 @@ Sub Main
   StartArm()
   s()
   'Sale de casa
-  Recto.EncoderF(50,10)
-  Siguelineas.Encoder14(70,20)
+  Recto.Encoder(50,30)
   
   'Dos arcos para acercarse a puerta amarilla
   Giro.Grados(10,40,60)
@@ -111,10 +110,10 @@ Sub Main
   Siguelineas.Cruce14(60)
   
   'Media vuelta
-  Giro.Grados(70,-62,175)
+  Giro.Grados(70,-62,180)
   
   'Anda por linea para acercarse a marking de bloque grande
-  Siguelineas.Encoder31(40,48)
+  Siguelineas.Encoder31(40,52)
   
   'Se acerca a marking
   Giro.Grados(-30,30,90)
@@ -128,7 +127,7 @@ Sub Main
   'Dos arcos para alejarse de pared
   
   Giro.Grados(40,10,35)
-  Giro.Grados(10,40,35)
+  Giro.Grados(10,40,33)
   
   'Anda a markings y los lee
   Recto.Encoder(20,15)
@@ -144,7 +143,7 @@ Sub Main
   Giro.Grados(30,-30,90)
   
   'Se acerca para leer 3 y 4 marking
-  Recto.Encoder(30,10)
+  Recto.Encoder(30,7)
   Giro.Grados(30,-30,85)
   
   'Choca con pared y lee
@@ -161,10 +160,98 @@ Sub Main
   RGB.Detect(2,5,marking[2])
   RGB.Gritar(marking[2])
   
+  'Avanzamos a línea
+  Recto.EncoderF(70,66)
+  
+  'Doble arco atrás para tirar del rojo
+  Giro.Grados(-10,-50,70)
+  Giro.Grados(-50,-10,70)
+  
+  'Retrocede y baja araña
+  Brazo.AEncoder(20,-250)
+  
+  'Tira de la barrera, retrocede y levanta araña
+  Recto.Encoder(20,20)
+  Recto.Encoder(-20,5)
+  Brazo.AEncoder(20,-50)
+  
+  'Avanza a linea
+  Recto.Encoder(40,12)
+  Recto.Negro1(40,1)
+  
+  'Gira hacia barreras
+  Giro.Grados(-30,40,90)
+  Siguelineas.Encoder14(30,10)
+  Siguelineas.Cruce_Externo(30,3)
+  
+  'Media vuelta y coge barreras
+  Giro.Grados(-30,30,175)
+  Recto.Encoder(-10,20)
+  Recto.Encoder(10,1.5)
+  Brazo.AEncoder(20,-350)
+  Recto.Encoder(10,3)
+  
+  'Medio pivote avance y arco
+  Giro.Grados(30,0,30)
+  Recto.Encoder(20,15)
+  Giro.Grados(15,-15,75)
+  
+  'Va a línea y sigue
+  Recto.Negro1(30,1)
+  Siguelineas.Encoder14(30,35)
+  Recto.Encoder(40,12)
+  
+  'Gira y deja la barrera amarilla
+  Giro.Grados(-30,0,-45)
+  Recto.Encoder(-20,13)
+  Brazo.AEncoder(30,-50)
+  Recto.Encoder(10,6.5)
+  Brazo.AEncoder(30,-350)
+  
+  'Deja barrera roja
+  Giro.Grados(30,0,45)
+  Recto.Encoder(-30,4)
+  Giro.Grados(-15,15,124)
+  Recto.Encoder(-30,12)
+  Brazo.AEncoder(30,-50)
+  
 EndSub
 
 Sub MainPrueba
-  Siguelineas.Encoder31(50,40)
+  StartArm()
+  Siguelineas.Encoder14(30,10)
+  Siguelineas.Cruce_Externo(30,3)
+  
+  'Media vuelta y coge barreras
+  Giro.Grados(-30,30,175)
+  Recto.Encoder(-10,20)
+  Recto.Encoder(10,1.5)
+  Brazo.AEncoder(20,-350)
+  Recto.Encoder(10,3)
+  
+  'Medio pivote avance y arco
+  Giro.Grados(30,0,30)
+  Recto.Encoder(20,15)
+  Giro.Grados(15,-15,75)
+  
+  'Va a línea y sigue
+  Recto.Negro1(30,1)
+  Siguelineas.Encoder14(30,35)
+  Recto.Encoder(40,12)
+  
+  'Gira y deja la barrera amarilla
+  Giro.Grados(-30,0,-45)
+  Recto.Encoder(-20,13)
+  Brazo.AEncoder(30,-50)
+  Recto.Encoder(10,6.5)
+  Brazo.AEncoder(30,-350)
+  
+  'Deja barrera roja
+  Giro.Grados(30,0,45)
+  Recto.Encoder(-30,4)
+  Giro.Grados(-15,15,124)
+  Recto.Encoder(-30,12)
+  Brazo.AEncoder(30,-50)
   
 EndSub
 
