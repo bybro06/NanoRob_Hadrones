@@ -9,9 +9,17 @@ import "modules/Smart"
 import "modules/RGB"
 
 'Motor A: Brazo
-'Motor D: Panel
+'Motor D: 
 
-#region ProgramasInicio
+#region Entorno de Ejecución
+
+Setup()
+Main()
+
+#EndRegion
+
+#region Programas de Inicio
+
   Sub Setup
   
     Sensor.SetMode(1, 0)
@@ -22,15 +30,15 @@ import "modules/RGB"
     diametro = 6.24
 
     '965
-    Giro.G1 = 965 / 360
+    Giro.G1 = 1065 / 360
 
     negro1 = 10
-    negro3 = 7
+    negro3 = 8
     negro4 = 10
 
-    blanco1 = 77
-    blanco3 = 59
-    blanco4 = 77
+    blanco1 = 65
+    blanco3 = 57
+    blanco4 = 71
 
     RGB.VALUENEGRO = 4
     RGB.VALUEBLANCO = 32
@@ -70,49 +78,47 @@ import "modules/RGB"
   EndSub
 
   Sub StartArm
-    Brazo.ATimer(-10,300)
-    Brazo.DTimer(-100,1000)
-    MotorA.ResetCount()
-    MotorD.ResetCount()
-    Brazo.DEncoder(60,500)
-    Brazo.ATimer(100,1500)
-    MotorA.ResetCount()
-    MotorD.ResetCount()
+  
+    Brazo.ADTimer(-50,50,250)
+  MotorA.ResetCount()
+  MotorD.ResetCount()
+  Speaker.Play(100,"Connect")
+  Speaker.Wait()
   EndSub
 
 #EndRegion
 
-Setup()
-StartArm()
-MainPrueba()
+#region Subrutinas de Ejecución
 
 Sub Main
+  
+  StartArm()
+  s()
   'Sale de casa
-  Recto.EncoderF(80,10)
+  Recto.EncoderF(50,10)
   Siguelineas.Encoder14(70,20)
   
   'Dos arcos para acercarse a puerta amarilla
   Giro.Grados(10,40,60)
   Giro.Grados(40,10,60)
-  s()
   
   'Anda hasta linea y abre puerta
+  Recto.EncoderF(50,40)
   Recto.Negro1(70,4)
   
   'Gira hacia cruce y toma referencia
-  Giro.Grados(40,-10,90)
+  Giro.Grados(40,-20,90)
   Siguelineas.Cruce14(60)
   
   'Media vuelta
-  Giro.Grados(60,-60,180)
+  Giro.Grados(70,-62,175)
   
   'Anda por linea para acercarse a marking de bloque grande
-  Siguelineas.Encoder31(70,40)
-  s()
+  Siguelineas.Encoder31(40,48)
   
   'Se acerca a marking
   Giro.Grados(-30,30,90)
-  Recto.Encoder(60,25)
+  Recto.Encoder(60,14)
   
   'Gira y lee
   Giro.Grados(30,-30,90)
@@ -121,36 +127,48 @@ Sub Main
   
   'Dos arcos para alejarse de pared
   
-  Giro.Grados(40,10,60)
-  Giro.Grados(10,40,60)
+  Giro.Grados(40,10,35)
+  Giro.Grados(10,40,35)
   
   'Anda a markings y los lee
-  Recto.Encoder(10,10)
+  Recto.Encoder(20,15)
   RGB.Detect(2,5,marking[0])
   RGB.Gritar(marking[0])
-  s()
   
-  Recto.Encoder(10,10)
+  Recto.Tiempo(20,700)
   RGB.Detect(2,5,marking[1])
   RGB.Gritar(marking[1])
-  s()
   
+  'Echa atrás y gira
+  Recto.Encoder(-30,35)
+  Giro.Grados(30,-30,90)
+  
+  'Se acerca para leer 3 y 4 marking
+  Recto.Encoder(30,10)
+  Giro.Grados(30,-30,85)
+  
+  'Choca con pared y lee
+  Recto.Encoder(-70,30)
+  Recto.Tiempo(-20,500)
+  
+  'Lee 3 marking
+  Recto.Encoder(20,4)
+  RGB.Detect(2,5,marking[2])
+  RGB.Gritar(marking[2])
+  
+  'Lee 4 marking
+  Recto.Encoder(20,8)
+  RGB.Detect(2,5,marking[2])
+  RGB.Gritar(marking[2])
   
 EndSub
 
 Sub MainPrueba
+  Siguelineas.Encoder31(50,40)
   
-  Brazo.AEncoder(60,-400)
-  Program.Delay(300)
-  Brazo.AEncoder(40,-530)
-  Buttons.Wait()
-  Brazo.AEncoder(10,-350)
-  Program.End()
-  Brazo.AEncoder(15,-100)
-  Brazo.AEncoder(8,-40)
-  Program.Delay(300)
-  Brazo.AEncoder(10,-300)
 EndSub
+
+#endregion
 
 Sub MostrarVel
   While "true"
@@ -159,19 +177,6 @@ Sub MostrarVel
     LCD.Write(5,5,"Vel = "+MotorC.GetSpeed())
     LCD.Update()
     EndWhile
-EndSub
-
-Sub BrazoPosIzq
-  Brazo.DEncoder(100,-350)
-EndSub
-
-Sub BrazoPosDch
-  Brazo.DEncoder(100,430)
-EndSub
-
-Sub SoltarIzq
-  Brazo.DEncoder(100,430)
-  Brazo.DTimer(100,500)
 EndSub
 
 Function Coger()
@@ -186,5 +191,6 @@ Function Coger()
 EndFunction
 
 Function s()
+  Buttons.Flush()
   Buttons.Wait()
 EndFunction

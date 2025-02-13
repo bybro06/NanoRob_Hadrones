@@ -1,7 +1,8 @@
 FOLDER_KEY PRJS
 FOLDER_NAME WRO2025
 IMAGE_LIST 0
-SOUND_LIST 8
+SOUND_LIST 9
+SOUND ; Connect.rsf ; WRO2025/Media/ ; WRO2025/Media/Connect.rsf
 SOUND ; Zero.rsf ; WRO2025/Media/ ; WRO2025/Media/Zero.rsf
 SOUND ; Black.rsf ; WRO2025/Media/ ; WRO2025/Media/Black.rsf
 SOUND ; BLUE.rsf ; WRO2025/Media/ ; WRO2025/Media/BLUE.rsf
