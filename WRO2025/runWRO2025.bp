@@ -14,7 +14,7 @@ import "modules/RGB"
 #region Entorno de Ejecución
 
 Setup()
-Main()
+MainPrueba()
 
 #EndRegion
 
@@ -91,9 +91,10 @@ Main()
 #region Subrutinas de Ejecución
 
 Sub Main
-  
+  GritarVoltaje()
   StartArm()
   s()
+  Program.Delay(300)
   'Sale de casa
   Recto.Encoder(50,30)
   
@@ -168,7 +169,7 @@ Sub Main
   Giro.Grados(-50,-10,70)
   
   'Retrocede y baja araña
-  Brazo.AEncoder(20,-250)
+  Brazo.AEncoder(20,-300)
   
   'Tira de la barrera, retrocede y levanta araña
   Recto.Encoder(20,20)
@@ -176,19 +177,20 @@ Sub Main
   Brazo.AEncoder(20,-50)
   
   'Avanza a linea
-  Recto.Encoder(40,12)
+  Recto.Encoder(40,14)
   Recto.Negro1(40,1)
   
   'Gira hacia barreras
   Giro.Grados(-30,40,90)
   Siguelineas.Encoder14(30,10)
-  Siguelineas.Cruce_Externo(30,3)
+  Siguelineas.Cruce_Externo(25,3)
   
   'Media vuelta y coge barreras
-  Giro.Grados(-30,30,175)
+  Giro.Grados(-30,30,180)
   Recto.Encoder(-10,20)
   Recto.Encoder(10,1.5)
-  Brazo.AEncoder(20,-350)
+  Brazo.AEncoder(20,-370)
+  Program.Delay(400)
   Recto.Encoder(10,3)
   
   'Medio pivote avance y arco
@@ -199,14 +201,15 @@ Sub Main
   'Va a línea y sigue
   Recto.Negro1(30,1)
   Siguelineas.Encoder14(30,35)
-  Recto.Encoder(40,12)
+  Recto.Encoder(40,14)
   
   'Gira y deja la barrera amarilla
   Giro.Grados(-30,0,-45)
   Recto.Encoder(-20,13)
   Brazo.AEncoder(30,-50)
   Recto.Encoder(10,6.5)
-  Brazo.AEncoder(30,-350)
+  Brazo.AEncoder(20,-370)
+  Program.Delay(400)
   
   'Deja barrera roja
   Giro.Grados(30,0,45)
@@ -214,44 +217,92 @@ Sub Main
   Giro.Grados(-15,15,124)
   Recto.Encoder(-30,12)
   Brazo.AEncoder(30,-50)
+  
+  'Vuelve al pasillo central
+  Giro.Grados(-20,20,10)
+  Giro.Encoder(60,70,70)
+  Giro.Grados(30,-30,65)
+  
+  'Coge referencia en el cruce y siguelineas hasta azul
+  Siguelineas.Cruce_Externo(40,4)
+  Siguelineas.Encoder31(80,90)
+  Siguelineas.Color31(30,2)
+  
+  If markingGrande = 2 Then
+    'Anda alante y coge bloque
+    Recto.Encoder(30,16)
+    Giro.Grados(-20,20,90)
+    Recto.Encoder(-10,8)
+    Brazo.AEncoder(40,-380)
+    
+  EndIf
   
 EndSub
 
 Sub MainPrueba
   StartArm()
-  Siguelineas.Encoder14(30,10)
-  Siguelineas.Cruce_Externo(30,3)
+  markingGrande = 5
+  'Coge referencia en el cruce y siguelineas hasta azul
+  Siguelineas.Cruce_ExternoF(40,4)
+  Siguelineas.Encoder31F(80,50)
   
-  'Media vuelta y coge barreras
-  Giro.Grados(-30,30,175)
-  Recto.Encoder(-10,20)
-  Recto.Encoder(10,1.5)
-  Brazo.AEncoder(20,-350)
-  Recto.Encoder(10,3)
-  
-  'Medio pivote avance y arco
-  Giro.Grados(30,0,30)
-  Recto.Encoder(20,15)
-  Giro.Grados(15,-15,75)
-  
-  'Va a línea y sigue
-  Recto.Negro1(30,1)
-  Siguelineas.Encoder14(30,35)
-  Recto.Encoder(40,12)
-  
-  'Gira y deja la barrera amarilla
-  Giro.Grados(-30,0,-45)
-  Recto.Encoder(-20,13)
-  Brazo.AEncoder(30,-50)
-  Recto.Encoder(10,6.5)
-  Brazo.AEncoder(30,-350)
-  
-  'Deja barrera roja
-  Giro.Grados(30,0,45)
-  Recto.Encoder(-30,4)
-  Giro.Grados(-15,15,124)
-  Recto.Encoder(-30,12)
-  Brazo.AEncoder(30,-50)
+  If markingGrande = 2 Then
+    Siguelineas.Encoder31F(80,40)
+    Siguelineas.Encoder31(30,9)
+    'Anda alante y coge bloque
+    Recto.Encoder(30,16)
+    Giro.Grados(-20,20,90)
+    Recto.Encoder(-10,8)
+    Brazo.AEncoder(40,-380)
+    
+    'Gira con arco y deja bloque
+    Giro.Grados(-20,-40,90)
+    Recto.AccelDecelF(-30,-80,10,1,15)
+    Recto.Encoder(-10,5)
+    Recto.Encoder(10,2)
+    Brazo.AEncoder(40,-50)
+    
+  ElseIf markingGrande = 5 Then
+    
+    Siguelineas.Encoder31(30,10)
+    
+    Giro.Grados(30,-30,90)
+    Recto.Encoder(40,25)
+    Giro.Grados(30,-30,88)
+    
+    Recto.EncoderF(-60,27)
+    Recto.Encoder(-20,10)
+    Brazo.AEncoder(40,-380)
+    
+    Giro.Grados(-5,-60,182)
+    Recto.EncoderF(-80,37)
+    Recto.Encoder(-10,6)
+    Recto.Encoder(10,2)
+    Brazo.AEncoder(40,-60)
+    
+  ElseIf markingGrande = 4 Then
+    Siguelineas.Encoder31F(80,34.5)
+    Siguelineas.Encoder31(30,9)
+    
+    Giro.Grados(30,-30,90)
+    Recto.AccelDecel(30,80,10,30.5,10)
+    Giro.Grados(-30,30,86)
+    Recto.EncoderF(20,5)
+    Siguelineas.Cruce_Externo(20,4)
+    Recto.Encoder(-10,1.5)
+    Giro.Grados(15,-30,87)
+    Recto.Encoder(-10,5.5)
+    Brazo.AEncoder(40,-380)
+    Recto.Encoder(10,0.5)
+    
+    Program.Delay(100)
+    
+    Giro.Grados(-30,30,87)
+    Recto.Encoder(-80,54)
+    Recto.Encoder(-20,7)
+    Brazo.AEncoder(40,-50)
+    
+  EndIf
   
 EndSub
 
@@ -265,6 +316,43 @@ Sub MostrarVel
     LCD.Update()
     EndWhile
 EndSub
+
+Function GritarVoltaje()
+
+  voltaje = EV3.BatteryVoltage
+  GritarNumero(Math.Floor(voltaje))
+  GritarNumero(Math.Floor(voltaje * 10) - Math.Floor(voltaje) * 10)
+  GritarNumero(Math.Floor(voltaje * 100) - Math.Floor(voltaje * 10) * 10)
+
+EndFunction
+
+Function GritarNumero(in number numero)
+    If numero = 0 Then
+        Speaker.Play(100, "ZERO")
+        Elseif numero = 1 Then
+        Speaker.Play(100, "One")
+        Elseif numero = 2 Then
+        Speaker.Play(100, "Two")
+        Elseif numero = 3 Then
+        Speaker.Play(100, "Three")
+        Elseif numero = 4 Then
+        Speaker.Play(100, "Four")
+        Elseif numero = 5 Then
+        Speaker.Play(100, "Five")
+        Elseif numero = 6 Then
+        Speaker.Play(100, "Six")
+        Elseif numero = 7 Then
+        Speaker.Play(100, "Seven")
+        Elseif numero = 8 Then
+        Speaker.Play(100, "Eight")
+        Elseif numero = 9 Then
+        Speaker.Play(100, "Nine")
+        Elseif numero = 10 Then
+        Speaker.Play(100, "Ten")
+    EndIf
+
+    Speaker.Wait()
+EndFunction
 
 Function Coger()
   Brazo.AEncoder(30,-400)
