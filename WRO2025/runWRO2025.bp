@@ -14,7 +14,9 @@ import "modules/RGB"
 #region Entorno de Ejecución
 
 Setup()
-Main()
+StartArm()
+BajarAmbos()
+'MainPrueba()
 
 #EndRegion
 
@@ -79,7 +81,7 @@ Main()
 
   Sub StartArm
   
-    Brazo.ADTimer(30,-30,250)
+    Brazo.ADTimer(35,-35,500)
     MotorA.ResetCount()
     MotorD.ResetCount()
     Speaker.Play(100,"Connect")
@@ -293,7 +295,8 @@ Sub MainPrueba
   StartArm()
   Speaker.Play(100,"Two")
   s()
-  markingGrande = 5
+  markingGrande = 2
+  
   'Coge referencia en el cruce y siguelineas hasta azul
   Siguelineas.Cruce_ExternoF(40,4)
   Siguelineas.Encoder31F(80,50)
@@ -308,29 +311,39 @@ Sub MainPrueba
     BajarArana()
     
     'Gira con arco y deja bloque
-    Giro.Grados(-20,-40,90)
-    Recto.AccelDecelF(-30,-80,10,1,15)
-    Recto.Encoder(-10,5)
+    Giro.Grados(-18,-40,91)
+    Recto.Encoder(-80,26)
+    Recto.Encoder(-10,6)
     Recto.Encoder(10,2)
-    Brazo.AEncoder(40,-50)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,17,25)
+    Giro.Encoder(17,30,25)
+    
+    Siguelineas.Cruce_Externo(30,4)
     
   ElseIf markingGrande = 5 Then
     
     Siguelineas.Encoder31(30,10)
     
     Giro.Grados(30,-30,90)
-    Recto.Encoder(40,25)
+    Recto.Encoder(40,26)
     Giro.Grados(30,-30,88)
     
     Recto.EncoderF(-60,27)
     Recto.Encoder(-20,10)
     BajarArana()
     
-    Giro.Grados(-5,-60,182)
-    Recto.EncoderF(-80,37)
+    Giro.Grados(0,-60,182)
+    Recto.EncoderF(-80,39)
     Recto.Encoder(-10,6)
     Recto.Encoder(10,2)
-    Brazo.AEncoder(40,-60)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,19,20)
+    Giro.Encoder(19,30,20)
+    
+    Siguelineas.Cruce_Externo(30,4)
     
   ElseIf markingGrande = 4 Then
     Siguelineas.Encoder31F(80,34.5)
@@ -341,10 +354,11 @@ Sub MainPrueba
     Giro.Grados(-30,30,86)
     Recto.EncoderF(20,5)
     Siguelineas.Cruce_Externo(20,4)
-    Recto.Encoder(-10,1.5)
+    Recto.Encoder(-10,0.5)
     Giro.Grados(15,-30,87)
     Recto.Encoder(-10,5.5)
     BajarArana()
+    
     Recto.Encoder(10,0.5)
     
     Program.Delay(100)
@@ -352,9 +366,59 @@ Sub MainPrueba
     Giro.Grados(-30,30,87)
     Recto.Encoder(-80,54)
     Recto.Encoder(-20,7)
-    Brazo.AEncoder(40,-50)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,19,20)
+    Giro.Encoder(19,30,20)
+    
+    Siguelineas.Cruce_Externo(30,4)
+    
+  ElseIf markingGrande = 3 Then
+    
+    Siguelineas.Encoder31F(80,34.5)
+    Siguelineas.Encoder31(30,9)
+    
+    Giro.Grados(30,-30,90)
+    Recto.AccelDecel(30,80,10,30.5,10)
+    Giro.Grados(-30,30,86)
+    Recto.EncoderF(20,5)
+    Siguelineas.Cruce_Externo(20,4)
+    Recto.Encoder(-10,0.5)
+    Giro.Grados(15,-30,90)
+    Recto.Encoder(-10,5.5)
+    BajarArana()
+    Brazo.AEncoder(30,-180)
+    Recto.Encoder(10,0.5)
+    
+    Program.Delay(100)
+    
+    Giro.Grados(30,-10,87)
+    Recto.EncoderF(80,55)
+    Recto.Encoder(20,4)
+    
+    Giro.Grados(0,30,90)
+    Giro.Encoder(30,20,9)
+    Giro.Encoder(20,30,11)
+    
+    Recto.Encoder(-20,17)
+    Giro.Grados(-30,30,9)
+    
+    Brazo.AEncoder(30,0)
+    Recto.Encoder(10,3)
+    Giro.Grados(-10,30,81)
+    
+    
+    Giro.Encoder(21,30,30)
+    Giro.Encoder(30,21,30)
+    
+    Siguelineas.Cruce_Externo(30,4)
     
   EndIf
+  
+  Giro.Grados(40,-15,90)
+  Siguelineas.Encoder31(15,12)
+  
+  Recto.Encoder(-20,12)
   
 EndSub
 
@@ -417,8 +481,21 @@ Function Coger()
   Brazo.AEncoder(10,-320)
 EndFunction
 
+Sub BajarIzq
+  Brazo.AEncoder(20,-370)
+EndSub
+
+Sub BajarDch
+  Brazo.DEncoder(20,370)
+EndSub
+
 Function BajarArana()
   Brazo.AEncoder(20,-370)
+EndFunction
+
+Function BajarAmbos()
+  Thread.Run = BajarIzq
+  BajarDch()
 EndFunction
 
 Function s()
