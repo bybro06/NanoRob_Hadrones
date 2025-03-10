@@ -104,7 +104,7 @@ Function Blanco14(in number velocidad)
     u = 0
     sentido = velocidad / Math.Abs(velocidad)
 
-    While lectura1 < 90 Or lectura4 < 90
+    While lectura1 < 40 Or lectura4 < 40
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
@@ -134,7 +134,7 @@ Function Blanco14F(in number velocidad)
     u = 0
     sentido = velocidad / Math.Abs(velocidad)
 
-    While lectura1 < 90 Or lectura4 < 90
+    While lectura1 < 70 Or lectura4 < 70
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
@@ -399,7 +399,7 @@ Function Blanco31(in number velocidad)
     u = 0
     sentido = velocidad / Math.Abs(velocidad)
 
-    While lectura3 < 90 Or lectura1 < 90
+    While lectura3 < 70 Or lectura1 < 70
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
@@ -429,7 +429,7 @@ Function Blanco31F(in number velocidad)
     u = 0
     sentido = velocidad / Math.Abs(velocidad)
 
-    While lectura3 < 90 Or lectura1 < 90
+    While lectura3 < 70 Or lectura1 < 70
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura3 = (Sensor.ReadPercent(3) - negro3) / blanco3 * (100 - negro3) 'Normalización
