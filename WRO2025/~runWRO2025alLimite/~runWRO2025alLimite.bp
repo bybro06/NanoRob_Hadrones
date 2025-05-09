@@ -140,8 +140,8 @@ Sub f_mainprueba_0
 f_startarm_0 ()
 Speaker.Play ( 100 , "WRO2025/Media/Two" )
 f_s_0 ()
-gv_marking [ 0 ] = 2
-gv_marking [ 1 ] = 4
+gv_marking [ 0 ] = 4
+gv_marking [ 1 ] = 2
 lv_velocidad_22 = 30
 lv_reader_22 = 4
 m_siguelineas_cruce_externo_2 ()

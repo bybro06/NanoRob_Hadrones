@@ -1,0 +1,604 @@
+folder "prjs""WRO2025"
+
+import "modules/Siguelineas"
+import "modules/Giro"
+import "modules/Recto"
+import "modules/Shift"
+import "modules/Brazo"
+import "modules/Smart"
+import "modules/RGB"
+
+'Motor A: Subir brazo (+)
+'Motor D: Abrir brazo (+)
+
+'Disposición de tornillos
+'
+'   1\       |2
+'   0|       \3
+'
+
+#region Entorno de Ejecución
+
+Setup()
+Main()
+
+#EndRegion
+
+#region Programas de Inicio
+
+  Sub Setup
+  
+    Sensor.SetMode(1, 0)
+    Sensor.SetMode(2, 4)
+    Sensor.SetMode(3, 0)
+    Sensor.SetMode(4, 0)
+
+    diametro = 6.24
+
+    '965
+    Giro.G1 = 965 / 360
+
+    negro1 = 10
+    negro3 = 9
+    negro4 = 8
+
+    blanco1 = 65
+    blanco3 = 59
+    blanco4 = 55
+
+    RGB.VALUENEGRO = 4
+    RGB.VALUEBLANCO = 32
+    RGB.RWHITE = 57
+    RGB.GWHITE = 71
+    RGB.BWHITE = 73
+
+    'Auto definición de propiedades
+
+    Recto.diametro = diametro
+    Giro.diametro = diametro
+    Siguelineas.diametro = diametro
+    Smart.diametro = diametro
+
+    Siguelineas.negro1 = negro1
+    Siguelineas.negro3 = negro3
+    Siguelineas.negro4 = negro4
+
+    Siguelineas.blanco1 = blanco1
+    Siguelineas.blanco3 = blanco3
+    Siguelineas.blanco4 = blanco4
+
+    Smart.negro1 = negro1
+    Smart.negro3 = negro3
+    Smart.negro4 = negro4
+
+    Smart.blanco1 = blanco1
+    Smart.blanco3 = blanco3
+    Smart.blanco4 = blanco4
+
+    Recto.negro = (negro1 + negro3 + negro4) / 3
+    Recto.blanco = (blanco1 + blanco3 + blanco4) / 3
+
+    Giro.negro = (negro1 + negro3 + negro4) / 3
+    Giro.blanco = (blanco1 + blanco3 + blanco4) / 3
+
+  EndSub
+
+  Sub StartArm
+  
+    Brazo.ATimer(-65,1000)
+    Brazo.DTimer(-35,1200)
+    MotorA.ResetCount()
+    MotorD.ResetCount()
+    Program.Delay(100)
+    Brazo.AEncoder(35,150)
+    Brazo.DEncoder(35,250)
+    MotorA.ResetCount()
+    MotorD.ResetCount()
+    Speaker.Play(100,"Connect")
+    Speaker.Wait()
+  EndSub
+
+#EndRegion
+
+#region Subrutinas de Ejecución
+
+Sub Main
+  GritarVoltaje()
+  StartArm()
+  Speaker.Play(100,"One")
+  s()
+  Program.Delay(150)
+  'Sale de casa
+  Recto.EncoderF(50,5)
+  Siguelineas.Encoder14(50,27)
+  
+  'Dos arcos para acercarse a puerta amarilla
+  Giro.Grados(10,45,60)
+  Recto.Encoder(10,1)
+  Giro.Grados(40,10,60)
+  
+  'Anda hasta linea y abre puerta
+  Recto.EncoderF(50,40)
+  Recto.Negro1(50,4)
+  
+  'Gira hacia cruce y toma referencia
+  Giro.Grados(40,-20,90)
+  Siguelineas.Encoder14(50,5)
+  Siguelineas.Cruce14(60)
+  
+  'Media vuelta
+  Giro.Grados(70,-62,180)
+  
+  'Anda por linea para acercarse a marking de bloque grande
+  Siguelineas.Encoder31(40,54)
+  
+  'Se acerca a marking
+  Giro.Grados(-30,30,90)
+  Recto.Encoder(60,12.7)
+  
+  'Gira y lee
+  Giro.Grados(20,-20,98)
+  Program.Delay(100)
+  RGB.Detect(2,5,markingGrande)
+  RGB.Gritar(markingGrande)
+  
+  marking[1] = 0
+  'Dos arcos para alejarse de pared
+  
+  Giro.Grados(40,10,35)
+  Giro.Grados(10,40,35)
+  
+  'Anda a markings y los lee
+  Recto.Encoder(20,18)
+  RGB.Detect(2,5,marking[0])
+  RGB.Gritar(marking[0])
+  
+  'Echa atrás y gira
+  Recto.Encoder(-30,5)
+  Giro.Grados(30,-30,90)
+  
+  'Se acerca para leer 3 y 4 marking
+  Recto.Encoder(30,7)
+  Giro.Grados(30,-30,85)
+  
+  'Choca con pared y lee
+  Recto.Encoder(-70,10)
+  Recto.Tiempo(-20,500)
+  
+  'Lee 3 marking
+  Recto.Encoder(20,4)
+  RGB.Detect(2,5,marking[2])
+  RGB.Gritar(marking[2])
+  
+  'Lee 4 marking
+  Recto.Encoder(20,8)
+  RGB.Detect(2,5,marking[3])
+  RGB.Gritar(marking[3])
+  
+  marking[1] = 14 - (marking[0] + marking[2] + marking[3])
+  
+  'Avanzamos a línea
+  Recto.EncoderF(70,66)
+  
+  'Doble arco atrás para tirar del rojo
+  Giro.Grados(-10,-50,74)
+  Giro.Grados(-50,-10,74)
+  Recto.Encoder(-30,10)
+  
+  'Retrocede y baja araña
+  BajarArana()
+  Program.Delay(200)
+  
+  'Tira de la barrera, retrocede y levanta araña
+  Recto.EncoderF(30,18)
+  Recto.Tiempo(10,500)
+  Brazo.AEncoder(20,300)
+  Recto.Encoder(-20,5)
+  Brazo.AEncoder(20,0)
+  
+  'Avanza a linea
+  Recto.Encoder(40,18)
+  Recto.Negro1(40,1)
+  
+  'Gira hacia barreras
+  Giro.Grados(-25,40,90)
+  Siguelineas.Encoder14(30,10)
+  Siguelineas.Cruce_Externo(25,3)
+  
+  'Media vuelta y coge barreras
+  Giro.Grados(-30,30,177)
+  Recto.Encoder(-10,20)
+  Recto.Encoder(10,3.5)
+  BajarArana()
+  Program.Delay(400)
+  Recto.Encoder(10,3)
+  
+  'Medio pivote avance y arco
+  Giro.Grados(20,4,88)
+
+  Siguelineas.Encoder14(20,30)
+  Recto.Encoder(40,26)
+  
+  'Gira y deja la barrera amarilla
+  Giro.Grados(-30,0,-46)
+  Recto.Encoder(-20,12)
+  Brazo.AEncoder(30,-50)
+  Recto.Encoder(10,5.5)
+  BajarArana()
+  Program.Delay(400)
+  
+  'Deja barrera roja
+  Giro.Grados(30,0,45)
+  Recto.Encoder(-30,3)
+  Giro.Grados(-15,15,129)
+  Recto.Encoder(-30,8)
+  Brazo.AEncoder(30,-50)
+  
+  'Vuelve al pasillo central
+  Giro.Grados(-20,20,10)
+  Giro.Encoder(60,70,74.75)
+  Giro.Grados(30,-30,76.5)
+  
+  'Coge referencia en el cruce y siguelineas hasta azul
+  Siguelineas.Encoder31F(50,7)
+  Siguelineas.Cruce_ExternoF(40,4)
+  Siguelineas.Encoder31F(80,50)
+  
+  If markingGrande = 5 Then
+    
+    Siguelineas.Encoder31(30,10)
+    
+    Giro.Grados(30,-30,90)
+    Recto.Encoder(40,26)
+    Giro.Grados(30,-30,88)
+    
+    Recto.EncoderF(-60,27)
+    Recto.Encoder(-20,10)
+    BajarArana()
+    
+    Giro.Grados(0,-60,182)
+    Recto.EncoderF(-80,39)
+    Recto.Encoder(-10,6)
+    Recto.Encoder(10,2)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,19,20)
+    Giro.Encoder(19,30,20)
+    
+    Siguelineas.Encoder31F(30,5)
+    Siguelineas.Cruce_Externo(30,4)
+    
+  ElseIf markingGrande = 4 Then
+    Siguelineas.Encoder31F(80,34.5)
+    Siguelineas.Encoder31(30,9)
+    
+    Giro.Grados(30,-30,90)
+    Recto.AccelDecel(30,80,10,30.5,10)
+    Giro.Grados(-30,30,86)
+    Recto.EncoderF(20,5)
+    Siguelineas.Cruce_Externo(20,4)
+    Recto.Encoder(-10,0.5)
+    Giro.Grados(15,-30,87)
+    Recto.Encoder(-10,5.5)
+    BajarArana()
+    
+    Recto.Encoder(10,0.5)
+    
+    Program.Delay(100)
+    
+    Giro.Grados(-30,30,87)
+    Recto.Encoder(-80,54)
+    Recto.Encoder(-20,7)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,19,20)
+    Giro.Encoder(19,30,20)
+    
+    Siguelineas.Encoder31F(30,5)
+    Siguelineas.Cruce_Externo(30,4)
+    
+  ElseIf markingGrande = 3 Then
+    
+    Siguelineas.Encoder31F(80,34.5)
+    Siguelineas.Encoder31(30,9)
+    
+    Giro.Grados(30,-30,90)
+    Recto.AccelDecel(30,80,10,30.5,10)
+    Giro.Grados(-30,30,86)
+    Recto.EncoderF(20,5)
+    Siguelineas.Cruce_Externo(20,4)
+    Recto.Encoder(-10,0.5)
+    Giro.Grados(15,-30,90)
+    Recto.Encoder(-10,5.5)
+    BajarArana()
+    Brazo.AEncoder(30,-180)
+    Recto.Encoder(10,0.5)
+    
+    Program.Delay(100)
+    
+    Giro.Grados(30,-10,87)
+    Recto.EncoderF(80,55)
+    Recto.Encoder(20,4)
+    
+    Giro.Grados(0,30,90)
+    Giro.Encoder(30,20,9)
+    Giro.Encoder(20,30,11)
+    
+    Recto.Encoder(-20,17)
+    Giro.Grados(-30,30,9)
+    
+    Brazo.AEncoder(30,0)
+    Recto.Encoder(10,3)
+    Giro.Grados(-10,30,81)
+    
+    
+    Giro.Encoder(21,30,30)
+    Giro.Encoder(30,21,30)
+    
+    Siguelineas.Encoder31F(30,5)
+    Siguelineas.Cruce_Externo(30,4)
+    
+  Else
+    
+    Siguelineas.Encoder31F(80,40)
+    Siguelineas.Encoder31(30,9)
+    'Anda alante y coge bloque
+    Recto.Encoder(30,16)
+    Giro.Grados(-20,20,90)
+    Recto.Encoder(-10,8)
+    BajarArana()
+    
+    'Gira con arco y deja bloque
+    Giro.Grados(-19,-40,91)
+    Recto.Encoder(-80,29)
+    Recto.Encoder(-10,6)
+    Recto.Encoder(10,2)
+    Brazo.AEncoder(40,0)
+    
+    Giro.Encoder(30,17,25)
+    Giro.Encoder(17,30,25)
+    
+    Siguelineas.Encoder14(30,15)
+    Siguelineas.Cruce_Externo(30,4)
+  EndIf
+  
+  Recto.Encoder(-10,3)
+  Giro.Grados(40,-13,90)
+  
+  bloquesBrazo[0] = 0
+  bloquesBrazo[1] = 0
+  bloquesBrazo[2] = 0
+  bloquesBrazo[3] = 0
+  
+  'PRIMER CASO: PAREJA AZUL-AMARILLO / ROJO-VERDE
+  If(marking[0]+marking[1]=9) or (marking[2]+marking[3]=9) then
+      'SEGUNDO CASO: AMARILLO Y ROJO
+      
+      If(marking[0]=4 Or marking[3]=4) then
+      'COGER AMARILLO Y DESPUÉS ROJO
+      bloquesBrazo[3] = 4
+      bloquesBrazo[2] = 5
+      Else
+      'RECOLOCAMOS BLOQUES PARA PILLAR ROJO Y LUEGO AMARILLO
+      bloquesBrazo[3] = 5
+      bloquesBrazo[2] = 4
+      EndIf
+      
+      If(marking[3]=3 Or marking[0]=3) then
+      'RECOLOCAMOS BLOQUES PARA COGER VERDE Y DESPUÉS AZUL
+      bloquesBrazo[1] = 3
+      bloquesBrazo[0] = 2
+      Else
+      'COGER AZUL Y DESPUÉS VERDE
+      bloquesBrazo[1] = 2
+      bloquesBrazo[0] = 3
+    EndIf
+    
+  Else
+      'PRIMER CASO: AMARILLO Y AZUL EN INICIO
+      
+      If(marking[0]=2 Or marking[3]=2) then
+      'COGER AZUL Y DESPUÉS AMARILLO
+      bloquesBrazo[3] = 2
+      bloquesBrazo[2] = 4
+      Else
+      'COGER AMARILLO Y DESPUÉS AZUL
+      bloquesBrazo[3] = 4
+      bloquesBrazo[2] = 2
+      EndIf
+      
+      If(marking[3]=3 Or marking[0]=3) then
+      'COGER VERDE Y DESPUÉS ROJO
+      bloquesBrazo[1] = 3
+      bloquesBrazo[0] = 5
+      Else
+      'COGER ROJO Y DESPUÉS VERDE
+      bloquesBrazo[1] = 5
+      bloquesBrazo[0] = 3
+    EndIf
+    
+  EndIf
+  
+  If(bloquesBrazo[0]=marking[1]) Then
+    'Se va lejos y soltamos 2
+  ElseIf(bloquesBrazo[0]=marking[2]) Then
+    'Se va lejos
+  Else
+    'C peta
+  EndIf
+  
+EndSub
+
+Sub MainPrueba
+  StartArm()
+  Speaker.Play(100,"Two")
+  s()
+  
+  marking[0] = 2
+  marking[1] = 4
+  
+  Siguelineas.Cruce_Externo(30,4)
+  Giro.Grados(40,-23,90)
+  Siguelineas.Encoder31(10,12)
+  
+  Recto.Encoder(-20,8)
+  BajarIzq()
+  Recto.Encoder(20,9.5)
+  SubirIzq()
+  
+  Recto.Encoder(-20,9.5)
+  BajarDch()
+  Recto.Encoder(20,9.75)
+  SubirDch()
+  
+  If (marking[0] = 2 Or marking[0] = 4) And (marking[1] = 2 Or marking[1] = 4) Then
+    Recto.Encoder(-40,25.25)
+    Giro.Grados(40,0,90)
+    Siguelineas.Encoder31F(15,10)
+    Recto.EncoderF(100,29)
+    Recto.Encoder(60,10)
+    
+    Giro.Grados(4,40,90)
+    Recto.Encoder(20,11.5)
+    Giro.Grados(40,0,90)
+    
+    If marking[0] = 4 Then
+      Recto.EncoderF(-15,2)
+      Recto.Negro1(-15,1)
+      Recto.Encoder(15,2)
+      BajarAmbos()
+      Recto.Encoder(-15,7)
+      SubirAmbosRap()
+    ElseIf marking[0] = 2 Then
+      Recto.EncoderF(-15,2)
+      Recto.Negro1(-15,1)
+      Recto.Encoder(15,2)
+      Giro.Grados(-30,30,60)
+      s()
+      BajarDch()
+      Recto.Encoder(-10,3)
+      SubirDchRap()
+      Recto.Encoder(10,3)
+      Giro.Grados(30,-30,110)
+      Recto.Encoder(-10,5)
+      BajarIzq()
+      s()
+      Giro.Grados(-30,30,60)
+      SubirIzqRap()
+      Recto.Encoder(-15,7)
+      
+    EndIf
+  EndIf
+  
+EndSub
+
+#endregion
+
+Sub MostrarVel
+  While "true"
+    LCD.StopUpdate()
+    LCD.Clear()
+    LCD.Write(5,5,"Vel = "+MotorC.GetSpeed())
+    LCD.Update()
+    EndWhile
+EndSub
+
+Function GritarVoltaje()
+
+  voltaje = EV3.BatteryVoltage
+  GritarNumero(Math.Floor(voltaje))
+  GritarNumero(Math.Floor(voltaje * 10) - Math.Floor(voltaje) * 10)
+  GritarNumero(Math.Floor(voltaje * 100) - Math.Floor(voltaje * 10) * 10)
+
+EndFunction
+
+Function GritarNumero(in number numero)
+    If numero = 0 Then
+        Speaker.Play(100, "ZERO")
+        Elseif numero = 1 Then
+        Speaker.Play(100, "One")
+        Elseif numero = 2 Then
+        Speaker.Play(100, "Two")
+        Elseif numero = 3 Then
+        Speaker.Play(100, "Three")
+        Elseif numero = 4 Then
+        Speaker.Play(100, "Four")
+        Elseif numero = 5 Then
+        Speaker.Play(100, "Five")
+        Elseif numero = 6 Then
+        Speaker.Play(100, "Six")
+        Elseif numero = 7 Then
+        Speaker.Play(100, "Seven")
+        Elseif numero = 8 Then
+        Speaker.Play(100, "Eight")
+        Elseif numero = 9 Then
+        Speaker.Play(100, "Nine")
+        Elseif numero = 10 Then
+        Speaker.Play(100, "Ten")
+    EndIf
+
+    Speaker.Wait()
+EndFunction
+
+Function Coger()
+  Brazo.AEncoder(30,300)
+  Recto.Encoder(15,7)
+  Brazo.AEncoder(30,0)
+  Brazo.DEncoder(20,-200)
+  Program.Delay(800)
+  Brazo.AEncoder(30,300)
+EndFunction
+
+Sub BajarIzq
+  Brazo.AEncoder(20,-380)
+EndSub
+
+Sub BajarDch
+  Brazo.DEncoder(20,430)
+EndSub
+
+Sub SubirIzq
+  Brazo.AEncoder(15,-120)
+EndSub
+
+Sub SubirDch
+  Brazo.DEncoder(15,120)
+EndSub
+
+Sub SubirIzqRap
+  Brazo.AEncoder(65,-120)
+EndSub
+
+Sub SubirDchRap
+  Brazo.DEncoder(65,120)
+EndSub
+
+Sub BajarDchLeve
+  Brazo.DEncoder(20,100)
+EndSub
+
+Function BajarArana()
+  Brazo.AEncoder(40,520)
+EndFunction
+
+Function BajarAmbos()
+  Thread.Run = BajarIzq
+  BajarDch()
+  Thread.Run = BajarIzq
+  BajarDch()
+EndFunction
+
+Function SubirAmbos()
+  Thread.Run = SubirIzq
+  SubirDch()
+EndFunction
+
+Function SubirAmbosRap()
+  Thread.Run = SubirIzqRap
+  SubirDchRap()
+EndFunction
+
+Function s()
+  Buttons.Flush()
+  Buttons.Wait()
+EndFunction

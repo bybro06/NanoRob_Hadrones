@@ -20,7 +20,7 @@ import "modules/RGB"
 #region Entorno de Ejecución
 
 Setup()
-Main()
+MainPrueba()
 
 #EndRegion
 
@@ -409,8 +409,8 @@ Sub MainPrueba
   Speaker.Play(100,"Two")
   s()
   
-  marking[0] = 2
-  marking[1] = 4
+  marking[0] = 4
+  marking[1] = 2
   
   Siguelineas.Cruce_Externo(30,4)
   Giro.Grados(40,-23,90)
@@ -449,12 +449,19 @@ Sub MainPrueba
       Recto.Negro1(-15,1)
       Recto.Encoder(15,2)
       Giro.Grados(-30,30,60)
+      s()
       BajarDch()
-      Giro.Grados(30,-30,120)
+      Recto.Encoder(-10,3)
+      SubirDchRap()
+      Recto.Encoder(10,3)
+      Giro.Grados(30,-30,110)
+      Recto.Encoder(-10,5)
       BajarIzq()
+      s()
       Giro.Grados(-30,30,60)
+      SubirIzqRap()
       Recto.Encoder(-15,7)
-      SubirAmbosRap()
+      
     EndIf
   EndIf
   
