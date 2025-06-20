@@ -234,8 +234,8 @@ Sub Main
   
   'Vuelve al pasillo central
   Giro.Grados(-20,20,10)
-  Giro.Encoder(60,70,74)
-  Giro.Grados(30,-30,79.5)
+  Giro.Encoder(60,70,71.5)
+  Giro.Grados(30,-30,79)
   
   'Coge referencia en el cruce y siguelineas hasta azul
   Siguelineas.Encoder31F(30,10)
@@ -264,17 +264,15 @@ Sub Main
     Giro.Encoder(30,19,23)
     Giro.Encoder(19,30,23)
     
-    Siguelineas.Encoder31F(30,15)
-    Siguelineas.Cruce_Externo(30,4)
-    
   ElseIf markingGrande = 4 Then
     Siguelineas.Encoder31F(80,34.5)
     Siguelineas.Encoder31(30,9)
     
     Giro.Grados(30,-30,90)
-    Recto.AccelDecel(30,80,10,30.5,10)
-    Giro.Grados(-30,30,86)
-    Recto.EncoderF(20,5)
+    Recto.Encoder(60,51.5)
+    Giro.Grados(-30,30,84)
+    
+    Siguelineas.Encoder31(20,9)
     Siguelineas.Cruce_Externo(20,4)
     Recto.Encoder(-10,0.5)
     Giro.Grados(15,-30,87)
@@ -289,13 +287,10 @@ Sub Main
     Recto.Encoder(-80,54)
     
     Brazo.AEncoder(40,0)
-    Recto.Encoder(-20,9)
+    Recto.Encoder(-20,8.5)
     
     Giro.Encoder(30,19,20)
     Giro.Encoder(19,30,20)
-    
-    Siguelineas.Encoder31F(30,5)
-    Siguelineas.Cruce_Externo(30,4)
     
   ElseIf markingGrande = 3 Then
     
@@ -335,9 +330,6 @@ Sub Main
     Giro.Encoder(21,30,30)
     Giro.Encoder(30,21,30)
     
-    Siguelineas.Encoder31F(30,5)
-    Siguelineas.Cruce_Externo(30,4)
-    
   Else
     
     Siguelineas.Encoder31F(80,40)
@@ -349,110 +341,35 @@ Sub Main
     BajarArana()
     
     'Gira con arco y deja bloque
-    Giro.Grados(-19,-40,91)
+    Giro.Grados(-18,-40,93)
     Recto.Encoder(-80,29)
     
-    Brazo.AEncoder(40,0)
-    Recto.Encoder(-10,8)
+    Brazo.AEncoder(40,80)
+    Recto.Encoder(-10,9)
     Recto.Encoder(10,2)
     
-    Giro.Encoder(30,17,25)
-    Giro.Encoder(17,30,25)
+    Giro.Encoder(30,17,27)
+    Giro.Encoder(17,30,23)
     
-    Siguelineas.Encoder14(30,15)
-    Siguelineas.Cruce_Externo(30,4)
-    
-  EndIf
-  
-  Recto.Encoder(-10,3)
-  Giro.Grados(40,-13,90)
-  
-  bloquesBrazo[0] = 0
-  bloquesBrazo[1] = 0
-  bloquesBrazo[2] = 0
-  bloquesBrazo[3] = 0
-  
-  'PRIMER CASO: PAREJA AZUL-AMARILLO / ROJO-VERDE
-  If(marking[0]+marking[1]=9) Or (marking[2]+marking[3]=9) Then
-    'SEGUNDO CASO: AMARILLO Y ROJO
-    
-    If(marking[0]=4 Or marking[3]=4) Then
-      'COGER AMARILLO Y DESPUÉS ROJO
-      bloquesBrazo[3] = 4
-      bloquesBrazo[2] = 5
-    Else
-      'RECOLOCAMOS BLOQUES PARA PILLAR ROJO Y LUEGO AMARILLO
-      bloquesBrazo[3] = 5
-      bloquesBrazo[2] = 4
-    EndIf
-    
-    If(marking[3]=3 Or marking[0]=3) Then
-      'RECOLOCAMOS BLOQUES PARA COGER VERDE Y DESPUÉS AZUL
-      bloquesBrazo[1] = 3
-      bloquesBrazo[0] = 2
-    Else
-      'COGER AZUL Y DESPUÉS VERDE
-      bloquesBrazo[1] = 2
-      bloquesBrazo[0] = 3
-    EndIf
-    
-  Else
-    'PRIMER CASO: AMARILLO Y AZUL EN INICIO
-    
-    If(marking[0]=2 Or marking[3]=2) Then
-      'COGER AZUL Y DESPUÉS AMARILLO
-      bloquesBrazo[3] = 2
-      bloquesBrazo[2] = 4
-      
-      Recto.Encoder(20,6.5)
-      Coger()
-      Giro.Grados(-40,10,75)
-      Giro.Grados(10,-40,75)
-      Giro.Grados(10,-10,3)
-      Recto.Encoder(20,5.5)
-      Coger()
-      
-      If(marking[3]=3 Or marking[0]=3) Then
-      'COGER VERDE Y DESPUÉS ROJO
-      bloquesBrazo[1] = 3
-      bloquesBrazo[0] = 5
-    Else
-      'COGER ROJO Y DESPUÉS VERDE
-      bloquesBrazo[1] = 5
-      bloquesBrazo[0] = 3
-      
-        Recto.Encoder(10,3)
-        Coger()
-        Giro.Grados(10,-40,73)
-        Giro.Grados(-40,10,73)
-        Giro.Grados(-10,10,3)
-      Recto.Encoder(20,4.5)
-        Coger()
-    EndIf
-    Else
-      'COGER AMARILLO Y DESPUÉS AZUL
-      bloquesBrazo[3] = 4
-      bloquesBrazo[2] = 2
-      
-      Recto.Encoder(20,6.5)
-      Coger()
-      Giro.Grados(10,-40,73)
-      Giro.Grados(-40,10,73)
-      Giro.Grados(-10,10,3)
-      Recto.Encoder(20,5.5)
-      Coger()
-    EndIf
+    Recto.Encoder(-30,7)
     
   EndIf
   
-  'Desplazamiento para soltar tornillos
-  If(bloquesBrazo[0]=marking[1]) Then
-    'Se va lejos y soltamos 2
-  ElseIf(bloquesBrazo[0]=marking[2]) Then
-    'Se va lejos
-  Else
-    'C peta
-  EndIf
+  Giro.Grados(-30,30,90)
+  Recto.Encoder(30,4)
+  BajarArana()
+  
+  Brazo.AEncoder(40,0)
+  Giro.Grados(0,30,90)
+  Giro.Grados(30,0,90)
+  
+  Recto.Encoder(-30,14)
+  BajarArana()
+  For i = 0 To 2
+    Recto.Encoder(20,4)
+    Recto.Encoder(-20,4)
+  EndFor
+  Recto.Encoder(20,7)
   
 EndSub
 
