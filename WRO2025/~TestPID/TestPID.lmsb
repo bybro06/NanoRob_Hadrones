@@ -1,0 +1,685 @@
+DATA16 FD_NATIVECODECOMMAND
+DATA16 FD_NATIVECODERESPONSE
+DATA32 STOPLCDUPDATE
+DATA32 NUMMAILBOXES
+ARRAY8 MOTORISINVERTED 4     
+ARRAY8 FIRSTOF2  16
+ARRAY16 LOCKS 2           
+DATA32 s1out1
+DATA32 s1out2
+DATA32 s1out3
+DATA32 s2out1
+DATA32 s2out2
+DATA32 s2out3
+DATA32 s3out1
+DATA32 s3out2
+DATA32 s3out3
+DATA32 s4out1
+DATA32 s4out2
+DATA32 s4out3
+DATA32 getTachoA
+DATA32 tmpTachoA
+DATA8 getSpeedA
+DATA8 setSpeedA
+DATA8 setPowerA
+DATA32 getTachoB
+DATA32 tmpTachoB
+DATA8 getSpeedB
+DATA8 setSpeedB
+DATA8 setPowerB
+DATA32 getTachoC
+DATA32 tmpTachoC
+DATA8 getSpeedC
+DATA8 setSpeedC
+DATA8 setPowerC
+DATA32 getTachoD
+DATA32 tmpTachoD
+DATA8 getSpeedD
+DATA8 setSpeedD
+DATA8 setPowerD
+DATA16 newArray1d
+DATA32 newSize1d
+DATA32 newIndex1d
+DATA32 timeMC1
+DATA32 timeMC2
+DATA32 timeMC3
+DATA32 timeMC4
+DATA32 timeMC5
+DATA32 timeMC6
+DATA32 timeMC7
+DATA32 timeMC8
+DATA32 timeMC9
+DATA32 timeMC1tmp
+DATA32 timeMC2tmp
+DATA32 timeMC3tmp
+DATA32 timeMC4tmp
+DATA32 timeMC5tmp
+DATA32 timeMC6tmp
+DATA32 timeMC7tmp
+DATA32 timeMC8tmp
+DATA32 timeMC9tmp
+DATAF VGV_VELOCIDAD
+DATAF VGV_ENCODER
+DATAF VGV_DIAMETRO
+DATAF VGV_NEGRO1
+DATAF VGV_NEGRO3
+DATAF VGV_NEGRO4
+DATAF VGV_BLANCO1
+DATAF VGV_BLANCO3
+DATAF VGV_BLANCO4
+DATAF VGV_LECTURA1
+DATAF VGV_LECTURA3
+DATAF VGV_LECTURA4
+DATAF VGV_KP
+DATAF VGV_KI
+DATAF VGV_KD
+DATAF VGV_ERROR
+DATAF VGV_OLDERROR
+DATAF VGV_U
+DATAF VGV_SENTIDO
+DATAF VGV_STARTC
+DATAF VGV_ENCODERC
+DATAF VGV_DELTAT
+DATAF VGV_LOG
+DATAF VGV_LECTURAS
+DATAF VGV_I
+ARRAY16 VGV_ERRORES 2
+ARRAY16 VGV_CORRECCIONES 2
+
+vmthread MAIN
+{
+    MOVE32_32 0 STOPLCDUPDATE
+    MOVE32_32 0 NUMMAILBOXES
+    OUTPUT_RESET 0 15
+
+	WRITE8 0 0 MOTORISINVERTED
+	WRITE8 0 1 MOTORISINVERTED
+	WRITE8 0 2 MOTORISINVERTED
+	WRITE8 0 3 MOTORISINVERTED
+	WRITE8 0 0 FIRSTOF2
+	WRITE8 0 1 FIRSTOF2
+	WRITE8 0 2 FIRSTOF2
+	WRITE8 1 3 FIRSTOF2
+	WRITE8 0 4 FIRSTOF2
+	WRITE8 1 5 FIRSTOF2
+	WRITE8 2 6 FIRSTOF2
+	WRITE8 0 7 FIRSTOF2
+	WRITE8 0 8 FIRSTOF2
+	WRITE8 1 9 FIRSTOF2
+	WRITE8 2 10 FIRSTOF2
+	WRITE8 0 11 FIRSTOF2
+	WRITE8 4 12 FIRSTOF2
+	WRITE8 0 13 FIRSTOF2
+	WRITE8 0 14 FIRSTOF2
+	WRITE8 0 15 FIRSTOF2
+    INPUT_DEVICE CLR_ALL -1
+    ARRAY CREATE8 0 LOCKS
+    MOVE32_32 0 s1out1
+	MOVE32_32 0 s1out2
+	MOVE32_32 0 s1out3
+    MOVE32_32 0 s2out1
+	MOVE32_32 0 s2out2
+	MOVE32_32 0 s2out3
+    MOVE32_32 0 s3out1
+	MOVE32_32 0 s3out2
+	MOVE32_32 0 s3out3
+    MOVE32_32 0 s4out1
+	MOVE32_32 0 s4out2
+	MOVE32_32 0 s4out3
+    MOVE32_32 0 timeMC1
+	MOVE32_32 0 timeMC2
+	MOVE32_32 0 timeMC3
+	MOVE32_32 0 timeMC4
+	MOVE32_32 0 timeMC5
+	MOVE32_32 0 timeMC6
+	MOVE32_32 0 timeMC7
+	MOVE32_32 0 timeMC8
+	MOVE32_32 0 timeMC9
+    MOVEF_F 0.0 VGV_VELOCIDAD
+    MOVEF_F 0.0 VGV_ENCODER
+    MOVEF_F 0.0 VGV_DIAMETRO
+    MOVEF_F 0.0 VGV_NEGRO1
+    MOVEF_F 0.0 VGV_NEGRO3
+    MOVEF_F 0.0 VGV_NEGRO4
+    MOVEF_F 0.0 VGV_BLANCO1
+    MOVEF_F 0.0 VGV_BLANCO3
+    MOVEF_F 0.0 VGV_BLANCO4
+    MOVEF_F 0.0 VGV_LECTURA1
+    MOVEF_F 0.0 VGV_LECTURA3
+    MOVEF_F 0.0 VGV_LECTURA4
+    MOVEF_F 0.0 VGV_KP
+    MOVEF_F 0.0 VGV_KI
+    MOVEF_F 0.0 VGV_KD
+    MOVEF_F 0.0 VGV_ERROR
+    MOVEF_F 0.0 VGV_OLDERROR
+    MOVEF_F 0.0 VGV_U
+    MOVEF_F 0.0 VGV_SENTIDO
+    MOVEF_F 0.0 VGV_STARTC
+    MOVEF_F 0.0 VGV_ENCODERC
+    MOVEF_F 0.0 VGV_DELTAT
+    MOVEF_F 0.0 VGV_LOG
+    MOVEF_F 0.0 VGV_LECTURAS
+    MOVEF_F 0.0 VGV_I
+    CALL ARRAYCREATE_FLOAT VGV_ERRORES
+    CALL ARRAYCREATE_FLOAT VGV_CORRECCIONES
+    ARRAY CREATE8 1 LOCKS
+    CALL PROGRAM_MAIN -1
+    PROGRAM_STOP -1
+}
+subcall PROGRAM_MAIN
+{
+    IN_32 SUBPROGRAM
+    DATA32 INDEX
+    ARRAY8 STACKPOINTER 4
+    DATAF F.0
+    DATAF F.1
+    DATAF F.2
+    ARRAY32 RETURNSTACK2 128
+    ARRAY32 RETURNSTACK 128
+    DATAS S.0 252
+    DATAS S.1 252
+    DATAS S.2 252
+    MOVE8_8 0 STACKPOINTER
+    MOVEF_F 0.0 VGV_VELOCIDAD
+    MOVEF_F 0.0 VGV_ENCODER
+    MOVEF_F 0.0 VGV_DIAMETRO
+    MOVEF_F 0.0 VGV_NEGRO1
+    MOVEF_F 0.0 VGV_NEGRO3
+    MOVEF_F 0.0 VGV_NEGRO4
+    MOVEF_F 0.0 VGV_BLANCO1
+    MOVEF_F 0.0 VGV_BLANCO3
+    MOVEF_F 0.0 VGV_BLANCO4
+    MOVEF_F 0.0 VGV_LECTURA1
+    MOVEF_F 0.0 VGV_LECTURA3
+    MOVEF_F 0.0 VGV_LECTURA4
+    MOVEF_F 0.0 VGV_KP
+    MOVEF_F 0.0 VGV_KI
+    MOVEF_F 0.0 VGV_KD
+    MOVEF_F 0.0 VGV_ERROR
+    MOVEF_F 0.0 VGV_OLDERROR
+    MOVEF_F 0.0 VGV_U
+    MOVEF_F 0.0 VGV_SENTIDO
+    MOVEF_F 0.0 VGV_STARTC
+    MOVEF_F 0.0 VGV_ENCODERC
+    MOVEF_F 0.0 VGV_DELTAT
+    MOVEF_F 0.0 VGV_LOG
+    MOVEF_F 0.0 VGV_LECTURAS
+    MOVEF_F 0.0 VGV_I
+    CALL ARRAYSTORE_FLOAT 0.0 0.0 VGV_ERRORES
+    CALL ARRAYSTORE_FLOAT 0.0 0.0 VGV_CORRECCIONES
+    MOVEF_F 100.0 VGV_VELOCIDAD
+    MOVEF_F 80.0 VGV_ENCODER
+    WRITE32 ENDSUB_F_SETUP_0:CALLSUB2 STACKPOINTER RETURNSTACK
+    ADD8 STACKPOINTER 1 STACKPOINTER
+    JR SUB_F_SETUP_0
+CALLSUB2:
+    WRITE32 ENDSUB_F_ENCODER14_0:CALLSUB3 STACKPOINTER RETURNSTACK
+    ADD8 STACKPOINTER 1 STACKPOINTER
+    JR SUB_F_ENCODER14_0
+CALLSUB3:
+ENDTHREAD:
+    RETURN
+SUB_F_SETUP_0:
+    DATA8 layer4
+	DATA8 no4
+	DATA8 mode84
+	
+	MOVEF_8 1.0 no4
+	SUB8 no4 1 no4
+	DIV8 no4 4 layer4
+	MATH MOD8 no4 4 no4
+
+	MOVEF_8 0.0 mode84
+	
+	INPUT_DEVICE READY_RAW layer4 no4 0 mode84 0
+    DATA8 layer5
+	DATA8 no5
+	DATA8 mode85
+	
+	MOVEF_8 2.0 no5
+	SUB8 no5 1 no5
+	DIV8 no5 4 layer5
+	MATH MOD8 no5 4 no5
+
+	MOVEF_8 4.0 mode85
+	
+	INPUT_DEVICE READY_RAW layer5 no5 0 mode85 0
+    DATA8 layer6
+	DATA8 no6
+	DATA8 mode86
+	
+	MOVEF_8 3.0 no6
+	SUB8 no6 1 no6
+	DIV8 no6 4 layer6
+	MATH MOD8 no6 4 no6
+
+	MOVEF_8 0.0 mode86
+	
+	INPUT_DEVICE READY_RAW layer6 no6 0 mode86 0
+    DATA8 layer7
+	DATA8 no7
+	DATA8 mode87
+	
+	MOVEF_8 4.0 no7
+	SUB8 no7 1 no7
+	DIV8 no7 4 layer7
+	MATH MOD8 no7 4 no7
+
+	MOVEF_8 0.0 mode87
+	
+	INPUT_DEVICE READY_RAW layer7 no7 0 mode87 0
+    MOVEF_F 6.24 VGV_DIAMETRO
+    MOVEF_F 10.0 VGV_NEGRO1
+    MOVEF_F 9.0 VGV_NEGRO3
+    MOVEF_F 8.0 VGV_NEGRO4
+    MOVEF_F 65.0 VGV_BLANCO1
+    MOVEF_F 59.0 VGV_BLANCO3
+    MOVEF_F 55.0 VGV_BLANCO4
+RETSUB_F_SETUP_0:
+    SUB8 STACKPOINTER 1 STACKPOINTER
+    READ32 RETURNSTACK STACKPOINTER INDEX
+    JR_DYNAMIC INDEX
+ENDSUB_F_SETUP_0:
+SUB_F_ENCODER14_0:
+    MULF VGV_VELOCIDAD 1.0 VGV_VELOCIDAD
+    MOVEF_F 50.0 VGV_LECTURA1
+    MOVEF_F 50.0 VGV_LECTURA3
+    MOVEF_F 50.0 VGV_LECTURA4
+    MATH POW VGV_VELOCIDAD 0.833333333333333 F.0
+    DATAF tmpf10
+    DATA8 flag10
+    DIVF F.0 440.0 tmpf10
+    CP_EQF 0.0 440.0 flag10
+    SELECTF flag10 0.0 tmpf10 VGV_KP
+
+    MOVEF_F 0.0 VGV_KI
+    MULF VGV_KP 70.0 VGV_KD
+    MOVEF_F 0.0 VGV_ERROR
+    MOVEF_F 0.0 VGV_OLDERROR
+    MOVEF_F 0.0 VGV_U
+    MATH ABS VGV_VELOCIDAD F.0
+    DATAF tmpf13
+    DATA8 flag13
+    DIVF VGV_VELOCIDAD F.0 tmpf13
+    CP_EQF 0.0 F.0 flag13
+    SELECTF flag13 0.0 tmpf13 VGV_SENTIDO
+
+    MOVEF_F 3.1415926535897932384 F.2
+    MULF VGV_DIAMETRO F.2 F.1
+    DATAF tmpf16
+    DATA8 flag16
+    DIVF VGV_ENCODER F.1 tmpf16
+    CP_EQF 0.0 F.1 flag16
+    SELECTF flag16 0.0 tmpf16 F.0
+
+    MULF F.0 360.0 VGV_ENCODER
+    OUTPUT_GET_COUNT 0 2 getTachoC
+	MOVE32_F getTachoC VGV_STARTC
+    MOVEF_F 0.0 VGV_ENCODERC
+    MOVEF_F 0.0 VGV_DELTAT
+    CALL EV3FILE.OPENWRITE 'WRO2025/Files/LecturasPID.txt' VGV_LOG
+    MOVEF_F 0.0 VGV_LECTURAS
+    TIMER_READ timeMC8
+    MOVEF_F 0.0 VGV_I
+  while21:
+    MATH ABS VGV_ENCODERC F.0
+    JR_GTEQF F.0 VGV_ENCODER endwhile21
+  whilebody21:
+    OUTPUT_GET_COUNT 0 2 getTachoC
+	MOVE32_F getTachoC F.0
+    SUBF F.0 VGV_STARTC VGV_ENCODERC
+    CALL SENSOR.READPERCENT 1.0 F.2
+    SUBF F.2 VGV_NEGRO1 F.1
+    DATAF tmpf27
+    DATA8 flag27
+    DIVF F.1 VGV_BLANCO1 tmpf27
+    CP_EQF 0.0 VGV_BLANCO1 flag27
+    SELECTF flag27 0.0 tmpf27 F.0
+
+    SUBF 100.0 VGV_NEGRO1 F.1
+    MULF F.0 F.1 VGV_LECTURA1
+    CALL SENSOR.READPERCENT 4.0 F.2
+    SUBF F.2 VGV_NEGRO4 F.1
+    DATAF tmpf32
+    DATA8 flag32
+    DIVF F.1 VGV_BLANCO4 tmpf32
+    CP_EQF 0.0 VGV_BLANCO4 flag32
+    SELECTF flag32 0.0 tmpf32 F.0
+
+    SUBF 100.0 VGV_NEGRO4 F.1
+    MULF F.0 F.1 VGV_LECTURA4
+    SUBF VGV_LECTURA1 VGV_LECTURA4 F.1
+    MULF F.1 VGV_SENTIDO F.0
+    MULF F.0 1.0 VGV_ERROR
+    ADDF VGV_LECTURAS 1.0 VGV_LECTURAS
+    MULF VGV_ERROR VGV_KP F.0
+    SUBF VGV_ERROR VGV_OLDERROR F.2
+    MULF F.2 VGV_KD F.1
+    ADDF F.0 F.1 VGV_U
+    CALL ARRAYSTORE_FLOAT VGV_LECTURAS VGV_ERROR VGV_ERRORES
+    MATH NEGATE VGV_U F.0
+    CALL ARRAYSTORE_FLOAT VGV_LECTURAS F.0 VGV_CORRECCIONES
+    ADDF VGV_VELOCIDAD VGV_U F.1
+    MATH NEGATE F.1 F.0
+    SUBF VGV_VELOCIDAD VGV_U F.1
+    CALL MOTOR.STARTSYNC 'BC' F.0 F.1
+    MOVEF_F VGV_ERROR VGV_OLDERROR
+    MATH ABS VGV_ENCODERC F.0
+    JR_LTF F.0 VGV_ENCODER whilebody21
+  endwhile21:
+    TIMER_READ timeMC8tmp
+	SUB32 timeMC8tmp timeMC8 timeMC8tmp
+	MOVE32_F timeMC8tmp VGV_DELTAT
+    OUTPUT_POWER 0 6 0
+	OUTPUT_STOP 0 6 1
+    MOVEF_F 0.0 VGV_I
+  for53:
+    JR_GTF VGV_I VGV_LECTURAS endfor53
+  forbody53:
+    CALL ARRAYGET_FLOAT VGV_I F.0 VGV_ERRORES
+    STRINGS VALUE_FORMATTED F.0 '%g' 99 S.2
+    CALL TEXT.APPEND S.2 ';' S.1
+    CALL ARRAYGET_FLOAT VGV_I F.0 VGV_CORRECCIONES
+    STRINGS VALUE_FORMATTED F.0 '%g' 99 S.2
+    CALL TEXT.APPEND S.1 S.2 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    ADDF VGV_I 1.0 VGV_I
+    JR_LTEQF VGV_I VGV_LECTURAS forbody53
+  endfor53:
+    STRINGS VALUE_FORMATTED VGV_VELOCIDAD '%g' 99 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    STRINGS VALUE_FORMATTED VGV_KP '%g' 99 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    STRINGS VALUE_FORMATTED VGV_KI '%g' 99 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    STRINGS VALUE_FORMATTED VGV_KD '%g' 99 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    DATAF tmpf70
+    DATA8 flag70
+    DIVF VGV_LECTURAS VGV_DELTAT tmpf70
+    CP_EQF 0.0 VGV_DELTAT flag70
+    SELECTF flag70 0.0 tmpf70 F.1
+
+    MULF F.1 1000.0 F.0
+    STRINGS VALUE_FORMATTED F.0 '%g' 99 S.0
+    CALL EV3FILE.WRITELINE VGV_LOG S.0
+    CALL EV3FILE.CLOSE VGV_LOG
+RETSUB_F_ENCODER14_0:
+    SUB8 STACKPOINTER 1 STACKPOINTER
+    READ32 RETURNSTACK STACKPOINTER INDEX
+    JR_DYNAMIC INDEX
+ENDSUB_F_ENCODER14_0:
+}
+subcall ARRAYSTORE_FLOAT   // FFFV
+{
+	IN_F index
+	IN_F value	
+	IN_16 handle
+	
+	DATA32 index32
+	DATA32 len	
+	MOVEF_32 index index32
+
+	ARRAY SIZE handle len
+	JR_LT32 index32 0 negativeindex
+	JR_LT32 index32 len arraybigenough
+
+increasesize:	
+	DATA32 doublelen
+	ADD32 len len doublelen
+	ARRAY RESIZE handle doublelen
+writeloop:	
+	ARRAY_WRITE handle len 0.0
+	ADD32 len 1 len
+	JR_LT32 len doublelen writeloop
+	JR_GTEQ32 index32 len increasesize
+	
+arraybigenough:
+	ARRAY_WRITE handle index32 value
+negativeindex:
+}
+subcall EV3FILE.OPENWRITE       // SF
+{
+	IN_S filename 252
+	OUT_F handle
+
+	DATAS fullname 300
+	DATA16 handle16
+
+	STRINGS DUPLICATE filename fullname
+	JR_EQ8 filename 47 absolutepath               // filename begins with a '/'
+	STRINGS ADD '/home/root/lms2012/prjs/' filename fullname
+absolutepath:
+	FILE OPEN_WRITE fullname handle16
+
+	MOVE16_F handle16 handle
+}
+subcall SENSOR.READPERCENT       // FF
+{
+	IN_F port
+	OUT_F result
+
+	DATA8 layer
+	DATA8 no
+	DATA8 percentage
+
+	MOVEF_8 port no
+	SUB8 no 1 no
+	DIV8 no 4 layer
+	MATH MOD8 no 4 no
+
+	INPUT_READ layer no 0 -1 percentage
+	JR_LT8 percentage 0 novalue
+	
+	MOVE8_F percentage result
+	RETURN
+novalue:	
+	MOVE8_F 0 result
+}
+subcall MOTOR.STARTSYNC      // SFFV       MOTORSTARTSTEERIMPL
+{
+	IN_S ports 8
+	IN_F speed1
+	IN_F speed2
+
+	JR_GTEQF speed1 -100.0 nottoosmall1
+	MOVEF_F -100.0 speed1
+nottoosmall1:
+	JR_LTEQF speed1 100.0 nottoobig1
+	MOVEF_F 100.0 speed1
+nottoobig1:
+	JR_GTEQF speed2 -100.0 nottoosmall2
+	MOVEF_F -100.0 speed2
+nottoosmall2:
+	JR_LTEQF speed1 100.0 nottoobig2
+	MOVEF_F 100.0 speed2
+nottoobig2:
+
+	DATAF speed  
+	DATAF turn
+	MOVE8_F 0 speed
+	MOVE8_F 0 turn
+
+	DATAF speed1abs
+	DATAF speed2abs
+	MATH ABS speed1 speed1abs
+	MATH ABS speed2 speed2abs
+	JR_LTF speed1abs speed2abs secondisfaster
+	JR_EQF speed1abs 0.0 donecomputation
+	 MOVEF_F speed1 speed
+	 MULF 100.0 speed2 turn
+	 DIVF turn speed1 turn
+	 SUBF 100.0 turn turn
+	JR donecomputation
+secondisfaster:
+	 MOVEF_F speed2 speed
+	 MULF 100.0 speed1 turn
+	 DIVF turn speed2 turn
+	 SUBF turn 100.0 turn
+donecomputation:
+
+	CALL MOTORSTARTSTEERIMPL ports speed turn
+}
+subcall MOTORSTARTSTEERIMPL      // SFFV       MOTORDECODEPORTSDESCRIPTOR
+{
+	IN_S ports 8
+	IN_F speed
+	IN_F turn
+
+	DATA8 layer
+	DATA8 nos	
+	DATA8 first
+	DATA8 second
+	DATA8 invfirst
+	DATA8 invsecond
+
+	CALL MOTORDECODEPORTSDESCRIPTOR ports layer nos
+	READ8 FIRSTOF2 nos first
+	JR_EQ8 0 first not_two_ports
+	XOR8 first nos second
+	READ8 MOTORISINVERTED layer invfirst
+	AND8 first invfirst invfirst
+	READ8 MOTORISINVERTED layer invsecond
+	AND8 second invsecond invsecond
+
+	JR_LTF turn 0.0 second_is_master
+first_is_master:
+	JR_EQ8 invfirst 0 non_invert_first
+	SUBF 0.0 speed speed
+	JR_NEQ8 invsecond 0 done_inversion
+	SUBF 200.0 turn turn
+	JR done_inversion
+non_invert_first:
+	JR_EQ8 invsecond 0 done_inversion
+	SUBF 200.0 turn turn
+	JR done_inversion
+
+second_is_master:
+	JR_EQ8 invsecond 0 non_invert_second
+	SUBF 0.0 speed speed
+	JR_NEQ8 invfirst 0 done_inversion
+	SUBF -200.0 turn turn
+	JR done_inversion
+non_invert_second:
+	JR_EQ8 invfirst 0 done_inversion
+	SUBF -200.0 turn turn
+	JR done_inversion
+
+done_inversion:
+	DATA8 spd  
+	DATA16 trn
+	MOVEF_16 turn trn
+	MOVEF_8 speed spd
+	OUTPUT_STEP_SYNC layer nos spd trn 0 0
+not_two_ports:
+}
+subcall MOTORDECODEPORTSDESCRIPTOR  //  V
+{
+	IN_S descriptor 8
+	OUT_8 layer
+	OUT_8 nos
+
+	DATA8 i 
+	DATA8 c
+
+	MOVE8_8 0 layer
+	MOVE8_8 0 nos	
+	MOVE8_8 0 i
+loop:
+	READ8 descriptor i c
+	JR_EQ8 c 0 decoding_end
+	
+	JR_LT8 c 65 no_uppercase_port
+	JR_GT8 c 68 no_uppercase_port
+	SUB8 c 65 c
+	RL8  1 c c
+	OR8  nos c nos
+	JR loop_end
+no_uppercase_port:
+	JR_LT8 c 97 no_lowercase_port
+	JR_GT8 c 100 no_lowercase_port
+	SUB8 c 97 c
+	RL8  1 c c
+	OR8  nos c nos	
+	JR loop_end
+no_lowercase_port:
+	JR_LT8 c 49 loop_end
+	JR_GT8 c 52 loop_end
+	SUB8 c 49 layer
+loop_end:
+	ADD8 1 i i
+	JR loop	
+	
+decoding_end:
+	RETURN
+}
+subcall ARRAYGET_FLOAT     // FFF
+{
+	IN_F index
+	OUT_F value
+	IN_16 handle
+	
+	DATA32 index32
+	DATA32 len
+	MOVEF_32 index index32
+	
+	ARRAY SIZE handle len
+	JR_LT32 index32 0 outofbounds
+	JR_GTEQ32 index32 len outofbounds
+	
+	ARRAY_READ handle index32 value
+	RETURN
+outofbounds:
+	MOVE8_F 0 value	
+}
+subcall TEXT.APPEND     // SSS
+{
+	IN_S a 252
+	IN_S b 252
+    OUT_S result 252
+	
+	DATA16 len0
+	DATA16 len1
+	DATA16 sum
+
+	STRINGS GET_SIZE a len0
+	STRINGS GET_SIZE b len1
+	ADD16 len0,len1,sum
+	JR_GT16 sum,251,stringsizeexceeded
+
+	STRINGS ADD a b result
+	RETURN
+	
+stringsizeexceeded:	
+    STRINGS DUPLICATE a result
+}
+subcall EV3FILE.WRITELINE     // FSV
+{
+	IN_F handle
+	IN_S text 252
+
+	JR_LTF handle 1.0 invalidhandle
+	JR_GTF handle 32767.0 invalidhandle
+	DATA16 handle16
+	MOVEF_16 handle handle16
+	FILE WRITE_TEXT handle16 6 text
+invalidhandle:
+}
+subcall EV3FILE.CLOSE          // FV
+{
+	IN_F handle
+
+	JR_LTF handle 1.0 invalidhandle
+	JR_GTF handle 32767.0 invalidhandle
+	DATA16 handle16
+	MOVEF_16 handle handle16
+	FILE CLOSE handle16
+invalidhandle:
+}
+subcall ARRAYCREATE_FLOAT   // F
+{
+	OUT_16 handle
+	
+	ARRAY CREATEF 8 handle			// create with 8 elements
+	ARRAY FILL handle 0.0
+}

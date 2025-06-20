@@ -1,0 +1,88 @@
+gv_velocidad = 0
+gv_encoder = 0
+gv_diametro = 0
+gv_negro1 = 0
+gv_negro3 = 0
+gv_negro4 = 0
+gv_blanco1 = 0
+gv_blanco3 = 0
+gv_blanco4 = 0
+gv_lectura1 = 0
+gv_lectura3 = 0
+gv_lectura4 = 0
+gv_kp = 0
+gv_ki = 0
+gv_kd = 0
+gv_error = 0
+gv_olderror = 0
+gv_u = 0
+gv_sentido = 0
+gv_startc = 0
+gv_encoderc = 0
+gv_deltat = 0
+gv_log = 0
+gv_lecturas = 0
+gv_i = 0
+gv_errores [ 0 ] = 0
+gv_correcciones [ 0 ] = 0
+gv_velocidad = 100
+gv_encoder = 80
+f_setup_0 ()
+f_encoder14_0 ()
+Sub f_setup_0
+Sensor.SetMode ( 1 , 0 )
+Sensor.SetMode ( 2 , 4 )
+Sensor.SetMode ( 3 , 0 )
+Sensor.SetMode ( 4 , 0 )
+gv_diametro = 6.24
+gv_negro1 = 10
+gv_negro3 = 9
+gv_negro4 = 8
+gv_blanco1 = 65
+gv_blanco3 = 59
+gv_blanco4 = 55
+EndSub
+Sub f_encoder14_0
+gv_velocidad = gv_velocidad * 1
+gv_lectura1 = 50
+gv_lectura3 = 50
+gv_lectura4 = 50
+gv_kp = Math.Power ( gv_velocidad , 5 / 6 ) / 440
+gv_ki = 0
+gv_kd = gv_kp * 70
+gv_error = 0
+gv_olderror = 0
+gv_u = 0
+gv_sentido = gv_velocidad / Math.Abs ( gv_velocidad )
+gv_encoder = gv_encoder / ( gv_diametro * Math.Pi ) * 360
+gv_startc = MotorC.GetTacho ()
+gv_encoderc = 0
+gv_deltat = 0
+GV_LOG = EV3File.OpenWrite ( "WRO2025/Files/LecturasPID.txt" )
+gv_lecturas = 0
+Time.Reset8 ()
+gv_i = 0
+While Math.Abs ( gv_encoderc ) < gv_encoder
+gv_encoderc = MotorC.GetTacho () - gv_startc
+gv_lectura1 = ( Sensor.ReadPercent ( 1 ) - gv_negro1 ) / gv_blanco1 * ( 100 - gv_negro1 )
+gv_lectura4 = ( Sensor.ReadPercent ( 4 ) - gv_negro4 ) / gv_blanco4 * ( 100 - gv_negro4 )
+gv_error = ( gv_lectura1 - gv_lectura4 ) * gv_sentido * 1
+gv_lecturas = gv_lecturas + 1
+gv_u = gv_error * gv_kp + ( gv_error - gv_olderror ) * gv_kd
+gv_errores [ gv_lecturas ] = gv_error
+gv_correcciones [ gv_lecturas ] = - gv_u
+Motor.StartSync ( "BC" , - ( gv_velocidad + gv_u ) , gv_velocidad - gv_u )
+gv_olderror = gv_error
+EndWhile
+gv_deltat = Time.Get8 ()
+MotorBC.OffAndBrake ()
+For gv_i = 0 To gv_lecturas
+EV3File.WriteLine ( gv_log , Text.Append ( Text.Append ( gv_errores [ gv_i ] , ";" ) , gv_correcciones [ gv_i ] ) )
+EndFor
+EV3File.WriteLine ( gv_log , gv_velocidad )
+EV3File.WriteLine ( gv_log , gv_kp )
+EV3File.WriteLine ( gv_log , gv_ki )
+EV3File.WriteLine ( gv_log , gv_kd )
+EV3File.WriteLine ( gv_log , gv_lecturas / gv_deltat * 1000 )
+EV3File.Close ( gv_log )
+EndSub
