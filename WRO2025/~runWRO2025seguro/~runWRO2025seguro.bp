@@ -299,10 +299,10 @@ lv_velocidad1_21 = - 12.5
 lv_velocidad2_21 = 20
 lv_grados_21 = 88
 m_giro_grados_3 ()
-lv_velocidad_15 = 25
+lv_velocidad_15 = 15
 lv_encoder_15 = 10
 m_siguelineas_encoder14_2 ()
-lv_velocidad_18 = 20
+lv_velocidad_18 = 15
 lv_reader_18 = 3
 m_siguelineas_cruce_externo_2 ()
 lv_velocidad1_21 = - 30
@@ -311,10 +311,10 @@ lv_grados_21 = 177
 m_giro_grados_3 ()
 lv_velocidad1_22 = - 10.5
 lv_velocidad2_22 = - 10
-lv_distancia_22 = 23
+lv_distancia_22 = 23.25
 m_giro_encoder_3 ()
 lv_velocidad_11 = 10
-lv_distancia_11 = 4.25
+lv_distancia_11 = 4
 m_recto_encoder_2 ()
 f_bajararana_0 ()
 Program.Delay ( 400 )
@@ -408,16 +408,16 @@ m_recto_encoder_2 ()
 f_bajararana_0 ()
 lv_velocidad1_21 = 1
 lv_velocidad2_21 = - 60
-lv_grados_21 = 190
+lv_grados_21 = 192
 m_giro_grados_3 ()
 lv_velocidad_10 = - 80
-lv_distancia_10 = 43
+lv_distancia_10 = 39
 m_recto_encoderf_2 ()
 lv_velocidad_8 = 40
 lv_encoder_8 = 0
 m_brazo_aencoder_2 ()
 lv_velocidad_11 = - 10
-lv_distancia_11 = 8
+lv_distancia_11 = 4
 m_recto_encoder_2 ()
 lv_velocidad_11 = 10
 lv_distancia_11 = 2
@@ -633,7 +633,7 @@ lv_velocidad2_21 = 30
 lv_grados_21 = 90
 m_giro_grados_3 ()
 lv_velocidad_11 = 30
-lv_distancia_11 = 4
+lv_distancia_11 = 1
 m_recto_encoder_2 ()
 f_bajararana_0 ()
 lv_velocidad_8 = 40
@@ -648,7 +648,7 @@ lv_velocidad2_21 = 0
 lv_grados_21 = 90
 m_giro_grados_3 ()
 lv_velocidad_11 = - 30
-lv_distancia_11 = 14
+lv_distancia_11 = 25
 m_recto_encoder_2 ()
 f_bajararana_0 ()
 For gv_i = 0 To 2
@@ -731,8 +731,8 @@ lv_distancia_11 = 5
 m_recto_encoder_2 ()
 EndSub
 Sub f_bajararana_0
-lv_velocidad_8 = 70
-lv_encoder_8 = 470
+lv_velocidad_8 = 60
+lv_encoder_8 = 460
 m_brazo_aencoder_2 ()
 EndSub
 Sub f_s_0
