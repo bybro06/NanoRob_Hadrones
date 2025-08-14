@@ -6,25 +6,53 @@ number negro
 number blanco
 
 'Por encoder
+
 Function Encoder(in number velocidad, in number distancia)
+  
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
 
     correccion = (Math.abs(velocidad) - 20) * 0.05 ' Ajuste de corrección lineal en función de la velocidad
 
     enc = (distancia - correccion) * 360 / Math.Pi / diametro ' Ajuste de distancia con corrección
+    MotorB.ResetCount()
+    MotorC.ResetCount()
     MotorBC.Off()
     Program.Delay(100)
-    Motor.MoveSync("BC", - velocidad, velocidad, enc, "True")
-
+    Time.Reset4()
+    While Math.Abs(MotorC.GetTacho()) < enc And Time.Get4() < safetyTimer + 2000
+      Motor.StartSync("BC", - velocidad, velocidad)
+    EndWhile
+    
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
+  
+    MotorBC.OffAndBrake()
 EndFunction
 
 Function EncoderF(in number velocidad, in number distancia)
 
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
+
     correccion = (Math.abs(velocidad) - 20) * 0.05 ' Ajuste de corrección lineal en función de la velocidad
 
     enc = (distancia - correccion) * 360 / Math.Pi / diametro ' Ajuste de distancia con corrección
+    MotorB.ResetCount()
+    MotorC.ResetCount()
     MotorBC.Off()
     Program.Delay(100)
-    Motor.MoveSync("BC", - velocidad, velocidad, enc, "False")
+    Time.Reset4()
+    While Math.Abs(MotorC.GetTacho()) < enc And Time.Get4() < safetyTimer + 2000
+      Motor.StartSync("BC", - velocidad, velocidad)
+    EndWhile
+    
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
+  
+    MotorBC.Off()
 
 EndFunction
 

@@ -240,8 +240,11 @@ Function Encoder14(in number velocidad, in number encoder)
 
     startC = MotorC.GetTacho()
     encoderC = 0
-
-    While Math.Abs(encoderC) < encoder
+    
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
+  
+    Time.Reset4()
+    While Math.Abs(encoderC) < encoder And Time.Get4() < safetyTimer + 2000
 
         encoderC = MotorC.GetTacho() - startC
 
@@ -253,7 +256,12 @@ Function Encoder14(in number velocidad, in number encoder)
         Motor.StartSync("BC", - (velocidad + u), velocidad - u)
         olderror = error
     EndWhile
-
+  
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
+  
     MotorBC.OffAndBrake()
 EndFunction
 
@@ -277,8 +285,11 @@ Function Encoder14F(in number velocidad, in number encoder)
 
     startC = MotorC.GetTacho()
     encoderC = 0
-
-    While Math.Abs(encoderC) < encoder
+    
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
+  
+    Time.Reset4()
+    While Math.Abs(encoderC) < encoder And Time.Get4() < safetyTimer + 2000
 
         encoderC = MotorC.GetTacho() - startC
 
@@ -290,7 +301,12 @@ Function Encoder14F(in number velocidad, in number encoder)
         Motor.StartSync("BC", - (velocidad + u), velocidad - u)
         olderror = error
     EndWhile
-
+  
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
+  
     MotorBC.Off()
 EndFunction
 
@@ -535,8 +551,11 @@ Function Encoder31(in number velocidad, in number encoder)
 
     startC = MotorC.GetTacho()
     encoderC = 0
-
-    While Math.Abs(encoderC) < encoder
+  
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
+    
+    Time.Reset4()
+    While Math.Abs(encoderC) < encoder And Time.Get4() < safetyTimer + 2000
 
         encoderC = MotorC.GetTacho() - startC
 
@@ -548,7 +567,12 @@ Function Encoder31(in number velocidad, in number encoder)
         Motor.StartSync("BC", - (velocidad + u), velocidad - u)
         olderror = error
     EndWhile
-
+  
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
+  
     MotorBC.OffAndBrake()
 EndFunction
 
@@ -572,8 +596,11 @@ Function Encoder31F(in number velocidad, in number encoder)
 
     startC = MotorC.GetTacho()
     encoderC = 0
-
-    While Math.Abs(encoderC) < encoder
+  
+    safetyTimer = 11286/(velocidad/10)*(distancia/100)/(diametro/6.24)
+    
+    Time.Reset4()
+    While Math.Abs(encoderC) < encoder And Time.Get4() < safetyTimer + 2000
 
         encoderC = MotorC.GetTacho() - startC
 
@@ -585,7 +612,11 @@ Function Encoder31F(in number velocidad, in number encoder)
         Motor.StartSync("BC", - (velocidad + u), velocidad - u)
         olderror = error
     EndWhile
-
+  
+    If Time.Get4() > safetyTimer + 2000 Then
+      Speaker.Play(100, "General alert")
+      Speaker.Wait()
+    EndIf
     MotorBC.Off()
 EndFunction
 

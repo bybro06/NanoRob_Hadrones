@@ -19,7 +19,7 @@ import "modules/RGB"
 #region Entorno de Ejecución
 
 Setup()
-Main()
+PruebaAndar()
 
 #EndRegion
 
@@ -429,6 +429,28 @@ Sub MainPrueba
   
   
   
+EndSub
+
+Sub PruebaAndar
+  Recto.EncoderSafe(10,30)
+  
+  GritarVoltaje()
+  Program.End()
+  StartArm()
+  Speaker.Play(100,"Three")
+  Brazo.AEncoder(35,-310)
+  
+  s()
+  Program.Delay(150)
+  Time.Reset4()
+  Recto.Encoder(10,100)
+  tiempo = Time.Get4()
+  
+  LCD.StopUpdate()
+  LCD.Clear()
+  LCD.Write(5,5,"Tiempo: "+tiempo+" ms")
+  LCD.Update()
+  s()
 EndSub
 
 #endregion
