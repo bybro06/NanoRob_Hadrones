@@ -16,10 +16,11 @@ import "modules/RGB"
 '   0\       |2
 '   1|       \3
 '
+
 #region Entorno de Ejecución
 
 Setup()
-PruebaAndar()
+Main()
 
 #EndRegion
 
@@ -35,7 +36,7 @@ Sub Setup
   diametro = 6.24
   
   '965
-  Giro.G1 = 985 / 360
+  Giro.G1 = 965 / 360
   
   negro1 = 10
   negro3 = 9
@@ -102,35 +103,33 @@ Sub Main
   StartArm()
   Speaker.Play(100,"One")
   s()
-  MotorA.ResetCount()
   Program.Delay(150)
   
-  Brazo.AEncoder(35,-330)
+  Brazo.AEncoder(35,-300)
   'Sale de casa
   Recto.EncoderF(50,5)
-  Siguelineas.Encoder14(50,27)
+  Siguelineas.Encoder14(50,23)
   
   'Dos arcos para acercarse a puerta amarilla
-  Giro.Grados(5*2,22.5*2,63)
+  Giro.Grados(5*2,22.5*2,61)
   Motor.Stop("BC","True")
   Program.Delay(200)
-  Giro.Grados(22.5*1.25,5*1.25,61.2)
+  Giro.Grados(22.5*1,5*1,62)
   
   'Anda hasta linea y abre puerta
-  Recto.EncoderF(50,40)
+  Recto.EncoderF(50,44)
   Recto.Negro1(50,4)
   
   'Gira hacia cruce y toma referencia
   Giro.Grados(40,-20,90)
-  Siguelineas.Encoder14(50,6.5)
-  Siguelineas.Cruce14(60)
+  Siguelineas.Cruce14(40)
   
   'Media vuelta
   Giro.Grados(70,-62,180)
   
   'Anda por linea para acercarse a marking de bloque grande
-  Siguelineas.Encoder31F(60,40)
-  Recto.Encoder(450,10)
+  Siguelineas.Encoder31F(30,40)
+  Recto.Encoder(30,9)
   
   'Se acerca a marking
   Giro.Grados(-30,30,90)
@@ -142,60 +141,60 @@ Sub Main
   Recto.Encoder(-40,2)
   RGB.Detect(2,5,markingGrande)
   color = markingGrande
-  
+  Thread.run = GritarColor
   
   marking[0] = 0
   'Dos arcos para alejarse de pared
-  Thread.Run = GritarColor
   Giro.Grados(40,9,41)
-  Giro.Grados(9,40,41)
+  Giro.Grados(9,40,39.5)
   
   'Anda a markings y los lee
-  Recto.Encoder(20,14)
+  Recto.Encoder(20,16)
   RGB.Detect(2,5,marking[1])
   color = marking[1]
-  Thread.run =GritarColor
+  Thread.run = GritarColor
   
   'Echa atrás y gira
   Recto.Encoder(-30,5.8)
   Giro.Grados(30,-30,90)
   
   'Se acerca para leer 3 y 4 marking
-  Recto.Encoder(30,6)
-  Giro.Grados(30,-30,93)
+  Recto.Encoder(30,8)
+  Giro.Grados(30,-30,92)
   
   'Choca con pared y lee
-  Recto.Tiempo(-20,700)
+  Recto.Tiempo(-20,500)
   
   'Lee 3 marking
   RGB.Detect(2,5,marking[2])
   color = marking[2]
-  Thread.run =GritarColor
+  Thread.run = GritarColor
   
   'Lee 4 marking
   Recto.Encoder(20,8)
   RGB.Detect(2,5,marking[3])
   color = marking[3]
-  Thread.run =GritarColor
+  Thread.run = GritarColor
   
   marking[0] = 14 - (marking[1] + marking[2] + marking[3])
   
   'Avanzamos a línea
-  Giro.Negro1F(50,43,1)
+  Giro.Negro1F(50,42,1)
   Giro.Negro1F(5,25,4)
   Siguelineas.Encoder14F(30,7)
   Siguelineas.Cruce14(60)
   
   'Doble arco atrás para tirar del rojo
-  Giro.Grados(-35,25,86)
+  Giro.Grados(-35,30,86)
   MotorBC.OffAndBrake()
   Program.Delay(100)
-  Siguelineas.Encoder14(30,21)
+  Siguelineas.Encoder14(30,20)
   
-  Giro.Grados(60,-40,91)
+  Giro.Grados(60,-40,89)
   
   'Retrocede y baja araña
-  Recto.Encoder(-50,40)
+  Recto.EncoderF(-50,35)
+  Recto.Encoder(-30,5)
   Brazo.AEncoder(20,40)
   Program.Delay(200)
   
@@ -204,7 +203,7 @@ Sub Main
   Recto.Tiempo(10,400)
   
   Recto.Encoder(-20,3)
-  Brazo.AEncoder(20,-330)
+  Brazo.AEncoder(20,-310)
   
   'Avanza a linea
   Giro.Encoder(30,20,13)
@@ -212,19 +211,20 @@ Sub Main
   Recto.Negro1(20,1)
   
   'Gira hacia barreras
-  Giro.Grados(-12,20,45)
-  Giro.Negro1(-10,20,4)
+  Giro.Grados(-8,20,85)
   Siguelineas.Encoder14(15,10)
-  Siguelineas.Cruce_Externo(15,3)
+ Siguelineas.Cruce_Externo(15,3)
+  
+  Program.Delay(400)
   
   'Media vuelta y coge barreras
   Giro.Encoder(30,26,12)
-  Giro.Encoder(27,30,9)
-  Recto.Encoder(12,6.5)
+  Giro.Encoder(27,30,11)
+  Recto.Encoder(12,5)
   Recto.Encoder(-10,5.25)
   BajarCuadro()
   Program.Delay(400)
-  Recto.Encoder(-25,16)
+  Recto.Encoder(-25,17.5)
   
   'Medio pivote avance y arco
   Giro.Grados(-20,20,95)
@@ -234,7 +234,7 @@ Sub Main
   
   'Gira y deja la barrera amarilla
   
-  Giro.Grados(30,0,134)
+  Giro.Grados(30,0,154)
   Recto.Encoder(20,2)
   Brazo.AEncoder(35,-330)
   Recto.Encoder(-25,6.5)
@@ -243,24 +243,22 @@ Sub Main
   
   'Deja barrera roja
   Giro.Grados(-40,0,70)
-  Recto.Encoder(40,16.3)
-  Brazo.AEncoder(40,-330)
+  Recto.Encoder(40,13)
+  Brazo.AEncoder(40,-300)
   
   'Vuelve al pasillo central
   Giro.Grados(20,-20,160)
-  Giro.Encoder(60,70,70.5)
-  Giro.Grados(30,-30,90)
-  Giro.Negro1(30,-30,3)
-  Giro.Negro1(-30,30,1)
-  
+  Giro.Encoder(60,70,70)
+  Giro.Grados(30,-30,87)
+  Giro.Negro1(20,-20,3)
   
   'Coge referencia en el cruce y siguelineas hasta azul
   Siguelineas.Encoder31F(30,10)
   Siguelineas.Cruce_ExternoF(40,4)
-  Siguelineas.Encoder31F(80,90)
-  Siguelineas.Encoder31(30,9)
+  Siguelineas.Encoder31F(80,80)
+  Siguelineas.Encoder31F(30,15)
   'Anda alante y coge bloque
-  Recto.Encoder(20,16)
+  Recto.Encoder(20,20)
   Giro.Grados(20,-20,90)
   Recto.Encoder(20,8)
   Brazo.AEncoder(30,-740)
@@ -270,32 +268,39 @@ Sub Main
     Else 
       Motor.Move("D", 60, (markingGrande - 2)*90, "true")
     EndIf
-    
-    
-    'Coge bloque grande y toma linea referencia
+  
+  
+  'Coge bloque grande y toma linea referencia
   Recto.Encoder(80,28)
   Recto.Blanco1(40,1)
   Recto.Negro1(40,1)
   Motor.Stop("BC","True")
   
   Program.Delay(150)
-  Giro.Grados(15,-15,92)
+  Giro.Grados(15,-15,101)
   
   'Anda hasta linea para dejar bloque
-  Recto.Encoder(80,60)
-  Recto.Negro1(10,3)
-  Recto.Encoder(-10,1)
-    
+  Recto.Encoder(80,56)
+  
+  Sensor.setmode(3,0)
+  MotorC.ResetCount()
+  While Motor.GetCount("C") <= 1000 or Sensor.ReadPercent(3)<5
+    Motor.StartSync("BC",-20,20)
+    EndWhile
+  
+  Recto.Encoder(-10,3)   
   Brazo.AEncoder(40,-500)
   If markingGrande = 5 or markingGrande = 3 Then
     Motor.Move("D", 60, -90, "true")
   EndIf
-  Brazo.AEncoder(40,-330)
+  Brazo.AEncoder(40,-300)
   Recto.Encoder(-10,10)
   
+  
+  'Se coloca para levantar barrera
   Giro.Grados(30,-30,180)
     
-    Giro.Encoder(30,17,27)
+    Giro.Encoder(30,17,23)
     Giro.Encoder(17,30,23)
     
   Recto.Encoder(-30,11)
@@ -304,8 +309,12 @@ Sub Main
   Recto.EncoderF(-30,2)
   Recto.Tiempo(-30,500)
   Recto.EncoderF(30,2)
+  
+   'Levanta primera bandera
   Brazo.ATimer(100,600)
-  Brazo.AEncoder(100,-330)
+  Brazo.AEncoder(100,-300)
+  
+  'Vuelve a linea para coger los 4 bloques
   Giro.Grados(35,0,95)
   Siguelineas.Cruce_ExternoF(30,4)
   
@@ -316,17 +325,23 @@ Sub Main
   Giro.Encoder(30*0.75,13*0.75,6.5)
   
   Recto.Encoder(-20,3)
- 
+  
+  'Coge y ordena los bloques
   OrdenarBloques(marking)
   Recto.Encoder(30,10)
+  
+  'Vuelve a línea para dejar luego los bloques
   Siguelineas.Cruce_Externo(30,3)
   Giro.Grados(-14,30,95)
+  
   Siguelineas.Encoder14F(40,20)
   Recto.Encoder(35,39)
+  
+  'Gira al lado de las banderas para dejar bloques
   Giro.Grados(10,-10,128)
- 
   Recto.Encoder(-40,18)
   
+  'Deja los bloques
   Giro.Grados(-1,-15,70)
   Recto.Encoder(-15,2)
   Brazo.AEncoder(50,-330)
@@ -336,8 +351,11 @@ Sub Main
   Recto.Encoder(-15,11)
   Recto.Encoder(15,13)
   Recto.Encoder(-15,5)
+  
+  'Gira para levatar banderas
   Giro.Grados(-15,15,100)
   
+  'Cuadra con pared y la levanta
   Recto.Tiempo(-30,500)
   Recto.Encoder(15,12)
   Giro.Grados(-10,10,7)
@@ -347,6 +365,7 @@ Sub Main
   Brazo.AEncoder(50,0)
   Giro.Grados(10,-10,15)
   
+  'Vuelve a linea y va a dejar los otros bloques
   Recto.EncoderF(100,60)
   Recto.Blanco1F(40,1)
   Recto.Negro1F(20,1)
@@ -356,6 +375,8 @@ Sub Main
   Siguelineas.Encoder14F(40,10)
   Siguelineas.Encoder14F(80,70)
   Siguelineas.Cruce_Externo(40,3)
+  
+  'Llega a la otra parte del mapa
   Recto.Encoder(20,2)
   Giro.Grados(-50,50,88)
   
@@ -374,37 +395,144 @@ Sub Main
 EndSub
 
 Sub MainPrueba
-  
-  
-  Speaker.Play(100,"Two")
-  'R=5
-  'A=4
-  'Z=2
-  'V=3
-  color = 0
   markingGrande=5
-  marking[0]=4
-  marking[1]=5
+  marking[0]=3
+  marking[1]=4
   marking[2]=2
-  marking[3]=3
+  marking[3]=5
   GritarVoltaje()
   StartArm()
+  Speaker.Play(100,"Two")
   s()
-  
-
   Program.Delay(150)
-  'Brazo.AEncoder(35,-330)
-  'MotorA.OffAndBrake()
-  'Program.Delay(500)
-
+  Brazo.AEncoder(35,-310)
+  MotorA.OffAndBrake()
+  Program.Delay(500)
+  
+  Siguelineas.Cruce_Externo(15,3)
+  
+  Program.Delay(400)
+  
+  'Media vuelta y coge barreras
+  Giro.Encoder(30,26,12)
+  Giro.Encoder(27,30,11)
+  Recto.Encoder(12,5)
+  Recto.Encoder(-10,5.25)
+  BajarCuadro()
+  Program.Delay(400)
+  Recto.Encoder(-25,17.5)
+  
+  'Medio pivote avance y arco
+  Giro.Grados(-20,20,95)
+  
+  Siguelineas.Encoder14(35,30)
+  Recto.Encoder(40,16)
+  
+  'Gira y deja la barrera amarilla
+  
+  Giro.Grados(30,0,154)
+  Recto.Encoder(20,2)
+  Brazo.AEncoder(35,-330)
+  Recto.Encoder(-25,6.5)
+  BajarCuadro()
+  Program.Delay(400)
+  
+  'Deja barrera roja
+  Giro.Grados(-40,0,70)
+  Recto.Encoder(40,13)
+  Brazo.AEncoder(40,-300)
+  
+  'Vuelve al pasillo central
+  Giro.Grados(20,-20,160)
+  Giro.Encoder(60,70,70)
+  Giro.Grados(30,-30,87)
+  Giro.Negro1(20,-20,3)
+  
+  'Coge referencia en el cruce y siguelineas hasta azul
+  Siguelineas.Encoder31F(30,10)
+  Siguelineas.Cruce_ExternoF(40,4)
+  Siguelineas.Encoder31F(80,80)
+  Siguelineas.Encoder31F(30,15)
+  'Anda alante y coge bloque
+  Recto.Encoder(20,20)
+  Giro.Grados(20,-20,90)
+  Recto.Encoder(20,8)
+  Brazo.AEncoder(30,-740)
+  
+    If markingGrande = 5 Then
+      Motor.Move("D", -60, 90, "true")
+    Else 
+      Motor.Move("D", 60, (markingGrande - 2)*90, "true")
+    EndIf
+  
+  
+  'Coge bloque grande y toma linea referencia
+  Recto.Encoder(80,28)
+  Recto.Blanco1(40,1)
+  Recto.Negro1(40,1)
+  Motor.Stop("BC","True")
+  
+  Program.Delay(150)
+  Giro.Grados(15,-15,99)
+  
+  'Anda hasta linea para dejar bloque
+  Recto.Encoder(80,58)
+  Recto.Negro1(10,3)
+  Recto.Encoder(-10,3)
+    
+  Brazo.AEncoder(40,-500)
+  If markingGrande = 5 or markingGrande = 3 Then
+    Motor.Move("D", 60, -90, "true")
+  EndIf
+  Brazo.AEncoder(40,-300)
+  Recto.Encoder(-10,10)
+  
+  
+  'Se coloca para levantar barrera
+  Giro.Grados(30,-30,180)
+    
+    Giro.Encoder(30,17,23)
+    Giro.Encoder(17,30,23)
+    
+  Recto.Encoder(-30,11)
+  
+  Giro.Grados(-30,30,90)
+  Recto.EncoderF(-30,2)
+  Recto.Tiempo(-30,500)
+  Recto.EncoderF(30,2)
+  
+   'Levanta primera bandera
+  Brazo.ATimer(100,600)
+  Brazo.AEncoder(100,-300)
+  
+  'Vuelve a linea para coger los 4 bloques
+  Giro.Grados(35,0,95)
+  Siguelineas.Cruce_ExternoF(30,4)
+  
+  Giro.Grados(30,-18,90)
+  Siguelineas.Encoder31F(10,6)
+  
+  Giro.Encoder(13*0.75,30*0.75,6.5)
+  Giro.Encoder(30*0.75,13*0.75,6.5)
+  
+  Recto.Encoder(-20,3)
+  
+  'Coge y ordena los bloques
+  OrdenarBloques(marking)
+  Recto.Encoder(30,10)
+  
+  'Vuelve a línea para dejar luego los bloques
   Siguelineas.Cruce_Externo(30,3)
   Giro.Grados(-14,30,95)
+  
   Siguelineas.Encoder14F(40,20)
   Recto.Encoder(35,39)
+  
+  'Gira al lado de las banderas para dejar bloques
   Giro.Grados(10,-10,128)
- 
   Recto.Encoder(-40,18)
   
+  'Deja los bloques
   Giro.Grados(-1,-15,70)
   Recto.Encoder(-15,2)
   Brazo.AEncoder(50,-330)
@@ -414,8 +542,11 @@ Sub MainPrueba
   Recto.Encoder(-15,11)
   Recto.Encoder(15,13)
   Recto.Encoder(-15,5)
+  
+  'Gira para levatar banderas
   Giro.Grados(-15,15,100)
   
+  'Cuadra con pared y la levanta
   Recto.Tiempo(-30,500)
   Recto.Encoder(15,12)
   Giro.Grados(-10,10,7)
@@ -425,32 +556,32 @@ Sub MainPrueba
   Brazo.AEncoder(50,0)
   Giro.Grados(10,-10,15)
   
-  Recto.EncoderF(100,8)
+  'Vuelve a linea y va a dejar los otros bloques
+  Recto.EncoderF(100,60)
+  Recto.Blanco1F(40,1)
+  Recto.Negro1F(20,1)
   
+  Giro.Grados(-12,30,93)
   
+  Siguelineas.Encoder14F(40,10)
+  Siguelineas.Encoder14F(80,70)
+  Siguelineas.Cruce_Externo(40,3)
   
-EndSub
-
-Sub PruebaAndar
-  Recto.EncoderSafe(10,30)
+  'Llega a la otra parte del mapa
+  Recto.Encoder(20,2)
+  Giro.Grados(-50,50,88)
   
-  GritarVoltaje()
-  Program.End()
-  StartArm()
-  Speaker.Play(100,"Three")
-  Brazo.AEncoder(35,-310)
+  Siguelineas.Encoder31(50,40)
+  Recto.Encoder(50,30)
   
-  s()
-  Program.Delay(150)
-  Time.Reset4()
-  Recto.Encoder(10,100)
-  tiempo = Time.Get4()
+  'cuadramos con pared para dejar los bloques
+  Recto.Tiempo(40,1000)
+  Giro.Grados(8,-32,94)
+  Brazo.AEncoder(30,-300)
   
-  LCD.StopUpdate()
-  LCD.Clear()
-  LCD.Write(5,5,"Tiempo: "+tiempo+" ms")
-  LCD.Update()
-  s()
+  Recto.Encoder(30,20)
+  Brazo.AEncoder(30,0)
+  Recto.Encoder(-30,13.2)
 EndSub
 
 #endregion
@@ -516,7 +647,7 @@ Function Soltar()
 EndFunction
 
 Function BajarCuadro()
-  Brazo.AEncoder(25,-800)
+  Brazo.AEncoder(30,-780)
 EndFunction
 
 Function Codigo(in number[] marking, out string codigo)
@@ -609,6 +740,7 @@ Function OrdenarBloques(in number[] marking)
     Swap()
    ElseIf codigo = "ZVAR" Then
     Rotar(-90)
+
   ElseIf codigo = "ZVRA" Then
     Rotar(-90)
     Swap()
