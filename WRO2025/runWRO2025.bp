@@ -111,21 +111,22 @@ Sub Main
   Siguelineas.Encoder14(50,23)
   
   'Dos arcos para acercarse a puerta amarilla
-  Giro.Grados(5*2,22.5*2,61)
-  Motor.Stop("BC","True")
-  Program.Delay(200)
-  Giro.Grados(22.5*1,5*1,62)
-  
+  Giro.Grados(10,45,74)
+  'Motor.Stop("BC","True")
+  'Program.Delay(200)
+  Giro.Grados(22.5,5,82)
+  'Program.Delay(200)
   'Anda hasta linea y abre puerta
-  Recto.EncoderF(50,44)
+  
+  Recto.Encoder(50,44)
   Recto.Negro1(50,4)
   
   'Gira hacia cruce y toma referencia
-  Giro.Grados(40,-20,90)
+  Giro.Grados(50,-20,90)
   Siguelineas.Cruce14(40)
   
   'Media vuelta
-  Giro.Grados(70,-62,180)
+  Giro.Grados(70,-62,185)
   
   'Anda por linea para acercarse a marking de bloque grande
   Siguelineas.Encoder31F(30,40)
@@ -133,7 +134,7 @@ Sub Main
   
   'Se acerca a marking
   Giro.Grados(-30,30,90)
-  Recto.Encoder(20,14)
+  Recto.Encoder(20,13)
   
   'Gira y lee
   Giro.Grados(20,-20,90)
@@ -145,22 +146,22 @@ Sub Main
   
   marking[0] = 0
   'Dos arcos para alejarse de pared
-  Giro.Grados(40,9,41)
-  Giro.Grados(9,40,39.5)
+  Giro.Grados(40,9,45)
+  Giro.Grados(9,40,40)
   
   'Anda a markings y los lee
-  Recto.Encoder(20,16)
+  Recto.Encoder(20,12)
   RGB.Detect(2,5,marking[1])
   color = marking[1]
   Thread.run = GritarColor
   
   'Echa atrás y gira
   Recto.Encoder(-30,5.8)
-  Giro.Grados(30,-30,90)
+  Giro.Grados(30,-30,102)
   
   'Se acerca para leer 3 y 4 marking
   Recto.Encoder(30,8)
-  Giro.Grados(30,-30,92)
+  Giro.Grados(30,-30,100)
   
   'Choca con pared y lee
   Recto.Tiempo(-20,500)
@@ -181,14 +182,14 @@ Sub Main
   'Avanzamos a línea
   Giro.Negro1F(50,42,1)
   Giro.Negro1F(5,25,4)
-  Siguelineas.Encoder14F(30,7)
+  Siguelineas.Encoder14F(20,7)
   Siguelineas.Cruce14(60)
   
   'Doble arco atrás para tirar del rojo
   Giro.Grados(-35,30,86)
   MotorBC.OffAndBrake()
   Program.Delay(100)
-  Siguelineas.Encoder14(30,20)
+  Siguelineas.Encoder14(30,22)
   
   Giro.Grados(60,-40,89)
   
@@ -212,6 +213,8 @@ Sub Main
   
   'Gira hacia barreras
   Giro.Grados(-8,20,85)
+  Giro.Negro1(-20,20,4)
+  Giro.Grados(20,0,10)
   Siguelineas.Encoder14(15,10)
  Siguelineas.Cruce_Externo(15,3)
   
@@ -221,7 +224,7 @@ Sub Main
   Giro.Encoder(30,26,12)
   Giro.Encoder(27,30,11)
   Recto.Encoder(12,5)
-  Recto.Encoder(-10,5.25)
+  Recto.Encoder(-10,6)
   BajarCuadro()
   Program.Delay(400)
   Recto.Encoder(-25,17.5)
@@ -230,11 +233,11 @@ Sub Main
   Giro.Grados(-20,20,95)
   
   Siguelineas.Encoder14(35,30)
-  Recto.Encoder(40,16)
+  Recto.Encoder(40,13)
   
   'Gira y deja la barrera amarilla
   
-  Giro.Grados(30,0,154)
+  Giro.Grados(30,0,144)
   Recto.Encoder(20,2)
   Brazo.AEncoder(35,-330)
   Recto.Encoder(-25,6.5)
@@ -242,15 +245,17 @@ Sub Main
   Program.Delay(400)
   
   'Deja barrera roja
-  Giro.Grados(-40,0,70)
-  Recto.Encoder(40,13)
-  Brazo.AEncoder(40,-300)
+  Giro.Grados(-40,20,80)
+  Recto.Encoder(40,15)
+  Brazo.AEncoder(40,-330)
   
   'Vuelve al pasillo central
   Giro.Grados(20,-20,160)
-  Giro.Encoder(60,70,70)
-  Giro.Grados(30,-30,87)
-  Giro.Negro1(20,-20,3)
+  Giro.Encoder(63,70,65.5)
+  Giro.Encoder(60*0.3,70*0.3,3.5)
+  Recto.Blanco1(40,4)
+  Giro.Grados(30,-30,85)
+  'Giro.Negro1(20,-20,3)
   
   'Coge referencia en el cruce y siguelineas hasta azul
   Siguelineas.Encoder31F(30,10)
@@ -259,7 +264,7 @@ Sub Main
   Siguelineas.Encoder31F(30,15)
   'Anda alante y coge bloque
   Recto.Encoder(20,20)
-  Giro.Grados(20,-20,90)
+  Giro.Grados(15,-15,92)
   Recto.Encoder(20,8)
   Brazo.AEncoder(30,-740)
   
@@ -280,11 +285,11 @@ Sub Main
   Giro.Grados(15,-15,101)
   
   'Anda hasta linea para dejar bloque
-  Recto.Encoder(80,56)
+  Recto.Encoder(80,45)
   
   Sensor.setmode(3,0)
   MotorC.ResetCount()
-  While Motor.GetCount("C") <= 1000 or Sensor.ReadPercent(3)<5
+  While Motor.GetCount("C") <= 400 or Sensor.ReadPercent(1)<5
     Motor.StartSync("BC",-20,20)
     EndWhile
   
@@ -444,9 +449,13 @@ Sub MainPrueba
   
   'Vuelve al pasillo central
   Giro.Grados(20,-20,160)
-  Giro.Encoder(60,70,70)
-  Giro.Grados(30,-30,87)
-  Giro.Negro1(20,-20,3)
+  Giro.Encoder(60,70,65.5)
+  Giro.Encoder(60*0.3,70*0.3,5)
+  Recto.Blanco1(20,4)
+  Recto.Encoder(30,3)
+  Giro.Grados(30,-30,90)
+  'Giro.Grados(30,-30,87)
+  'Giro.Negro1(20,-20,3)
   
   'Coge referencia en el cruce y siguelineas hasta azul
   Siguelineas.Encoder31F(30,10)
