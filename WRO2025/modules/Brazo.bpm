@@ -6,13 +6,13 @@ Function AEncoder(in number velocidad, in number encoder)
 
     signo = encDiff / Math.Abs(encDiff)
 
-    safetyTimer = Math.Max(((Math.abs(encDiff) / 100) / (velocidad / 20) * 650 * 2), 400)
+    safetyTimer = Math.abs(encDiff)/300/(Math.Abs(velocidad)/30)*750 + 150
 
     Time.Reset3()
 
     If encDiff < > 0 Then
 
-        While Math.Abs(Motor.GetCount("A") - encoder) > 25 and Time.Get3() < 2000
+        While Math.Abs(Motor.GetCount("A") - encoder) > 35 and Time.Get3() < safetyTimer
             ' Puedes ajustar el Valor (5) para controlar la precisión
             MotorA.StartSpeed(signo * velocidad)
         EndWhile
