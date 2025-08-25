@@ -107,16 +107,16 @@ Sub Main
   s()
   Program.Delay(150)
   
-  Brazo.AEncoder(35,-300)
+  Brazo.AEncoder(35,-310)
   'Sale de casa
   Recto.EncoderF(50,5)
   Siguelineas.Encoder14(50,23)
   
   'Dos arcos para acercarse a puerta amarilla
-  Giro.Grados(10,45,74)
+  Giro.Grados(10,45,68)
   'Motor.Stop("BC","True")
   'Program.Delay(200)
-  Giro.Grados(22.5,5,82)
+  Giro.Grados(22.5,5,78)
   'Program.Delay(200)
   'Anda hasta linea y abre puerta
   
@@ -191,7 +191,7 @@ Sub Main
   Giro.Grados(-25,30,86)
   MotorBC.OffAndBrake()
   Program.Delay(100)
-  Siguelineas.Encoder14(30,22)
+  Siguelineas.Encoder14(30,21)
   
   Giro.Grados(60,-40,89)
   
@@ -222,9 +222,9 @@ Sub Main
   Program.Delay(300)
   
   'Media vuelta y coge barreras
-  Giro.Encoder(30,26,12)
-  Giro.Encoder(27,30,11)
-  Recto.Encoder(12,5)
+  Giro.Encoder(32,26,15)
+  Giro.Encoder(27,32,11)
+  Recto.Encoder(12,4)
   Recto.Encoder(-10,6)
   BajarCuadro()
   Program.Delay(400)
@@ -239,7 +239,7 @@ Sub Main
   'Gira y deja la barrera amarilla
   
   Giro.Grados(30,0,144)
-  Recto.Encoder(20,2.5)
+  Recto.Encoder(20,1)
   Brazo.AEncoder(35,-330)
   Recto.Encoder(-25,6.5)
   BajarCuadro()
@@ -247,7 +247,7 @@ Sub Main
   
   'Deja barrera roja
   Giro.Grados(-40,20,80)
-  Recto.Encoder(40,9)
+  Recto.Encoder(40,8)
   Brazo.AEncoder(40,-330)
   
   'Vuelve al pasillo central
@@ -286,7 +286,7 @@ Sub Main
   Giro.Grados(15,-15,97)
   
   'Anda hasta linea para dejar bloque
-  Recto.Encoder(80,56)
+  Recto.Encoder(80,54)
   
   'MotorC.ResetCount()
   'While Motor.GetCount("C") <= 400 or Sensor.ReadPercent(1)<5
@@ -298,7 +298,7 @@ Sub Main
   If markingGrande = 5 or markingGrande = 3 Then
     Motor.Move("D", 60, -90, "true")
   EndIf
-  Brazo.AEncoder(40,-300)
+  Brazo.AEncoder(40,-330)
   Recto.Encoder(-10,10)
   
   
@@ -312,7 +312,7 @@ Sub Main
   
   Giro.Grados(-30,30,90)
   Recto.Tiempo(-30,500)
-  Recto.EncoderF(30,1)
+  Recto.EncoderF(30,3)
   
    'Levanta primera bandera
   Brazo.ATimer(100,600)
@@ -322,7 +322,7 @@ Sub Main
   Giro.Grados(35,-3,95)
   Siguelineas.Cruce_ExternoF(20,4)
   
-  Giro.Grados(30,-14,90)
+  Giro.Grados(30,-10,90)
   Siguelineas.Encoder31F(10,6)
   
   Giro.Encoder(13*0.75,30*0.75,6.5)
@@ -358,13 +358,13 @@ Sub Main
   Recto.Encoder(15,17)
   Recto.Encoder(-15,5)
   'Gira para levatar banderas
-  Giro.Grados(-15,15,85)
+  Giro.Grados(-15,15,88)
   
   'Cuadra con pared y la levanta
   Recto.Tiempo(-30,500)
   Recto.Encoder(15,12)
   Giro.Grados(-10,10,9)
-  Brazo.AEncoder(30,-200)
+  Brazo.AEncoder(30,-250)
   Recto.Encoder(10,5)
   Recto.Encoder(-10,5)
   Brazo.AEncoder(50,0)

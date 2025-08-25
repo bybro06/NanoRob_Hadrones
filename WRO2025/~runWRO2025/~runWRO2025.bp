@@ -152,7 +152,7 @@ Speaker.Play ( 100 , "WRO2025/Media/One" )
 f_s_0 ()
 Program.Delay ( 150 )
 lv_velocidad_10 = 35
-lv_encoder_10 = - 300
+lv_encoder_10 = - 310
 m_brazo_aencoder_2 ()
 lv_velocidad_11 = 50
 lv_distancia_11 = 5
@@ -162,11 +162,11 @@ lv_encoder_18 = 23
 m_siguelineas_encoder14_2 ()
 lv_velocidad1_25 = 10
 lv_velocidad2_25 = 45
-lv_grados_25 = 74
+lv_grados_25 = 68
 m_giro_grados_3 ()
 lv_velocidad1_25 = 22.5
 lv_velocidad2_25 = 5
-lv_grados_25 = 82
+lv_grados_25 = 78
 m_giro_grados_3 ()
 lv_velocidad1_26 = 50
 lv_velocidad2_26 = 49
@@ -284,7 +284,7 @@ m_giro_grados_3 ()
 MotorBC.OffAndBrake ()
 Program.Delay ( 100 )
 lv_velocidad_18 = 30
-lv_encoder_18 = 22
+lv_encoder_18 = 23
 m_siguelineas_encoder14_2 ()
 lv_velocidad1_25 = 60
 lv_velocidad2_25 = - 40
@@ -342,16 +342,16 @@ lv_velocidad_22 = 15
 lv_reader_22 = 3
 m_siguelineas_cruce_externo_2 ()
 Program.Delay ( 300 )
-lv_velocidad1_26 = 30
+lv_velocidad1_26 = 32
 lv_velocidad2_26 = 26
-lv_distancia_26 = 12
+lv_distancia_26 = 15
 m_giro_encoder_3 ()
 lv_velocidad1_26 = 27
-lv_velocidad2_26 = 30
+lv_velocidad2_26 = 32
 lv_distancia_26 = 11
 m_giro_encoder_3 ()
 lv_velocidad_13 = 12
-lv_distancia_13 = 5
+lv_distancia_13 = 4
 m_recto_encoder_2 ()
 lv_velocidad_13 = - 10
 lv_distancia_13 = 6
@@ -376,7 +376,7 @@ lv_velocidad2_25 = 0
 lv_grados_25 = 144
 m_giro_grados_3 ()
 lv_velocidad_13 = 20
-lv_distancia_13 = 2.5
+lv_distancia_13 = 1
 m_recto_encoder_2 ()
 lv_velocidad_10 = 35
 lv_encoder_10 = - 330
@@ -391,7 +391,7 @@ lv_velocidad2_25 = 20
 lv_grados_25 = 80
 m_giro_grados_3 ()
 lv_velocidad_13 = 40
-lv_distancia_13 = 9
+lv_distancia_13 = 8
 m_recto_encoder_2 ()
 lv_velocidad_10 = 40
 lv_encoder_10 = - 330
@@ -461,7 +461,7 @@ lv_velocidad2_25 = - 15
 lv_grados_25 = 97
 m_giro_grados_3 ()
 lv_velocidad_13 = 80
-lv_distancia_13 = 56
+lv_distancia_13 = 54
 m_recto_encoder_2 ()
 lv_velocidad_10 = 40
 lv_encoder_10 = - 500
@@ -470,7 +470,7 @@ If gv_markinggrande = 5 or gv_markinggrande = 3 Then
 Motor.Move ( "D" , 60 , - 90 , "true" )
 EndIf
 lv_velocidad_10 = 40
-lv_encoder_10 = - 300
+lv_encoder_10 = - 330
 m_brazo_aencoder_2 ()
 lv_velocidad_13 = - 10
 lv_distancia_13 = 10
@@ -498,7 +498,7 @@ lv_velocidad_14 = - 30
 lv_tiempo_14 = 500
 m_recto_tiempo_2 ()
 lv_velocidad_11 = 30
-lv_distancia_11 = 1
+lv_distancia_11 = 3
 m_recto_encoderf_2 ()
 lv_velocidad_9 = 100
 lv_timer_9 = 600
@@ -514,7 +514,7 @@ lv_velocidad_23 = 20
 lv_reader_23 = 4
 m_siguelineas_cruce_externof_2 ()
 lv_velocidad1_25 = 30
-lv_velocidad2_25 = - 14
+lv_velocidad2_25 = - 10
 lv_grados_25 = 90
 m_giro_grados_3 ()
 lv_velocidad_20 = 10
@@ -591,7 +591,7 @@ lv_distancia_13 = 5
 m_recto_encoder_2 ()
 lv_velocidad1_25 = - 15
 lv_velocidad2_25 = 15
-lv_grados_25 = 85
+lv_grados_25 = 88
 m_giro_grados_3 ()
 lv_velocidad_14 = - 30
 lv_tiempo_14 = 500
@@ -604,7 +604,7 @@ lv_velocidad2_25 = 10
 lv_grados_25 = 9
 m_giro_grados_3 ()
 lv_velocidad_10 = 30
-lv_encoder_10 = - 200
+lv_encoder_10 = - 250
 m_brazo_aencoder_2 ()
 lv_velocidad_13 = 10
 lv_distancia_13 = 5
