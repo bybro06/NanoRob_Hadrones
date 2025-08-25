@@ -6,20 +6,14 @@ Function AEncoder(in number velocidad, in number encoder)
 
     signo = encDiff / Math.Abs(encDiff)
 
-    safetyTimer = Math.abs(encDiff)/300/(Math.Abs(velocidad)/30)*750 + 150
-
-    Time.Reset3()
-
     If encDiff < > 0 Then
 
-        While Math.Abs(Motor.GetCount("A") - encoder) > 35 and Time.Get3() < safetyTimer
-            ' Puedes ajustar el Valor (5) para controlar la precisión
-            MotorA.StartSpeed(signo * velocidad)
-        EndWhile
+        Motor.Move("A", velocidad*signo, Math.Abs(encDiff), "True")
 
-        Motor.Stop("A", "True")
     EndIf
-
+  
+  Motor.Stop("A", "True")
+  
 EndFunction
 
 Function ATimer(in number velocidad, in number timer)
@@ -90,21 +84,13 @@ Function DEncoder(in number velocidad, in number encoder)
 
     signo = encDiff / Math.Abs(encDiff)
 
-    safetyTimer = Math.Max(((Math.abs(encDiff) / 100) / (velocidad / 20) * 650 * 2), 400)
-
-    Time.Reset3()
-
     If encDiff < > 0 Then
 
-        While Math.Abs(Motor.GetCount("D") - encoder) > 25 and Time.Get3() < safetyTimer
-            ' Puedes ajustar el velocidadAlor (5) para controlar la precisión
-            MotorD.StartSpeed(signo * velocidad)
-            LCD.Clear()
-            LCD.Write(5, 30, "safetyTimer: " + safetyTimer)
-        EndWhile
+        Motor.Move("D", velocidad*signo, Math.Abs(encDiff), "True")
 
-        Motor.Stop("D", "True")
     EndIf
+  
+  Motor.Stop("D", "True")
 
 EndFunction
 
