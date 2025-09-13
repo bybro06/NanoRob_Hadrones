@@ -18,9 +18,11 @@ Function Encoder(in number velocidad, in number distancia)
     MotorC.ResetCount()
     MotorBC.Off()
     Program.Delay(100)
+
+    c = -0.05
     Time.Reset4()
     While Math.Abs(MotorC.GetTacho()) < enc And Time.Get4() < safetyTimer + 2000
-      Motor.StartSync("BC", - velocidad, velocidad)
+      Motor.StartSync("BC", - velocidad*(1+c/2), velocidad*(1-c/2))
     EndWhile
     
     If Time.Get4() > safetyTimer + 2000 Then
@@ -42,9 +44,11 @@ Function EncoderF(in number velocidad, in number distancia)
     MotorC.ResetCount()
     MotorBC.Off()
     Program.Delay(100)
+
+    c = -0.05
     Time.Reset4()
     While Math.Abs(MotorC.GetTacho()) < enc And Time.Get4() < safetyTimer + 2000
-      Motor.StartSync("BC", - velocidad, velocidad)
+      Motor.StartSync("BC", - velocidad*(1+c/2), velocidad*(1-c/2))
     EndWhile
     
     If Time.Get4() > safetyTimer + 2000 Then
@@ -59,13 +63,13 @@ EndFunction
 'Hasta negro en 1 Sensor
 Function Negro1(in number velocidad, in number sensor)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura = 50
     While lectura > 15
         lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -74,12 +78,12 @@ EndFunction
 
 Function Negro1F(in number velocidad, in number sensor)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura = 50
     While lectura > 15
         lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -89,13 +93,13 @@ EndFunction
 'Hasta blanco en 1 Sensor
 Function Blanco1(in number velocidad, in number sensor)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura = 50
     While lectura < 60
         lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -104,13 +108,13 @@ EndFunction
 
 Function Blanco1F(in number velocidad, in number sensor)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura = 50
     While lectura < 60
         lectura = (Sensor.ReadPercent(sensor) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -120,7 +124,7 @@ EndFunction
 'Hasta negro en 2 Sensores
 Function Negros2(in number velocidad, in number sensor1, in number sensor2)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura1 = 50
     lectura2 = 50
@@ -128,7 +132,7 @@ Function Negros2(in number velocidad, in number sensor1, in number sensor2)
         lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
         lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -137,7 +141,7 @@ EndFunction
 
 Function Negros2F(in number velocidad, in number sensor1, in number sensor2)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura1 = 50
     lectura2 = 50
@@ -145,7 +149,7 @@ Function Negros2F(in number velocidad, in number sensor1, in number sensor2)
         lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
         lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -155,7 +159,7 @@ EndFunction
 'Hasta blanco en 2 Sensores
 Function Blancos2(in number velocidad, in number sensor1, in number sensor2)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura1 = 50
     lectura2 = 50
@@ -163,7 +167,7 @@ Function Blancos2(in number velocidad, in number sensor1, in number sensor2)
         lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
         lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -172,7 +176,7 @@ EndFunction
 
 Function Blancos2F(in number velocidad, in number sensor1, in number sensor2)
 
-    correccion = 0
+    correccion = 0.002
     MotorBC.Off()
     lectura1 = 50
     lectura2 = 50
@@ -180,7 +184,7 @@ Function Blancos2F(in number velocidad, in number sensor1, in number sensor2)
         lectura1 = (Sensor.ReadPercent(sensor1) - negro) / blanco * (100 - negro) 'Normalización
         lectura2 = (Sensor.ReadPercent(sensor2) - negro) / blanco * (100 - negro) 'Normalización
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1+correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -190,14 +194,14 @@ EndFunction
 'Hasta color en 1 Sensor
 Function Color1(in number velocidad, in number sensor, in number color)
 
-    correccion = 0
+    correccion = 0.002
     mode = Sensor.GetMode(sensor)
     Sensor.SetMode(sensor, 2)
 
     MotorBC.Off()
     While Sensor.ReadRawValue(sensor, 0) < > color
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1+correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -207,14 +211,14 @@ EndFunction
 
 Function Color1F(in number velocidad, in number sensor, in number color)
 
-    correccion = 0
+    correccion = 0.002
     mode = Sensor.GetMode(sensor)
     Sensor.SetMode(sensor, 2)
 
     MotorBC.Off()
     While Sensor.ReadRawValue(sensor, 0) < > color
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1+correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -225,13 +229,13 @@ EndFunction
 'Por tiempo
 Function Tiempo(in number velocidad, in number tiempo)
 
-    correccion = 0
+    correccion = 0.002
     Time.Reset3()
 
     MotorBC.Off()
     While Time.Get3() < tiempo
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 
@@ -240,13 +244,13 @@ EndFunction
 
 Function TiempoF(in number velocidad, in number tiempo)
 
-    correccion = 0
+    correccion = 0.002
     Time.Reset3()
 
     MotorBC.Off()
     While Time.Get3() < tiempo
 
-        Motor.StartSync("BC", - velocidad + correccion, velocidad + correccion)
+        Motor.StartSync("BC", - velocidad*(1-correccion), velocidad*(1-correccion))
 
     EndWhile
 

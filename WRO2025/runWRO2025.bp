@@ -125,23 +125,24 @@ Sub Main
   Brazo.AEncoder(35,-260) 'eran -260
   
   'SALE DE CASA SIGUIENDO LINEA
- 
-  Giro.Encoder(80,77,27)
+  
+  Giro.EncoderF(80,82,17)
+  Recto.Encoder(30,7)
   'Siguelineas.Encoder14(80,22)
   
   'SE APROXIMA A PUERTA AMARILLA
   
-  Giro.GradosF(10,45,72)
-  Giro.GradosF(24,5,68)
+  Giro.GradosF(10*0.75,45*0.75,59)
+  Giro.GradosF(24,5,62)
 
   'ABRE PUERTA AMARILLA Y LLEGA HASTA LINEA
   
-  Giro.Encoder(50,47,44)
+  Recto.Encoder(50,44)
   Recto.Negro1(50,4)
   
   'GIRA A CRUCE PARA TOMAR REFERENCIA
   
-  Giro.Grados(50,-17,94)
+  Giro.Grados(50,-40,92)
   Siguelineas.Cruce14(40)
   Giro.Grados(70,-62,185)
   
@@ -153,8 +154,8 @@ Sub Main
   'APROXIMACIÓN AL MARKING GRANDE
   
   Giro.Grados(-30,30,90)
-  Recto.Encoder(20,13)
-  Giro.Grados(20,-20,90)
+  Recto.Encoder(20,14.5)
+  Giro.Grados(20,-20,93)
   Program.Delay(100)
   Recto.Encoder(-40,2)
   
@@ -167,8 +168,8 @@ Sub Main
   
   'APROXIMACIÓN AL 1º MARKING
   
-  Giro.Grados(40,9,44.5)
-  Giro.Grados(9,40,37.5)
+  Giro.Grados(40,9,42.5)
+  Giro.Grados(9,40,42.5)
   Giro.Encoder(42,40,12)
   
   'CUADRA CON PARED
@@ -220,12 +221,12 @@ Sub Main
   
   'SIGUELINEAS HASTA MISIÓN DE PALANCA ROJA
   
-  Siguelineas.Encoder14(30,25)
+  Siguelineas.Encoder14(30,27)
   
   'SE DESVÍA A PALANCA ROJA
   
-  Giro.Grados(60,-40,87)
-  Recto.EncoderF(-80,34) 'Había -50,35
+  Giro.Grados(60,-40,88)
+  Giro.EncoderF(-80,-80,34)
   Recto.Encoder(-30,5)
   
   'BAJA ARAÑA
@@ -235,7 +236,7 @@ Sub Main
   
   'TIRA DE LA PALANCA, RETROCEDE Y LEVANTA ARAÑA
   
-  Recto.EncoderF(30,15)
+  Recto.EncoderF(30,16.5)
   Recto.Tiempo(10,200)
   Recto.Encoder(-20,3)
   Brazo.AEncoder(20,-310)
@@ -244,7 +245,7 @@ Sub Main
   
   Recto.Encoder(40,23.5)
   Recto.Negro1(20,1)
-  Giro.Grados(-8,20,85)
+  Giro.Grados(-5,20,85)
   Giro.Negro1(-20,20,4)
   Giro.Grados(20,0,10)
   
@@ -270,14 +271,14 @@ Sub Main
   Recto.Encoder(-35,16.5)
   Giro.Grados(-20,20,95) 
   Siguelineas.Encoder14(45,30)
-  Giro.Encoder(50,48,14)
+  Giro.Encoder(50,50,14)
   
   'GIRA PARA DEJAR LA BARRERA AMARILLA
   
   Giro.Grados(30,0,150)
   Recto.EncoderF(40,9)
-  Recto.Color1(40,4,4)
-  Recto.Encoder(-20,14)
+  Recto.Color1(20,1,4)
+  Recto.Encoder(-20,9)
   Brazo.AEncoder(35,-330)
   
   'RECOGE LA BARRERA ROJA
@@ -288,7 +289,7 @@ Sub Main
   
   'GIRA PARA DEJAR LA BARRERA ROJA
   
-  Giro.Grados(-40,20,80)
+  Giro.Grados(-40,20,86)
   Brazo.AEncoder(40,-300)
   Recto.EncoderF(60,8)
   Recto.Color1(30,1,5)
@@ -296,7 +297,7 @@ Sub Main
   'VUELVE A CARRIL CENTRAL
   
   Recto.Encoder(-50,14)
-  Giro.Grados(35,-35,165)
+  Giro.Grados(35,-35,152)
   Giro.EncoderF(65*1.25,70*1.25,65)
   
   'CUADRA CON PARED
@@ -305,10 +306,11 @@ Sub Main
   Recto.EncoderF(-80,13) 'Había -50, 14
   Recto.Blanco1F(-40,1)
   Recto.Negro1(-30,1)
-  Giro.Grados(41,-20,90)
+  Giro.Grados(41,-20,92)
   
   'RECORRE LINEA PRINCIPAL ENTERA
   
+  s()
   Siguelineas.Encoder31F(40,10)
   Siguelineas.Cruce_ExternoF(80,4)
   Siguelineas.Encoder31F(80,82)
@@ -571,14 +573,20 @@ Sub MainPrueba
 EndSub
 
 Sub PruebaVelocidad
-  Time.Reset5()
-  Motor.Move("A",-30,300,"True")
-  tiempo = Time.Get5()
-  LCD.StopUpdate()
-  LCD.Clear()
-  LCD.Write(5,5,"Tiempo: "+tiempo)
-  LCD.Update()
+  'Time.Reset5()
+  'Motor.Move("A",-30,300,"True")
+  'tiempo = Time.Get5()
+  'LCD.StopUpdate()
+  'LCD.Clear()
+  'LCD.Write(5,5,"Tiempo: "+tiempo)
+  'LCD.Update()
+  's()
+  StartArm()
+  Program.Delay(200)
+  Brazo.AEncoder(30,-260)
+  Program.Delay(500)
   s()
+  Recto.Encoder(30,200)
 EndSub
 
 Sub PruebaBloques
