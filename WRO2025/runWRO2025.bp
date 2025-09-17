@@ -122,7 +122,7 @@ Sub Main
   
   Time.Reset9()
   Program.Delay(100) 'Habían 150ms
-  Brazo.AEncoder(35,-260) 'eran -260
+  Brazo.AEncoder(35,-290) 'eran -260
   
   'SALE DE CASA SIGUIENDO LINEA
   
@@ -132,8 +132,8 @@ Sub Main
   
   'SE APROXIMA A PUERTA AMARILLA
   
-  Giro.GradosF(10*0.75,45*0.75,59)
-  Giro.GradosF(24,5,62)
+  Giro.GradosF(10*0.75,45*0.75,61)
+  Giro.GradosF(24,5,58)
 
   'ABRE PUERTA AMARILLA Y LLEGA HASTA LINEA
   
@@ -144,12 +144,12 @@ Sub Main
   
   Giro.Grados(50,-40,92)
   Siguelineas.Cruce14(40)
-  Giro.Grados(70,-62,185)
+  Giro.Grados(70,-62,191)
   
   'RECORRE LINEA Y ENTRA EN REGIÓN DE MARKINGS
   
   Siguelineas.Encoder31F(30,40)
-  Recto.Encoder(30,9)
+  Recto.Encoder(30,8)
   
   'APROXIMACIÓN AL MARKING GRANDE
   
@@ -168,8 +168,8 @@ Sub Main
   
   'APROXIMACIÓN AL 1º MARKING
   
-  Giro.Grados(40,9,42.5)
-  Giro.Grados(9,40,42.5)
+  Giro.Grados(40,9,43.5)
+  Giro.Grados(9,40,44.5)
   Giro.Encoder(42,40,12)
   
   'CUADRA CON PARED
@@ -188,7 +188,7 @@ Sub Main
   Recto.Encoder(-30,5.8)
   Giro.Grados(30,-30,91)
   Recto.Encoder(30,8)
-  Giro.Grados(30,-30,86)
+  Giro.Grados(30,-30,89)
   Recto.Tiempo(-20,500)
   
   'LECTURA DEL 3º MARKING
@@ -213,19 +213,19 @@ Sub Main
   
   'INCORPORACIÓN A LINEA PRINCIPAL
   
-  Giro.Negro1F(52,48,1)
+  Giro.Negro1F(52,46,1)
   Siguelineas.Cruce14(60)
-  Giro.Grados(-41,30,83)
+  Giro.Grados(-41,30,87)
   'MotorBC.OffAndBrake()
   'Program.Delay(100)
   
   'SIGUELINEAS HASTA MISIÓN DE PALANCA ROJA
   
-  Siguelineas.Encoder14(30,27)
+  Siguelineas.Encoder14(30,26)
   
   'SE DESVÍA A PALANCA ROJA
   
-  Giro.Grados(60,-40,88)
+  Giro.Grados(60*0.75,-40*0.75,93)
   Giro.EncoderF(-80,-80,34)
   Recto.Encoder(-30,5)
   
@@ -236,16 +236,16 @@ Sub Main
   
   'TIRA DE LA PALANCA, RETROCEDE Y LEVANTA ARAÑA
   
-  Recto.EncoderF(30,16.5)
-  Recto.Tiempo(10,200)
+  Recto.EncoderF(30,17)
+  Recto.Tiempo(10,400)
   Recto.Encoder(-20,3)
   Brazo.AEncoder(20,-310)
   
   'INCORPORACIÓN A LINEA PRINCIPAL
   
-  Recto.Encoder(40,23.5)
+  Giro.Encoder(40,38,23.5)
   Recto.Negro1(20,1)
-  Giro.Grados(-5,20,85)
+  Giro.Grados(-12,20,85)
   Giro.Negro1(-20,20,4)
   Giro.Grados(20,0,10)
   
@@ -257,9 +257,9 @@ Sub Main
   
   'APROXIMACIÓN A BARRERAS
   
-  Giro.Encoder(32,26,11)
-  Giro.Encoder(26,32,9)
-  Giro.Encoder(13,12,9)
+  Giro.Encoder(32,26,12)
+  Giro.Encoder(26,32,10)
+  Giro.Encoder(13,12,8)
   Recto.Encoder(-10,6)
   
   'COGE BARRERAS
@@ -275,7 +275,7 @@ Sub Main
   
   'GIRA PARA DEJAR LA BARRERA AMARILLA
   
-  Giro.Grados(30,0,150)
+  Giro.Grados(30,0,144)
   Recto.EncoderF(40,9)
   Recto.Color1(20,1,4)
   Recto.Encoder(-20,9)
@@ -297,7 +297,7 @@ Sub Main
   'VUELVE A CARRIL CENTRAL
   
   Recto.Encoder(-50,14)
-  Giro.Grados(35,-35,152)
+  Giro.Grados(35,-35,170)
   Giro.EncoderF(65*1.25,70*1.25,65)
   
   'CUADRA CON PARED
@@ -306,11 +306,10 @@ Sub Main
   Recto.EncoderF(-80,13) 'Había -50, 14
   Recto.Blanco1F(-40,1)
   Recto.Negro1(-30,1)
-  Giro.Grados(41,-20,92)
+  Giro.Grados(41,-22,92)
   
   'RECORRE LINEA PRINCIPAL ENTERA
   
-  s()
   Siguelineas.Encoder31F(40,10)
   Siguelineas.Cruce_ExternoF(80,4)
   Siguelineas.Encoder31F(80,82)
@@ -338,8 +337,8 @@ Sub Main
   Recto.Encoder(-20,1)
   Motor.Stop("BC","True")
   Program.Delay(100) 'Habían 150ms
-  Giro.Grados(15,-15,103)
-  Giro.Encoder(82,80,60)
+  Giro.Grados(15,-15,88)
+  Giro.Encoder(82,81,51)
   
   'LEVANTA ARAÑA PARA DEJAR BLOQUE Y RECOLOCA LA ROTACIÓN
 
@@ -352,8 +351,8 @@ Sub Main
   
   'SE APROXIMA PARA LEVANTAR LA 1º BANDERA
   
-  Recto.Encoder(-60,27)
-  Giro.Grados(30,-30,85)
+  Recto.Encoder(-60,24)
+  Giro.Grados(20,-20,96)
   Recto.Encoder(-70,12)
   Recto.Tiempo(-30,800)
   Recto.Encoder(30,2.25)
@@ -368,7 +367,7 @@ Sub Main
   Giro.Grados(32,-6,98)
   Siguelineas.Encoder31F(15,5)
   Siguelineas.Cruce_ExternoF(15,4)
-  Giro.Grados(30,-7,92)
+  Giro.Grados(30,-12,92)
   Recto.Encoder(20,7.5)
   Program.Delay(100) 'Habían 200ms
   
@@ -386,8 +385,8 @@ Sub Main
   
   'GIRA Y SE POSICIONA ENTRE BANDERAS Y MARKINGS
   
-  Giro.Grados(-20,20,92)
-  Giro.TiempoF(30,26,1500)
+  Giro.Grados(-20,20,102)
+  Giro.TiempoF(30,29,1500)
   Giro.Tiempo(60,60,300)
   
   'SE RECOLOCA PARA SOLTAR LOS TORNILLOS
@@ -431,7 +430,7 @@ Sub Main
   
   'VUELVE A LINEA PRINCIPAL PARA DEJAR LOS ÚLTIMOS TORNILLOS
   
-  Recto.EncoderF(100,65)
+  Giro.EncoderF(80,83,65)
   Recto.Blanco1F(40,1)
   Recto.Negro1F(20,1)
   Giro.Grados(-15,30,90)
@@ -715,8 +714,8 @@ Function OrdenarBloques(in number[] marking)
   
   Codigo(marking,codigo)
   
-  If codigo = "VRZA" Then
-    'Directo
+  If codigo = "AZRV" Then
+    Rotar(180)
   ElseIf codigo = "VRAZ" Then
     Swap()
   ElseIf codigo = "VZRA" Then
@@ -804,13 +803,13 @@ Function OrdenarBloques(in number[] marking)
     Rotar(180)
     Swap()
   Else
-    Rotar(180)
+    'Directo
   EndIf
   
   'Recogida
   
   Recto.Encoder(-20,8)
-  Giro.Grados(15,-15,182)
+  Giro.Grados(15,-15,185)
   Recto.Encoder(-30,22)
   Brazo.AEncoder(20,24)
 
