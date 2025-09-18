@@ -27,8 +27,8 @@ Function Cruce14(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -64,8 +64,8 @@ Function Cruce14F(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -96,8 +96,8 @@ Function Blanco14(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -126,8 +126,8 @@ Function Blanco14F(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -161,8 +161,8 @@ Function Color14(in number velocidad, in number color)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -195,8 +195,8 @@ Function Color14F(in number velocidad, in number color)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -228,8 +228,8 @@ Function Encoder14(in number velocidad, in number encoder)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -273,8 +273,8 @@ Function Encoder14F(in number velocidad, in number encoder)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -345,8 +345,8 @@ Function Cruce31(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -375,8 +375,8 @@ Function Cruce31F(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -407,8 +407,8 @@ Function Blanco31(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -437,8 +437,8 @@ Function Blanco31F(in number velocidad)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -472,8 +472,8 @@ Function Color31(in number velocidad, in number color)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -506,8 +506,8 @@ Function Color31F(in number velocidad, in number color)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -539,8 +539,8 @@ Function Encoder31(in number velocidad, in number encoder)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -584,8 +584,8 @@ Function Encoder31F(in number velocidad, in number encoder)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -658,8 +658,8 @@ Function Cruce_Externo(in number velocidad, in number reader)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
@@ -707,8 +707,8 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
     lectura3 = 50
     lectura4 = 50
 
-    kp = Math.Power(velocidad,5/6)/440
-    kd = kp * 70
+    kp = Math.Power(velocidad,5/6)/210
+    kd = kp * 50
 
     error = 0
     olderror = 0
