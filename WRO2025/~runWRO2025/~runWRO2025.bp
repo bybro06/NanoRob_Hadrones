@@ -479,11 +479,11 @@ Motor.Stop ( "BC" , "True" )
 Program.Delay ( 100 )
 lv_velocidad1_20 = 15
 lv_velocidad2_20 = - 15
-lv_grados_20 = 88
+lv_grados_20 = 86
 m_giro_grados_3 ()
 lv_velocidad1_19 = 82
 lv_velocidad2_19 = 81
-lv_distancia_19 = 49
+lv_distancia_19 = 23
 m_giro_encoder_3 ()
 lv_velocidad_10 = 40
 lv_encoder_10 = - 500
@@ -494,9 +494,6 @@ EndIf
 lv_velocidad_10 = 40
 lv_encoder_10 = - 330
 m_brazo_aencoder_2 ()
-lv_velocidad_26 = - 60
-lv_distancia_26 = 26
-m_recto_encoder_2 ()
 lv_velocidad1_20 = 20
 lv_velocidad2_20 = - 20
 lv_grados_20 = 97
@@ -552,7 +549,15 @@ lv_encoder_14 = 20
 m_siguelineas_encoder14_2 ()
 lv_velocidad1_19 = 36
 lv_velocidad2_19 = 34
+lv_distancia_19 = 10
+m_giro_encoder_3 ()
+lv_velocidad1_19 = 36 * 1.75
+lv_velocidad2_19 = 34 * 1.75
 lv_distancia_19 = 42
+m_giro_encoder_3 ()
+lv_velocidad1_19 = - 36
+lv_velocidad2_19 = - 34
+lv_distancia_19 = 7
 m_giro_encoder_3 ()
 lv_velocidad1_20 = - 20
 lv_velocidad2_20 = 20
@@ -584,7 +589,7 @@ m_giro_tiempo_3 ()
 lv_velocidad_10 = 50
 lv_encoder_10 = - 330
 m_brazo_aencoder_2 ()
-lv_velocidad1_19 = - 16
+lv_velocidad1_19 = - 17
 lv_velocidad2_19 = - 15
 lv_distancia_19 = 13
 m_giro_encoder_3 ()

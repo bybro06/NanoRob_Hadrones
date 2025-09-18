@@ -334,8 +334,8 @@ Sub Main
   Recto.Encoder(-20,1)
   Motor.Stop("BC","True")
   Program.Delay(100) 'Habían 150ms
-  Giro.Grados(15,-15,88)
-  Giro.Encoder(82,81,49)
+  Giro.Grados(15,-15,86)
+  Giro.Encoder(82,81,23)
   
   'LEVANTA ARAÑA PARA DEJAR BLOQUE Y RECOLOCA LA ROTACIÓN
 
@@ -348,7 +348,6 @@ Sub Main
   
   'SE APROXIMA PARA LEVANTAR LA 1º BANDERA
   
-  Recto.Encoder(-60,26)
   Giro.Grados(20,-20,97)
   Giro.Encoder(-70,-73,12)
   Recto.Tiempo(-30,800)
@@ -378,7 +377,9 @@ Sub Main
   Siguelineas.Cruce_Externo(30,3)
   Giro.Grados(-16,30,95)
   Siguelineas.Encoder14(35,20)
-  Giro.Encoder(36,34,42)
+  Giro.Encoder(36,34,10)
+  Giro.Encoder(36*1.75,34*1.75,42)
+  Giro.Encoder(-36,-34,7)
   
   'GIRA Y SE POSICIONA ENTRE BANDERAS Y MARKINGS
   
@@ -396,7 +397,7 @@ Sub Main
   'BAJA ARAÑA, RETROCEDE, AVANZA, LEVANTA ARAÑA
   
   Brazo.AEncoder(50,-330)
-  Giro.Encoder(-16,-15,13)
+  Giro.Encoder(-17,-15,13)
   Recto.Encoder(15,8)
   Brazo.AEncoder(30,0)
   
