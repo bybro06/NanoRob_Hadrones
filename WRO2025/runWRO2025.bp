@@ -49,13 +49,13 @@ Sub Setup
   '965
   Giro.G1 = 965 / 360
   
-  negro1 = 0
-  negro3 = 6
-  negro4 = 6
+  negro1 = 3
+  negro3 = 3
+  negro4 = 2
   
-  blanco1 = 97
-  blanco3 = 124
-  blanco4 = 128
+  blanco1 = 99
+  blanco3 = 100
+  blanco4 = 104
   
   RGB.VALUENEGRO = 4
   RGB.VALUEBLANCO = 32
@@ -133,29 +133,29 @@ Sub Main
   
   'SE APROXIMA A PUERTA AMARILLA
   
-  Giro.GradosF(10*0.75,45*0.75,64)
+  Giro.GradosF(10*0.75,45*0.75,64.5)
   Giro.GradosF(24,5,65)
 
   'ABRE PUERTA AMARILLA Y LLEGA HASTA LINEA
   
-  Giro.Encoder(50,49,44)
+  Giro.Encoder(51,49,44)
   Recto.Negro1(50,4)
   
   'GIRA A CRUCE PARA TOMAR REFERENCIA
   
   Giro.Grados(50,-25,90)
   Siguelineas.Cruce14(40)
-  Giro.Grados(70,-62,190)
+  Giro.Grados(70,-62,180)
   
   'RECORRE LINEA Y ENTRA EN REGIÓN DE MARKINGS
   
   Siguelineas.Encoder31F(60,40)
-  Recto.Encoder(30,10)
+  Recto.Encoder(30,8)
   
   'APROXIMACIÓN AL MARKING GRANDE
   
-  Giro.Grados(-30,30,94)
-  Recto.Encoder(20,13.5)
+  Giro.Grados(-30,30,96)
+  Recto.Encoder(20,13)
   Giro.Grados(20,-20,95)
   
   'LECTURA DEL MARKING GRANDE
@@ -167,7 +167,7 @@ Sub Main
   
   'APROXIMACIÓN AL 1º MARKING
   
-  Giro.Grados(40,9,41)
+  Giro.Grados(40,9,34)
   Giro.Grados(9,40,41)
   Giro.Encoder(42,40,12)
   
@@ -185,7 +185,7 @@ Sub Main
   'APROXIMACIÓN A 3º Y 4º MARKING
   
   Recto.Encoder(-30,5.8)
-  Giro.Grados(30,-30,93)
+  Giro.Grados(30,-30,90)
   Recto.Encoder(30,8)
   Giro.Grados(30,-30,90)
   Recto.Tiempo(-20,500)
@@ -220,7 +220,7 @@ Sub Main
   
   'SIGUELINEAS HASTA MISIÓN DE PALANCA ROJA
   
-  Siguelineas.Encoder14(30,26)
+  Siguelineas.Encoder14(30,24)
   
   'SE DESVÍA A PALANCA ROJA
   
@@ -242,7 +242,8 @@ Sub Main
   
   'INCORPORACIÓN A LINEA PRINCIPAL
   
-  Giro.Encoder(40,38,22.5)
+  Giro.Encoder(40,18,15.5)
+  Giro.Encoder(18,40,15.5)
   Recto.Negro1(20,1)
   Giro.Grados(-9,20,96)
   
@@ -255,7 +256,7 @@ Sub Main
   'APROXIMACIÓN A BARRERAS
   
   Giro.Encoder(32,23,12)
-  Giro.Encoder(26,32,11)
+  Giro.Encoder(22,32,11.5)
   Giro.Encoder(13,12,7.5)
   Recto.Encoder(-10,6)
   
@@ -370,7 +371,7 @@ Sub Main
   'ORDENA LOS TORNILLOS Y LOS RECOGE
   
   OrdenarBloques(marking)
-  Recto.Encoder(30,10)
+  Giro.Encoder(30,33,10)
   
   'VUELVE A LINEA CON LOS TORNILLOS
   
@@ -408,8 +409,8 @@ Sub Main
   
   'APROXIMA PARA LEVANTAR LA 2º BANDERA
   
-  Recto.Encoder(-15,6)
-  Giro.Grados(-15,15,90)
+  Recto.Encoder(-15,10)
+  Giro.Grados(-5,15,90)
   Recto.Tiempo(-30,500)
   Recto.Encoder(15,12)
   Giro.Grados(-10,10,16)
@@ -812,7 +813,7 @@ Function OrdenarBloques(in number[] marking)
   
   Recto.Encoder(-20,8)
   Giro.Grados(15,-15,185)
-  Recto.Encoder(-30,22)
+  Recto.Encoder(-30,0)
   Brazo.AEncoder(20,24)
 
 EndFunction

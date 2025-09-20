@@ -123,12 +123,12 @@ Sensor.SetMode ( 3 , 0 )
 Sensor.SetMode ( 4 , 0 )
 gv_diametro = 6.24
 pr_giro_g1 = 965 / 360
-gv_negro1 = 0
-gv_negro3 = 6
-gv_negro4 = 6
-gv_blanco1 = 97
-gv_blanco3 = 124
-gv_blanco4 = 128
+gv_negro1 = 3
+gv_negro3 = 3
+gv_negro4 = 2
+gv_blanco1 = 99
+gv_blanco3 = 100
+gv_blanco4 = 104
 pr_rgb_valuenegro = 4
 pr_rgb_valueblanco = 32
 pr_rgb_rwhite = 57
@@ -187,13 +187,13 @@ lv_encoder_11 = 7
 m_siguelineas_encoder14f_2 ()
 lv_velocidad1_18 = 10 * 0.75
 lv_velocidad2_18 = 45 * 0.75
-lv_grados_18 = 64
+lv_grados_18 = 64.5
 m_giro_gradosf_3 ()
 lv_velocidad1_18 = 24
 lv_velocidad2_18 = 5
 lv_grados_18 = 65
 m_giro_gradosf_3 ()
-lv_velocidad1_19 = 50
+lv_velocidad1_19 = 51
 lv_velocidad2_19 = 49
 lv_distancia_19 = 44
 m_giro_encoder_3 ()
@@ -208,20 +208,20 @@ lv_velocidad_12 = 40
 m_siguelineas_cruce14_1 ()
 lv_velocidad1_20 = 70
 lv_velocidad2_20 = - 62
-lv_grados_20 = 190
+lv_grados_20 = 180
 m_giro_grados_3 ()
 lv_velocidad_13 = 60
 lv_encoder_13 = 40
 m_siguelineas_encoder31f_2 ()
 lv_velocidad_26 = 30
-lv_distancia_26 = 10
+lv_distancia_26 = 8
 m_recto_encoder_2 ()
 lv_velocidad1_20 = - 30
 lv_velocidad2_20 = 30
-lv_grados_20 = 94
+lv_grados_20 = 96
 m_giro_grados_3 ()
 lv_velocidad_26 = 20
-lv_distancia_26 = 13.5
+lv_distancia_26 = 13
 m_recto_encoder_2 ()
 lv_velocidad1_20 = 20
 lv_velocidad2_20 = - 20
@@ -236,7 +236,7 @@ Thread.run = f_gritarcolor_0
 gv_marking [ 0 ] = 0
 lv_velocidad1_20 = 40
 lv_velocidad2_20 = 9
-lv_grados_20 = 41
+lv_grados_20 = 34
 m_giro_grados_3 ()
 lv_velocidad1_20 = 9
 lv_velocidad2_20 = 40
@@ -263,7 +263,7 @@ lv_distancia_26 = 5.8
 m_recto_encoder_2 ()
 lv_velocidad1_20 = 30
 lv_velocidad2_20 = - 30
-lv_grados_20 = 93
+lv_grados_20 = 90
 m_giro_grados_3 ()
 lv_velocidad_26 = 30
 lv_distancia_26 = 8
@@ -302,7 +302,7 @@ lv_velocidad2_20 = 30
 lv_grados_20 = 87
 m_giro_grados_3 ()
 lv_velocidad_14 = 30
-lv_encoder_14 = 26
+lv_encoder_14 = 24
 m_siguelineas_encoder14_2 ()
 lv_velocidad1_20 = 60 * 0.75
 lv_velocidad2_20 = - 40 * 0.75
@@ -332,8 +332,12 @@ lv_velocidad_10 = 20
 lv_encoder_10 = - 310
 m_brazo_aencoder_2 ()
 lv_velocidad1_19 = 40
-lv_velocidad2_19 = 38
-lv_distancia_19 = 22.5
+lv_velocidad2_19 = 18
+lv_distancia_19 = 15.5
+m_giro_encoder_3 ()
+lv_velocidad1_19 = 18
+lv_velocidad2_19 = 40
+lv_distancia_19 = 15.5
 m_giro_encoder_3 ()
 lv_velocidad_25 = 20
 lv_sensor_25 = 1
@@ -353,9 +357,9 @@ lv_velocidad1_19 = 32
 lv_velocidad2_19 = 23
 lv_distancia_19 = 12
 m_giro_encoder_3 ()
-lv_velocidad1_19 = 26
+lv_velocidad1_19 = 22
 lv_velocidad2_19 = 32
-lv_distancia_19 = 11
+lv_distancia_19 = 11.5
 m_giro_encoder_3 ()
 lv_velocidad1_19 = 13
 lv_velocidad2_19 = 12
@@ -534,9 +538,10 @@ m_recto_encoder_2 ()
 Program.Delay ( 100 )
 lv_marking_6 = gv_marking
 f_ordenarbloques_1 ()
-lv_velocidad_26 = 30
-lv_distancia_26 = 10
-m_recto_encoder_2 ()
+lv_velocidad1_19 = 30
+lv_velocidad2_19 = 33
+lv_distancia_19 = 10
+m_giro_encoder_3 ()
 lv_velocidad_15 = 30
 lv_reader_15 = 3
 m_siguelineas_cruce_externo_2 ()
@@ -606,9 +611,9 @@ lv_velocidad_26 = 30
 lv_distancia_26 = 16
 m_recto_encoder_2 ()
 lv_velocidad_26 = - 15
-lv_distancia_26 = 6
+lv_distancia_26 = 10
 m_recto_encoder_2 ()
-lv_velocidad1_20 = - 15
+lv_velocidad1_20 = - 5
 lv_velocidad2_20 = 15
 lv_grados_20 = 90
 m_giro_grados_3 ()
@@ -925,7 +930,7 @@ lv_velocidad2_20 = - 15
 lv_grados_20 = 185
 m_giro_grados_3 ()
 lv_velocidad_26 = - 30
-lv_distancia_26 = 22
+lv_distancia_26 = 0
 m_recto_encoder_2 ()
 lv_velocidad_10 = 20
 lv_encoder_10 = 24
