@@ -36,7 +36,7 @@ Function Cruce14(in number velocidad)
     u = 0
     sentido = velocidad / Math.Abs(velocidad)
 
-    While lectura1 > 10 Or lectura4 > 10
+    While lectura1 > 15 Or lectura4 > 15
 
         lectura1 = (Sensor.ReadPercent(1) - negro1) / blanco1 * (100 - negro1) 'Normalización
         lectura4 = (Sensor.ReadPercent(4) - negro4) / blanco4 * (100 - negro4) 'Normalización
@@ -673,7 +673,7 @@ Function Cruce_Externo(in number velocidad, in number reader)
 
     lectura = 50
 
-    While lectura > 7
+    While lectura > 15
 
         If reader = 3 Then
             lectura = lectura3
@@ -722,7 +722,7 @@ Function Cruce_ExternoF(in number velocidad, in number reader)
 
     lectura = 50
 
-    While lectura > 7
+    While lectura > 15
 
         If reader = 3 Then
             lectura = lectura3
