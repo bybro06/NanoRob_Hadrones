@@ -258,6 +258,60 @@ Function TiempoF(in number velocidad, in number tiempo)
 EndFunction
 
 'Con Aceleración y deceleración
+
+Function SinAccelDecel(in number vMax, in number distanciaAccel, in number distancia)
+
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
+
+    encoderB = 0
+    encoderC = 0
+
+    signo = vMax / Math.Abs(vMax)
+
+    vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    distanciaCrucero = distancia - 2*distanciaAccel
+
+    While Math.Abs(distanciaC) < distancia
+
+        distanciaB = (Motor.GetCount("B") - startB)*-360 / (diametro * math.pi)
+        distanciaC = (Motor.GetCount("C") - startC)* 360 / (diametro * math.pi)
+
+        #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        If Math.Abs(distanciaC) < distanciaAccel Then
+            ' Aceleración 
+            vel = -(2*vMax/5)*Math.cos(Math.pi*distanciaC/distanciaAccel)+3*vMax/5
+
+        ElseIf Math.Abs(distanciaC) < distanciaAccel + distanciaCrucero
+            'Crucero
+            vel = vMax
+        Else 
+            ' Deceleración 
+            vel = -(vMax/2)*Math.cos(Math.pi*(distanciaC-distanciaCrucero)/distanciaAccel)+vMax/2
+
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = ( - 1 * encoderB - encoderC) * 1
+        correccion = error * kp + (error - olderror) * kd
+
+        Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+        olderror = error
+    EndWhile
+
+    MotorBC.OffAndBrake()
+
+EndFunction
+
 Function AccelDecel(in number v0, in number vMax, in number distanciaAccel, in number distanciaCrucero, in number distanciaDecel)
 
     startB = Motor.GetCount("B")
@@ -284,7 +338,7 @@ Function AccelDecel(in number v0, in number vMax, in number distanciaAccel, in n
 
     While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
 
-        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderB = (Motor.GetCount("B") - startB)*-1
         encoderC = Motor.GetCount("C") - startC
 
         #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
@@ -347,7 +401,7 @@ Function AccelDecelF(in number v0, in number vMax, in number distanciaAccel, in 
 
     While Math.Abs(encoderC) < gradosAccel + gradosCrucero + gradosDecel
 
-        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderB = (Motor.GetCount("B") - startB)*-1
         encoderC = Motor.GetCount("C") - startC
 
         #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
@@ -409,7 +463,7 @@ Function Decel(in number v0, in number vMin, in number distanciaDecel, in number
 
     While Math.Abs(encoderC) < gradosDecel + gradosCrucero
 
-        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderB = (Motor.GetCount("B") - startB)*-1
         encoderC = Motor.GetCount("C") - startC
 
         #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
@@ -458,7 +512,7 @@ Function DecelF(in number v0, in number vMin, in number distanciaDecel, in numbe
 
     While Math.Abs(encoderC) < gradosDecel + gradosCrucero
 
-        encoderB = Motor.GetCount("B") * 1 - startB
+        encoderB = (Motor.GetCount("B") - startB)*-1
         encoderC = Motor.GetCount("C") - startC
 
         #Decelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
