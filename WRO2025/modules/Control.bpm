@@ -1,0 +1,292 @@
+number diametro
+
+Function s()
+  Buttons.Flush()
+  Buttons.Wait()
+EndFunction
+
+Function logRecto(in number velocidad, in number distancia)
+  velocidad *= 1
+  
+  enc = (distancia - correccion) * 360 / Math.Pi / diametro ' Ajuste de distancia con corrección
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  MotorBC.Off()
+  Program.Delay(100)
+  
+  log = EV3File.OpenWrite("LecturasRecto.txt")
+  lecturas = 0
+  Time.Reset8()
+  i=0
+  c = 0
+  
+  While Math.Abs(MotorC.GetTacho()) < enc
+    Motor.StartSync("BC", - velocidad*(1+c/2), velocidad*(1-c/2))
+    encoderB[lecturas]=MotorB.GetTacho()*-1
+    encoderC[lecturas]=MotorC.GetTacho()
+    lecturas++
+  EndWhile
+  
+  deltaT = Time.Get8()
+  MotorBC.OffAndBrake()
+    EV3File.WriteLine(log,"encoderB;encoderC")
+  For i = 0 To lecturas
+    EV3File.WriteLine(log,Text.Append(Text.Append(encoderB[i]/ 360 * (diametro * math.pi),";"),encoderC[i]/ 360 * (diametro * math.pi)))
+  EndFor
+  
+  'Vel
+  EV3File.WriteLine(log,velocidad)
+  'Hz
+  EV3File.WriteLine(log,lecturas/deltaT*1000)
+  
+  EV3File.Close(log)
+EndFunction
+
+Function logSinAccelDecel(in number vMax, in number distanciaAccel, in number distancia)
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  signo = vMax / Math.Abs(vMax)
+  
+  vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+  
+  vel = 0
+  kp = 0.4
+  kd = 1
+  
+  error = 0
+  olderror = 0
+  
+  encoderAccel = distanciaAccel *360 /(Math.Pi * diametro)
+  encoder = distancia *360 /(Math.Pi * diametro)
+  
+  encoderCrucero = encoder - 2*encoderAccel
+  log = EV3File.OpenWrite("LecturasAccelDecel.txt")
+  lecturas = 0
+  
+  encoderB[0]=0
+  encoderC[0]=0
+  
+  distanciaC = 0
+  Speaker.Play(100,"Start")
+  Speaker.Wait()
+  Time.Reset8()
+  While Math.Abs(distanciaC) < encoder
+    
+    distanciaB = Motor.GetCount("B")
+    distanciaC = Motor.GetCount("C")
+    
+    'Acelera hasta la distancia de aceleración/2 con aceleración sinusoidal y se mantiene hasta la distancia de velocidad cte
+    If Math.Abs(distanciaC) < encoderAccel/2 Then
+      ' Aceleración
+      vel = -1*(2*vMax/5)*Math.cos(2*Math.pi*distanciaC/encoderAccel)+3*vMax/5
+      
+    ElseIf Math.Abs(distanciaC) < encoderAccel + encoderCrucero Then
+      'Crucero
+      vel = vMax
+    Else
+      ' Deceleración
+      vel = -1*(2*vMax/5)*Math.cos(Math.pi*(distanciaC-encoderCrucero)/encoderAccel)+3*vMax/5
+      
+    EndIf
+    
+    'Correción PID para mantener el robot recto
+    
+    error = (distanciaB - distanciaC)
+    correccion = error * kp + (error - olderror) * kd
+    
+    Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+    olderror = error
+    velocidad[lecturas]=vel
+    encoderB[lecturas]=distanciaB
+    encoderC[lecturas]=distanciaC
+    lecturas++
+  EndWhile
+  
+  deltaT = Time.Get8()
+  MotorBC.OffAndBrake()
+  'Creamos la cabecera
+  EV3File.WriteLine(log,"encoderB;encoderC;velocidad")
+  
+  For i = 0 To lecturas-1
+    'Normalización de lecturas
+    encoderB[lecturas] = encoderB[lecturas] / 360 * (Math.Pi * diametro)
+    encoderC[lecturas] = encoderC[lecturas] / 360 * (Math.Pi * diametro)
+    EV3File.WriteLine(log,Text.Append(Text.Append(Text.Append(Text.Append(encoderB[i],";"),encoderC[i]),";"),velocidad[i]))
+  EndFor
+  
+  'Hz
+  EV3File.WriteLine(log,lecturas/deltaT*1000)
+  
+  EV3File.Close(log)
+EndFunction
+
+Function logAccelDecel(in number v0, in number vMax, in number distanciaAccel, in number distanciaCrucero, in number distanciaDecel)
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  signo = v0 / Math.Abs(v0)
+  
+  v0 = Math.Max(8, Math.Abs(v0)) * signo
+  vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+  
+  vel = 0
+  kp = 0.4
+  kd = 0.5
+  
+  error = 0
+  olderror = 0
+  
+  encoderB[0]=0
+  encoderC[0]=0
+  
+  gradosAccel = distanciaAccel * 360 / (diametro * math.pi)
+  gradosCrucero = distanciaCrucero * 360 / (diametro * math.pi)
+  gradosDecel = distanciaDecel * 360 / (diametro * math.pi)
+  
+  log = EV3File.OpenWrite("LecturasAccelDecel.txt")
+  lecturas = 0
+  
+  distanciaB = 0
+  distanciaC = 0
+  Speaker.Play(100,"Start")
+  Speaker.Wait()
+  Time.Reset8()
+  
+  While Math.Abs(distanciaC) < gradosAccel + gradosCrucero + gradosDecel
+    
+    distanciaB = (Motor.GetCount("B") - startB)*-1
+    distanciaC = Motor.GetCount("C") - startC
+    
+    'Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+    If Math.Abs(distanciaC) < gradosAccel + gradosCrucero Then
+      ' Aceleración y velocidad Cte
+      pendiente = (vMax - v0) / gradosAccel * signo
+      If signo > 0 Then
+        vel = Math.Min(vMax, pendiente * distanciaC + v0)
+      Else
+        vel = Math.Max(vMax, pendiente * distanciaC + v0)
+      EndIf
+      
+    Else
+      ' Deceleración
+      pendiente = (v0 - vMax) / gradosDecel * signo
+      If signo > 0 Then
+        vel = Math.Max(v0, pendiente * (distanciaC - gradosAccel - gradosCrucero) + vMax)
+      Else
+        vel = Math.Min(v0, pendiente * (distanciaC + gradosAccel + gradosCrucero) + vMax)
+      EndIf
+      
+    EndIf
+    
+    'Correción PID para mantener el robot recto
+    
+    error = ( - 1 * distanciaB - distanciaC)
+    correccion = error * kp + (error - olderror) * kd
+    
+    Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+    olderror = error
+    velocidad[lecturas]=vel
+    encoderB[lecturas]=distanciaB
+    encoderC[lecturas]=distanciaC
+    lecturas++
+  EndWhile
+  
+  deltaT = Time.Get8()
+  MotorBC.OffAndBrake()
+  EV3File.WriteLine(log,"encoderB;encoderC;velocidad")
+  
+  For i = 0 To lecturas-1 Step 1
+    'Normalizacion de lecturas
+    encoderB[i] = encoderB[i] / 360 * (diametro * math.pi)
+    encoderC[i] = encoderC[i] / 360 * (diametro * math.pi)
+    EV3File.WriteLine(log,Text.Append(Text.Append(Text.Append(Text.Append(encoderB[i],";"),encoderC[i]),";"),velocidad[i]))
+  EndFor
+  
+  'Hz
+  EV3File.WriteLine(log,lecturas/deltaT*1000)
+  
+  EV3File.Close(log)
+EndFunction
+
+Function loglnSinAccelDecel(in number vMax, in number distanciaAccel, in number distancia)
+  
+  MotorB.ResetCount()
+  MotorC.ResetCount()
+  
+  signo = vMax / Math.Abs(vMax)
+  
+  vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+  
+  vel = 0
+  kp = 0.4
+  kd = 1
+  
+  error = 0
+  olderror = 0
+  
+  encoderAccel = distanciaAccel *360 /(Math.Pi * diametro)
+  encoder = distancia *360 /(Math.Pi * diametro)
+  
+  encoderCrucero = encoder - 2*encoderAccel
+  log = EV3File.OpenWrite("LecturasAccelDecel.txt")
+  lecturas = 0
+  
+  encoderB[0]=0
+  encoderC[0]=0
+  
+  distanciaC = 0
+  Speaker.Play(100,"Start")
+  Speaker.Wait()
+  Time.Reset8()
+  While Math.Abs(distanciaC) < encoder
+    
+    distanciaB = Motor.GetCount("B")
+    distanciaC = Motor.GetCount("C")
+    
+    'Acelera hasta la distancia de aceleración/2 con aceleracion logaritmica y se mantiene hasta la distancia de velocidad cte
+    If Math.Abs(distanciaC) < encoderAccel/2 Then
+      ' Aceleración
+      vel = vMax/(Math.Log(Math.Power(distanciaC-distanciaAccel/2,2)+2.71828))
+      
+    ElseIf Math.Abs(distanciaC) < encoderAccel + encoderCrucero Then
+      'Crucero
+      vel = vMax
+    Else
+      ' Deceleración
+      vel = -1*(2*vMax/5)*Math.cos(Math.pi*(distanciaC-encoderCrucero)/encoderAccel)+3*vMax/5
+      
+    EndIf
+    
+    'Correción PID para mantener el robot recto
+    
+    error = (distanciaB - distanciaC)
+    correccion = error * kp + (error - olderror) * kd
+    
+    Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+    olderror = error
+    velocidad[lecturas]=vel
+    encoderB[lecturas]=distanciaB
+    encoderC[lecturas]=distanciaC
+    lecturas++
+  EndWhile
+  
+  deltaT = Time.Get8()
+  MotorBC.OffAndBrake()
+  'Creamos la cabecera
+  EV3File.WriteLine(log,"encoderB;encoderC;velocidad")
+  
+  For i = 0 To lecturas-1
+    'Normalización de lecturas
+    encoderB[lecturas] = encoderB[lecturas] / 360 * (Math.Pi * diametro)
+    encoderC[lecturas] = encoderC[lecturas] / 360 * (Math.Pi * diametro)
+    EV3File.WriteLine(log,Text.Append(Text.Append(Text.Append(Text.Append(encoderB[i],";"),encoderC[i]),";"),velocidad[i]))
+  EndFor
+  
+  'Hz
+  EV3File.WriteLine(log,lecturas/deltaT*1000)
+  
+  EV3File.Close(log)
+EndFunction

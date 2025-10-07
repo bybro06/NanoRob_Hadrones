@@ -7,6 +7,7 @@ import "modules/Shift"
 import "modules/Brazo"
 import "modules/Smart"
 import "modules/RGB"
+import "modules/Control"
 
 'Motor A: Subir brazo / Bajar araña (+)
 'Motor D: Abrir brazo (+)
@@ -20,18 +21,7 @@ import "modules/RGB"
 #region Entorno de Ejecución
 
 Setup()
-Main()
-tiempo = Time.Get9()
-LCD.StopUpdate()
-LCD.Clear()
-LCD.Write(5,5,"Tiempo: "+tiempo/1000 +" s")
-LCD.Update()
-Speaker.Play(100,"Good job")
-Speaker.Wait()
-GritarNumero(Math.Floor(tiempo/100000))
-GritarNumero(Math.Floor(tiempo/10000) - Math.Floor(tiempo/100000) * 10)
-GritarNumero(Math.Floor(tiempo/1000) - Math.Floor(tiempo/10000) * 10)
-s()
+PruebaVelocidad()
 
 #EndRegion
 
@@ -69,6 +59,7 @@ Sub Setup
   Giro.diametro = diametro
   Siguelineas.diametro = diametro
   Smart.diametro = diametro
+  Control.diametro = diametro
   
   Siguelineas.negro1 = negro1
   Siguelineas.negro3 = negro3
@@ -91,7 +82,6 @@ Sub Setup
   
   Giro.negro = (negro1 + negro3 + negro4) / 3
   Giro.blanco = (blanco1 + blanco3 + blanco4) / 3
-  
   color = 0
   
 EndSub
@@ -586,9 +576,8 @@ Sub PruebaVelocidad
   StartArm()
   Program.Delay(200)
   Brazo.AEncoder(30,-260)
-  Program.Delay(500)
-  s()
-  Recto.Encoder(30,200)
+  Program.Delay(1000)
+  Control.logSinAccelDecel(60,15,50)
 EndSub
 
 Sub PruebaBloques

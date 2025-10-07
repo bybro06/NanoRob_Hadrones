@@ -301,7 +301,7 @@ Function SinAccelDecel(in number vMax, in number distanciaAccel, in number dista
 
         #Correción PID para mantener el robot recto
 
-        error = ( - 1 * encoderB - encoderC) * 1
+        error = (distanciaB - distanciaC)
         correccion = error * kp + (error - olderror) * kd
 
         Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
@@ -309,6 +309,59 @@ Function SinAccelDecel(in number vMax, in number distanciaAccel, in number dista
     EndWhile
 
     MotorBC.OffAndBrake()
+
+EndFunction
+
+Function SinAccelDecelF(in number vMax, in number distanciaAccel, in number distancia)
+
+    startB = Motor.GetCount("B")
+    startC = Motor.GetCount("C")
+
+    encoderB = 0
+    encoderC = 0
+
+    signo = vMax / Math.Abs(vMax)
+
+    vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
+
+    vel = 0
+    kp = 0.4
+    kd = 0.5
+
+    error = 0
+    olderror = 0
+
+    distanciaCrucero = distancia - 2*distanciaAccel
+
+    While Math.Abs(distanciaC) < distancia
+
+        distanciaB = (Motor.GetCount("B") - startB)*-360 / (diametro * math.pi)
+        distanciaC = (Motor.GetCount("C") - startC)* 360 / (diametro * math.pi)
+
+        #Acelera hasta la distancia de aceleración y se mantiene hasta la distancia de velocidad cte
+        If Math.Abs(distanciaC) < distanciaAccel Then
+            ' Aceleración 
+            vel = -(2*vMax/5)*Math.cos(Math.pi*distanciaC/distanciaAccel)+3*vMax/5
+
+        ElseIf Math.Abs(distanciaC) < distanciaAccel + distanciaCrucero
+            'Crucero
+            vel = vMax
+        Else 
+            ' Deceleración 
+            vel = -(vMax/2)*Math.cos(Math.pi*(distanciaC-distanciaCrucero)/distanciaAccel)+vMax/2
+
+        EndIf
+
+        #Correción PID para mantener el robot recto
+
+        error = (distanciaB - distanciaC)
+        correccion = error * kp + (error - olderror) * kd
+
+        Motor.StartSync("BC", - (vel - correccion), (vel + correccion))
+        olderror = error
+    EndWhile
+
+    MotorBC.Off()
 
 EndFunction
 

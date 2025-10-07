@@ -2,10 +2,9 @@ FOLDER_KEY PRJS
 FOLDER_NAME WRO2025
 IMAGE_LIST 0
 SOUND_LIST 22
-SOUND ; Good job.rsf ; WRO2025/Media/ ; WRO2025/Media/Good job.rsf
 SOUND ; Connect.rsf ; WRO2025/Media/ ; WRO2025/Media/Connect.rsf
-SOUND ; One.rsf ; WRO2025/Media/ ; WRO2025/Media/One.rsf
 SOUND ; ZERO.rsf ; WRO2025/Media/ ; WRO2025/Media/ZERO.rsf
+SOUND ; One.rsf ; WRO2025/Media/ ; WRO2025/Media/One.rsf
 SOUND ; Two.rsf ; WRO2025/Media/ ; WRO2025/Media/Two.rsf
 SOUND ; Three.rsf ; WRO2025/Media/ ; WRO2025/Media/Three.rsf
 SOUND ; Four.rsf ; WRO2025/Media/ ; WRO2025/Media/Four.rsf
@@ -24,4 +23,6 @@ SOUND ; YELLOW.rsf ; WRO2025/Media/ ; WRO2025/Media/YELLOW.rsf
 SOUND ; RED.rsf ; WRO2025/Media/ ; WRO2025/Media/RED.rsf
 SOUND ; White.rsf ; WRO2025/Media/ ; WRO2025/Media/White.rsf
 SOUND ; Brown.rsf ; WRO2025/Media/ ; WRO2025/Media/Brown.rsf
-FILE_LIST 0
+SOUND ; Start.rsf ; WRO2025/Media/ ; WRO2025/Media/Start.rsf
+FILE_LIST 1
+FILE ; LecturasAccelDecel.txt ; WRO2025/Files/ ; WRO2025/Files/LecturasAccelDecel.txt
