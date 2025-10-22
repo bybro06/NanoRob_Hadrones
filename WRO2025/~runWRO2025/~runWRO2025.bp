@@ -166,7 +166,7 @@ lv_encoder_10 = - 260
 m_brazo_aencoder_2 ()
 Program.Delay ( 1000 )
 lv_vmax_35 = 60
-lv_distanciaaccel_35 = 15
+lv_distanciaaccel_35 = 10
 lv_distancia_35 = 50
 m_control_logsinacceldecel_3 ()
 EndSub
@@ -912,7 +912,7 @@ MotorC.ResetCount ()
 lv_signo_35 = lv_vmax_35 / Math.Abs ( lv_vmax_35 )
 lv_vmax_35 = Math.Min ( 90 , Math.Abs ( lv_vmax_35 ) ) * lv_signo_35
 lv_vel_35 = 0
-lv_kp_35 = 0.4
+lv_kp_35 = 0.7
 lv_kd_35 = 1
 lv_error_35 = 0
 lv_olderror_35 = 0
@@ -928,7 +928,7 @@ Speaker.Play ( 100 , "WRO2025/Media/Start" )
 Speaker.Wait ()
 Time.Reset8 ()
 While Math.Abs ( lv_distanciac_35 ) < lv_encoder_35
-lv_distanciab_35 = Motor.GetCount ( "B" )
+lv_distanciab_35 = Motor.GetCount ( "B" ) * - 1
 lv_distanciac_35 = Motor.GetCount ( "C" )
 If Math.Abs ( lv_distanciac_35 ) < lv_encoderaccel_35 / 2 Then
 lv_vel_35 = - 1 * ( 2 * lv_vmax_35 / 5 ) * Math.cos ( 2 * Math.pi * lv_distanciac_35 / lv_encoderaccel_35 ) + 3 * lv_vmax_35 / 5
@@ -950,8 +950,8 @@ lv_deltat_35 = Time.Get8 ()
 MotorBC.OffAndBrake ()
 EV3File.WriteLine ( lv_log_35 , "encoderB;encoderC;velocidad" )
 For lv_i_35 = 0 To lv_lecturas_35 - 1
-lv_encoderb_35 [ lv_lecturas_35 ] = lv_encoderb_35 [ lv_lecturas_35 ] / 360 * ( Math.Pi * pr_control_diametro )
-lv_encoderc_35 [ lv_lecturas_35 ] = lv_encoderc_35 [ lv_lecturas_35 ] / 360 * ( Math.Pi * pr_control_diametro )
+lv_encoderb_35 [ lv_i_35 ] = lv_encoderb_35 [ lv_i_35 ] / 360 * ( Math.Pi * pr_control_diametro )
+lv_encoderc_35 [ lv_i_35 ] = lv_encoderc_35 [ lv_i_35 ] / 360 * ( Math.Pi * pr_control_diametro )
 EV3File.WriteLine ( lv_log_35 , Text.Append ( Text.Append ( Text.Append ( Text.Append ( lv_encoderb_35 [ lv_i_35 ] , ";" ) , lv_encoderc_35 [ lv_i_35 ] ) , ";" ) , lv_velocidad_35 [ lv_i_35 ] ) )
 EndFor
 EV3File.WriteLine ( lv_log_35 , lv_lecturas_35 / lv_deltat_35 * 1000 )

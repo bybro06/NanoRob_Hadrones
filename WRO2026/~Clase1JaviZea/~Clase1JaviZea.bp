@@ -1,0 +1,13 @@
+Sensor.SetMode ( 1 , 0 )
+Sensor.SetMode ( 4 , 0 )
+While Sensor.ReadPercent ( 1 ) < 90 and Sensor.ReadPercent ( 4 ) < 90
+Motor.StartSync ( "BC" , 50 , 50 )
+EndWhile
+Motor.Stop ( "BC" , "true" )
+Sensor.SetMode ( 1 , 2 )
+Sensor.SetMode ( 4 , 2 )
+Motor.Move ( "C" , 100 , 360 , "true" )
+While Sensor.ReadRawValue ( 4 , 0 ) <> 5
+Motor.StartSync ( "BC" , 50 , 50 )
+EndWhile
+Motor.Stop ( "BC" , "true" )

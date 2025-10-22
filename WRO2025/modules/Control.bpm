@@ -52,7 +52,7 @@ Function logSinAccelDecel(in number vMax, in number distanciaAccel, in number di
   vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
   
   vel = 0
-  kp = 0.4
+  kp = 0.7
   kd = 1
   
   error = 0
@@ -74,7 +74,7 @@ Function logSinAccelDecel(in number vMax, in number distanciaAccel, in number di
   Time.Reset8()
   While Math.Abs(distanciaC) < encoder
     
-    distanciaB = Motor.GetCount("B")
+    distanciaB = Motor.GetCount("B")*-1
     distanciaC = Motor.GetCount("C")
     
     'Acelera hasta la distancia de aceleración/2 con aceleración sinusoidal y se mantiene hasta la distancia de velocidad cte
@@ -111,8 +111,8 @@ Function logSinAccelDecel(in number vMax, in number distanciaAccel, in number di
   
   For i = 0 To lecturas-1
     'Normalización de lecturas
-    encoderB[lecturas] = encoderB[lecturas] / 360 * (Math.Pi * diametro)
-    encoderC[lecturas] = encoderC[lecturas] / 360 * (Math.Pi * diametro)
+    encoderB[i] = encoderB[i] / 360 * (Math.Pi * diametro)
+    encoderC[i] = encoderC[i] / 360 * (Math.Pi * diametro)
     EV3File.WriteLine(log,Text.Append(Text.Append(Text.Append(Text.Append(encoderB[i],";"),encoderC[i]),";"),velocidad[i]))
   EndFor
   
@@ -221,7 +221,7 @@ Function loglnSinAccelDecel(in number vMax, in number distanciaAccel, in number 
   vMax = Math.Min(90, Math.Abs(vMax)) * signo 'Limitamos las potencias
   
   vel = 0
-  kp = 0.4
+  kp = 0.7
   kd = 1
   
   error = 0
@@ -230,7 +230,7 @@ Function loglnSinAccelDecel(in number vMax, in number distanciaAccel, in number 
   encoderAccel = distanciaAccel *360 /(Math.Pi * diametro)
   encoder = distancia *360 /(Math.Pi * diametro)
   
-  encoderCrucero = encoder - 2*encoderAccel
+  encoderCrucero = encoder - 3*encoderAccel
   log = EV3File.OpenWrite("LecturasAccelDecel.txt")
   lecturas = 0
   
@@ -243,20 +243,20 @@ Function loglnSinAccelDecel(in number vMax, in number distanciaAccel, in number 
   Time.Reset8()
   While Math.Abs(distanciaC) < encoder
     
-    distanciaB = Motor.GetCount("B")
+    distanciaB = Motor.GetCount("B")*-1
     distanciaC = Motor.GetCount("C")
     
     'Acelera hasta la distancia de aceleración/2 con aceleracion logaritmica y se mantiene hasta la distancia de velocidad cte
     If Math.Abs(distanciaC) < encoderAccel/2 Then
       ' Aceleración
-      vel = vMax/(Math.Log(Math.Power(distanciaC-distanciaAccel/2,2)+2.71828))
+      vel = vMax/(Math.Log(Math.Power(distanciaC-encoderAccel/2,2)+2.75))
       
     ElseIf Math.Abs(distanciaC) < encoderAccel + encoderCrucero Then
       'Crucero
       vel = vMax
     Else
       ' Deceleración
-      vel = -1*(2*vMax/5)*Math.cos(Math.pi*(distanciaC-encoderCrucero)/encoderAccel)+3*vMax/5
+      vel = -1*(2*vMax/5)*Math.cos(Math.pi*(distanciaC-encoderCrucero+1*encoderAccel)/2/encoderAccel)+3*vMax/5
       
     EndIf
     
@@ -280,8 +280,8 @@ Function loglnSinAccelDecel(in number vMax, in number distanciaAccel, in number 
   
   For i = 0 To lecturas-1
     'Normalización de lecturas
-    encoderB[lecturas] = encoderB[lecturas] / 360 * (Math.Pi * diametro)
-    encoderC[lecturas] = encoderC[lecturas] / 360 * (Math.Pi * diametro)
+    encoderB[i] = encoderB[i] / 360 * (Math.Pi * diametro)
+    encoderC[i] = encoderC[i] / 360 * (Math.Pi * diametro)
     EV3File.WriteLine(log,Text.Append(Text.Append(Text.Append(Text.Append(encoderB[i],";"),encoderC[i]),";"),velocidad[i]))
   EndFor
   

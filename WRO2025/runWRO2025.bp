@@ -577,7 +577,7 @@ Sub PruebaVelocidad
   Program.Delay(200)
   Brazo.AEncoder(30,-260)
   Program.Delay(1000)
-  Control.logSinAccelDecel(60,15,50)
+  Control.logSinAccelDecel(60,10,50)
 EndSub
 
 Sub PruebaBloques
