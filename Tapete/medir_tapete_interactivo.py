@@ -1,207 +1,381 @@
 #!/usr/bin/env python3
 """
-Medidor interactivo de distancias y ángulos sobre una imagen de tapete.
-- Muestra distancias entre puntos consecutivos (cm).
-- Muestra ángulos interiores (180° - ángulo medido) entre rectas consecutivas.
-- Fondo redondeado y texto nítido.
+medir_tapete_pyqt.py
+
+PyQt6 application "Medidor Tapete Pro".
+
+Características:
+ - Carga imagen (PNG/JPG)
+ - Zoom y pan
+ - Clic izquierdo: añadir puntos (P1, P2, ...)
+ - Clic derecho: eliminar último punto
+ - Botones: Abrir, Guardar captura, Exportar CSV, Reiniciar, Deshacer
+ - Muestra distancias entre puntos consecutivos (cm) y ángulos interiores (usar 'd' como símbolo)
+ - Escala por las dimensiones reales del tapete (por defecto 2362mm x 1143mm), configurables
+ - Visuales nítidos usando QPainter (fondo redondeado, antialias)
+
+Dependencias:
+    pip install PyQt6 opencv-python numpy pillow
+
+Ejecutar:
+    python medir_tapete_pyqt.py
+
 """
+
+import sys
+import os
+import math
+import csv
+from typing import List, Tuple
 
 import cv2
 import numpy as np
-import math
-import argparse
-import os
-import tkinter as tk
+from PIL import Image
 
-# --- Parámetros reales (mm)
-DEFAULT_REAL_WIDTH_MM = 2362.0
-DEFAULT_REAL_HEIGHT_MM = 1143.0
+from PyQt6.QtCore import Qt, QPoint, QPointF, QRectF, QRect
+from PyQt6.QtGui import QImage, QPixmap, QPainter, QPen, QColor, QBrush, QFont, QAction, QPalette
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QWidget, QLabel, QPushButton, QFileDialog,
+    QVBoxLayout, QHBoxLayout, QMenuBar, QMenu, QStatusBar,
+    QGraphicsView, QGraphicsScene, QDoubleSpinBox, QSpinBox, QToolBar, QMessageBox
+)
 
-def mm_to_cm(mm): 
-    return mm / 10.0
+# --- Defaults
+DEFAULT_WIDTH_MM = 2362.0
+DEFAULT_HEIGHT_MM = 1143.0
 
-def angle_between_vectors_deg(v1, v2):
-    dot = np.dot(v1, v2)
-    n1 = np.linalg.norm(v1)
-    n2 = np.linalg.norm(v2)
-    if n1 == 0 or n2 == 0:
-        return None
-    cosang = np.clip(dot / (n1 * n2), -1.0, 1.0)
-    return math.degrees(math.acos(cosang))
+# --- Utility functions
+def cv2_to_qimage(cv_img: np.ndarray) -> QImage:
+    """Convert BGR cv2 image to QImage"""
+    if cv_img.ndim == 2:
+        h, w = cv_img.shape
+        bytes_per_line = w
+        return QImage(cv_img.data, w, h, bytes_per_line, QImage.Format.Format_Grayscale8).copy()
+    rgb = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+    h, w, ch = rgb.shape
+    bytes_per_line = ch * w
+    return QImage(rgb.data, w, h, bytes_per_line, QImage.Format.Format_RGB888).copy()
 
-def draw_rounded_box(img, x1, y1, x2, y2, color=(0,0,0), radius=6, alpha=0.5):
-    overlay = img.copy()
-    cv2.rectangle(overlay, (x1+radius, y1), (x2-radius, y2), color, -1)
-    cv2.rectangle(overlay, (x1, y1+radius), (x2, y2-radius), color, -1)
-    for cx, cy in [(x1+radius, y1+radius), (x2-radius, y1+radius),
-                   (x1+radius, y2-radius), (x2-radius, y2-radius)]:
-        cv2.circle(overlay, (cx, cy), radius, color, -1)
-    cv2.addWeighted(overlay, alpha, img, 1 - alpha, 0, img)
 
-def draw_text_with_bg(img, text, pos, font, scale, color_text, thickness=1,
-                      bg_color=(0, 0, 0), alpha=0.5, pad=4, radius=6):
-    (tw, th), _ = cv2.getTextSize(text, font, scale, thickness)
-    x, y = pos
-    x1 = x - pad
-    y1 = y - th - pad
-    x2 = x + tw + pad
-    y2 = y + pad
-    draw_rounded_box(img, x1, y1, x2, y2, bg_color, radius, alpha)
-    cv2.putText(img, text, (x, y), font, scale, (0,0,0), thickness+1, cv2.LINE_AA)
-    cv2.putText(img, text, (x, y), font, scale, color_text, thickness, cv2.LINE_AA)
+class ImageWidget(QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.cv_img = None
+        self.pixmap = None
+        self.points: List[Tuple[int,int]] = []
+        self._zoom = 1.0
+        self._offset = QPoint(0,0)
+        self._drag_last = None
 
-class Medidor:
-    def __init__(self, img, real_width_mm=DEFAULT_REAL_WIDTH_MM, real_height_mm=DEFAULT_REAL_HEIGHT_MM):
-        self.orig = img.copy()
-        self.img = img
-        self.h, self.w = img.shape[:2]
-        self.real_w_mm = float(real_width_mm)
-        self.real_h_mm = float(real_height_mm)
-        self.scale_x = self.real_w_mm / self.w
-        self.scale_y = self.real_h_mm / self.h
+        self.real_w_mm = DEFAULT_WIDTH_MM
+        self.real_h_mm = DEFAULT_HEIGHT_MM
+
+        self.setMouseTracking(True)
+
+    def load_image(self, path: str):
+        # abrir imagen con PIL para evitar problemas con unicode/Windows
+        try:
+            pil_img = Image.open(path).convert('RGB')
+            cv_img = np.array(pil_img)
+            cv_img = cv2.cvtColor(cv_img, cv2.COLOR_RGB2BGR)
+        except Exception as e:
+            raise RuntimeError(f"No se pudo abrir imagen: {e}")
+
+        self.cv_img = cv_img
         self.points = []
+        self._zoom = 1.0
+        self._offset = QPoint(0,0)
+        self.adjust_zoom_to_fit()
+        self.update()
+
+    def adjust_zoom_to_fit(self):
+        """Ajusta zoom para que la imagen ocupe el widget"""
+        if self.cv_img is None:
+            return
+        img_h, img_w = self.cv_img.shape[:2]
+        widget_w = self.width() if self.width()>0 else img_w
+        widget_h = self.height() if self.height()>0 else img_h
+        scale_w = widget_w / img_w
+        scale_h = widget_h / img_h
+        self._zoom = min(scale_w, scale_h)
+
+    def set_real_dimensions(self, w_mm: float, h_mm: float):
+        self.real_w_mm = float(w_mm)
+        self.real_h_mm = float(h_mm)
+        self.update()
 
     def reset(self):
         self.points = []
-        self.img = self.orig.copy()
+        self._zoom = 1.0
+        self._offset = QPoint(0,0)
+        self.adjust_zoom_to_fit()
+        self.update()
 
-    def add_point(self, x, y):
-        self.points.append((int(x), int(y)))
-        self.redraw()
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.TextAntialiasing)
 
-    def pixel_to_real_vector_mm(self, p_from, p_to):
-        dx_px = p_to[0] - p_from[0]
-        dy_px = p_to[1] - p_from[1]
-        dx_mm = dx_px * self.scale_x
-        dy_mm = -dy_px * self.scale_y
-        return np.array([dx_mm, dy_mm])
+        if self.cv_img is None:
+            return
 
-    def pixel_distance_mm(self, p1, p2):
-        v = self.pixel_to_real_vector_mm(p1, p2)
-        return float(np.linalg.norm(v))
+        # pixmap original
+        self.pixmap = QPixmap.fromImage(cv2_to_qimage(self.cv_img))
+        pw = int(self.pixmap.width()*self._zoom)
+        ph = int(self.pixmap.height()*self._zoom)
+        scaled = self.pixmap.scaled(pw, ph, Qt.AspectRatioMode.KeepAspectRatio)
 
-    def redraw(self):
-        self.img = self.orig.copy()
+        # centrar imagen + offset
+        x = (self.width() - scaled.width())//2 + self._offset.x()
+        y = (self.height() - scaled.height())//2 + self._offset.y()
+        painter.drawPixmap(x, y, scaled)
 
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        scale = 0.55
-        thickness = 1
+        # escala mm/pixel
+        img_h, img_w = self.cv_img.shape[:2]
+        mm_per_px_x = self.real_w_mm / img_w
+        mm_per_px_y = self.real_h_mm / img_h
 
-        # Dibujar puntos
+        # dibujar líneas, puntos y distancias
         for i, p in enumerate(self.points):
-            cv2.circle(self.img, p, 5, (0, 0, 230), -1)
-            cv2.putText(self.img, f"P{i+1}", (p[0]+6, p[1]-6),
-                        font, 0.5, (0,0,230), 1, cv2.LINE_AA)
+            px, py = p
+            sx = x + int(px * self._zoom)
+            sy = y + int(py * self._zoom)
+            painter.setBrush(QBrush(QColor(0,0,200)))
+            painter.setPen(QPen(QColor(0,0,0),1))
+            painter.drawEllipse(QPoint(sx,sy), max(3,int(3*self._zoom)), max(3,int(3*self._zoom)))
+            painter.setPen(QPen(QColor(0,0,200),1))
+            painter.setFont(QFont('Sans', max(8,int(10*self._zoom))))
+            painter.drawText(sx+6, sy-6, f"P{i+1}")
 
-        # Dibujar líneas y distancias
         for i in range(1, len(self.points)):
-            p1, p2 = self.points[i-1], self.points[i]
-            cv2.line(self.img, p1, p2, (255,130,130), 2)
+            p1 = self.points[i-1]; p2 = self.points[i]
+            sx1 = x + int(p1[0]*self._zoom); sy1 = y + int(p1[1]*self._zoom)
+            sx2 = x + int(p2[0]*self._zoom); sy2 = y + int(p2[1]*self._zoom)
+            # línea
+            painter.setPen(QPen(QColor(255,120,120), max(1,int(2*self._zoom))))
+            painter.drawLine(sx1, sy1, sx2, sy2)
 
-            dist_mm = self.pixel_distance_mm(p1, p2)
-            dist_cm = mm_to_cm(dist_mm)
-            text = f"{dist_cm:.1f} cm"
+            # distancia en cm
+            dx_px = p2[0]-p1[0]; dy_px = p2[1]-p1[1]
+            dx_mm = dx_px * mm_per_px_x; dy_mm = -dy_px * mm_per_px_y
+            dist_cm = math.hypot(dx_mm, dy_mm)/10.0
+            dist_text = f"{dist_cm:.1f} cm"
 
-            mid_x = int((p1[0] + p2[0]) / 2)
-            mid_y = int((p1[1] + p2[1]) / 2)
+            # midpoint con offset perpendicular
+            mx = (sx1+sx2)//2; my = (sy1+sy2)//2
+            seg_len = math.hypot(sx2-sx1, sy2-sy1)
+            if seg_len==0: seg_len=1
+            nx = -(sy2-sy1)/seg_len; ny = (sx2-sx1)/seg_len
+            off = int(15*self._zoom)
+            tx = int(mx+nx*off)
+            ty = int(my+ny*off)
+            self._draw_text_box(painter, dist_text, tx, ty, bg_color=(30,30,30,180), fg=(255,255,255))
 
-            # Mover texto un poco perpendicular a la línea
-            dx, dy = p2[0] - p1[0], p2[1] - p1[1]
-            length = math.hypot(dx, dy)
-            if length > 0:
-                dx, dy = dx / length, dy / length
-                perp_x, perp_y = -dy, dx
-                mid_x += int(perp_x * 20)
-                mid_y += int(perp_y * 20)
-
-            draw_text_with_bg(self.img, text, (mid_x, mid_y),
-                              font, scale, (255,255,255), thickness,
-                              bg_color=(50,50,50), alpha=0.6)
-
-        # Dibujar ángulos
-        for i in range(1, len(self.points) - 1):
-            p_prev = np.array(self.points[i-1], dtype=float)
-            p_curr = np.array(self.points[i], dtype=float)
-            p_next = np.array(self.points[i+1], dtype=float)
-
-            v1 = p_prev - p_curr
-            v2 = p_next - p_curr
-            n1 = np.linalg.norm(v1)
-            n2 = np.linalg.norm(v2)
-            if n1 == 0 or n2 == 0:
-                continue
-
-            v1n = v1 / n1
-            v2n = v2 / n2
-            ang_between = math.degrees(math.acos(np.clip(np.dot(v1n, v2n), -1.0, 1.0)))
+        # ángulos
+        for i in range(1,len(self.points)-1):
+            p_prev = np.array(self.points[i-1],dtype=float)
+            p_curr = np.array(self.points[i],dtype=float)
+            p_next = np.array(self.points[i+1],dtype=float)
+            v1 = p_prev - p_curr; v2 = p_next - p_curr
+            n1 = np.linalg.norm(v1); n2 = np.linalg.norm(v2)
+            if n1==0 or n2==0: continue
+            v1n = v1/n1; v2n = v2/n2
+            ang_between = math.degrees(math.acos(np.clip(np.dot(v1n,v2n),-1.0,1.0)))
             interior_ang = 180.0 - ang_between
-
-            bisector = v1n + v2n
-            if np.linalg.norm(bisector) == 0:
-                continue
-            bisector /= np.linalg.norm(bisector)
-
-            offset = 60
-            text_center = (int(p_curr[0] + bisector[0]*offset),
-                           int(p_curr[1] + bisector[1]*offset))
-
             angle_text = f"{interior_ang:.1f}d"
-            draw_text_with_bg(self.img, angle_text,
-                              (text_center[0], text_center[1]),
-                              font, scale, (255,255,255), thickness,
-                              bg_color=(0,80,0), alpha=0.6)
+            bis = v1n+v2n
+            if np.linalg.norm(bis)==0: continue
+            bisn = bis/np.linalg.norm(bis)
+            bx = int(p_curr[0]+bisn[0]*60/self._zoom)
+            by = int(p_curr[1]+bisn[1]*60/self._zoom)
+            sx_b = x + int(bx*self._zoom); sy_b = y + int(by*self._zoom)
+            self._draw_text_box(painter, angle_text, sx_b, sy_b, bg_color=(0,100,0,200), fg=(255,255,255))
 
-def mouse_callback(event, x, y, flags, param):
-    med: Medidor = param
-    if event == cv2.EVENT_LBUTTONDOWN:
-        med.add_point(x, y)
-    elif event == cv2.EVENT_RBUTTONDOWN:
-        med.reset()
+        painter.end()
+
+    def _draw_text_box(self, painter: QPainter, text: str, cx: int, cy: int, bg_color=(0,0,0,180), fg=(255,255,255)):
+        font = QFont('Sans', max(8,int(10*self._zoom)))
+        painter.setFont(font)
+        metrics = painter.fontMetrics()
+        tw = metrics.horizontalAdvance(text)
+        th = metrics.height()
+        pad = max(4,int(4*self._zoom))
+        x1 = cx - tw//2 - pad; y1 = cy - th//2 - pad
+        x2 = cx + tw//2 + pad; y2 = cy + th//2 + pad
+        rect = QRect(x1,y1,x2-x1,y2-y1)
+        painter.setBrush(QBrush(QColor(*bg_color)))
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawRoundedRect(rect, max(4,int(6*self._zoom)), max(4,int(6*self._zoom)))
+        painter.setPen(QPen(QColor(0,0,0),2))
+        painter.drawText(cx - tw//2, cy + th//4, text)
+        painter.setPen(QPen(QColor(*fg),1))
+        painter.drawText(cx - tw//2, cy + th//4, text)
+
+    # --- Mouse events
+    def mousePressEvent(self, ev):
+        if self.cv_img is None: return
+        if ev.button() == Qt.MouseButton.LeftButton:
+            img_pt = self._widget_to_image(ev.position())
+            if img_pt: self.points.append((int(img_pt[0]), int(img_pt[1])))
+            self.update()
+        elif ev.button() == Qt.MouseButton.RightButton:
+            if self.points: self.points.pop()
+            self.update()
+        elif ev.button() == Qt.MouseButton.MiddleButton:
+            self._drag_last = ev.position()
+
+    def mouseMoveEvent(self, ev):
+        if self._drag_last and ev.buttons() & Qt.MouseButton.MiddleButton:
+            delta = ev.position() - self._drag_last
+            self._offset += QPoint(int(delta.x()), int(delta.y()))
+            self._drag_last = ev.position()
+            self.update()
+
+    def mouseReleaseEvent(self, ev):
+        self._drag_last = None
+
+    def wheelEvent(self, ev):
+        angle = ev.angleDelta().y()
+        factor = 1.0 + (angle/240.0)
+        old_zoom = self._zoom
+        self._zoom = max(0.1, min(5.0, self._zoom*factor))
+        pos = ev.position()
+        img_before = self._widget_to_image(pos)
+        self.update()
+        img_after = self._widget_to_image(pos)
+        if img_before and img_after:
+            dx = img_after[0]-img_before[0]; dy = img_after[1]-img_before[1]
+            self._offset += QPoint(int(dx*self._zoom), int(dy*self._zoom))
+        self.update()
+
+    def export_overlay_image(self, path: str):
+        if self.pixmap is None:
+            return
+        # crear un QPixmap del tamaño del widget
+        pix = QPixmap(self.size())
+        self.render(pix)  # renderiza el widget completo
+        pix.save(path)
+
+    def export_csv(self, path: str):
+        """Exporta los puntos y distancias a CSV"""
+        if self.cv_img is None or len(self.points) < 2:
+            return
+
+        h, w = self.cv_img.shape[:2]
+        mm_per_px_x = self.real_w_mm / w
+        mm_per_px_y = self.real_h_mm / h
+
+        rows = []
+        for i in range(1, len(self.points)):
+            p1 = self.points[i-1]
+            p2 = self.points[i]
+            dx = p2[0] - p1[0]
+            dy = p2[1] - p1[1]
+            dx_mm = dx * mm_per_px_x
+            dy_mm = -dy * mm_per_px_y
+            dist_cm = math.hypot(dx_mm, dy_mm) / 10.0
+            rows.append([i, p1[0], p1[1], p2[0], p2[1], f"{dist_cm:.3f}"])
+
+        with open(path, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['seg', 'x1', 'y1', 'x2', 'y2', 'dist_cm'])
+            writer.writerows(rows)
+
+    def _widget_to_image(self, qp) -> Tuple[float,float]:
+        if self.pixmap is None: return None
+        x = (self.width()-self.pixmap.width()*self._zoom)//2 + self._offset.x()
+        y = (self.height()-self.pixmap.height()*self._zoom)//2 + self._offset.y()
+        imgx = (qp.x() - x)/self._zoom
+        imgy = (qp.y() - y)/self._zoom
+        img_h, img_w = self.cv_img.shape[:2]
+        if imgx<0 or imgy<0 or imgx>=img_w or imgy>=img_h: return None
+        return (imgx,imgy)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Medidor Tapete Pro")
+        self.resize(1200,800)
+
+        self.image_widget = ImageWidget()
+
+        toolbar = QToolBar()
+        self.addToolBar(toolbar)
+
+        open_action = QAction("Abrir", self)
+        open_action.triggered.connect(self.open_image)
+        toolbar.addAction(open_action)
+
+        save_action = QAction("Guardar captura", self)
+        save_action.triggered.connect(self.save_capture)
+        toolbar.addAction(save_action)
+
+        csv_action = QAction("Exportar CSV", self)
+        csv_action.triggered.connect(self.export_csv)
+        toolbar.addAction(csv_action)
+
+        reset_action = QAction("Reiniciar", self)
+        reset_action.triggered.connect(self.image_widget.reset)
+        toolbar.addAction(reset_action)
+
+        undo_action = QAction("Deshacer", self)
+        undo_action.triggered.connect(self.undo_point)
+        toolbar.addAction(undo_action)
+
+        # dimensiones reales
+        wspin = QDoubleSpinBox()
+        wspin.setRange(10,10000); wspin.setValue(DEFAULT_WIDTH_MM); wspin.setSuffix(" mm")
+        wspin.valueChanged.connect(lambda v: self.image_widget.set_real_dimensions(v,self.image_widget.real_h_mm))
+        toolbar.addWidget(wspin)
+        hspin = QDoubleSpinBox()
+        hspin.setRange(10,10000); hspin.setValue(DEFAULT_HEIGHT_MM); hspin.setSuffix(" mm")
+        hspin.valueChanged.connect(lambda v: self.image_widget.set_real_dimensions(self.image_widget.real_w_mm,v))
+        toolbar.addWidget(hspin)
+
+        central = QWidget()
+        vlay = QVBoxLayout()
+        vlay.addWidget(self.image_widget)
+        central.setLayout(vlay)
+        self.setCentralWidget(central)
+
+    def open_image(self):
+        path,_ = QFileDialog.getOpenFileName(self,"Abrir imagen","","Imagenes (*.png *.jpg *.jpeg *.bmp)")
+        if not path: return
+        try:
+            self.image_widget.load_image(path)
+        except Exception as e:
+            QMessageBox.critical(self,"Error",str(e))
+
+    def save_capture(self):
+        path, _ = QFileDialog.getSaveFileName(self, "Guardar captura", "", "PNG (*.png);;JPG (*.jpg)")
+        if not path:
+            return
+        # llama a la función del widget para guardar la imagen con overlay
+        self.image_widget.export_overlay_image(path)
+        QMessageBox.information(self, "Guardado", f"Captura guardada en:\n{path}")
+
+    def export_csv(self):
+        path, _ = QFileDialog.getSaveFileName(self, "Exportar CSV", "", "CSV (*.csv)")
+        if not path:
+            return
+        # llama a la función del widget para exportar CSV
+        self.image_widget.export_csv(path)
+        QMessageBox.information(self, "Exportado", f"CSV guardado en:\n{path}")
+
+
+    def undo_point(self):
+        if self.image_widget.points:
+            self.image_widget.points.pop()
+            self.image_widget.update()
+
 
 def main():
-    parser = argparse.ArgumentParser(description='Medidor interactivo de tapete con ángulos y distancias')
-    parser.add_argument('image', help='ruta de la imagen PNG/JPG')
-    parser.add_argument('--width_mm', type=float, default=DEFAULT_REAL_WIDTH_MM)
-    parser.add_argument('--height_mm', type=float, default=DEFAULT_REAL_HEIGHT_MM)
-    args = parser.parse_args()
+    app = QApplication(sys.argv)
+    win = MainWindow()
+    win.show()
+    sys.exit(app.exec())
 
-    if not os.path.exists(args.image):
-        print('ERROR: imagen no encontrada:', args.image)
-        return
-
-    img = cv2.imread(args.image)
-    if img is None:
-        print('ERROR: no se pudo abrir la imagen.')
-        return
-
-    # Ajustar al largo de pantalla
-    root = tk.Tk()
-    screen_w = root.winfo_screenwidth()
-    screen_h = root.winfo_screenheight()
-    root.destroy()
-
-    h, w = img.shape[:2]
-    scale = min(screen_w / w, screen_h / h, 1.0)
-    if scale < 1.0:
-        img_display = cv2.resize(img, (int(w*scale), int(h*scale)))
-    else:
-        img_display = img.copy()
-
-    med = Medidor(img_display, args.width_mm, args.height_mm)
-
-    winname = 'Medidor Tapete (clic izq: punto, der/r: reiniciar, q/ESC: salir)'
-    cv2.namedWindow(winname, cv2.WINDOW_AUTOSIZE)
-    cv2.setMouseCallback(winname, mouse_callback, med)
-
-    while True:
-        cv2.imshow(winname, med.img)
-        key = cv2.waitKey(20) & 0xFF
-        if key in (ord('q'), 27):
-            break
-        elif key == ord('r'):
-            med.reset()
-
-    cv2.destroyAllWindows()
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
