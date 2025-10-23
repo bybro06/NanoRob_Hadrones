@@ -1,0 +1,35 @@
+
+distancia = 25
+detectarcolor(5,50)
+
+
+
+Time.Reset1()
+tiempo = Time.Get1()
+
+Function andarportiempo(in number vel, in number tiempo)
+  Time.Reset1()
+  while Time.Get1() < tiempo
+    Motor.StartSync("BC",vel,vel)
+  EndWhile
+  Motor.Stop("BC","true")
+
+  
+EndFunction
+
+Function detectarcolor(in number color, in number vel)
+  Sensor.SetMode(1,2)
+  Sensor.SetMode(4,2)
+  While Sensor.ReadRawValue(1,0) <> color
+    Motor.StartSync("BC",vel,vel)
+  EndWhile 
+  Motor.Stop("BC","true")
+    
+  EndFunction
+
+Function andar(in number vel, in number distancia)
+  diametro = 5.6
+  grados = (distancia*360)/(Math.pi*diametro)
+
+  Motor.Move("BC",vel,grados,"True")
+EndFunction
